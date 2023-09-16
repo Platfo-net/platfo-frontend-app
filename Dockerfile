@@ -1,15 +1,16 @@
 # develop stage
 FROM node:lts-alpine as develop-stage
-WORKDIR /app
+WORKDIR /application
 COPY package-*.json ./
 COPY . .
 RUN npm install
 
 # build stage
 FROM develop-stage as build-stage
-RUN npm run install
 RUN npm run build
 
 # production stage
-FROM nginx:alpine as production-stage
-COPY --from=build-stage /app/dist/spa /usr/share/nginx/html
+FROM steebchen/nginx-spa:stable as production-stage
+COPY --from=build-stage /application/dist/spa /app
+CMD ["nginx"]
+EXPOSE 80
