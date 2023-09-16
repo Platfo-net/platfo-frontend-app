@@ -4,7 +4,7 @@ import { useAuthStore } from 'stores/auth-store';
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    redirect: {name: 'StoresPage'},
+    redirect: { name: 'StoresPage' },
   },
   {
     path: '/dashboard',
@@ -58,6 +58,11 @@ const routes: RouteRecordRaw[] = [
         path: 'register',
         name: 'RegisterPage',
         component: () => import('pages/public/RegisterPage.vue'),
+      },
+      {
+        path: 'confirm-phone',
+        name: 'OtpPhoneConfirmationPage',
+        component: () => import('pages/public/OtpPhoneConfirmationPage.vue'),
       },
     ],
   },

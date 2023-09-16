@@ -30,3 +30,7 @@ export type ApiQueryProps = {
   endpoint: string;
   params?: object;
 };
+
+export interface ISendActivationCodeResponse {
+  token: string;
+}

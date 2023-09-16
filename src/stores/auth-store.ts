@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import { AuthState, ILoginApiResponse } from 'stores/types';
 import { LocalStorage } from 'quasar';
 
@@ -14,8 +14,10 @@ export const useAuthStore = defineStore('auth_store', () => {
       isLoggedIn: false,
     }
   );
+  const otpToken = ref('');
   return {
     state,
+    otpToken,
     actions: {
       setAuthState(authResponse: ILoginApiResponse) {
         const newState = {
@@ -33,6 +35,9 @@ export const useAuthStore = defineStore('auth_store', () => {
         };
         Object.assign<AuthState, AuthState>(state, newState);
         LocalStorage.set(LS_AUTH_KEY, newState);
+      },
+      setOtpToken(token: string) {
+        otpToken.value = token;
       },
     },
   };

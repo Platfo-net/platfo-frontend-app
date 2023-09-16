@@ -5,13 +5,14 @@ import { useNotify } from 'src/composables/use-notify';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from 'stores/auth-store';
 import { ILoginApiResponse } from 'stores/types';
+import { ILoginFormState } from 'src/types';
 
 const { api } = useApi();
 const notify = useNotify();
 const router = useRouter();
 const authStore = useAuthStore();
 
-const loginState = reactive({
+const loginState = reactive<ILoginFormState>({
   phone_number: '',
   password: '',
   phone_country_code: '+98',
@@ -36,7 +37,10 @@ const handleFormSubmit = () => {
 
 <template>
   <q-page class="flex justify-center items-center bg-primary q-pa-lg">
-    <q-card class="q-pa-md">
+    <q-card
+      class="q-pa-md"
+      style="min-width: 300px; width: 100%; max-width: 500px"
+    >
       <div class="text-h6">Login to Platfo</div>
       <form @submit.prevent="handleFormSubmit">
         <div class="q-gutter-md">
@@ -74,6 +78,14 @@ const handleFormSubmit = () => {
           "
         />
       </form>
+      <div class="flex row justify-center items-center q-mt-md">
+        <p>
+          Not a user yet?
+          <router-link :to="{ name: 'RegisterPage' }"
+            >Register here.</router-link
+          >
+        </p>
+      </div>
     </q-card>
   </q-page>
 </template>

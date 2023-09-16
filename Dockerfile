@@ -6,11 +6,10 @@ COPY . .
 RUN npm install
 
 # build stage
-#FROM develop-stage as build-stage
-#RUN npm run install
-#RUN npm run build
+FROM develop-stage as build-stage
+RUN npm run install
+RUN npm run build
 
 # production stage
-FROM develop-stage as production-stage
-CMD ["npm", "run", "dev"]
-EXPOSE 5050
+FROM nginx:alpine as production-stage
+COPY --from=build-stage /app/dist/spa /usr/share/nginx/html
