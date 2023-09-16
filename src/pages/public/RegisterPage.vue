@@ -8,13 +8,13 @@ import { ISendActivationCodeResponse } from 'src/composables/types';
 import { useAuthStore } from 'stores/auth-store';
 
 const authStore = useAuthStore();
-const registerState = reactive<IRegisterFormState>({
-  first_name: '',
-  last_name: '',
-  password: '',
-  phone_country_code: '',
-  phone_number: '',
-});
+// const registerState = reactive<IRegisterFormState>({
+//   first_name: '',
+//   last_name: '',
+//   password: '',
+//   phone_country_code: '+98',
+//   phone_number: '',
+// });
 const showPass = ref(true);
 const { api } = useApi();
 const router = useRouter();
@@ -22,14 +22,14 @@ const notify = useNotify();
 
 const handleFormSubmit = () => {
   api
-    .post<null>('/user/register-by-phone-number', registerState)
+    .post<null>('/user/register-by-phone-number', authStore.registerState)
     .then(() => {
       api
         .post<ISendActivationCodeResponse>(
           '/auth/send-activation-code-by-sms',
           {
-            phone_number: registerState.phone_number,
-            phone_country_code: registerState.phone_country_code,
+            phone_number: authStore.registerState.phone_number,
+            phone_country_code: authStore.registerState.phone_country_code,
           }
         )
         .then(({ data: { token } }) => {
@@ -45,7 +45,29 @@ const handleFormSubmit = () => {
       });
     })
     .catch((err) => {
-      notify.error('Error', err.response.data.detail);
+      console.log(err.response.data.detail);
+      if (
+        err.response.status == 400 &&
+        err.response.data.detail === 'Inactive user'
+      ) {
+        api
+          .post<ISendActivationCodeResponse>(
+            '/auth/send-activation-code-by-sms',
+            {
+              phone_number: authStore.registerState.phone_number,
+              phone_country_code: authStore.registerState.phone_country_code,
+            }
+          )
+          .then(({ data: { token } }) => {
+            authStore.actions.setOtpToken(token);
+            router.replace({ name: 'OtpPhoneConfirmationPage' });
+          })
+          .catch(() => {
+            notify.error('Error while calling OTP');
+          });
+      } else {
+        notify.error('Error', err.response.data.detail);
+      }
     });
 };
 </script>
@@ -61,7 +83,7 @@ const handleFormSubmit = () => {
         <div class="q-gutter-md">
           <q-input
             name="first_name"
-            v-model="registerState.first_name"
+            v-model="authStore.registerState.first_name"
             type="text"
             label="First Name"
             color="dark"
@@ -69,7 +91,7 @@ const handleFormSubmit = () => {
           />
           <q-input
             name="last_name"
-            v-model="registerState.last_name"
+            v-model="authStore.registerState.last_name"
             type="text"
             label="Last Name"
             color="dark"
@@ -77,7 +99,7 @@ const handleFormSubmit = () => {
           />
           <q-input
             name="phone_number"
-            v-model="registerState.phone_number"
+            v-model="authStore.registerState.phone_number"
             type="text"
             label="Phone Number"
             color="dark"
@@ -85,14 +107,15 @@ const handleFormSubmit = () => {
           />
           <q-input
             name="phone_country_code"
-            v-model="registerState.phone_country_code"
+            v-model="authStore.registerState.phone_country_code"
             type="text"
             label="Phone Country Code"
             color="dark"
             :rules="[(val) => !!val || 'Field is required']"
+            disable
           />
           <q-input
-            v-model="registerState.password"
+            v-model="authStore.registerState.password"
             :type="showPass ? 'password' : 'text'"
             label="Password"
             color="dark"
@@ -113,11 +136,11 @@ const handleFormSubmit = () => {
           label="Register"
           type="submit"
           :disable="
-            registerState.phone_country_code.length < 1 ||
-            registerState.phone_number.length < 1 ||
-            registerState.first_name.length < 1 ||
-            registerState.last_name.length < 1 ||
-            registerState.password.length < 1
+            authStore.registerState.phone_country_code.length < 1 ||
+            authStore.registerState.phone_number.length < 1 ||
+            authStore.registerState.first_name.length < 1 ||
+            authStore.registerState.last_name.length < 1 ||
+            authStore.registerState.password.length < 1
           "
         />
       </form>

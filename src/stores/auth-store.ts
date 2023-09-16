@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { reactive, ref } from 'vue';
 import { AuthState, ILoginApiResponse } from 'stores/types';
 import { LocalStorage } from 'quasar';
+import { IRegisterFormState } from 'src/types';
 
 const LS_AUTH_KEY = 'authentication';
 
@@ -14,9 +15,17 @@ export const useAuthStore = defineStore('auth_store', () => {
       isLoggedIn: false,
     }
   );
+  const registerState = reactive<IRegisterFormState>({
+    first_name: '',
+    last_name: '',
+    password: '',
+    phone_country_code: '+98',
+    phone_number: '',
+  });
   const otpToken = ref('');
   return {
     state,
+    registerState,
     otpToken,
     actions: {
       setAuthState(authResponse: ILoginApiResponse) {

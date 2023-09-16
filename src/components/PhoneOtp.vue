@@ -1,18 +1,39 @@
 <script setup lang="ts">
 import VOtpInput from 'vue3-otp-input';
-import { reactive, ref } from 'vue';
+import { ref } from 'vue';
 
+const authStore = useAuthStore();
+
+import { useApi } from 'src/composables/use-api';
+import { useAuthStore } from 'stores/auth-store';
+import { useRouter } from 'vue-router';
+import { useNotify } from 'src/composables/use-notify';
+const { api } = useApi();
 const OTP_DIGITS = 6;
 const otpInput = ref<InstanceType<typeof VOtpInput> | null>();
 const optState = ref('');
+const router = useRouter();
+const notify = useNotify();
 function handleOnComplete(value: any) {
   console.log('OTP completed: ', optState.value);
+  api
+    .post('/auth/activate-by-sms', {
+      phone_number: authStore.registerState.phone_number,
+      phone_country_code: authStore.registerState.phone_country_code,
+      code: value,
+      token: authStore.otpToken,
+    })
+    .then((d) => {
+      notify.success('Phone verified.');
+      router.replace({ name: 'LoginPage' });
+    })
+    .catch((err) => {
+      notify.error(JSON.stringify(err.response.data));
+      // TODO implement proper error handling
+    });
 }
 function handleOnChange(value: any) {
   optState.value = value;
-}
-function handleClearInput() {
-  otpInput.value?.clearInput();
 }
 </script>
 
