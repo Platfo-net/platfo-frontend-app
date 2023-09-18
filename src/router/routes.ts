@@ -8,7 +8,7 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/dashboard',
-    component: import('layouts/MainLayout.vue'),
+    component: () => import('layouts/MainLayout.vue'),
     redirect: { name: 'StoresPage' },
     children: [
       {
@@ -47,7 +47,7 @@ const routes: RouteRecordRaw[] = [
           const authStore = useAuthStore();
           if (authStore.state.isLoggedIn) {
             next({
-              name: 'StoreList',
+              name: 'StoresPage',
               replace: true,
             });
           }
