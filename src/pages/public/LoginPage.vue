@@ -26,7 +26,7 @@ const handleFormSubmit = () => {
       notify.success('Successful', 'Login was successful');
       authStore.actions.setAuthState(res.data);
       router.replace({
-        name: 'StoresPage',
+        name: 'StoreListPage',
       });
     })
     .catch((err) => {

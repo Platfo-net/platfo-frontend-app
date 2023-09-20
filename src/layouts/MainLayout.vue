@@ -62,7 +62,7 @@ const essentialLinks: EssentialLinkProps[] = [
   {
     title: 'My Stores',
     icon: 'storefront',
-    link: { name: 'StoresPage' },
+    link: { name: 'StoreListPage' },
   },
   {
     title: 'My Contacts',
