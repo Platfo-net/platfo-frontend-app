@@ -4,18 +4,28 @@ import { useAuthStore } from 'stores/auth-store';
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    redirect: { name: 'StoresPage' },
+    redirect: { name: 'StoreListPage' },
   },
   {
     path: '/dashboard',
     component: () => import('layouts/MainLayout.vue'),
-    redirect: { name: 'StoresPage' },
+    redirect: { name: 'StoreListPage' },
     children: [
       {
-        name: 'StoresPage',
-        path: 'store-list',
-        meta: {},
-        component: () => import('pages/dashboard/store/StoreListPage.vue'),
+        path: 'store',
+        children: [
+          {
+            name: 'StoreListPage',
+            component: () => import('pages/dashboard/store/StoreListPage.vue'),
+            path: 'list',
+          },
+          {
+            name: 'CreateStorePage',
+            component: () =>
+              import('pages/dashboard/store/CreateStorePage.vue'),
+            path: 'create',
+          },
+        ],
       },
       {
         name: 'ContactsPage',
