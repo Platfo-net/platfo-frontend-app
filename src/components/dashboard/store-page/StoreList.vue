@@ -1,36 +1,31 @@
 <script setup lang="ts">
+import { useApi } from 'src/composables/use-api';
+const { api, loading } = useApi();
 import StoreListItem from 'components/dashboard/store-page/StoreListItem.vue';
-import { ShopModel } from 'components/models';
-const shops: ShopModel[] = [
-  {
-    category: 'Developer Shop Category #1',
-    id: '1',
-    description: 'Description #1',
-    title: 'Shop Title #1',
-  },
-  {
-    category: 'Developer Shop Category #2',
-    id: '2',
-    description: 'Description #2',
-    title: 'Shop Title #2',
-  },
-  {
-    category: 'Developer Shop Category #3',
-    id: '3',
-    description: 'Description #3',
-    title: 'Shop Title #3',
-  },
-  {
-    category: 'Developer Shop Category #4',
-    id: '4',
-    description: 'Description #4',
-    title: 'Shop Title #4',
-  },
-];
+import { IShop } from 'components/models';
+import { ref } from 'vue';
+const getShops = async () => {
+  try {
+    const { data } = await api.get<IShop[]>('/shop/shop/all');
+    return data;
+  } catch (err) {
+    console.error(err);
+    return [];
+  }
+};
+const shops = ref<IShop[]>([]);
+
+getShops().then((data) => {
+  shops.value = data;
+});
 </script>
 
 <template>
   <div class="row q-col-gutter-md">
+    <template v-if="loading"
+      ><q-inner-loading :showing="loading">
+        <q-spinner-dots size="50px" color="accent" /> </q-inner-loading
+    ></template>
     <template v-for="(shop, idx) in shops" :key="`${idx}-${shop.id}`">
       <StoreListItem
         :category="shop.category"
