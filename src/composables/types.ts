@@ -34,3 +34,11 @@ export type ApiQueryProps = {
 export interface ISendActivationCodeResponse {
   token: string;
 }
+
+export interface ICreateShopResponse {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  support_token: string;
+}
