@@ -26,7 +26,13 @@ getShops().then((data) => {
       ><q-inner-loading :showing="loading">
         <q-spinner-dots size="50px" color="accent" /> </q-inner-loading
     ></template>
-    <template v-for="(shop, idx) in shops" :key="`${idx}-${shop.id}`">
+    <template v-else-if="shops.length < 1">
+      <p>
+        You do not have any shop registered at the moment. Please create a new
+        shop.
+      </p>
+    </template>
+    <template v-else v-for="(shop, idx) in shops" :key="`${idx}-${shop.id}`">
       <StoreListItem
         :category="shop.category"
         :description="shop.description"
