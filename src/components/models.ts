@@ -1,4 +1,4 @@
-export interface ShopModel {
+export interface IShop {
   id: string;
   title: string;
   description: string;
