@@ -42,3 +42,9 @@ export interface ICreateShopResponse {
   category: string;
   support_token: string;
 }
+
+export interface IRegisterTelegramBotResponse {
+  id: string;
+  first_name: string;
+  username: string;
+}
