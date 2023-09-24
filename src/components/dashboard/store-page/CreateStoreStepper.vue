@@ -47,8 +47,9 @@ const handleVerifySupportAccount = async () => {
 
 const handleRegisterTelegramBot = async () => {
   try {
-    await api.post<IRegisterTelegramBotResponse>('/telegram', {
+    await api.post<string>('/shop/telegram/connect-bot', {
       bot_token: botToken.value,
+      shop_id: createShopState.id,
     });
     notify.success('Telegram Bot Registered in Platfo');
     step.value = 4;
