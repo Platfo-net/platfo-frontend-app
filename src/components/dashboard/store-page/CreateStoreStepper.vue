@@ -3,7 +3,10 @@ import { reactive, ref } from 'vue';
 import { useApi } from 'src/composables/use-api';
 import { IShop } from 'components/models';
 import { useNotify } from 'src/composables/use-notify';
-import { ICreateShopResponse } from 'src/composables/types';
+import {
+  ICreateShopResponse,
+  IRegisterTelegramBotResponse,
+} from 'src/composables/types';
 import { AxiosError } from 'axios';
 const { api, loading } = useApi();
 const step = ref(1);
@@ -32,15 +35,9 @@ const handleRegisterShop = async () => {
   }
 };
 
-const handleVerifyShop = async () => {
+const handleVerifySupportAccount = async () => {
   try {
-    const apiResponse = await api.post<ICreateShopResponse>(
-      '/shop/telegram/connect-support-account',
-      {
-        token: supportToken,
-        shop_id: createShopState.id,
-      }
-    );
+    await api.get(`/shop/telegram/${createShopState.id}/check-support-bot`);
     notify.success('Support Connection Verified');
     step.value = 3;
   } catch (err) {
@@ -48,17 +45,13 @@ const handleVerifyShop = async () => {
   }
 };
 
-const handleBotConnection = async () => {
+const handleRegisterTelegramBot = async () => {
   try {
-    const apiResponse = await api.post<ICreateShopResponse>(
-      '/shop/telegram/connect-bot',
-      {
-        bot_id: supportToken,
-        shop_id: createShopState.id,
-      }
-    );
-    notify.success('Support Connection Verified');
-    step.value = 3;
+    await api.post<IRegisterTelegramBotResponse>('/telegram', {
+      bot_token: botToken.value,
+    });
+    notify.success('Telegram Bot Registered in Platfo');
+    step.value = 4;
   } catch (err) {
     if (err instanceof AxiosError) notify.error(err.response?.data.detail);
   }
@@ -105,9 +98,12 @@ const handleBotConnection = async () => {
       <q-stepper-navigation>
         <q-btn
           :loading="loading"
-          @click="step = 2"
+          @click="handleRegisterShop"
           color="accent"
           label="Next"
+          :disable="createShopState.description?.length! < 3 ||
+  createShopState.title?.length! < 3 ||
+  createShopState.category?.length! < 3"
         />
       </q-stepper-navigation>
     </q-step>
@@ -152,7 +148,11 @@ const handleBotConnection = async () => {
       </ol>
 
       <q-stepper-navigation>
-        <q-btn @click="step = 3" color="accent" label="Verify Connection" />
+        <q-btn
+          @click="handleVerifySupportAccount"
+          color="accent"
+          label="Verify Connection"
+        />
         <!--        <q-btn-->
         <!--          flat-->
         <!--          @click="step = 1"-->
@@ -163,7 +163,12 @@ const handleBotConnection = async () => {
       </q-stepper-navigation>
     </q-step>
 
-    <q-step :name="3" title="Telegram Bot Connection" icon="robot">
+    <q-step
+      :name="3"
+      title="Telegram Bot Connection"
+      icon="robot"
+      :done="step > 3"
+    >
       <p>Connect your shop to your telegram bot.</p>
       <p>To do this, please follow the steps below:</p>
       <ol>
@@ -203,12 +208,18 @@ const handleBotConnection = async () => {
             label="Bot Token"
             color="accent"
             filled
+            v-model="botToken"
           ></q-input>
         </div>
       </div>
 
       <q-stepper-navigation>
-        <q-btn color="accent" label="Finish" />
+        <q-btn
+          color="accent"
+          label="Finish"
+          :disable="botToken.length < 3"
+          @click="handleRegisterTelegramBot"
+        />
         <!--        <q-btn-->
         <!--          flat-->
         <!--          @click="step = 2"-->
@@ -217,6 +228,16 @@ const handleBotConnection = async () => {
         <!--          class="q-ml-sm"-->
         <!--        />-->
       </q-stepper-navigation>
+    </q-step>
+    <q-step :name="4" title="Success" icon="success">
+      <div class="text-h4 q-my-lg">
+        Congratulations, you have created a new shop
+      </div>
+      <q-btn
+        color="accent"
+        label="Back to shop list"
+        :to="{ name: 'StoreListPage' }"
+      />
     </q-step>
   </q-stepper>
 </template>
