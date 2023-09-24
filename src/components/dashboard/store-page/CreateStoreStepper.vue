@@ -162,7 +162,6 @@ const handleRegisterTelegramBot = async () => {
         <!--        />-->
       </q-stepper-navigation>
     </q-step>
-
     <q-step
       :name="3"
       title="Telegram Bot Connection"
@@ -230,7 +229,7 @@ const handleRegisterTelegramBot = async () => {
       </q-stepper-navigation>
     </q-step>
     <q-step :name="4" title="Success" icon="success">
-      <div class="text-h4 q-my-lg">
+      <div class="text-h5 q-my-lg">
         Congratulations, you have created a new shop
       </div>
       <q-btn
