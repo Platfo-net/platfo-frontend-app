@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ShopModel } from 'components/models';
+import { IShop } from 'components/models';
 
-const props = defineProps<ShopModel>();
+const props = defineProps<IShop>();
 </script>
 
 <template>
