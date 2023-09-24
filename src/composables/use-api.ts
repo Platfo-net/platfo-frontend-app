@@ -6,9 +6,11 @@ import axios from 'axios';
 //   ApiState,
 // } from 'src/composables/types';
 import { useAuthStore } from 'stores/auth-store';
+import { ref } from 'vue';
 
 export const useApi = () => {
   const authStore = useAuthStore();
+  const loading = ref(false);
 
   const api = axios.create({
     baseURL: 'https://api.platfo.net/api/v1',
@@ -17,6 +19,7 @@ export const useApi = () => {
   api.interceptors.request.use(
     (cfg) => {
       try {
+        loading.value = true;
         const token = authStore.state.access_token;
         if (token) cfg.headers['Authorization'] = `Bearer ${token}`;
         return cfg;
@@ -27,8 +30,20 @@ export const useApi = () => {
     (err) => Promise.reject(err)
   );
 
+  api.interceptors.response.use(
+    (data) => {
+      loading.value = false;
+      return data;
+    },
+    (err) => {
+      loading.value = false;
+      return Promise.reject(err);
+    }
+  );
+
   return {
     api,
+    loading,
   };
 
   // const query = async <T>(
