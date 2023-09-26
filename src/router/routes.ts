@@ -10,6 +10,7 @@ const routes: RouteRecordRaw[] = [
     path: '/dashboard',
     component: () => import('layouts/MainLayout.vue'),
     redirect: { name: 'StoreListPage' },
+    name: 'Dashboard',
     children: [
       {
         path: 'store',
@@ -18,19 +19,50 @@ const routes: RouteRecordRaw[] = [
             name: 'StoreListPage',
             component: () => import('pages/dashboard/store/StoreListPage.vue'),
             path: 'list',
+            meta: {
+              breadcrumbs: [
+                { label: 'Dashboard', to: { name: 'Dashboard' } },
+                { label: 'My Stores' },
+              ],
+            },
           },
           {
             name: 'CreateStorePage',
             component: () =>
               import('pages/dashboard/store/CreateStorePage.vue'),
             path: 'create',
+            meta: {
+              breadcrumbs: [
+                { label: 'Dashboard', to: { name: 'Dashboard' } },
+                { label: 'My Stores', to: { name: 'StoreListPage' } },
+                { label: 'Create new store' },
+              ],
+            },
+          },
+          {
+            name: 'ManageStorePage',
+            component: () =>
+              import('pages/dashboard/store/ManageStorePage.vue'),
+            path: 'manage/:storeId',
+            meta: {
+              breadcrumbs: [
+                { label: 'Dashboard', to: { name: 'Dashboard' } },
+                { label: 'My Stores', to: { name: 'StoreListPage' } },
+                { label: 'Manage Store' },
+              ],
+            },
           },
         ],
       },
       {
         name: 'ContactsPage',
         path: 'contacts',
-        meta: {},
+        meta: {
+          breadcrumbs: [
+            { label: 'Dashboard', to: { name: 'Dashboard' } },
+            { label: 'My Contacts' },
+          ],
+        },
         component: () => import('pages/dashboard/contacts/ContactsPage.vue'),
       },
     ],
