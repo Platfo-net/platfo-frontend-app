@@ -4,3 +4,19 @@ export interface IShop {
   description: string;
   category: string;
 }
+
+export interface ICategory {
+  title: string;
+  id: string;
+}
+
+export interface IProduct {
+  title: string;
+  image: string;
+  price: number;
+  currency: string;
+  id: string;
+  category: ICategory;
+  created_at: Date;
+  updated_at: Date;
+}

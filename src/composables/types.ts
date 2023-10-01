@@ -48,3 +48,24 @@ export interface IRegisterTelegramBotResponse {
   first_name: string;
   username: string;
 }
+
+export interface IPagination {
+  page: number;
+  total_pages: number;
+  page_size: number;
+  total_count: number;
+}
+
+export interface IPaginatedResponse<T> {
+  items: T[];
+  pagination: IPagination;
+}
+
+export interface ICreateProduct {
+  title: string;
+  image: string;
+  price: number;
+  currency: string;
+  category_id: string;
+  shop_id: string;
+}

@@ -1,13 +1,20 @@
 <script setup lang="ts">
 import BreadCrumbs from 'components/BreadCrumbs.vue';
 import { useApi } from 'src/composables/use-api';
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { IShop } from 'components/models';
+import StoreManagementProductsPanel from 'components/dashboard/store-page/StoreManagementProductsPanel.vue';
 const route = useRoute();
 const { api, loading } = useApi();
 
 const shop = ref<IShop>();
+
+const tab = ref('basics');
+
+const getProducts = async () => {
+  const res = await api.get(`/shop/products/${route.params.storeId}/all`);
+};
 
 onBeforeMount(() => {
   api
@@ -38,8 +45,34 @@ onBeforeMount(() => {
           label="Go Back"
         ></q-btn>
       </div>
-      <code>{{ JSON.stringify(shop) }}</code></template
-    >
+      <q-tabs
+        class="q-mb-md"
+        v-model="tab"
+        align="left"
+        active-bg-color="accent"
+        active-color="white"
+        indicator-color="primary"
+      >
+        <q-tab name="basics" label="Basic Information"></q-tab>
+        <q-tab name="products" label="Products Management"></q-tab>
+        <q-tab name="orders" label="Orders"></q-tab>
+      </q-tabs>
+      <q-tab-panels v-model="tab">
+        <q-tab-panel name="basics" class="q-pa-none">
+          <q-card class="q-pa-lg" bordered square flat>
+            <div class="text-h6">Basic Information</div>
+          </q-card>
+        </q-tab-panel>
+        <q-tab-panel name="products" class="q-pa-none">
+          <store-management-products-panel />
+        </q-tab-panel>
+        <q-tab-panel name="orders" class="q-pa-none">
+          <q-card class="q-pa-lg" bordered square flat>
+            <div class="text-h6">Orders</div>
+          </q-card>
+        </q-tab-panel>
+      </q-tab-panels>
+    </template>
     <template v-else>FUCK</template>
   </q-page>
 </template>
