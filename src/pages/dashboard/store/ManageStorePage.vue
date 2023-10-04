@@ -54,8 +54,8 @@ onBeforeMount(() => {
         indicator-color="primary"
       >
         <q-tab name="basics" label="Basic Information"></q-tab>
-        <q-tab name="products" label="Products Management"></q-tab>
-        <q-tab name="orders" label="Orders"></q-tab>
+        <q-tab name="products" label="Products"></q-tab>
+        <!--        <q-tab name="orders" label="Orders"></q-tab>-->
       </q-tabs>
       <q-tab-panels v-model="tab">
         <q-tab-panel name="basics" class="q-pa-none">
