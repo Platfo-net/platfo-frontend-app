@@ -142,7 +142,7 @@ onMounted(async () => {
                 <q-btn icon="edit" size="sm" color="accent" flat />
               </div>
               <div class="text-caption text-grey">
-                {{ product.category?.title }}
+                {{ product?.category?.title }}
               </div>
               <div class="text-h4 text-grey">IRR{{ product.price }}</div>
             </q-card>
