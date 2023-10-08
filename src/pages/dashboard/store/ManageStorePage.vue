@@ -5,6 +5,7 @@ import { onBeforeMount, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { IShop } from 'components/models';
 import StoreManagementProductsPanel from 'components/dashboard/store-page/StoreManagementProductsPanel.vue';
+import StoreManagementBasicInformationPanel from 'components/dashboard/store-page/StoreManagementBasicInformationPanel.vue';
 const route = useRoute();
 const { api, loading } = useApi();
 
@@ -59,8 +60,12 @@ onBeforeMount(() => {
       </q-tabs>
       <q-tab-panels v-model="tab">
         <q-tab-panel name="basics" class="q-pa-none">
-          <q-card class="q-pa-lg" bordered square flat>
-            <div class="text-h6">Basic Information</div>
+          <q-card class="q-pa-none" bordered square flat>
+            <store-management-basic-information-panel
+              :title="shop.title"
+              :category="shop.category"
+              :description="shop.description"
+            />
           </q-card>
         </q-tab-panel>
         <q-tab-panel name="products" class="q-pa-none">
