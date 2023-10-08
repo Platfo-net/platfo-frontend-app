@@ -31,7 +31,7 @@ const createNewProduct = async () => {
 
 const addItem = ref(false);
 const productModel = reactive<ICreateProduct>({
-  category_id: 'a8b0f6ec-9475-4531-bcda-e3d1ba742c1e',
+  category_id: null,
   currency: '',
   image: '',
   price: 0,
@@ -142,7 +142,7 @@ onMounted(async () => {
                 <q-btn icon="edit" size="sm" color="accent" flat />
               </div>
               <div class="text-caption text-grey">
-                {{ product.category.title }}
+                {{ product?.category?.title }}
               </div>
               <div class="text-h4 text-grey">IRR{{ product.price }}</div>
             </q-card>

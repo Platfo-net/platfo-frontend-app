@@ -66,6 +66,6 @@ export interface ICreateProduct {
   image: string;
   price: number;
   currency: string;
-  category_id: string;
+  category_id: string | null;
   shop_id: string;
 }
