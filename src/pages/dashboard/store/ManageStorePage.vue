@@ -40,9 +40,9 @@ onBeforeMount(() => {
       </div>
       <q-tabs class="q-mb-md" v-model="tab" align="left" active-bg-color="accent" active-color="white"
         indicator-color="primary">
-        <q-tab name="basics" label="Basic Information"></q-tab>
+        <q-tab name="basics" label="Basic"></q-tab>
         <q-tab name="products" label="Products"></q-tab>
-        <!--        <q-tab name="orders" label="Orders"></q-tab>-->
+        <q-tab name="payment-config" label="Payment Configuration"></q-tab>
       </q-tabs>
       <q-tab-panels v-model="tab">
         <q-tab-panel name="basics" class="q-pa-none">
@@ -54,9 +54,9 @@ onBeforeMount(() => {
         <q-tab-panel name="products" class="q-pa-none">
           <store-management-products-panel />
         </q-tab-panel>
-        <q-tab-panel name="orders" class="q-pa-none">
+        <q-tab-panel name="payment-config" class="q-pa-none">
           <q-card class="q-pa-lg" bordered square flat>
-            <div class="text-h6">Orders</div>
+            <div class="text-h6">Payment Configuration</div>
           </q-card>
         </q-tab-panel>
       </q-tab-panels>
