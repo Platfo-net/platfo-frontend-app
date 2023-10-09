@@ -29,31 +29,17 @@ onBeforeMount(() => {
     <div class="row items-center q-mb-lg justify-between">
       <BreadCrumbs />
     </div>
-    <template v-if="loading"
-      ><q-inner-loading :showing="loading">
-        <q-spinner-dots size="50px" color="accent" /> </q-inner-loading
-    ></template>
+    <template v-if="loading"><q-inner-loading :showing="loading">
+        <q-spinner-dots size="50px" color="accent" /> </q-inner-loading></template>
     <template v-else-if="shop">
       <div class="row items-center q-mb-lg justify-between">
         <div class="col">
           <div class="text-h5">Manage Shop</div>
-          <div class="text-caption text-grey">{{ shop.title }}</div>
         </div>
-        <q-btn
-          color="accent"
-          icon="chevron_left"
-          :to="{ name: 'StoreListPage' }"
-          label="Go Back"
-        ></q-btn>
+        <q-btn color="accent" icon="chevron_left" :to="{ name: 'StoreListPage' }" label="Go Back"></q-btn>
       </div>
-      <q-tabs
-        class="q-mb-md"
-        v-model="tab"
-        align="left"
-        active-bg-color="accent"
-        active-color="white"
-        indicator-color="primary"
-      >
+      <q-tabs class="q-mb-md" v-model="tab" align="left" active-bg-color="accent" active-color="white"
+        indicator-color="primary">
         <q-tab name="basics" label="Basic Information"></q-tab>
         <q-tab name="products" label="Products"></q-tab>
         <!--        <q-tab name="orders" label="Orders"></q-tab>-->
@@ -61,11 +47,8 @@ onBeforeMount(() => {
       <q-tab-panels v-model="tab">
         <q-tab-panel name="basics" class="q-pa-none">
           <q-card class="q-pa-none" bordered square flat>
-            <store-management-basic-information-panel
-              :title="shop.title"
-              :category="shop.category"
-              :description="shop.description"
-            />
+            <store-management-basic-information-panel :title="shop.title" :category="shop.category"
+              :description="shop.description" />
           </q-card>
         </q-tab-panel>
         <q-tab-panel name="products" class="q-pa-none">
