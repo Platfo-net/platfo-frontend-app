@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue';
 import { IShop } from 'components/models';
+import { useApi } from 'src/composables/use-api';
+import { useRoute } from 'vue-router';
+import { useNotify } from 'src/composables/use-notify';
+
+const { api } = useApi();
 
 const props = defineProps({
   title: String,
@@ -8,7 +13,7 @@ const props = defineProps({
   description: String,
 });
 
-const updateModel = reactive<Partial<IShop>>({
+const shopModel = reactive<Partial<IShop>>({
   description: props.description,
   title: props.title,
   category: props.category,
@@ -16,7 +21,18 @@ const updateModel = reactive<Partial<IShop>>({
 
 const isEdit = ref(false);
 
-// TODO implement edit shop
+const route = useRoute();
+const notify = useNotify();
+const updateShop = async () => {
+  try {
+    const { data: { category, description, title } } = await api.put<IShop>(`/shop/shop/${route.params.storeId}`, shopModel);
+    notify.success('Update shop successfull');
+  } catch (err) {
+    notify.error('Error while updating shop information.');
+  } finally {
+    isEdit.value = false;
+  }
+}
 </script>
 
 <template>
@@ -24,17 +40,11 @@ const isEdit = ref(false);
     <div class="row justify-between items-center q-mb-md">
       <div class="text-h6">Basic Information</div>
       <div class="q-gutter-sm">
-        <q-btn
-          :icon="!isEdit ? 'edit' : 'close'"
-          :label="!isEdit ? 'edit' : ''"
-          size="sm"
-          :color="!isEdit ? 'accent' : 'negative'"
-          :flat="!isEdit"
-          @click="isEdit = !isEdit"
-        >
+        <q-btn :icon="!isEdit ? 'edit' : 'close'" :label="!isEdit ? 'edit' : ''" size="sm"
+          :color="!isEdit ? 'accent' : 'negative'" :flat="!isEdit" @click="isEdit = !isEdit">
           <q-tooltip v-if="isEdit"> Cancel edit </q-tooltip>
         </q-btn>
-        <q-btn v-if="isEdit" icon="save" size="sm" color="green">
+        <q-btn v-if="isEdit" icon="save" size="sm" color="green" @click="updateShop">
           <q-tooltip> Save Changes </q-tooltip>
         </q-btn>
       </div>
@@ -43,33 +53,33 @@ const isEdit = ref(false);
       <div class="column col-12 col-md-4">
         <div class="text-caption text-grey-7">Title</div>
         <template v-if="isEdit">
-          <q-input type="text" v-model="updateModel.title" />
+          <q-input type="text" v-model="shopModel.title" />
         </template>
         <template v-else>
           <div class="text-h4">
-            {{ title }}
+            {{ shopModel.title }}
           </div>
         </template>
       </div>
       <div class="column col-12 col-md-4">
         <div class="text-caption text-grey-7">Category</div>
         <template v-if="isEdit">
-          <q-input type="text" v-model="updateModel.category" />
+          <q-input type="text" v-model="shopModel.category" />
         </template>
         <template v-else>
           <div class="text-h4">
-            {{ category }}
+            {{ shopModel.category }}
           </div>
         </template>
       </div>
       <div class="column col-12 col-md-4">
         <div class="text-caption text-grey-7">Title</div>
         <template v-if="isEdit">
-          <q-input type="text" v-model="updateModel.description" />
+          <q-input type="text" v-model="shopModel.description" />
         </template>
         <template v-else>
           <div class="text-h4">
-            {{ description }}
+            {{ shopModel.description }}
           </div>
         </template>
       </div>
