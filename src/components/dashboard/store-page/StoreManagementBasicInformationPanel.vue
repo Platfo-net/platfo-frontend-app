@@ -5,7 +5,7 @@ import { useApi } from 'src/composables/use-api';
 import { useRoute } from 'vue-router';
 import { useNotify } from 'src/composables/use-notify';
 
-const { api } = useApi();
+const { api, loading } = useApi();
 
 const props = defineProps({
   title: String,
@@ -23,12 +23,22 @@ const isEdit = ref(false);
 
 const route = useRoute();
 const notify = useNotify();
+
+const revertShopModel = () => {
+  Object.assign(shopModel, {
+    description: props.description,
+    title: props.title,
+    category: props.category,
+  });
+}
+
 const updateShop = async () => {
   try {
-    const { data: { category, description, title } } = await api.put<IShop>(`/shop/shop/${route.params.storeId}`, shopModel);
+    await api.put<IShop>(`/shop/shop/${route.params.storeId}`, shopModel);
     notify.success('Update shop successfull');
   } catch (err) {
     notify.error('Error while updating shop information.');
+    revertShopModel();
   } finally {
     isEdit.value = false;
   }
@@ -41,10 +51,10 @@ const updateShop = async () => {
       <div class="text-h6">Basic Information</div>
       <div class="q-gutter-sm">
         <q-btn :icon="!isEdit ? 'edit' : 'close'" :label="!isEdit ? 'edit' : ''" size="sm"
-          :color="!isEdit ? 'accent' : 'negative'" :flat="!isEdit" @click="isEdit = !isEdit">
+          :color="!isEdit ? 'accent' : 'negative'" :flat="!isEdit" @click="isEdit = !isEdit" :disable="loading">
           <q-tooltip v-if="isEdit"> Cancel edit </q-tooltip>
         </q-btn>
-        <q-btn v-if="isEdit" icon="save" size="sm" color="green" @click="updateShop">
+        <q-btn v-if="isEdit" icon="save" size="sm" color="green" @click="updateShop" :loading="loading">
           <q-tooltip> Save Changes </q-tooltip>
         </q-btn>
       </div>
