@@ -38,12 +38,6 @@ const productModel = reactive<ICreateProduct>({
   shop_id: route.params.storeId as string,
   title: '',
 });
-const createCategory = async () => {
-  await api.post('/shop/categories', {
-    shop_id: route.params.storeId,
-    title: 'Test Category',
-  });
-};
 
 onMounted(async () => {
   await getProducts();
@@ -55,61 +49,25 @@ onMounted(async () => {
   <q-card class="q-pa-lg" bordered square flat>
     <div class="row justify-between items-center q-mb-md">
       <div class="text-h6">Product Management</div>
-      <q-btn
-        :icon="addItem ? 'expand_less' : 'expand_more'"
-        label="New"
-        size="sm"
-        color="accent"
-        @click="addItem = !addItem"
-      />
+      <q-btn :icon="addItem ? 'expand_less' : 'expand_more'" label="New" size="sm" color="accent"
+        @click="addItem = !addItem" />
     </div>
     <div class="row q-my-md">
       <q-card v-show="addItem" class="q-pa-md full-width" bordered square flat>
         <q-form @submit.prevent="createNewProduct">
-          <q-input
-            square
-            filled
-            v-model="productModel.title"
-            label="Title *"
-            hint="Product title"
-            color="accent"
-            lazy-rules
-            dense
-            :rules="[
+          <q-input square filled v-model="productModel.title" label="Title *" hint="Product title" color="accent"
+            lazy-rules dense :rules="[
               (val) => (val && val.length > 0) || 'Please type something',
-            ]"
-          />
-          <q-input
-            dense
-            square
-            filled
-            type="number"
-            v-model="productModel.price"
-            step="any"
-            label="Price *"
-            lazy-rules
-            color="accent"
-            :rules="[
+            ]" />
+          <q-input dense square filled type="number" v-model="productModel.price" step="any" label="Price *" lazy-rules
+            color="accent" :rules="[
               (val) => (val !== null && val !== '') || 'Please enter a number',
               (val) => val >= 0 || 'Price should be positive',
-            ]"
-          />
+            ]" />
           <div class="row q-gutter-md items-center">
-            <q-btn
-              @click="addItem = false"
-              color="negative"
-              icon="close"
-              label="cancel"
-              size="sm"
-            ></q-btn>
-            <q-btn
-              type="submit"
-              color="primary"
-              icon="check"
-              label="Add"
-              size="sm"
-              :disable="!productModel.title.length || !productModel.price"
-            ></q-btn>
+            <q-btn @click="addItem = false" color="negative" icon="close" label="cancel" size="sm"></q-btn>
+            <q-btn type="submit" color="primary" icon="check" label="Add" size="sm"
+              :disable="!productModel.title.length || !productModel.price"></q-btn>
           </div>
         </q-form>
       </q-card>
@@ -125,18 +83,8 @@ onMounted(async () => {
       </template>
       <template v-else>
         <div class="row q-gutter-sm">
-          <div
-            class="col-xs-12 col-sm-12 col-md-3"
-            v-for="(product, idx) in products"
-            :key="idx"
-          >
-            <q-card
-              id="product-card"
-              flat
-              bordered
-              square
-              class="q-pa-md overflow-hidden card-hover non-selectable"
-            >
+          <div class="col-xs-12 col-sm-12 col-md-3" v-for="(product, idx) in products" :key="idx">
+            <q-card id="product-card" flat bordered square class="q-pa-md overflow-hidden card-hover non-selectable">
               <div class="row justify-between items-center q-mb-md">
                 <div class="text-h6">{{ product.title }}</div>
                 <q-btn icon="edit" size="sm" color="accent" flat />
@@ -154,6 +102,5 @@ onMounted(async () => {
 </template>
 
 <style scoped lang="scss">
-:root {
-}
+:root {}
 </style>
