@@ -5,6 +5,7 @@ import { useApi } from 'src/composables/use-api';
 import { useRoute } from 'vue-router';
 import { ICreateProduct, IPaginatedResponse } from 'src/composables/types';
 import { useNotify } from 'src/composables/use-notify';
+import ProductItem from './ProductItem.vue'
 const { api, loading } = useApi();
 const products = ref<IProduct[]>([]);
 const route = useRoute();
@@ -19,7 +20,7 @@ const getProducts = async () => {
 
 const createNewProduct = async () => {
   try {
-    const response = await api.post<IProduct>('/shop/products', productModel);
+    await api.post<IProduct>('/shop/products', productModel);
     notify.success('Created new product');
     await getProducts();
     addItem.value = false;
@@ -30,6 +31,17 @@ const createNewProduct = async () => {
 };
 
 const addItem = ref(false);
+
+const deletProduct = async (productId: string) => {
+  try {
+    await api.delete(`/shop/products/${productId}`);
+    notify.success('Delete product success');
+    await getProducts();
+  } catch (err) {
+    console.error(err);
+    notify.error(err.message);
+  }
+}
 const productModel = reactive<ICreateProduct>({
   category_id: null,
   currency: '',
@@ -83,18 +95,9 @@ onMounted(async () => {
       </template>
       <template v-else>
         <div class="row q-gutter-sm">
-          <div class="col-xs-12 col-sm-12 col-md-3" v-for="(product, idx) in products" :key="idx">
-            <q-card id="product-card" flat bordered square class="q-pa-md overflow-hidden card-hover non-selectable">
-              <div class="row justify-between items-center q-mb-md">
-                <div class="text-h6">{{ product.title }}</div>
-                <q-btn icon="edit" size="sm" color="accent" flat />
-              </div>
-              <div class="text-caption text-grey">
-                {{ product?.category?.title }}
-              </div>
-              <div class="text-h4 text-grey">IRR{{ product.price }}</div>
-            </q-card>
-          </div>
+          <template v-for="(product, idx) in products" :key="idx">
+            <ProductItem :product="product" show-edit show-delete :delete-fn="deletProduct" />
+          </template>
         </div>
       </template>
     </template>
