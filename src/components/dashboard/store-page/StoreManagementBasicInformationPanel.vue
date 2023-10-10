@@ -46,7 +46,7 @@ const updateShop = async () => {
 </script>
 
 <template>
-  <q-card class="q-pa-lg" bordered square flat>
+  <q-card class="q-pa-lg" bordered flat>
     <div class="row justify-between items-center q-mb-md">
       <div class="text-h6">Basic Information</div>
       <div class="q-gutter-sm">

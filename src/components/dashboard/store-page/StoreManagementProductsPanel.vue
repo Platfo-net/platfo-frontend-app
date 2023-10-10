@@ -58,7 +58,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <q-card class="q-pa-lg" bordered square flat>
+  <q-card class="q-pa-lg" bordered flat>
     <div class="row justify-between items-center q-mb-md">
       <div class="text-h6">Product Management</div>
       <q-btn :icon="addItem ? 'expand_less' : 'expand_more'" label="New" size="sm" color="accent"
