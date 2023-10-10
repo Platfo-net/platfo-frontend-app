@@ -13,10 +13,6 @@ const shop = ref<IShop>();
 
 const tab = ref('basics');
 
-const getProducts = async () => {
-  const res = await api.get(`/shop/products/${route.params.storeId}/all`);
-};
-
 onBeforeMount(() => {
   api
     .get(`/shop/shop/${route.params.storeId}`)
