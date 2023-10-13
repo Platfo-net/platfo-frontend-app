@@ -12,7 +12,7 @@ const paymentMethods = ref([]);
 
 onMounted(async () => {
     try {
-        const response = await api.get(`/shop/${route.params.storeId}/payment-methods/all`);
+        const response = await api.get(`shop/payment-methods/${route.params.storeId}/all`);
     } catch (err) {
         notify.error(err.message);
     }
