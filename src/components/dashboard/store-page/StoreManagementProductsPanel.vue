@@ -67,12 +67,12 @@ onMounted(async () => {
     <div class="row q-my-md">
       <q-card v-show="addItem" class="q-pa-md full-width" bordered square flat>
         <q-form @submit.prevent="createNewProduct">
-          <q-input square filled v-model="productModel.title" label="Title *" hint="Product title" color="accent"
-            lazy-rules dense :rules="[
+          <q-input class="q-mb-lg" square filled v-model="productModel.title" label="Title *" color="accent" lazy-rules
+            dense :rules="[
               (val) => (val && val.length > 0) || 'Please type something',
             ]" />
-          <q-input dense square filled type="number" v-model="productModel.price" step="any" label="Price *" lazy-rules
-            color="accent" :rules="[
+          <q-input class="q-mb-lg" dense square filled type="number" v-model="productModel.price" step="any"
+            label="Price *" lazy-rules color="accent" :rules="[
               (val) => (val !== null && val !== '') || 'Please enter a number',
               (val) => val >= 0 || 'Price should be positive',
             ]" />
