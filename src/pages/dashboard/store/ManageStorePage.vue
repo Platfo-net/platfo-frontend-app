@@ -35,7 +35,7 @@ onBeforeMount(() => {
         </div>
         <q-btn color="accent" icon="chevron_left" :to="{ name: 'StoreListPage' }" label="Go Back"></q-btn>
       </div>
-      <q-tabs class="q-mb-md" v-model="tab" align="left" active-bg-color="accent" active-color="white"
+      <q-tabs class="q-mb-md" v-model="tab" align="left" active-bg-color="black" active-color="white"
         indicator-color="primary">
         <q-tab name="basics" label="Basic"></q-tab>
         <q-tab name="products" label="Products"></q-tab>
