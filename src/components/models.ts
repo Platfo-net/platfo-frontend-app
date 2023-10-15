@@ -20,3 +20,10 @@ export interface IProduct {
   created_at: Date;
   updated_at: Date;
 }
+
+export interface IPaymentMethod {
+  title: string;
+  description: string;
+  shop_id: string;
+  id: string;
+}
