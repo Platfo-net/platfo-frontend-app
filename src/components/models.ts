@@ -27,3 +27,7 @@ export interface IPaymentMethod {
   shop_id: string;
   id: string;
 }
+
+export interface ITelegramShopProductItemProps {
+  product: IProduct;
+}
