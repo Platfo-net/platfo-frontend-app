@@ -32,7 +32,7 @@ const createNewProduct = async () => {
 
 const addItem = ref(false);
 
-const deletProduct = async (productId: string) => {
+const deleteProduct = async (productId: string) => {
   try {
     await api.delete(`/shop/products/${productId}`);
     notify.success('Delete product success');
@@ -96,7 +96,7 @@ onMounted(async () => {
       <template v-else>
         <div class="row q-gutter-sm">
           <template v-for="(product, idx) in products" :key="idx">
-            <ProductItem :product="product" show-edit show-delete :delete-fn="deletProduct" />
+            <ProductItem :product="product" show-edit show-delete :delete-fn="deleteProduct" />
           </template>
         </div>
       </template>
