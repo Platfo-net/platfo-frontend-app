@@ -110,6 +110,24 @@ const routes: RouteRecordRaw[] = [
   },
 
   {
+    path: '/shop/:shopId/:leadId',
+    component: () => import('layouts/ShopLayout.vue'),
+    redirect: { name: 'ShopProductsListPage' },
+    children: [
+      {
+        name: 'ShopProductsListPage',
+        path: 'products',
+        component: () => import('pages/public/shop/ShopProductsListPage.vue'),
+      },
+      {
+        name: 'ShopShoppingCartPage',
+        path: 'cart',
+        component: () => import('pages/public/shop/ShopShoppingCartPage.vue'),
+      },
+    ],
+  },
+
+  {
     path: '/not-authorized',
     name: 'NotAuthorized',
     component: () => import('pages/NotAuthorizedPage.vue'),
