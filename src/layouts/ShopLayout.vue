@@ -27,7 +27,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import {onMounted, ref} from 'vue';
 
 const tab = ref<string>('products');
+
+onMounted(() => {
+  const telegramScript = document.createElement('script');
+  telegramScript.setAttribute('src', 'https://telegram.org/js/telegram-web-app.js')
+  document.head.appendChild(telegramScript);
+});
 </script>
