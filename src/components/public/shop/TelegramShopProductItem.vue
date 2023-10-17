@@ -13,10 +13,6 @@ const props = defineProps<ITelegramShopProductItemProps>();
     </q-card-section>
     <q-card-section>
       <div class="flex row items-center justify-between full-width">
-        <div class="flex column">
-          <div>قیمت</div>
-          <div>{{ product.price }} ریال</div>
-        </div>
         <div>
           <div class="row q-gutter-md">
             <q-btn
@@ -37,6 +33,10 @@ const props = defineProps<ITelegramShopProductItemProps>();
               ></q-btn>
             </template>
           </div>
+        </div>
+        <div class="flex column">
+          <div>قیمت</div>
+          <div>{{ product.price }} ریال</div>
         </div>
       </div>
     </q-card-section>
