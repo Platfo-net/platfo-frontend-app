@@ -16,7 +16,16 @@
             label="سبد خرید"
             :to="{ name: 'ShopShoppingCartPage' }"
             exact
-          />
+          >
+            <q-badge
+              v-if="shoppingCart.totalItems() > 0"
+              rounded
+              floating
+              color="accent"
+              text-color="white"
+              :label="shoppingCart.totalItems()"
+            />
+          </q-route-tab>
         </q-tabs>
       </q-toolbar>
     </q-footer>
@@ -27,13 +36,19 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, ref} from 'vue';
+import { onMounted, ref } from 'vue';
+import { useShoppingCart } from 'stores/shopping-cart-store';
 
 const tab = ref<string>('products');
 
+const shoppingCart = useShoppingCart();
+
 onMounted(() => {
   const telegramScript = document.createElement('script');
-  telegramScript.setAttribute('src', 'https://telegram.org/js/telegram-web-app.js')
+  telegramScript.setAttribute(
+    'src',
+    'https://telegram.org/js/telegram-web-app.js'
+  );
   document.head.appendChild(telegramScript);
 });
 </script>
