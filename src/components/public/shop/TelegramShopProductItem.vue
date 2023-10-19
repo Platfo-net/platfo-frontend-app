@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { ITelegramShopProductItemProps } from 'components/models';
 import { ref } from 'vue';
+import { useShoppingCart } from 'stores/shopping-cart-store';
 
 const cartCount = ref(0);
 const props = defineProps<ITelegramShopProductItemProps>();
+const shoppingCart = useShoppingCart();
 </script>
 
 <template>
@@ -20,16 +22,16 @@ const props = defineProps<ITelegramShopProductItemProps>();
               color="primary"
               dense
               size="sm"
-              @click="cartCount += 1"
+              @click="shoppingCart.add(product)"
             ></q-btn>
-            <template v-if="cartCount > 0">
-              <div>{{ cartCount }}</div>
+            <template v-if="shoppingCart.getItemCount(product) > 0">
+              <div>{{ shoppingCart.getItemCount(product) }}</div>
               <q-btn
                 icon="remove"
                 color="negative"
                 dense
                 size="sm"
-                @click="cartCount -= 1"
+                @click="shoppingCart.remove(product)"
               ></q-btn>
             </template>
           </div>
