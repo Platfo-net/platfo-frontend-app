@@ -12,7 +12,8 @@ export interface ILoginApiResponse {
 }
 
 export interface IShoppingCartItem {
-  product_id: string;
+  // product_id: string;
+  product: IProduct;
   count: number;
 }
 
