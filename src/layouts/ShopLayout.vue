@@ -21,7 +21,7 @@
               v-if="shoppingCart.totalItems() > 0"
               rounded
               floating
-              color="accent"
+              color="red"
               text-color="white"
               :label="shoppingCart.totalItems()"
             />
