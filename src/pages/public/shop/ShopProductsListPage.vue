@@ -23,6 +23,7 @@ onMounted(async () => {
 
 <template>
   <q-page class="q-pa-md">
+    <div class="text-h4 q-my-lg">محصولات</div>
     <template v-if="loading">
       <q-inner-loading :showing="loading">
         <q-spinner-dots size="md" />
