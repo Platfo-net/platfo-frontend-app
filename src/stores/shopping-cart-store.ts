@@ -39,7 +39,7 @@ export const useShoppingCart = defineStore('shopping-cart-store', () => {
     } else {
       shoppingCart.items[product.id] = {
         count: 1,
-        product_id: product.id,
+        product,
       };
     }
     update();
@@ -52,6 +52,11 @@ export const useShoppingCart = defineStore('shopping-cart-store', () => {
     shoppingCart.items[product.id].count -= 1;
     if (shoppingCart.items[product.id].count === 0)
       delete shoppingCart.items[product.id];
+    update();
+  };
+
+  const removeCartItem = (product: IProduct) => {
+    delete shoppingCart.items[product.id];
     update();
   };
 
@@ -71,6 +76,7 @@ export const useShoppingCart = defineStore('shopping-cart-store', () => {
     getItemCount,
     add,
     remove,
+    removeCartItem,
     totalItems,
   };
 });
