@@ -77,44 +77,46 @@ onMounted(async () => {
 </script>
 
 <template>
-  <q-dialog class="font-vazir" v-model="showConfirmDialog">
-    <q-card>
-      <q-card-section dir="rtl">
-        <div class="text-h4 text-negative text-bold">هشدار</div>
-      </q-card-section>
-      <q-separator />
-      <q-card-section dir="rtl">
-        <p>آیا از محصولات انتخاب شده در سبد خرید اطمینان دارید؟</p>
-      </q-card-section>
-      <q-card-actions>
-        <q-btn color="primary" :loading="loading" @click="checkout">بله</q-btn>
-        <q-btn
-          color="negative"
-          :disable="loading"
-          @click="showConfirmDialog = false"
-          >خیر</q-btn
-        >
-      </q-card-actions>
-    </q-card>
-  </q-dialog>
-
-  <q-dialog class="font-vazir" v-model="showCheckoutSuccessDialog">
-    <q-card>
-      <q-card-section dir="rtl">
-        <div class="text-h4 text-primary text-bold">ثبت موفق</div>
-      </q-card-section>
-      <q-separator />
-      <q-card-section dir="rtl">
-        <p>سفارش شما با کد رهگیری زیر در ثبت شد:</p>
-        <p class="text-bold">{{ createdOrderId }}</p>
-        <p>لطفا برای ادامه ی فرايند خرید به بات مراجعه کنید.</p>
-      </q-card-section>
-      <q-card-actions align="center">
-        <q-btn color="primary" @click="cleanup">بازگشت به بات</q-btn>
-      </q-card-actions>
-    </q-card>
-  </q-dialog>
   <div class="flex row q-pa-md items-center justify-between bg-accent">
+    <q-dialog class="font-vazir" v-model="showConfirmDialog">
+      <q-card>
+        <q-card-section dir="rtl">
+          <div class="text-h4 text-negative text-bold">هشدار</div>
+        </q-card-section>
+        <q-separator />
+        <q-card-section dir="rtl">
+          <p>آیا از محصولات انتخاب شده در سبد خرید اطمینان دارید؟</p>
+        </q-card-section>
+        <q-card-actions>
+          <q-btn color="primary" :loading="loading" @click="checkout"
+            >بله</q-btn
+          >
+          <q-btn
+            color="negative"
+            :disable="loading"
+            @click="showConfirmDialog = false"
+            >خیر</q-btn
+          >
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog class="font-vazir" v-model="showCheckoutSuccessDialog">
+      <q-card>
+        <q-card-section dir="rtl">
+          <div class="text-h4 text-primary text-bold">ثبت موفق</div>
+        </q-card-section>
+        <q-separator />
+        <q-card-section dir="rtl">
+          <p>سفارش شما با کد رهگیری زیر در ثبت شد:</p>
+          <p class="text-bold">{{ createdOrderId }}</p>
+          <p>لطفا برای ادامه ی فرايند خرید به بات مراجعه کنید.</p>
+        </q-card-section>
+        <q-card-actions align="center">
+          <q-btn color="primary" @click="cleanup">بازگشت به بات</q-btn>
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
     <q-btn
       @click="showConfirmDialog = true"
       label="ثبت سفارش"
