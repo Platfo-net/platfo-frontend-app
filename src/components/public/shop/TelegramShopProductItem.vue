@@ -38,7 +38,8 @@ const shoppingCart = useShoppingCart();
         </div>
         <div class="flex column">
           <div>قیمت</div>
-          <div>{{ product.price }} ریال</div>
+          <div>{{ Intl.NumberFormat('fa', {
+            currency: 'IRR', style:'currency'}).format(product.price) }}</div>
         </div>
       </div>
     </q-card-section>
