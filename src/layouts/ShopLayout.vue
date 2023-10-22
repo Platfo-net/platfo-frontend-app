@@ -1,7 +1,17 @@
 <template>
   <q-layout class="font-vazir" view="lHh Lpr lFf" dir="rtl">
     <q-footer elevated>
-      <q-toolbar>
+      <q-slide-transition v-show="tab === 'shoppingCart' && shoppingCart.totalItems() > 0">
+        <div class="flex row q-pa-md items-center justify-between bg-accent">
+          <q-btn label="ثبت سفارش" color="white" text-color="dark" />
+          <div class="flex column">
+            <div>جمع سبد خرید</div>
+            <div>{{ Intl.NumberFormat('fa', {
+              currency: 'IRR', style:'currency'}).format(shoppingCart.totalCartAmount()) }}</div>
+          </div>
+        </div>
+      </q-slide-transition>
+      <q-toolbar class="q-mt-sm">
         <q-tabs v-model="tab" align="center" class="full-width">
           <q-route-tab
             name="products"
