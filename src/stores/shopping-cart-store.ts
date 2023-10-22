@@ -66,6 +66,12 @@ export const useShoppingCart = defineStore('shopping-cart-store', () => {
       0
     );
 
+  const totalCartAmount = () =>
+    Object.keys(shoppingCart.items).reduce(
+      (acc, productId) => acc + shoppingCart.items[productId].product.price * shoppingCart.items[productId].count,
+      0
+    );
+
   const get = () => {
     return shoppingCart;
   };
@@ -78,5 +84,6 @@ export const useShoppingCart = defineStore('shopping-cart-store', () => {
     remove,
     removeCartItem,
     totalItems,
+    totalCartAmount,
   };
 });
