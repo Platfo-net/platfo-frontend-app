@@ -3,7 +3,7 @@
     <q-footer elevated>
       <q-slide-transition v-show="tab === 'shoppingCart' && shoppingCart.totalItems() > 0">
         <div class="flex row q-pa-md items-center justify-between bg-accent">
-          <q-btn label="ثبت سفارش" color="white" text-color="dark" />
+          <q-btn @click="window.Telegram.WebApp.close()" label="ثبت سفارش TEST" color="white" text-color="dark" />
           <div class="flex column">
             <div>جمع سبد خرید</div>
             <div>{{ Intl.NumberFormat('fa', {
