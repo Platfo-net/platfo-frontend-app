@@ -60,15 +60,21 @@ export const useShoppingCart = defineStore('shopping-cart-store', () => {
     update();
   };
 
-  const totalItems = () =>
-    Object.keys(shoppingCart.items).reduce(
+  const totalItems = () => {
+    const itemsKeys = Object.keys(shoppingCart.items);
+    if (!itemsKeys.length) return 0;
+    return itemsKeys.reduce(
       (acc, productId) => acc + shoppingCart.items[productId].count,
       0
     );
+  };
 
   const totalCartAmount = () =>
     Object.keys(shoppingCart.items).reduce(
-      (acc, productId) => acc + shoppingCart.items[productId].product.price * shoppingCart.items[productId].count,
+      (acc, productId) =>
+        acc +
+        shoppingCart.items[productId].product.price *
+          shoppingCart.items[productId].count,
       0
     );
 
