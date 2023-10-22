@@ -1,18 +1,38 @@
 <template>
   <q-layout class="font-vazir" view="lHh Lpr lFf" dir="rtl">
     <q-footer elevated>
-      <q-slide-transition v-show="tab === 'shoppingCart' && shoppingCart.totalItems() > 0">
+      <q-slide-transition
+        v-show="tab === 'shoppingCart' && shoppingCart.totalItems() > 0"
+      >
         <div class="flex row q-pa-md items-center justify-between bg-accent">
-          <q-btn @click="closeWebApp" label="ثبت سفارش TEST" color="white" text-color="dark" />
+          <q-btn
+            @click="closeWebApp"
+            label="ثبت سفارش TEST"
+            color="white"
+            text-color="dark"
+          />
           <div class="flex column">
             <div>جمع سبد خرید</div>
-            <div>{{ Intl.NumberFormat('fa', {
-              currency: 'IRR', style:'currency'}).format(shoppingCart.totalCartAmount()) }}</div>
+            <div>
+              {{
+                Intl.NumberFormat('fa', {
+                  currency: 'IRR',
+                }).format(shoppingCart.totalCartAmount())
+              }}
+              ریال
+            </div>
           </div>
         </div>
       </q-slide-transition>
       <q-toolbar class="q-mt-sm">
-        <q-tabs v-model="tab" align="center" class="full-width" dense narrow-indicator shrink>
+        <q-tabs
+          v-model="tab"
+          align="center"
+          class="full-width"
+          dense
+          narrow-indicator
+          shrink
+        >
           <q-route-tab
             name="products"
             icon="home"
