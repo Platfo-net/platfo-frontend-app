@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import { ITelegramShopProductItemProps } from 'components/models';
-import { ref } from 'vue';
 import { useShoppingCart } from 'stores/shopping-cart-store';
 
-const cartCount = ref(0);
-const props = defineProps<ITelegramShopProductItemProps>();
+defineProps<ITelegramShopProductItemProps>();
 const shoppingCart = useShoppingCart();
 </script>
 
