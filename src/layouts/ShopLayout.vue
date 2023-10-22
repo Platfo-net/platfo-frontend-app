@@ -12,7 +12,7 @@
         </div>
       </q-slide-transition>
       <q-toolbar class="q-mt-sm">
-        <q-tabs v-model="tab" align="center" class="full-width">
+        <q-tabs v-model="tab" align="center" class="full-width" dense narrow-indicator shrink>
           <q-route-tab
             name="products"
             icon="home"
