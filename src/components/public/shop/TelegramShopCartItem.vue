@@ -27,27 +27,18 @@ const shoppingCart = useShoppingCart();
             <template v-if="shoppingCart.getItemCount(product) > 0">
               <div>{{ shoppingCart.getItemCount(product) }}</div>
               <q-btn
-                icon="remove"
+                :icon="shoppingCart.getItemCount(product) > 1 ? 'remove' : 'delete'"
                 color="negative"
                 dense
                 size="sm"
-                @click="shoppingCart.remove(product)"
+                @click="shoppingCart.getItemCount(product) > 1 ? shoppingCart.remove(product) : shoppingCart.removeCartItem(product)"
               ></q-btn>
             </template>
           </div>
         </div>
         <div class="flex column">
           <div>قیمت</div>
-          <div>{{ product.price }} ریال</div>
-        </div>
-        <div class="flex column">
-          <q-btn
-            icon="delete"
-            color="negative"
-            label="حذف از سبد خرید"
-            outline
-            @click="shoppingCart.removeCartItem(product)"
-          ></q-btn>
+          <div>{{ product.price * shoppingCart.getItemCount(product) }} ریال</div>
         </div>
       </div>
     </q-card-section>
