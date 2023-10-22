@@ -69,3 +69,33 @@ export interface ICreateProduct {
   category_id: string | null;
   shop_id: string;
 }
+
+export interface IShopPaymentMethod {
+  title: string;
+  description: string;
+  id: string;
+  information_fields: Record<string, string>;
+  is_active: boolean;
+}
+
+export interface IShopOrderItem {
+  product_id: string;
+  count: number;
+}
+
+export interface ICreateShopOrderBody {
+  items: IShopOrderItem[];
+  first_name?: string;
+  last_name?: string;
+  phone_number?: string;
+  email?: string;
+  state?: string;
+  city?: string;
+  address?: string;
+  postal_code?: string;
+  payment_method_id: string;
+}
+
+export interface ICreateShopOrderResponse {
+  order_number: string;
+}
