@@ -1,22 +1,129 @@
 <script setup lang="ts">
 import { useShoppingCart } from 'stores/shopping-cart-store';
+import { useApi } from 'src/composables/use-api';
+import { useRoute } from 'vue-router';
+import { onMounted, ref } from 'vue';
+import {
+  ICreateShopOrderBody,
+  ICreateShopOrderResponse,
+  IShopOrderItem,
+  IShopPaymentMethod,
+} from 'src/composables/types';
+import { useNotify } from 'src/composables/use-notify';
 
+const { api, loading } = useApi();
+const notify = useNotify();
+const route = useRoute();
 const shoppingCart = useShoppingCart();
 function closeWebApp() {
   window.Telegram.WebApp.close();
 }
+
+const shopPaymentMethods = ref<IShopPaymentMethod[]>();
+const getShopPaymentMethods = async (): Promise<IShopPaymentMethod[]> => {
+  const response = await api.get<IShopPaymentMethod[]>(
+    `/shop/payment-methods/${route.params.shopId}/telegram-shop/all`
+  );
+  return response.data;
+};
+const showConfirmDialog = ref<boolean>(false);
+const showCheckoutSuccessDialog = ref<boolean>(false);
+const createdOrderId = ref<string>('');
+
+const checkout = async () => {
+  let paymentMethodToSend: IShopPaymentMethod;
+  if (!shopPaymentMethods.value) {
+    notify.error('خطا در پردازش اطلاعات. لطفا بعدا سعی کنید.');
+    return;
+  }
+  paymentMethodToSend = shopPaymentMethods.value[0];
+  const shoppingCartItems = shoppingCart.get().items;
+  let itemsToSend: IShopOrderItem[] = Object.keys(shoppingCartItems).map(
+    (k): IShopOrderItem => {
+      return {
+        product_id: k,
+        count: shoppingCartItems[k].count,
+      };
+    }
+  );
+  const dataToSend: ICreateShopOrderBody = {
+    items: itemsToSend,
+    payment_method_id: paymentMethodToSend.id,
+  };
+  try {
+    const { data } = await api.post<ICreateShopOrderResponse>(
+      `/shop/orders/telegram/${route.params.shopId}/${route.params.leadId}`,
+      dataToSend
+    );
+    createdOrderId.value = data.order_number;
+    showConfirmDialog.value = false;
+    showCheckoutSuccessDialog.value = true;
+  } catch (err) {
+    notify.error('خطا در ثبت سفارش. لطفا بعدا تلاش کنید.');
+  }
+};
+
+const cleanup = () => {
+  shoppingCart.clear();
+  createdOrderId.value = '';
+  showCheckoutSuccessDialog.value = false;
+  showConfirmDialog.value = false;
+  closeWebApp();
+};
+
+onMounted(async () => {
+  shopPaymentMethods.value = await getShopPaymentMethods();
+});
 </script>
 
 <template>
+  <q-dialog class="font-vazir" v-model="showConfirmDialog">
+    <q-card>
+      <q-card-section dir="rtl">
+        <div class="text-h4 text-negative text-bold">هشدار</div>
+      </q-card-section>
+      <q-separator />
+      <q-card-section dir="rtl">
+        <p>آیا از محصولات انتخاب شده در سبد خرید اطمینان دارید؟</p>
+      </q-card-section>
+      <q-card-actions>
+        <q-btn color="primary" :loading="loading" @click="checkout">بله</q-btn>
+        <q-btn
+          color="negative"
+          :disable="loading"
+          @click="showConfirmDialog = false"
+          >خیر</q-btn
+        >
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
+
+  <q-dialog class="font-vazir" v-model="showCheckoutSuccessDialog">
+    <q-card>
+      <q-card-section dir="rtl">
+        <div class="text-h4 text-primary text-bold">ثبت موفق</div>
+      </q-card-section>
+      <q-separator />
+      <q-card-section dir="rtl">
+        <p>سفارش شما با کد رهگیری زیر در ثبت شد:</p>
+        <p class="text-bold">{{ createdOrderId }}</p>
+        <p>لطفا برای ادامه ی فرايند خرید به بات مراجعه کنید.</p>
+      </q-card-section>
+      <q-card-actions align="center">
+        <q-btn color="primary" @click="cleanup">بازگشت به بات</q-btn>
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
   <div class="flex row q-pa-md items-center justify-between bg-accent">
     <q-btn
-      @click="closeWebApp"
-      label="ثبت سفارش TEST"
+      @click="showConfirmDialog = true"
+      label="ثبت سفارش"
       color="white"
-      text-color="dark"
+      text-color="accent"
+      class="text-bold"
     />
     <div class="flex column">
-      <div>جمع سبد خرید</div>
+      <div class="text-bold">جمع سبد خرید</div>
       <div>
         {{
           Intl.NumberFormat('fa', {
