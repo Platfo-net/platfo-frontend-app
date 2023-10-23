@@ -31,7 +31,13 @@ const revertModel = () => {
 
 const updateModel = async () => {
     try {
-        await api.put<IPaymentMethod>(`/shop/payment-methods/${props.paymentMethod.id}`, paymentMethodModel);
+        await api.put<IPaymentMethod>(`/shop/payment-methods/${props.paymentMethod.id}/fill-data`, {
+            information: {
+                bank: paymentMethodModel.information_fields['Bank'],
+                card_number: paymentMethodModel.information_fields['Card Number'],
+                name: paymentMethodModel.information_fields['Name']
+            }
+        });
         notify.success('Update paymentMethod successful');
     } catch (err) {
         notify.error('Error while updating paymentMethod.');
@@ -79,21 +85,30 @@ const updateModel = async () => {
             </div>
             <div class="column q-mb-md">
                 <div class="text-grey-8">Title</div>
-                <template v-if="isEdit">
-                    <q-input type="text" v-model="paymentMethodModel.title" step="0.01" clearable />
-                </template>
-                <template v-else>
-                    <div class="text-h5">{{ paymentMethod.title }}</div>
-                </template>
+                <div class="text-h6">{{ paymentMethod.title }}</div>
             </div>
+
             <div class="column q-mb-md">
-                <div class="text-grey-8">Price</div>
-                <template v-if="isEdit">
-                    <q-input type="textarea" v-model="paymentMethodModel.description" clearable />
-                </template>
-                <template v-else>
-                    <div>{{paymentMethodModel.description}}</div>
-                </template>
+                <div class="text-grey-8 q-mb-sm">Information Fields</div>
+                <q-card flat bordered>
+                    <q-card-section>
+                        <div class="column q-mb-md" v-for="key in Object.keys(paymentMethodModel.information_fields)" :key="key">
+                            <div class="text-grey-8">{{key}}</div>
+                            <template v-if="isEdit">
+                                <template v-if="isEdit">
+                                    <q-input type="text" v-model="paymentMethodModel.information_fields[key]" clearable />
+                                </template></template>
+                            <template v-else>
+                                <div class="text-h6">{{paymentMethodModel.information_fields[key]}}</div>
+                            </template>
+                        </div>
+                    </q-card-section>
+                </q-card>
+            </div>
+
+            <div class="column q-mb-md">
+                <div class="text-grey-8">Is Active</div>
+                <q-toggle disable v-model="paymentMethodModel.is_active" />
             </div>
         </q-card>
     </div>

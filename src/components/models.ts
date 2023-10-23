@@ -24,8 +24,9 @@ export interface IProduct {
 export interface IPaymentMethod {
   title: string;
   description: string;
-  shop_id: string;
+  information_fields: Record<string, string>;
   id: string;
+  is_active: boolean;
 }
 
 export interface ITelegramShopProductItemProps {
