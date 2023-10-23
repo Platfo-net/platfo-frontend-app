@@ -102,7 +102,7 @@ const handleRegisterTelegramBot = async () => {
           @click="handleRegisterShop"
           color="accent"
           label="Next"
-          :disable="createShopState.description?.length! < 3 ||
+          :disable="
   createShopState.title?.length! < 3 ||
   createShopState.category?.length! < 3"
         />
