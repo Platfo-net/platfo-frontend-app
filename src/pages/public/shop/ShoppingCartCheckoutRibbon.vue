@@ -108,9 +108,9 @@ onMounted(async () => {
         </q-card-section>
         <q-separator />
         <q-card-section dir="rtl">
-          <p>سفارش شما با کد رهگیری زیر در ثبت شد:</p>
+          <p>شماره سفارش شما ثبت شد:</p>
           <p class="text-bold">{{ createdOrderId }}</p>
-          <p>لطفا برای ادامه ی فرايند خرید به بات مراجعه کنید.</p>
+          <p>لطفا برای مشاهده سفارش و پرداخت آن، گزینه «بازگشت به بات» را انتخاب کنید.</p>
         </q-card-section>
         <q-card-actions align="center">
           <q-btn color="primary" @click="cleanup">بازگشت به بات</q-btn>
