@@ -1,2 +1,10 @@
-version: 3.1
 
+services:
+  spa:
+    image: platfo_spa
+    container_name: platfo_spa
+    build: .
+    restart: always
+    command: "nginx"
+    ports:
+      - 5050:80

@@ -12,5 +12,4 @@ RUN npm run build
 # production stage
 FROM steebchen/nginx-spa:stable as production-stage
 COPY --from=build-stage /application/dist/spa /app
-CMD ["nginx"]
 EXPOSE 80
