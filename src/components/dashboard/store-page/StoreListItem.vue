@@ -14,19 +14,25 @@ const props = defineProps<IShop>();
         color="white"
         text-color="dark"
         :to="{ name: 'ManageStorePage', params: { storeId: props.id } }"
-        >Manage</q-btn
+        >{{
+          $t('pages.panel.dashboard.storeListPage.storeListItem.manage')
+        }}</q-btn
       >
     </q-toolbar>
     <q-list bordered>
       <q-item class="q-my-sm">
         <q-item-section>
-          <q-item-label>Category</q-item-label>
+          <q-item-label>{{
+            $t('pages.panel.dashboard.storeListPage.storeListItem.category')
+          }}</q-item-label>
           <q-item-label caption lines="1">{{ props.category }}</q-item-label>
         </q-item-section>
       </q-item>
       <q-item class="q-my-sm">
         <q-item-section>
-          <q-item-label>Description</q-item-label>
+          <q-item-label>{{
+            $t('pages.panel.dashboard.storeListPage.storeListItem.description')
+          }}</q-item-label>
           <q-item-label caption lines="1">{{ props.description }}</q-item-label>
         </q-item-section>
       </q-item>

@@ -10,11 +10,13 @@ import LayoutBreadCrumbs from 'components/BreadCrumbs.vue';
     </div>
 
     <div class="row justify-between items-center q-mb-lg">
-      <div class="text-h5">My Stores</div>
+      <div class="text-h5">
+        {{ $t('pages.panel.dashboard.storeListPage.title') }}
+      </div>
       <q-btn
         color="accent"
         :to="{ name: 'CreateStorePage' }"
-        label="Create new store"
+        :label="$t('pages.panel.dashboard.storeListPage.createNewStore')"
       ></q-btn>
     </div>
     <StoreList />

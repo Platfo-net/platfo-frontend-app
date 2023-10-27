@@ -28,8 +28,9 @@ getShops().then((data) => {
     ></template>
     <template v-else-if="shops.length < 1">
       <p>
-        You do not have any shop registered at the moment. Please create a new
-        shop.
+        {{
+          $t('pages.panel.dashboard.storeListPage.messages.noShopsRegistered')
+        }}
       </p>
     </template>
     <template v-else v-for="(shop, idx) in shops" :key="`${idx}-${shop.id}`">
