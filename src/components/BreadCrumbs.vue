@@ -8,7 +8,7 @@ const route = useRoute();
     <q-breadcrumbs>
       <q-breadcrumbs-el
         v-for="bc in route.meta.breadcrumbs"
-        :label="bc.label"
+        :label="$t(bc.label)"
         :to="bc.to"
         :key="bc.label"
       />
