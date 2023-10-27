@@ -9,6 +9,13 @@ export default {
     edit: 'ویرایش',
     goBack: 'بازگشت',
     new: 'افزودن',
+    add: 'افزودن',
+    cancel: 'لفو',
+    fields: {
+      requiredStringField: 'این فیلد نباید خالی باشد',
+      requiredNumberField: 'مقدار عددی وارد کنید',
+      requiredNumberFieldPositiveValue: 'مقدار عددی این فیلد باید مثبت باشد',
+    },
   },
   pages: {
     public: {},
@@ -73,6 +80,21 @@ export default {
                 deleteWarning1: 'آیا از حذف این شیوه پراخت مطمئین هستید؟',
                 deleteWarning2: 'این شیوه پراخت برای همیشه از بین خواهد رفت.',
               },
+            },
+            productManagement: {
+              title: 'مدیریت محصولات',
+              fields: {
+                title: 'عنوان',
+                price: 'قیمت',
+              },
+              informationFields: 'اطلاعات شیوه پرداخت',
+              notifications: {
+                createProductSuccess: 'ایجاد محصول با موفقیت انجام شد.',
+                createProductError: 'ایجاد محصول با خطا مواجه شد.',
+                deleteProductSuccess: 'حذف محصول با موفقیت انجام شد.',
+                deleteProductError: 'حذف محصول با خطا مواجه شد.',
+              },
+              messages: {},
             },
           },
         },
