@@ -3,6 +3,7 @@ import { IPaymentMethod } from 'src/components/models';
 import { useApi } from 'src/composables/use-api';
 import { useNotify } from 'src/composables/use-notify';
 import { reactive, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 const props = defineProps<{
   paymentMethod: IPaymentMethod;
@@ -13,6 +14,7 @@ const props = defineProps<{
 
 const { api, loading } = useApi();
 const notify = useNotify();
+const { t } = useI18n();
 
 const isEdit = ref(false);
 
@@ -40,9 +42,17 @@ const updateModel = async () => {
         },
       }
     );
-    notify.success('Update paymentMethod successful');
+    notify.success(
+      t(
+        'pages.panel.dashboard.manageStorePage.panels.paymentConfiguration.notifications.updatePaymentMethodSuccess'
+      )
+    );
   } catch (err) {
-    notify.error('Error while updating paymentMethod.');
+    notify.error(
+      t(
+        'pages.panel.dashboard.manageStorePage.panels.paymentConfiguration.notifications.updatePaymentMethodError'
+      )
+    );
     revertModel();
   } finally {
     isEdit.value = false;
