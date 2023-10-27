@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { useApi } from 'src/composables/use-api';
 import { useNotify } from 'src/composables/use-notify';
-import {onMounted, reactive, ref} from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import {IPaymentMethod, IProduct} from "components/models";
-import PaymentMethodItem from "components/dashboard/store-page/PaymentMethodItem.vue";
+import { IPaymentMethod, IProduct } from 'components/models';
+import PaymentMethodItem from 'components/dashboard/store-page/PaymentMethodItem.vue';
 
 const { api, loading } = useApi();
 const route = useRoute();
@@ -19,24 +19,26 @@ const getPaymentMethods = async () => {
   paymentMethods.value = response.data;
 };
 
-
 onMounted(async () => {
-    await getPaymentMethods();
+  await getPaymentMethods();
 });
 
 const addItem = ref(false);
 
-const createNewPaymentMethod = async () => {
-  try {
-    await api.post<IProduct>('/shop/payment-methods', paymentMethodModel);
-    notify.success('Created new payment method');
-    await getPaymentMethods();
-    addItem.value = false;
-  } catch (err) {
-    console.error(err);
-    notify.error(err.message);
-  }
-}
+// const createNewPaymentMethod = async () => {
+//   try {
+//     await api.post<IProduct>('/shop/payment-methods', paymentMethodModel);
+//     notify.success('Created new payment method');
+//     await getPaymentMethods();
+//     addItem.value = false;
+//   } catch (err) {
+//     console.error(err);
+//     notify.error(err.message);
+//   }
+// }
+
+// ^^^^ Commented this function for later use. Creating new
+// payment method is not needed.
 
 const paymentMethodModel = reactive<Partial<IPaymentMethod>>({
   title: '',
@@ -53,35 +55,39 @@ const deletePaymentMethod = async (paymentMethodId: string) => {
     console.error(err);
     notify.error(err.message);
   }
-}
-
+};
 </script>
 
 <template>
-    <q-card class="q-pa-lg" bordered flat>
-        <q-card-section>
-            <div class="row justify-between items-center q-mb-md">
-                <div class="text-h6">Payment Configuration</div>
-            </div>
-        </q-card-section>
-      <q-card-section>
-        <template v-if="loading">
-          <q-inner-loading :showing="loading"  >
-            <q-spinner-dots size="md"/>
-          </q-inner-loading>
-        </template>
-        <template v-else-if="!paymentMethods.length">
-          <p class="q-pa-none q-ma-none">
-            No payment methods currently registered. <a href="#" @click="addItem = true">Add a new payment method</a>
-          </p>
-        </template>
-        <template v-else>
-          <div class="row q-gutter-sm">
-            <template v-for="(pm, idx) in paymentMethods" :key="idx">
-              <PaymentMethodItem :paymentMethod="pm" show-edit :delete-fn="deletePaymentMethod" />
-            </template>
-          </div>
-        </template>
-      </q-card-section>
-    </q-card>
+  <q-card class="q-pa-lg" bordered flat>
+    <q-card-section>
+      <div class="row justify-between items-center q-mb-md">
+        <div class="text-h6">Payment Configuration</div>
+      </div>
+    </q-card-section>
+    <q-card-section>
+      <template v-if="loading">
+        <q-inner-loading :showing="loading">
+          <q-spinner-dots size="md" />
+        </q-inner-loading>
+      </template>
+      <template v-else-if="!paymentMethods.length">
+        <p class="q-pa-none q-ma-none">
+          No payment methods currently registered.
+          <a href="#" @click="addItem = true">Add a new payment method</a>
+        </p>
+      </template>
+      <template v-else>
+        <div class="row q-gutter-sm">
+          <template v-for="(pm, idx) in paymentMethods" :key="idx">
+            <PaymentMethodItem
+              :paymentMethod="pm"
+              show-edit
+              :delete-fn="deletePaymentMethod"
+            />
+          </template>
+        </div>
+      </template>
+    </q-card-section>
+  </q-card>
 </template>
