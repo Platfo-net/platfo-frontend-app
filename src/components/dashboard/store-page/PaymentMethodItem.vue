@@ -34,9 +34,9 @@ const updateModel = async () => {
       `/shop/payment-methods/${props.paymentMethod.id}/fill-data`,
       {
         information: {
-          bank: paymentMethodModel.information_fields['Bank'],
-          card_number: paymentMethodModel.information_fields['Card Number'],
-          name: paymentMethodModel.information_fields['Name'],
+          bank: paymentMethodModel.information['bank'],
+          card_number: paymentMethodModel.information['card_number'],
+          name: paymentMethodModel.information['name'],
         },
       }
     );
@@ -109,33 +109,84 @@ const updateModel = async () => {
       </div>
       <div class="column q-mb-md">
         <div class="text-grey-8">Title</div>
-        <div class="text-h6">{{ paymentMethod.title }}</div>
+        <div class="text-h6">کارت به کارت</div>
+        <!--        <div class="text-h6">{{ paymentMethod.title }}</div>-->
+        <!--        Payment Title hard coded. Dynamic feature later on. Reason: Only one payment method supported ATM.-->
       </div>
 
       <div class="column q-mb-md">
         <div class="text-grey-8 q-mb-sm">Information Fields</div>
         <q-card flat bordered>
           <q-card-section>
-            <div
-              class="column q-mb-md"
-              v-for="key in Object.keys(paymentMethodModel.information)"
-              :key="key"
-            >
-              <div class="text-grey-8">{{ key }}</div>
+            <div class="column q-mb-md">
+              <div class="text-grey-8">بانک</div>
               <template v-if="isEdit">
                 <template v-if="isEdit">
                   <q-input
                     type="text"
-                    v-model="paymentMethodModel.information[key]"
+                    v-model="paymentMethodModel.information['bank']"
                     clearable
                   /> </template
               ></template>
               <template v-else>
                 <div class="text-h6">
-                  {{ paymentMethodModel.information[key] }}
+                  {{ paymentMethodModel.information['bank'] }}
                 </div>
               </template>
             </div>
+            <div class="column q-mb-md">
+              <div class="text-grey-8">شماره کارت</div>
+              <template v-if="isEdit">
+                <template v-if="isEdit">
+                  <q-input
+                    type="text"
+                    v-model="paymentMethodModel.information['card_number']"
+                    clearable
+                  /> </template
+              ></template>
+              <template v-else>
+                <div class="text-h6">
+                  {{ paymentMethodModel.information['card_number'] }}
+                </div>
+              </template>
+            </div>
+            <div class="column q-mb-md">
+              <div class="text-grey-8">نام دارنده حساب</div>
+              <template v-if="isEdit">
+                <template v-if="isEdit">
+                  <q-input
+                    type="text"
+                    v-model="paymentMethodModel.information['name']"
+                    clearable
+                  /> </template
+              ></template>
+              <template v-else>
+                <div class="text-h6">
+                  {{ paymentMethodModel.information['name'] }}
+                </div>
+              </template>
+            </div>
+            <!--            <div-->
+            <!--              class="column q-mb-md"-->
+            <!--              v-for="key in Object.keys(paymentMethodModel.information)"-->
+            <!--              :key="key"-->
+            <!--            >-->
+            <!--              <div class="text-grey-8">{{ key }}</div>-->
+            <!--              <template v-if="isEdit">-->
+            <!--                <template v-if="isEdit">-->
+            <!--                  <q-input-->
+            <!--                    type="text"-->
+            <!--                    v-model="paymentMethodModel.information[key]"-->
+            <!--                    clearable-->
+            <!--                  /> </template-->
+            <!--              ></template>-->
+            <!--              <template v-else>-->
+            <!--                <div class="text-h6">-->
+            <!--                  {{ paymentMethodModel.information[key] }}-->
+            <!--                </div>-->
+            <!--              </template>-->
+            <!--            </div>-->
+            <!-- ^^^^^^^^^^^ Dynamic model. Use if needed later on. -->
           </q-card-section>
         </q-card>
       </div>
