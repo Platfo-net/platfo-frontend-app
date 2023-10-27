@@ -14,6 +14,7 @@ export default {
     alert: 'هشدار',
     yes: 'بله',
     no: 'خیر',
+    nextStep: 'مرحله بعد',
     fields: {
       requiredStringField: 'این فیلد نباید خالی باشد',
       requiredNumberField: 'مقدار عددی وارد کنید',
@@ -40,6 +41,77 @@ export default {
         },
         createNewStorePage: {
           title: 'ایجاد فروشگاه جدید',
+          steps: {
+            shopInformation: {
+              title: 'ثبت مشخصات فروشگاه',
+              description:
+                'در این قسمت اطلاعات فروشگاهی را که می خواهید ایجاد کنید را وارد کنید.',
+              fields: {
+                title: 'عنوان',
+                category: 'دسته بندی',
+                description: 'شرح',
+              },
+            },
+            supportAccountConnection: {
+              title: 'اتصال حساب پشتیبانی',
+              description:
+                'برای دریافت تمام رویدادهای فروشگاه خود باید یک حساب کاربری متصل کنید.',
+              howto: 'برای انجام این کار، قدم های زیر را طی کنید:',
+              step1: {
+                part1: 'در تلگرام لینک',
+                part2:
+                  'را جست و جو کنید یا با دوربین خود عکس زیر را اسکن کنید.',
+              },
+              step2: {
+                part1: 'سپس دکمه ی ',
+                part2: 'را لمس کنید.',
+              },
+              step3: {
+                part1:
+                  'برای اتصال اکانت تلگرام خود به عنوان اکانت پشتیبانی، کد زیر را وارد کنید:',
+              },
+              verifyConnection: 'تایید اتصال',
+            },
+            telegramBotConnection: {
+              title: 'اتصال بات تلگرام',
+              description: 'بات تلگرام خود را به فروشگاه متصل کنید.',
+              howto: 'برای این کار، قدم های زیر را طی کنید:',
+              step1: {
+                part1: 'در تلگرام لینک',
+                part2:
+                  'را جست و جو کنید یا با دوربین خود عکس زیر را اسکن کنید.',
+              },
+              step2: {
+                part1: 'سپس دکمه ی ',
+                part2: 'را لمس کنید و دستور',
+                part3: 'را فراخوانی کنید.',
+              },
+              step3: {
+                part1: 'سپس مراحل ایجاد بات در تلگرام را طی کنید.',
+              },
+              step4: {
+                part1:
+                  'پس از طی کردن مراحل ایجاد بات، برای شما توکنی ایجاد میشود. آن توکن را در فیلد زیر جایگذاری کنید و به مرحله بعد بروید:',
+                fields: {
+                  botToken: 'توکن بات',
+                },
+                finish: 'اتمام فرایند ایجاد فروشگاه',
+              },
+            },
+            success: {
+              title: 'ثبت موفق',
+              description: 'تبریک، شما با موفقیت فروشگاه خود را ایجاد کردید!',
+              backToShopList: 'بازکشت به لیست فروشگاه',
+            },
+          },
+          notifications: {
+            createShopSuccess: 'ایجاد فروشگاه با موفقیت انجام شد.',
+            createShopError: 'ایجاد فروشگاه با خطا مواجه شد.',
+            supportConnectionSuccess: 'ارزیابی اتصال شما موفقیت آمیز بود.',
+            supportConnectionError: 'ارزیابی اتصال شما موفقیت آمیز نبود.',
+            telegramShopRegisterSuccess: 'ثبت بات با موفقیت انجام شد.',
+            telegramShopRegisterError: 'ثبت بات با خطا مواجه شد.',
+          },
         },
         manageStorePage: {
           title: 'مدیریت فروشگاه',

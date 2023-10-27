@@ -3,11 +3,11 @@ import { reactive, ref } from 'vue';
 import { useApi } from 'src/composables/use-api';
 import { IShop } from 'components/models';
 import { useNotify } from 'src/composables/use-notify';
-import {
-  ICreateShopResponse,
-  IRegisterTelegramBotResponse,
-} from 'src/composables/types';
-import { AxiosError } from 'axios';
+import { ICreateShopResponse } from 'src/composables/types';
+// import { AxiosError } from 'axios';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 const { api, loading } = useApi();
 const step = ref(1);
 
@@ -28,20 +28,38 @@ const handleRegisterShop = async () => {
     );
     createShopState.id = apiResponse.data.id;
     supportToken.value = apiResponse.data.support_token;
-    notify.success('Shop Successfully created');
+    notify.success(
+      t(
+        'pages.panel.dashboard.createNewStorePage.notifications.createShopSuccess'
+      )
+    );
     step.value = 2;
   } catch (err) {
-    if (err instanceof AxiosError) notify.error(err.response?.data.detail);
+    // if (err instanceof AxiosError) notify.error(err.response?.data.detail);
+    notify.error(
+      t(
+        'pages.panel.dashboard.createNewStorePage.notifications.createShopError'
+      )
+    );
   }
 };
 
 const handleVerifySupportAccount = async () => {
   try {
     await api.get(`/shop/telegram/${createShopState.id}/check-support-bot`);
-    notify.success('Support Connection Verified');
+    notify.success(
+      t(
+        'pages.panel.dashboard.createNewStorePage.notifications.supportConnectionSuccess'
+      )
+    );
     step.value = 3;
   } catch (err) {
-    if (err instanceof AxiosError) notify.error(err.response?.data.detail);
+    // if (err instanceof AxiosError) notify.error(err.response?.data.detail);
+    notify.error(
+      t(
+        'pages.panel.dashboard.createNewStorePage.notifications.supportConnectionError'
+      )
+    );
   }
 };
 
@@ -51,10 +69,19 @@ const handleRegisterTelegramBot = async () => {
       bot_token: botToken.value,
       shop_id: createShopState.id,
     });
-    notify.success('Telegram Bot Registered in Platfo');
+    notify.success(
+      t(
+        'pages.panel.dashboard.createNewStorePage.notifications.telegramShopRegisterSuccess'
+      )
+    );
     step.value = 4;
   } catch (err) {
-    if (err instanceof AxiosError) notify.error(err.response?.data.detail);
+    // if (err instanceof AxiosError) notify.error(err.response?.data.detail);
+    notify.error(
+      t(
+        'pages.panel.dashboard.createNewStorePage.notifications.telegramShopRegisterError'
+      )
+    );
   }
 };
 </script>
@@ -63,24 +90,42 @@ const handleRegisterTelegramBot = async () => {
   <q-stepper class="full-height" v-model="step" vertical animated>
     <q-step
       :name="1"
-      title="Register Shop Information"
+      :title="
+        $t(
+          'pages.panel.dashboard.createNewStorePage.steps.shopInformation.title'
+        )
+      "
       icon="settings"
       :done="step > 1"
     >
-      <p>In this section, enter the Shop information you want create.</p>
+      <p>
+        {{
+          $t(
+            'pages.panel.dashboard.createNewStorePage.steps.shopInformation.description'
+          )
+        }}
+      </p>
       <div class="row q-col-gutter-lg q-mb-lg">
         <div class="col-12 col-md-6">
           <q-input
             v-model="createShopState.title"
             color="accent"
-            label="Title"
+            :label="
+              $t(
+                'pages.panel.dashboard.createNewStorePage.steps.shopInformation.fields.title'
+              )
+            "
             class="q-my-sm"
             filled
           />
           <q-input
             v-model="createShopState.category"
             color="accent"
-            label="Category"
+            :label="
+              $t(
+                'pages.panel.dashboard.createNewStorePage.steps.shopInformation.fields.category'
+              )
+            "
             class="q-my-sm"
             filled
           />
@@ -90,7 +135,11 @@ const handleRegisterTelegramBot = async () => {
             v-model="createShopState.description"
             color="accent"
             type="textarea"
-            label="Description"
+            :label="
+              $t(
+                'pages.panel.dashboard.createNewStorePage.steps.shopInformation.fields.description'
+              )
+            "
             filled
           />
         </div>
@@ -101,7 +150,7 @@ const handleRegisterTelegramBot = async () => {
           :loading="loading"
           @click="handleRegisterShop"
           color="accent"
-          label="Next"
+          :label="$t('general.nextStep')"
           :disable="
   createShopState.title?.length! < 3 ||
   createShopState.category?.length! < 3"
@@ -110,26 +159,48 @@ const handleRegisterTelegramBot = async () => {
     </q-step>
     <q-step
       :name="2"
-      title="Support Account Connection"
+      :title="
+        $t(
+          'pages.panel.dashboard.createNewStorePage.steps.supportAccountConnection.title'
+        )
+      "
       icon="key"
       :done="step > 2"
     >
       <p>
-        You need to connect an account in order to receive all the events of
-        your shop.
+        {{
+          $t(
+            'pages.panel.dashboard.createNewStorePage.steps.supportAccountConnection.description'
+          )
+        }}
       </p>
-      <p>To do this, please follow the steps below:</p>
+      <p>
+        {{
+          $t(
+            'pages.panel.dashboard.createNewStorePage.steps.supportAccountConnection.howto'
+          )
+        }}
+      </p>
       <ol>
         <li>
           <div>
-            Search for
+            {{
+              $t(
+                'pages.panel.dashboard.createNewStorePage.steps.supportAccountConnection.step1.part1'
+              )
+            }}
             <a
               href="https://t.me/Platfoshopsbot"
               target="_blank"
               class="text-bold"
+              dir="ltr"
               >@Platfoshopsbot</a
             >
-            in Telegram or scan QR code with camera.
+            {{
+              $t(
+                'pages.panel.dashboard.createNewStorePage.steps.supportAccountConnection.step1.part2'
+              )
+            }}
           </div>
           <div class="row justify-center full-width">
             <q-img
@@ -138,10 +209,25 @@ const handleRegisterTelegramBot = async () => {
             ></q-img>
           </div>
         </li>
-        <li>Click on the <span class="text-bold">"Start"</span> button</li>
         <li>
-          Enter the code bellow to connect your Telegram account as a support
-          account
+          {{
+            $t(
+              'pages.panel.dashboard.createNewStorePage.steps.supportAccountConnection.step2.part1'
+            )
+          }}
+          <span class="text-bold">"Start"</span>
+          {{
+            $t(
+              'pages.panel.dashboard.createNewStorePage.steps.supportAccountConnection.step2.part2'
+            )
+          }}
+        </li>
+        <li>
+          {{
+            $t(
+              'pages.panel.dashboard.createNewStorePage.steps.supportAccountConnection.step3.part1'
+            )
+          }}
           <div class="text-h2 full-width row justify-center q-my-lg">
             {{ supportToken }}
           </div>
@@ -152,7 +238,11 @@ const handleRegisterTelegramBot = async () => {
         <q-btn
           @click="handleVerifySupportAccount"
           color="accent"
-          label="Verify Connection"
+          :label="
+            $t(
+              'pages.panel.dashboard.createNewStorePage.steps.supportAccountConnection.verifyConnection'
+            )
+          "
         />
         <!--        <q-btn-->
         <!--          flat-->
@@ -165,20 +255,44 @@ const handleRegisterTelegramBot = async () => {
     </q-step>
     <q-step
       :name="3"
-      title="Telegram Bot Connection"
+      :title="
+        $t(
+          'pages.panel.dashboard.createNewStorePage.steps.telegramBotConnection.title'
+        )
+      "
       icon="robot"
       :done="step > 3"
     >
-      <p>Connect your shop to your telegram bot.</p>
-      <p>To do this, please follow the steps below:</p>
+      <p>
+        {{
+          $t(
+            'pages.panel.dashboard.createNewStorePage.steps.telegramBotConnection.description'
+          )
+        }}
+      </p>
+      <p>
+        {{
+          $t(
+            'pages.panel.dashboard.createNewStorePage.steps.telegramBotConnection.howto'
+          )
+        }}
+      </p>
       <ol>
         <li>
           <div>
-            Search for in Telegram or scan QR code with camera.
+            {{
+              $t(
+                'pages.panel.dashboard.createNewStorePage.steps.telegramBotConnection.step1.part1'
+              )
+            }}
             <a href="https://t.me/Botfather" target="_blank" class="text-bold"
               >@Botfather</a
             >
-            in Telegram or scan QR code with camera.
+            {{
+              $t(
+                'pages.panel.dashboard.createNewStorePage.steps.telegramBotConnection.step1.part2'
+              )
+            }}
           </div>
           <div class="row justify-center full-width">
             <q-img
@@ -188,24 +302,48 @@ const handleRegisterTelegramBot = async () => {
           </div>
         </li>
         <li>
-          Click on the <span class="text-bold">start</span> button & send
-          <span class="text-bold">/newbot</span> in chat.
+          {{
+            $t(
+              'pages.panel.dashboard.createNewStorePage.steps.telegramBotConnection.step2.part1'
+            )
+          }}
+          <span class="text-bold">start</span>
+          {{
+            $t(
+              'pages.panel.dashboard.createNewStorePage.steps.telegramBotConnection.step2.part2'
+            )
+          }}
+          <span class="text-bold" dir="ltr">/newbot</span>
+          {{
+            $t(
+              'pages.panel.dashboard.createNewStorePage.steps.telegramBotConnection.step2.part3'
+            )
+          }}
         </li>
         <li>
-          Do the steps of creating bot, includes choosing a
-          <span class="text-bold">name</span> and
-          <span class="text-bold">username</span>.
+          {{
+            $t(
+              'pages.panel.dashboard.createNewStorePage.steps.telegramBotConnection.step3.part1'
+            )
+          }}
         </li>
         <li>
-          Enter <span class="text-bold">token</span> of your bot that telegram
-          sent & click on <span class="text-bold">"Connect"</span>.
+          {{
+            $t(
+              'pages.panel.dashboard.createNewStorePage.steps.telegramBotConnection.step4.part1'
+            )
+          }}
         </li>
       </ol>
       <div class="row q-mb-lg">
         <div class="col-12">
           <q-input
             type="text"
-            label="Bot Token"
+            :label="
+              $t(
+                'pages.panel.dashboard.createNewStorePage.steps.telegramBotConnection.step4.fields.botToken'
+              )
+            "
             color="accent"
             filled
             v-model="botToken"
@@ -216,7 +354,11 @@ const handleRegisterTelegramBot = async () => {
       <q-stepper-navigation>
         <q-btn
           color="accent"
-          label="Finish"
+          :label="
+            $t(
+              'pages.panel.dashboard.createNewStorePage.steps.telegramBotConnection.step4.finish'
+            )
+          "
           :disable="botToken.length < 3"
           @click="handleRegisterTelegramBot"
         />
@@ -229,13 +371,27 @@ const handleRegisterTelegramBot = async () => {
         <!--        />-->
       </q-stepper-navigation>
     </q-step>
-    <q-step :name="4" title="Success" icon="success">
+    <q-step
+      :name="4"
+      :title="
+        $t('pages.panel.dashboard.createNewStorePage.steps.success.title')
+      "
+      icon="success"
+    >
       <div class="text-h5 q-my-lg">
-        Congratulations, you have created a new shop
+        {{
+          $t(
+            'pages.panel.dashboard.createNewStorePage.steps.success.description'
+          )
+        }}
       </div>
       <q-btn
         color="accent"
-        label="Back to shop list"
+        :label="
+          $t(
+            'pages.panel.dashboard.createNewStorePage.steps.success.backToShopList'
+          )
+        "
         :to="{ name: 'StoreListPage' }"
       />
     </q-step>
