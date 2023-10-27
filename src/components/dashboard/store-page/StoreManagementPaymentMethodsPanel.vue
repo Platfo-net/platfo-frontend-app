@@ -40,11 +40,11 @@ const addItem = ref(false);
 // ^^^^ Commented this function for later use. Creating new
 // payment method is not needed.
 
-const paymentMethodModel = reactive<Partial<IPaymentMethod>>({
-  title: '',
-  description: '',
-  shop_id: route.params.storeId as string,
-});
+// const paymentMethodModel = reactive<Partial<IPaymentMethod>>({
+//   title: '',
+//   description: '',
+//   shop_id: route.params.storeId as string,
+// });
 
 const deletePaymentMethod = async (paymentMethodId: string) => {
   try {
