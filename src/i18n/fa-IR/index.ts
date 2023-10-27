@@ -3,6 +3,13 @@ export default {
     failed: 'عملایت ناموفق',
     success: 'عملیات موفق',
   },
+  general: {
+    saveChanges: 'ذخیره تغییرات',
+    cancelEdit: 'لغو تغییرات',
+    edit: 'ویرایش',
+    goBack: 'بازگشت',
+    new: 'افزودن',
+  },
   pages: {
     public: {},
     panel: {
@@ -26,6 +33,25 @@ export default {
         },
         manageStorePage: {
           title: 'مدیریت فروشگاه',
+          tabs: {
+            basic: 'اطلاعات پایه',
+            products: 'محصولات',
+            paymentConfiguration: 'تنظیمات پرداخت',
+          },
+          panels: {
+            basicInformation: {
+              title: 'اطاعالت پایه',
+              fields: {
+                title: 'نام',
+                category: 'دسته بندی',
+                description: 'شرح',
+              },
+              notifications: {
+                updateShopSuccess: 'بروزرسانی فروشگاه با موفقیت انجام شد.',
+                updateShopError: 'عملیات بروز رسانی فروشگاه با خطا مواجه شد.',
+              },
+            },
+          },
         },
       },
     },
