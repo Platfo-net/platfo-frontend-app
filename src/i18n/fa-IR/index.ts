@@ -51,6 +51,29 @@ export default {
                 updateShopError: 'عملیات بروز رسانی فروشگاه با خطا مواجه شد.',
               },
             },
+            paymentConfiguration: {
+              title: 'تنظیمان پرداخت',
+              fields: {
+                title: 'عنوان',
+                name: 'نام دارنده حساب',
+                bank: 'بانک',
+                cardNumber: 'شماره کارت',
+                active: 'فعال',
+              },
+              informationFields: 'اطلاعات شیوه پرداخت',
+              notifications: {
+                updatePaymentMethodSuccess:
+                  'بروزرسانی شیوه پرداخت با موفقیت انجام شد.',
+                updatePaymentMethodError:
+                  'عملیات بروز رسانی شیوه پرداخت با خطا مواجه شد.',
+              },
+              messages: {
+                noPaymentMethodRegistered: 'شیوه ی پرداختی ثبت نشده است.',
+                addNewPaymentMethod: 'افزودن شیوه پرداخت جدید',
+                deleteWarning1: 'آیا از حذف این شیوه پراخت مطمئین هستید؟',
+                deleteWarning2: 'این شیوه پراخت برای همیشه از بین خواهد رفت.',
+              },
+            },
           },
         },
       },

@@ -62,7 +62,13 @@ const deletePaymentMethod = async (paymentMethodId: string) => {
   <q-card class="q-pa-lg" bordered flat>
     <q-card-section>
       <div class="row justify-between items-center q-mb-md">
-        <div class="text-h6">Payment Configuration</div>
+        <div class="text-h6">
+          {{
+            $t(
+              'pages.panel.dashboard.manageStorePage.panels.paymentConfiguration.title'
+            )
+          }}
+        </div>
       </div>
     </q-card-section>
     <q-card-section>
@@ -73,8 +79,16 @@ const deletePaymentMethod = async (paymentMethodId: string) => {
       </template>
       <template v-else-if="!paymentMethods.length">
         <p class="q-pa-none q-ma-none">
-          No payment methods currently registered.
-          <a href="#" @click="addItem = true">Add a new payment method</a>
+          {{
+            $t(
+              'pages.panel.dashboard.manageStorePage.panels.paymentConfiguration.messages.noPaymentMethodRegistered'
+            )
+          }}
+          <a href="#" @click="addItem = true">{{
+            $t(
+              'pages.panel.dashboard.manageStorePage.panels.paymentConfiguration.messages.addNewPaymentMethod'
+            )
+          }}</a>
         </p>
       </template>
       <template v-else>

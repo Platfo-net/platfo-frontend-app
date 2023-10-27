@@ -62,10 +62,16 @@ const updateModel = async () => {
         </q-card-section>
         <q-separator />
         <q-card-section>
-          Are you sure you want to delete this payment method?
-          <span class="text-negative text-bold"
-            >The paymentMethod will be lost forever.</span
-          >
+          {{
+            $t(
+              'pages.panel.dashboard.manageStorePage.panels.paymentConfiguration.messages.deleteWarning1'
+            )
+          }}
+          <span class="text-negative text-bold">{{
+            $t(
+              'pages.panel.dashboard.manageStorePage.panels.paymentConfiguration.messages.deleteWarning2'
+            )
+          }}</span>
         </q-card-section>
         <q-separator />
         <q-card-actions align="right">
@@ -108,18 +114,36 @@ const updateModel = async () => {
         </template>
       </div>
       <div class="column q-mb-md">
-        <div class="text-grey-8">Title</div>
+        <div class="text-grey-8">
+          {{
+            $t(
+              'pages.panel.dashboard.manageStorePage.panels.paymentConfiguration.fields.title'
+            )
+          }}
+        </div>
         <div class="text-h6">کارت به کارت</div>
         <!--        <div class="text-h6">{{ paymentMethod.title }}</div>-->
         <!--        Payment Title hard coded. Dynamic feature later on. Reason: Only one payment method supported ATM.-->
       </div>
 
       <div class="column q-mb-md">
-        <div class="text-grey-8 q-mb-sm">Information Fields</div>
+        <div class="text-grey-8 q-mb-sm">
+          {{
+            $t(
+              'pages.panel.dashboard.manageStorePage.panels.paymentConfiguration.informationFields'
+            )
+          }}
+        </div>
         <q-card flat bordered>
           <q-card-section>
             <div class="column q-mb-md">
-              <div class="text-grey-8">بانک</div>
+              <div class="text-grey-8">
+                {{
+                  $t(
+                    'pages.panel.dashboard.manageStorePage.panels.paymentConfiguration.fields.bank'
+                  )
+                }}
+              </div>
               <template v-if="isEdit">
                 <template v-if="isEdit">
                   <q-input
@@ -135,7 +159,13 @@ const updateModel = async () => {
               </template>
             </div>
             <div class="column q-mb-md">
-              <div class="text-grey-8">شماره کارت</div>
+              <div class="text-grey-8">
+                {{
+                  $t(
+                    'pages.panel.dashboard.manageStorePage.panels.paymentConfiguration.fields.cardNumber'
+                  )
+                }}
+              </div>
               <template v-if="isEdit">
                 <template v-if="isEdit">
                   <q-input
@@ -151,7 +181,13 @@ const updateModel = async () => {
               </template>
             </div>
             <div class="column q-mb-md">
-              <div class="text-grey-8">نام دارنده حساب</div>
+              <div class="text-grey-8">
+                {{
+                  $t(
+                    'pages.panel.dashboard.manageStorePage.panels.paymentConfiguration.fields.name'
+                  )
+                }}
+              </div>
               <template v-if="isEdit">
                 <template v-if="isEdit">
                   <q-input
@@ -192,7 +228,13 @@ const updateModel = async () => {
       </div>
 
       <div class="column q-mb-md">
-        <div class="text-grey-8">Is Active</div>
+        <div class="text-grey-8">
+          {{
+            $t(
+              'pages.panel.dashboard.manageStorePage.panels.paymentConfiguration.fields.active'
+            )
+          }}
+        </div>
         <q-toggle disable v-model="paymentMethodModel.is_active" />
       </div>
     </q-card>
