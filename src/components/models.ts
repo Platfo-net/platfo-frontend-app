@@ -25,6 +25,7 @@ export interface IPaymentMethod {
   title: string;
   description: string;
   information_fields: Record<string, string>;
+  information: Record<string, string>;
   id: string;
   is_active: boolean;
 }
