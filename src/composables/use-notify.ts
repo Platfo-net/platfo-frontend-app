@@ -45,7 +45,7 @@ export function useNotify() {
       message: !msg
         ? ' '
         : `<div style="font-size:17px;font-weight:500;">${msg}</div>`,
-      icon: !icon ? 'fas fa-info-circle' : icon,
+      icon: !icon ? 'fas fa-IR-info-circle' : icon,
       caption: !caption
         ? ' '
         : `<div style="font-size:14px;font-weight:500;">${caption}</div>`,
@@ -62,7 +62,7 @@ export function useNotify() {
       message: !msg
         ? ' '
         : `<div style="font-size:17px;font-weight:500;">${msg}</div>`,
-      icon: !icon ? 'fas fa-exclamation-triangle' : icon,
+      icon: !icon ? 'fas fa-IR-exclamation-triangle' : icon,
       caption: !caption
         ? ' '
         : `<div style="font-size:14px;font-weight:500;">${caption}</div>`,
