@@ -6,3 +6,7 @@
 body {
   background: white !important;
 }
+
+html[dir="rtl"], [dir="rtl"] body, [dir="rtl"] #q-app {
+  font-family: Vazirmatn, "Roboto", "-apple-system", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
