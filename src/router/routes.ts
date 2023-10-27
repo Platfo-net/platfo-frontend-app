@@ -21,8 +21,11 @@ const routes: RouteRecordRaw[] = [
             path: 'list',
             meta: {
               breadcrumbs: [
-                { label: 'Dashboard', to: { name: 'Dashboard' } },
-                { label: 'My Stores' },
+                {
+                  label: 'pages.panel.dashboard.title',
+                  to: { name: 'Dashboard' },
+                },
+                { label: 'pages.panel.dashboard.storeListPage.title' },
               ],
             },
           },
@@ -33,9 +36,15 @@ const routes: RouteRecordRaw[] = [
             path: 'create',
             meta: {
               breadcrumbs: [
-                { label: 'Dashboard', to: { name: 'Dashboard' } },
-                { label: 'My Stores', to: { name: 'StoreListPage' } },
-                { label: 'Create new store' },
+                {
+                  label: 'pages.panel.dashboard.title',
+                  to: { name: 'Dashboard' },
+                },
+                {
+                  label: 'pages.panel.dashboard.storeListPage.title',
+                  to: { name: 'StoreListPage' },
+                },
+                { label: 'pages.panel.dashboard.createNewStorePage.title' },
               ],
             },
           },
@@ -46,9 +55,15 @@ const routes: RouteRecordRaw[] = [
             path: 'manage/:storeId',
             meta: {
               breadcrumbs: [
-                { label: 'Dashboard', to: { name: 'Dashboard' } },
-                { label: 'My Stores', to: { name: 'StoreListPage' } },
-                { label: 'Manage Store' },
+                {
+                  label: 'pages.panel.dashboard.title',
+                  to: { name: 'Dashboard' },
+                },
+                {
+                  label: 'pages.panel.dashboard.storeListPage.title',
+                  to: { name: 'StoreListPage' },
+                },
+                { label: 'pages.panel.dashboard.manageStorePage.title' },
               ],
             },
           },
@@ -59,7 +74,10 @@ const routes: RouteRecordRaw[] = [
         path: 'contacts',
         meta: {
           breadcrumbs: [
-            { label: 'Dashboard', to: { name: 'Dashboard' } },
+            {
+              label: 'pages.panel.dashboard.title',
+              to: { name: 'Dashboard' },
+            },
             { label: 'My Contacts' },
           ],
         },
