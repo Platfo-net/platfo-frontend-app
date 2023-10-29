@@ -61,7 +61,7 @@ const updateModel = async () => {
 </script>
 
 <template>
-  <div class="col-xs-12 col-sm-12 col-md-3">
+  <div class="col-xs-12 col-sm-12 col-md-4">
     <q-dialog v-if="deleteFn && showDelete" v-model="deleteAlert">
       <q-card>
         <q-card-section>
@@ -131,8 +131,8 @@ const updateModel = async () => {
             )
           }}
         </div>
-        <div class="text-h6">کارت به کارت</div>
-        <!--        <div class="text-h6">{{ paymentMethod.title }}</div>-->
+        <div class="text-body1">کارت به کارت</div>
+        <!--        <div class="text-body1">{{ paymentMethod.title }}</div>-->
         <!--        Payment Title hard coded. Dynamic feature later on. Reason: Only one payment method supported ATM.-->
       </div>
 
@@ -163,7 +163,7 @@ const updateModel = async () => {
                   /> </template
               ></template>
               <template v-else>
-                <div class="text-h6">
+                <div class="text-body1">
                   {{ paymentMethodModel.information['bank'] }}
                 </div>
               </template>
@@ -185,7 +185,7 @@ const updateModel = async () => {
                   /> </template
               ></template>
               <template v-else>
-                <div class="text-h6">
+                <div class="text-body1">
                   {{ paymentMethodModel.information['card_number'] }}
                 </div>
               </template>
@@ -207,7 +207,7 @@ const updateModel = async () => {
                   /> </template
               ></template>
               <template v-else>
-                <div class="text-h6">
+                <div class="text-body1">
                   {{ paymentMethodModel.information['name'] }}
                 </div>
               </template>
@@ -227,7 +227,7 @@ const updateModel = async () => {
             <!--                  /> </template-->
             <!--              ></template>-->
             <!--              <template v-else>-->
-            <!--                <div class="text-h6">-->
+            <!--                <div class="text-body1">-->
             <!--                  {{ paymentMethodModel.information[key] }}-->
             <!--                </div>-->
             <!--              </template>-->
