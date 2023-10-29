@@ -105,7 +105,7 @@ const updateShop = async () => {
           <q-input type="text" v-model="shopModel.title" />
         </template>
         <template v-else>
-          <div class="text-h5">
+          <div class="text-body1">
             {{ shopModel.title }}
           </div>
         </template>
@@ -122,7 +122,7 @@ const updateShop = async () => {
           <q-input type="text" v-model="shopModel.category" />
         </template>
         <template v-else>
-          <div class="text-h5">
+          <div class="text-body1">
             {{ shopModel.category }}
           </div>
         </template>
@@ -139,7 +139,7 @@ const updateShop = async () => {
           <q-input type="text" v-model="shopModel.description" />
         </template>
         <template v-else>
-          <div class="text-h5">
+          <div class="text-body1">
             {{ shopModel.description }}
           </div>
         </template>
