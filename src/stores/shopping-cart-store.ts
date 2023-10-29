@@ -1,17 +1,20 @@
 import { defineStore } from 'pinia';
 import { reactive } from 'vue';
-import { IShoppingCart, IShoppingCartItem } from 'stores/types';
+import { IShoppingCart } from 'stores/types';
 import { LocalStorage } from 'quasar';
 import { IProduct } from 'components/models';
+import { useRoute } from 'vue-router';
 
 export const SHOPPING_CART_KEY = 'shopping-cart';
 export const useShoppingCart = defineStore('shopping-cart-store', () => {
+  const { params } = useRoute();
   const initializeCart = (): IShoppingCart => {
     let shoppingCart = LocalStorage.getItem<IShoppingCart>(SHOPPING_CART_KEY);
     if (shoppingCart) return shoppingCart;
     shoppingCart = {
       items: {},
     };
+    shoppingCart.items[params.shopId as string] = {};
     LocalStorage.set(SHOPPING_CART_KEY, shoppingCart);
     return shoppingCart;
   };
@@ -26,18 +29,18 @@ export const useShoppingCart = defineStore('shopping-cart-store', () => {
     LocalStorage.set(SHOPPING_CART_KEY, {
       items: {},
       totalPrice: 0,
-    });
+    } as IShoppingCart);
   };
 
   const getItemCount = (product: IProduct) => {
-    return shoppingCart.items[product.id]?.count;
+    return shoppingCart.items[params.shopId as string]?.[product.id]?.count;
   };
 
   const add = (product: IProduct) => {
-    if (shoppingCart.items[product.id]) {
-      shoppingCart.items[product.id].count += 1;
+    if (shoppingCart.items[params.shopId as string][product.id]) {
+      shoppingCart.items[params.shopId as string][product.id].count += 1;
     } else {
-      shoppingCart.items[product.id] = {
+      shoppingCart.items[params.shopId as string][product.id] = {
         count: 1,
         product,
       };
@@ -46,35 +49,37 @@ export const useShoppingCart = defineStore('shopping-cart-store', () => {
   };
 
   const remove = (product: IProduct) => {
-    if (!shoppingCart.items[product.id]) {
+    if (!shoppingCart.items[params.shopId as string][product.id]) {
       return;
     }
-    shoppingCart.items[product.id].count -= 1;
-    if (shoppingCart.items[product.id].count === 0)
-      delete shoppingCart.items[product.id];
+    shoppingCart.items[params.shopId as string][product.id].count -= 1;
+    if (shoppingCart.items[params.shopId as string][product.id].count === 0)
+      delete shoppingCart.items[params.shopId as string][product.id];
     update();
   };
 
   const removeCartItem = (product: IProduct) => {
-    delete shoppingCart.items[product.id];
+    delete shoppingCart.items[params.shopId as string][product.id];
     update();
   };
 
   const totalItems = () => {
-    const itemsKeys = Object.keys(shoppingCart.items);
+    const itemsKeys = Object.keys(shoppingCart.items[params.shopId as string]);
     if (!itemsKeys.length) return 0;
     return itemsKeys.reduce(
-      (acc, productId) => acc + shoppingCart.items[productId].count,
+      (acc, productId) =>
+        acc + shoppingCart.items[params.shopId as string]?.[productId]?.count,
       0
     );
   };
 
   const totalCartAmount = () =>
-    Object.keys(shoppingCart.items).reduce(
+    Object.keys(shoppingCart.items[params.shopId as string]).reduce(
       (acc, productId) =>
         acc +
-        shoppingCart.items[productId].product.price *
-          shoppingCart.items[productId].count,
+        shoppingCart.items[params.shopId as string]?.[productId]?.product
+          .price *
+          shoppingCart.items[params.shopId as string]?.[productId]?.count,
       0
     );
 

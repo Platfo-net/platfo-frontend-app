@@ -18,5 +18,5 @@ export interface IShoppingCartItem {
 }
 
 export interface IShoppingCart {
-  items: Record<string, IShoppingCartItem>;
+  items: Record<string, Record<string, IShoppingCartItem>>;
 }

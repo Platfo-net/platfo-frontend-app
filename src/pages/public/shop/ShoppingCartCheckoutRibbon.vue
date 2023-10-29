@@ -37,7 +37,8 @@ const checkout = async () => {
     return;
   }
   paymentMethodToSend = shopPaymentMethods.value[0];
-  const shoppingCartItems = shoppingCart.get().items;
+  const shoppingCartItems =
+    shoppingCart.get().items[route.params.shopId as string];
   let itemsToSend: IShopOrderItem[] = Object.keys(shoppingCartItems).map(
     (k): IShopOrderItem => {
       return {
@@ -110,7 +111,10 @@ onMounted(async () => {
         <q-card-section dir="rtl">
           <p>شماره سفارش شما ثبت شد:</p>
           <p class="text-bold">{{ createdOrderId }}</p>
-          <p>لطفا برای مشاهده سفارش و پرداخت آن، گزینه «بازگشت به بات» را انتخاب کنید.</p>
+          <p>
+            لطفا برای مشاهده سفارش و پرداخت آن، گزینه «بازگشت به بات» را انتخاب
+            کنید.
+          </p>
         </q-card-section>
         <q-card-actions align="center">
           <q-btn color="primary" @click="cleanup">بازگشت به بات</q-btn>
