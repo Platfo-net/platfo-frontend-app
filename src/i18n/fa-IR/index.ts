@@ -27,7 +27,7 @@ export default {
       title: 'منو',
       myStores: 'فروشگاه های من',
     },
-    logout: 'خروج'
+    logout: 'خروج',
   },
   pages: {
     public: {
@@ -41,9 +41,9 @@ export default {
         registerHere: 'اینجا ثبت نام کن.',
         notifications: {
           loginSuccess: 'ورود موفقیت آمیز',
-          loginError: 'شماره یا پسوورد نادرست بود'
+          loginError: 'شماره یا پسوورد نادرست بود',
         },
-        login: 'ورود'
+        login: 'ورود',
       },
       register: {
         title: 'ثبت نام در پلتفو',
@@ -58,10 +58,10 @@ export default {
         loginHere: 'اینجا وارد شوید.',
         notifications: {
           registerSuccess: 'ثبت نام موفقیت آمیز',
-          registerError: 'شماره یا پسوورد نادرست بود'
+          registerError: 'شماره یا پسوورد نادرست بود',
         },
-        register: 'ثبت نام'
-      }
+        register: 'ثبت نام',
+      },
     },
     panel: {
       dashboard: {
@@ -174,7 +174,7 @@ export default {
               },
             },
             paymentConfiguration: {
-              title: 'تنظیمان پرداخت',
+              title: 'تنظیمات پرداخت',
               fields: {
                 title: 'عنوان',
                 name: 'نام دارنده حساب',
