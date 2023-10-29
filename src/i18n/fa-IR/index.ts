@@ -162,7 +162,7 @@ export default {
           },
           panels: {
             basicInformation: {
-              title: 'اطاعالت پایه',
+              title: 'اطلاعات پایه',
               fields: {
                 title: 'نام',
                 category: 'دسته بندی',
