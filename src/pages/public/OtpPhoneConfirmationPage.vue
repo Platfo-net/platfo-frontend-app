@@ -6,7 +6,7 @@ import { ref } from 'vue';
 const authStore = useAuthStore();
 const router = useRouter();
 if (!authStore.otpToken) {
-  router.replace({ name: 'RegisterPage' });
+  // router.replace({ name: 'RegisterPage' });
 }
 const resendEmail = ref(false);
 const counterSeconds = ref(120);
@@ -22,14 +22,20 @@ const timeout = setInterval(() => {
 <template>
   <q-page class="flex justify-center items-center bg-primary q-pa-lg">
     <q-card class="q-pa-md" style="min-width: 300px">
-      <div class="flex row justify-center items-center text-h6">
-        Phone Confirmation
-      </div>
-      <phone-otp></phone-otp>
-      <q-btn color="dark" :disable="!resendEmail"
-        >Resend Phone Confirmation code
-        {{ counterSeconds > 0 ? counterSeconds : '' }}</q-btn
-      >
+      <q-card-section>
+        <div class="flex row justify-center items-center text-h6">
+          {{ $t('pages.otp.title') }}
+        </div>
+      </q-card-section>
+      <q-card-section style="overflow: hidden">
+        <phone-otp></phone-otp>
+      </q-card-section>
+      <q-card-section class="flex items-center justify-center">
+        <q-btn color="dark" :disable="!resendEmail"
+          >{{ $t('pages.otp.resendConfirmation') }}
+          {{ counterSeconds > 0 ? counterSeconds : '' }}</q-btn
+        >
+      </q-card-section>
     </q-card>
   </q-page>
 </template>

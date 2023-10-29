@@ -14,6 +14,8 @@ export default {
     alert: 'هشدار',
     yes: 'بله',
     no: 'خیر',
+    oops: 'ای بابا!',
+    nothingHere: 'چیزی اینجا نیست که...',
     nextStep: 'مرحله بعد',
     fields: {
       requiredStringField: 'این فیلد نباید خالی باشد',
@@ -62,6 +64,10 @@ export default {
         },
         register: 'ثبت نام',
       },
+    },
+    otp: {
+      title: 'تایید شماره',
+      resendConfirmation: 'ارسال مجدد کد تایید',
     },
     panel: {
       dashboard: {

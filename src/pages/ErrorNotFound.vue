@@ -3,16 +3,18 @@
     class="fullscreen bg-primary text-white text-center q-pa-md flex flex-center"
   >
     <div>
-      <div class="text-h6">Oops!</div>
+      <div class="text-h6">{{ $t('general.oops') }}</div>
 
-      <div class="text-h4" style="opacity: 0.4">Nothing here...</div>
+      <div class="text-h4" style="opacity: 0.4">
+        {{ $t('general.nothingHere') }}
+      </div>
 
       <q-btn
         class="q-mt-xl"
         color="white"
         text-color="primary"
         unelevated
-        label="Go Back"
+        :label="$t('general.goBack')"
         @click="back()"
         no-caps
       />
