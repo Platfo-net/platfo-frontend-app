@@ -15,7 +15,10 @@ export default {
     yes: 'بله',
     no: 'خیر',
     oops: 'ای بابا!',
+    unauthorized: 'دسترسی غیر مجاز',
+    notAllowedToViewPage: 'شما دسترسی لازم برای مشاهده ی این صفحه را ندارید.',
     nothingHere: 'چیزی اینجا نیست که...',
+    backToLoginPage: 'مراجعه به صفحه ورود',
     nextStep: 'مرحله بعد',
     fields: {
       requiredStringField: 'این فیلد نباید خالی باشد',

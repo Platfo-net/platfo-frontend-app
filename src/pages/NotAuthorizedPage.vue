@@ -5,10 +5,10 @@
     class="fullscreen bg-primary text-white text-center q-pa-md flex flex-center"
   >
     <div>
-      <div class="text-h6">401 Unauthorized</div>
+      <div class="text-h4">{{ $t('general.unauthorized') }}</div>
 
-      <div class="text-h4" style="opacity: 0.4">
-        You're not allowed to view this page.
+      <div class="text-h5" style="opacity: 0.4">
+        {{ $t('general.notAllowedToViewPage') }}
       </div>
 
       <q-btn
@@ -17,7 +17,7 @@
         text-color="primary"
         unelevated
         :to="{ name: 'LoginPage' }"
-        label="Go To Login Page"
+        :label="$t('general.backToLoginPage')"
         no-caps
       />
     </div>
