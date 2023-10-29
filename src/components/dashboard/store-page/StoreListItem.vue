@@ -7,7 +7,7 @@ const props = defineProps<IShop>();
 <template>
   <div class="col-12 col-sm-6 col-lg-3">
     <q-toolbar class="bg-accent text-white">
-      <q-toolbar-title>{{ props.title }}</q-toolbar-title>
+      <q-toolbar-title class="text-h6">{{ props.title }}</q-toolbar-title>
       <q-btn
         class="q-ml-lg"
         size="sm"
