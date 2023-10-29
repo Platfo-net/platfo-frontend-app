@@ -6,11 +6,13 @@ import { useRouter } from 'vue-router';
 import { useAuthStore } from 'stores/auth-store';
 import { ILoginApiResponse } from 'stores/types';
 import { ILoginFormState } from 'src/types';
+import {useI18n} from "vue-i18n";
 
 const { api } = useApi();
 const notify = useNotify();
 const router = useRouter();
 const authStore = useAuthStore();
+const { t } = useI18n();
 
 const loginState = reactive<ILoginFormState>({
   phone_number: '',
@@ -23,14 +25,14 @@ const handleFormSubmit = () => {
   api
     .post<ILoginApiResponse>('/auth/access-token-phone-number', loginState)
     .then((res) => {
-      notify.success('Successful', 'Login was successful');
+      notify.success(t('pages.public.login.notifications.loginSuccess'));
       authStore.actions.setAuthState(res.data);
       router.replace({
         name: 'StoreListPage',
       });
     })
-    .catch((err) => {
-      notify.error('Error', err.response.data.detail);
+    .catch(() => {
+      notify.error(t('pages.public.login.notifications.loginSuccess'));
     });
 };
 </script>
@@ -41,23 +43,25 @@ const handleFormSubmit = () => {
       class="q-pa-md"
       style="min-width: 300px; width: 100%; max-width: 500px"
     >
-      <div class="text-h6">Login to Platfo</div>
+      <div class="text-h6">{{ $t('pages.public.login.title') }}</div>
       <form @submit.prevent="handleFormSubmit">
         <div class="q-gutter-md">
           <q-input
             name="phone_number"
             v-model="loginState.phone_number"
             type="text"
-            label="Phone Number"
+            :label="$t('pages.public.login.fields.phoneNumber')"
             color="dark"
-            :rules="[(val) => !!val || 'Field is required']"
+            :rules="[(val) => !!val || $t('general.fields.requiredStringField')]"
+            dir="ltr"
           />
           <q-input
             v-model="loginState.password"
             :type="showPass ? 'password' : 'text'"
-            label="Password"
+            :label="$t('pages.public.login.fields.password')"
             color="dark"
-            :rules="[(val) => !!val || 'Field is required']"
+            :rules="[(val) => !!val || $t('general.fields.requiredStringField')]"
+            dir="ltr"
           >
             <template v-slot:append>
               <q-icon
@@ -71,7 +75,7 @@ const handleFormSubmit = () => {
         <q-btn
           color="dark"
           class="full-width q-mt-md"
-          label="Login"
+          :label="$t('pages.public.login.login')"
           type="submit"
           :disable="
             loginState.password.length < 1 || loginState.phone_number.length < 1
@@ -80,9 +84,9 @@ const handleFormSubmit = () => {
       </form>
       <div class="flex row justify-center items-center q-mt-md">
         <p>
-          Not a user yet?
+          {{ $t('pages.public.login.notUser') }}
           <router-link :to="{ name: 'RegisterPage' }"
-            >Register here.</router-link
+            >{{ $t('pages.public.login.registerHere') }}</router-link
           >
         </p>
       </div>

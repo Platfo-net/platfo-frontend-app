@@ -22,7 +22,22 @@ export default {
     },
   },
   pages: {
-    public: {},
+    public: {
+      login: {
+        title: 'ورود به پلتفو',
+        fields: {
+          phoneNumber: 'شماره موبایل',
+          password: 'پسوورد',
+        },
+        notUser: 'هنوز کاربر نیستید؟',
+        registerHere: 'اینجا ثبت نام کن.',
+        notifications: {
+          loginSuccess: 'ورود موفقیت آمیز',
+          loginError: 'شماره یا پسوورد نادرست بود'
+        },
+        login: 'ورود'
+      }
+    },
     panel: {
       dashboard: {
         title: 'داشبورد',
