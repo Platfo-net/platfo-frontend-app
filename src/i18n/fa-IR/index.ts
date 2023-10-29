@@ -36,6 +36,23 @@ export default {
           loginError: 'شماره یا پسوورد نادرست بود'
         },
         login: 'ورود'
+      },
+      register: {
+        title: 'ثبت نام در پلتفو',
+        fields: {
+          firstname: 'نام',
+          lastname: 'نام خانوادگی',
+          phoneCountryCode: 'کد کشور',
+          phoneNumber: 'شماره موبایل',
+          password: 'پسوورد',
+        },
+        isUser: 'کاربر هستید؟',
+        loginHere: 'اینجا وارد شوید.',
+        notifications: {
+          registerSuccess: 'ثبت نام موفقیت آمیز',
+          registerError: 'شماره یا پسوورد نادرست بود'
+        },
+        register: 'ثبت نام'
       }
     },
     panel: {

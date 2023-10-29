@@ -78,48 +78,48 @@ const handleFormSubmit = () => {
       class="q-pa-md"
       style="min-width: 300px; width: 100%; max-width: 500px"
     >
-      <div class="text-h6">Register at Platfo</div>
+      <div class="text-h6">{{$t('pages.public.register.title')}}</div>
       <form @submit.prevent="handleFormSubmit">
         <div class="q-gutter-md">
           <q-input
             name="first_name"
             v-model="authStore.registerState.first_name"
             type="text"
-            label="First Name"
+            :label="$t('pages.public.register.fields.firstname')"
             color="dark"
-            :rules="[(val) => !!val || 'Field is required']"
+            :rules="[(val) => !!val || $t('general.fields.requiredStringField')]"
           />
           <q-input
             name="last_name"
             v-model="authStore.registerState.last_name"
             type="text"
-            label="Last Name"
+            :label="$t('pages.public.register.fields.lastname')"
             color="dark"
-            :rules="[(val) => !!val || 'Field is required']"
+            :rules="[(val) => !!val || $t('general.fields.requiredStringField')]"
           />
           <q-input
             name="phone_number"
             v-model="authStore.registerState.phone_number"
             type="text"
-            label="Phone Number"
+            :label="$t('pages.public.register.fields.phoneNumber')"
             color="dark"
-            :rules="[(val) => !!val || 'Field is required']"
+            :rules="[(val) => !!val || $t('general.fields.requiredStringField')]"
           />
           <q-input
             name="phone_country_code"
             v-model="authStore.registerState.phone_country_code"
             type="text"
-            label="Phone Country Code"
+            :label="$t('pages.public.register.fields.phoneCountryCode')"
             color="dark"
-            :rules="[(val) => !!val || 'Field is required']"
+            :rules="[(val) => !!val || $t('general.fields.requiredStringField')]"
             disable
           />
           <q-input
             v-model="authStore.registerState.password"
             :type="showPass ? 'password' : 'text'"
-            label="Password"
+            :label="$t('pages.public.register.fields.password')"
             color="dark"
-            :rules="[(val) => !!val || 'Field is required']"
+            :rules="[(val) => !!val || $t('general.fields.requiredStringField')]"
           >
             <template v-slot:append>
               <q-icon
@@ -133,7 +133,7 @@ const handleFormSubmit = () => {
         <q-btn
           color="dark"
           class="full-width q-mt-md"
-          label="Register"
+          :label="$t('pages.public.register.register')"
           type="submit"
           :disable="
             authStore.registerState.phone_country_code.length < 1 ||
@@ -146,8 +146,8 @@ const handleFormSubmit = () => {
       </form>
       <div class="flex row justify-center items-center q-mt-md">
         <p>
-          Already a user?
-          <router-link :to="{ name: 'LoginPage' }">Login here.</router-link>
+          {{ $t('pages.public.register.isUser') }}
+          <router-link :to="{ name: 'LoginPage' }">{{ $t('pages.public.register.loginHere') }}</router-link>
         </p>
       </div>
     </q-card>
