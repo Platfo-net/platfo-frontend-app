@@ -22,18 +22,18 @@ const props = defineProps<IShop>();
     <q-list bordered>
       <q-item class="q-my-sm">
         <q-item-section>
-          <q-item-label>{{
+          <q-item-label caption>{{
             $t('pages.panel.dashboard.storeListPage.storeListItem.category')
           }}</q-item-label>
-          <q-item-label caption lines="1">{{ props.category }}</q-item-label>
+          <q-item-label lines="1">{{ props.category }}</q-item-label>
         </q-item-section>
       </q-item>
       <q-item class="q-my-sm">
         <q-item-section>
-          <q-item-label>{{
+          <q-item-label caption>{{
             $t('pages.panel.dashboard.storeListPage.storeListItem.description')
           }}</q-item-label>
-          <q-item-label caption lines="1">{{ props.description }}</q-item-label>
+          <q-item-label lines="1">{{ props.description }}</q-item-label>
         </q-item-section>
       </q-item>
       <q-separator />
