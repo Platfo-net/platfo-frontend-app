@@ -11,14 +11,14 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title> Platfo </q-toolbar-title>
+        <q-toolbar-title> {{$t('layout.appHeader')}} </q-toolbar-title>
       </q-toolbar>
     </q-header>
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <div class="flex column justify-between full-height">
         <q-list>
-          <q-item-label header>Links</q-item-label>
+          <q-item-label header>{{ $t('layout.links.title') }}</q-item-label>
           <EssentialLink
             v-for="link in essentialLinks"
             :key="link.title"
@@ -28,7 +28,7 @@
         <q-btn
           class="q-ma-md"
           color="negative"
-          label="Logout"
+          :label="$t('layout.logout')"
           @click="handleLogoutClick"
         />
       </div>
@@ -60,14 +60,9 @@ const handleLogoutClick = () => {
 
 const essentialLinks: EssentialLinkProps[] = [
   {
-    title: 'My Stores',
+    title: 'layout.links.myStores',
     icon: 'storefront',
     link: { name: 'StoreListPage' },
-  },
-  {
-    title: 'My Contacts',
-    icon: 'account_circle',
-    link: { name: 'ContactsPage' },
   },
 ];
 

@@ -21,6 +21,14 @@ export default {
       requiredNumberFieldPositiveValue: 'مقدار عددی این فیلد باید مثبت باشد',
     },
   },
+  layout: {
+    appHeader: 'پلتفو',
+    links: {
+      title: 'منو',
+      myStores: 'فروشگاه های من',
+    },
+    logout: 'خروج'
+  },
   pages: {
     public: {
       login: {
