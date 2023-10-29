@@ -8,7 +8,7 @@ const shoppingCart = useShoppingCart();
 <template>
   <q-card class="col-12 q-mb-md" bordered flat>
     <q-card-section>
-      <div class="text-h5">{{ product.title }}</div>
+      <div class="text-body1">{{ product.title }}</div>
     </q-card-section>
     <q-card-section>
       <div class="flex row items-center justify-between full-width">
