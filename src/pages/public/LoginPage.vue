@@ -6,7 +6,7 @@ import { useRouter } from 'vue-router';
 import { useAuthStore } from 'stores/auth-store';
 import { ILoginApiResponse } from 'stores/types';
 import { ILoginFormState } from 'src/types';
-import {useI18n} from "vue-i18n";
+import { useI18n } from 'vue-i18n';
 
 const { api } = useApi();
 const notify = useNotify();
@@ -32,7 +32,7 @@ const handleFormSubmit = () => {
       });
     })
     .catch(() => {
-      notify.error(t('pages.public.login.notifications.loginSuccess'));
+      notify.error(t('pages.public.login.notifications.loginError'));
     });
 };
 </script>
@@ -52,7 +52,9 @@ const handleFormSubmit = () => {
             type="text"
             :label="$t('pages.public.login.fields.phoneNumber')"
             color="dark"
-            :rules="[(val) => !!val || $t('general.fields.requiredStringField')]"
+            :rules="[
+              (val) => !!val || $t('general.fields.requiredStringField'),
+            ]"
             dir="ltr"
           />
           <q-input
@@ -60,7 +62,9 @@ const handleFormSubmit = () => {
             :type="showPass ? 'password' : 'text'"
             :label="$t('pages.public.login.fields.password')"
             color="dark"
-            :rules="[(val) => !!val || $t('general.fields.requiredStringField')]"
+            :rules="[
+              (val) => !!val || $t('general.fields.requiredStringField'),
+            ]"
             dir="ltr"
           >
             <template v-slot:append>
@@ -85,9 +89,9 @@ const handleFormSubmit = () => {
       <div class="flex row justify-center items-center q-mt-md">
         <p>
           {{ $t('pages.public.login.notUser') }}
-          <router-link :to="{ name: 'RegisterPage' }"
-            >{{ $t('pages.public.login.registerHere') }}</router-link
-          >
+          <router-link :to="{ name: 'RegisterPage' }">{{
+            $t('pages.public.login.registerHere')
+          }}</router-link>
         </p>
       </div>
     </q-card>
