@@ -27,7 +27,7 @@ const timeout = setInterval(() => {
           {{ $t('pages.otp.title') }}
         </div>
       </q-card-section>
-      <q-card-section style="overflow: hidden">
+      <q-card-section style="overflow: hidden" dir="ltr">
         <phone-otp></phone-otp>
       </q-card-section>
       <q-card-section class="flex items-center justify-center">
