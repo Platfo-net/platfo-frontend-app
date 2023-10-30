@@ -1,5 +1,7 @@
 import { RouteRecordRaw } from 'vue-router';
 import { useAuthStore } from 'stores/auth-store';
+import {useApi} from "src/composables/use-api";
+import {AxiosError} from "axios";
 
 const routes: RouteRecordRaw[] = [
   {
@@ -84,14 +86,30 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/dashboard/contacts/ContactsPage.vue'),
       },
     ],
-    beforeEnter: (to, from, next) => {
+    beforeEnter: async (to, from, next) => {
+      const { api} = useApi();
       const authStore = useAuthStore();
+
       if (!authStore.state.isLoggedIn) {
         return next({
-          name: 'NotAuthorized',
+          name: 'LoginPage',
           replace: true,
         });
       }
+      // try {
+      //   const { data } = await api.post('/auth/check');
+      // } catch (err) {
+      //   if (err instanceof AxiosError) {
+      //     console.log(err.response);
+      //     // authStore.actions.clearAuthState();
+      //     // return next({
+      //     //   name: 'LoginPage',
+      //     //   replace: true,
+      //     // });
+      //   }
+      //   // throw new Error('Unhandled error while verifying token.');
+      // }
+      // ^^^^^^^^^^^^^^^^ TODO: implement auto logout if token is invalid and response is 401
       return next();
     },
   },
