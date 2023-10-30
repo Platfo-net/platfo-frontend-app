@@ -6,7 +6,7 @@ import { ref } from 'vue';
 const authStore = useAuthStore();
 const router = useRouter();
 if (!authStore.otpToken) {
-  // router.replace({ name: 'RegisterPage' });
+  router.replace({ name: 'RegisterPage' });
 }
 const resendEmail = ref(false);
 const counterSeconds = ref(120);
