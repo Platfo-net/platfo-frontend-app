@@ -5,7 +5,7 @@ import { LocalStorage } from 'quasar';
 import { IProduct } from 'components/models';
 import { useRoute } from 'vue-router';
 
-export const SHOPPING_CART_KEY = 'shopping-cart';
+export const SHOPPING_CART_KEY = 'shopping-cart-v2';
 export const useShoppingCart = defineStore('shopping-cart-store', () => {
   const { params } = useRoute();
   const initializeCart = (): IShoppingCart => {
