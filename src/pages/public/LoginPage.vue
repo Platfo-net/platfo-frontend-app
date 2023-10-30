@@ -21,19 +21,18 @@ const loginState = reactive<ILoginFormState>({
 });
 const showPass = ref(true);
 
-const handleFormSubmit = () => {
-  api
-    .post<ILoginApiResponse>('/auth/access-token-phone-number', loginState)
-    .then((res) => {
-      notify.success(t('pages.public.login.notifications.loginSuccess'));
-      authStore.actions.setAuthState(res.data);
-      router.replace({
-        name: 'StoreListPage',
-      });
-    })
-    .catch(() => {
-      notify.error(t('pages.public.login.notifications.loginError'));
+const handleFormSubmit = async () => {
+  try {
+    const {data} = await api
+      .post<ILoginApiResponse>('/auth/access-token-phone-number', loginState);
+    notify.success(t('pages.public.login.notifications.loginSuccess'));
+    authStore.actions.setAuthState(data);
+    await router.replace({
+      name: 'StoreListPage',
     });
+  } catch (err) {
+    notify.error(t('pages.public.login.notifications.loginError'));
+  }
 };
 </script>
 
