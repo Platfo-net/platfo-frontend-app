@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia';
 import { reactive } from 'vue';
-import { IShoppingCart } from 'stores/types';
+import {IShoppingCart, IShoppingCartItem} from 'stores/types';
 import { LocalStorage } from 'quasar';
 import { IProduct } from 'components/models';
 import { useRoute } from 'vue-router';
 
-export const SHOPPING_CART_KEY = 'shopping-cart-v2';
+export const SHOPPING_CART_KEY = 'shopping-cart-v2.1';
 export const useShoppingCart = defineStore('shopping-cart-store', () => {
   const { params } = useRoute();
   const initializeCart = (): IShoppingCart => {
@@ -26,10 +26,11 @@ export const useShoppingCart = defineStore('shopping-cart-store', () => {
   };
 
   const clear = () => {
-    LocalStorage.set(SHOPPING_CART_KEY, {
+    const shoppingCart: IShoppingCart = {
       items: {},
-      totalPrice: 0,
-    } as IShoppingCart);
+    };
+    shoppingCart.items[params.shopId as string] = {};
+    LocalStorage.set(SHOPPING_CART_KEY, shoppingCart);
   };
 
   const getItemCount = (product: IProduct) => {
