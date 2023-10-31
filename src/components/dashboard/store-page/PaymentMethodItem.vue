@@ -20,6 +20,11 @@ const isEdit = ref(false);
 
 const paymentMethodModel = reactive<IPaymentMethod>({
   ...props.paymentMethod,
+  information: props.paymentMethod.information || {
+    bank: '',
+    card_number: '',
+    name: '',
+  },
 });
 
 const deleteAlert = ref(false);
