@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { reactive } from 'vue';
-import {IShoppingCart, IShoppingCartItem} from 'stores/types';
+import { IShoppingCart, IShoppingCartItem } from 'stores/types';
 import { LocalStorage } from 'quasar';
 import { IProduct } from 'components/models';
 import { useRoute } from 'vue-router';
@@ -10,11 +10,16 @@ export const useShoppingCart = defineStore('shopping-cart-store', () => {
   const { params } = useRoute();
   const initializeCart = (): IShoppingCart => {
     let shoppingCart = LocalStorage.getItem<IShoppingCart>(SHOPPING_CART_KEY);
-    if (shoppingCart) return shoppingCart;
-    shoppingCart = {
-      items: {},
-    };
-    shoppingCart.items[params.shopId as string] = {};
+    if (shoppingCart) {
+      if (!shoppingCart.items[params.shopId as string]) {
+        shoppingCart.items[params.shopId as string] = {};
+      }
+    } else {
+      shoppingCart = {
+        items: {},
+      };
+      shoppingCart.items[params.shopId as string] = {};
+    }
     LocalStorage.set(SHOPPING_CART_KEY, shoppingCart);
     return shoppingCart;
   };
@@ -26,9 +31,9 @@ export const useShoppingCart = defineStore('shopping-cart-store', () => {
   };
 
   const clear = () => {
-    const shoppingCart: IShoppingCart = {
-      items: {},
-    };
+    // const shoppingCart: IShoppingCart = {
+    //   items: {},
+    // };
     shoppingCart.items[params.shopId as string] = {};
     LocalStorage.set(SHOPPING_CART_KEY, shoppingCart);
   };
@@ -65,7 +70,9 @@ export const useShoppingCart = defineStore('shopping-cart-store', () => {
   };
 
   const totalItems = () => {
-    const itemsKeys = Object.keys(shoppingCart.items[params.shopId as string]);
+    const itemsKeys = Object.keys(
+      shoppingCart.items[params.shopId as string] || {}
+    );
     if (!itemsKeys.length) return 0;
     return itemsKeys.reduce(
       (acc, productId) =>
@@ -74,8 +81,12 @@ export const useShoppingCart = defineStore('shopping-cart-store', () => {
     );
   };
 
-  const totalCartAmount = () =>
-    Object.keys(shoppingCart.items[params.shopId as string]).reduce(
+  const totalCartAmount = () => {
+    const itemsKeys = Object.keys(
+      shoppingCart.items[params.shopId as string] || {}
+    );
+    if (!itemsKeys.length) return 0;
+    return Object.keys(shoppingCart.items[params.shopId as string]).reduce(
       (acc, productId) =>
         acc +
         shoppingCart.items[params.shopId as string]?.[productId]?.product
@@ -83,6 +94,7 @@ export const useShoppingCart = defineStore('shopping-cart-store', () => {
           shoppingCart.items[params.shopId as string]?.[productId]?.count,
       0
     );
+  };
 
   const get = () => {
     return shoppingCart;
