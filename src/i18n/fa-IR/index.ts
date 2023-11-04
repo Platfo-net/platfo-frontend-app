@@ -93,8 +93,7 @@ export default {
           steps: {
             shopInformation: {
               title: 'ثبت مشخصات فروشگاه',
-              description:
-                'در این قسمت اطلاعات فروشگاهی را که می خواهید ایجاد کنید را وارد کنید.',
+              description: 'در این قسمت اطلاعات فروشگاه را وارد کنید:',
               fields: {
                 title: 'عنوان',
                 category: 'دسته بندی',
