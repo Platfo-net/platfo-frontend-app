@@ -132,7 +132,7 @@ const updateModel = async () => {
           />
         </template>
         <template v-else>
-          <div class="text-body1">{{ product.title }}</div>
+          <div class="text-body1">{{ productModel.title }}</div>
         </template>
       </div>
       <!-- <div class="text-caption text-grey">
@@ -156,7 +156,9 @@ const updateModel = async () => {
           />
         </template>
         <template v-else>
-          <div class="text-body1">IRR {{ $n(productModel.price) }}</div>
+          <div class="text-body1">
+            IRR {{ $n(parseFloat(productModel.price as string)) }}
+          </div>
         </template>
       </div>
     </q-card>
