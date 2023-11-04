@@ -157,7 +157,11 @@ onMounted(async () => {
     <template v-else>
       <template v-if="!products.length">
         <p class="q-pa-none q-ma-none">
-          No products currently registered. Add a new product.
+          {{
+            $t(
+              'pages.panel.dashboard.manageStorePage.panels.productManagement.noProducts'
+            )
+          }}
         </p>
       </template>
       <template v-else>

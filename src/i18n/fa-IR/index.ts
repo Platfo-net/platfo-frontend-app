@@ -211,6 +211,7 @@ export default {
                 title: 'عنوان',
                 price: 'قیمت',
               },
+              noProducts: 'محصولی ثبت نشده است. لطفا محصول جدید ثبت کنید.',
               informationFields: 'اطلاعات شیوه پرداخت',
               notifications: {
                 createProductSuccess: 'ایجاد محصول با موفقیت انجام شد.',
