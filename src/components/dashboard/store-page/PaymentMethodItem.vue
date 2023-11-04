@@ -184,13 +184,14 @@ const updateModel = async () => {
               <template v-if="isEdit">
                 <template v-if="isEdit">
                   <q-input
+                    dir="ltr"
                     type="text"
                     v-model="paymentMethodModel.information['card_number']"
                     clearable
                   /> </template
               ></template>
               <template v-else>
-                <div class="text-body1">
+                <div class="text-body1" dir="ltr">
                   {{ paymentMethodModel.information['card_number'] }}
                 </div>
               </template>
