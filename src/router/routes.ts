@@ -1,7 +1,7 @@
 import { RouteRecordRaw } from 'vue-router';
 import { useAuthStore } from 'stores/auth-store';
-import {useApi} from "src/composables/use-api";
-import {AxiosError} from "axios";
+import { useApi } from 'src/composables/use-api';
+import { AxiosError } from 'axios';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -87,7 +87,7 @@ const routes: RouteRecordRaw[] = [
       },
     ],
     beforeEnter: async (to, from, next) => {
-      const { api} = useApi();
+      const { api } = useApi();
       const authStore = useAuthStore();
 
       if (!authStore.state.isLoggedIn) {
@@ -125,7 +125,7 @@ const routes: RouteRecordRaw[] = [
           const authStore = useAuthStore();
           if (authStore.state.isLoggedIn) {
             next({
-              name: 'StoresPage',
+              name: 'StoreListPage',
               replace: true,
             });
           }
