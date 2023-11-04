@@ -96,20 +96,19 @@ const routes: RouteRecordRaw[] = [
           replace: true,
         });
       }
-      // try {
-      //   const { data } = await api.post('/auth/check');
-      // } catch (err) {
-      //   if (err instanceof AxiosError) {
-      //     console.log(err.response);
-      //     // authStore.actions.clearAuthState();
-      //     // return next({
-      //     //   name: 'LoginPage',
-      //     //   replace: true,
-      //     // });
-      //   }
-      //   // throw new Error('Unhandled error while verifying token.');
-      // }
-      // ^^^^^^^^^^^^^^^^ TODO: implement auto logout if token is invalid and response is 401
+      try {
+        const { data } = await api.post('/auth/check');
+      } catch (err) {
+        if (err instanceof AxiosError) {
+          // console.log(err.response);
+          authStore.actions.clearAuthState();
+          return next({
+            name: 'LoginPage',
+            replace: true,
+          });
+        }
+        // throw new Error('Unhandled error while verifying token.');
+      }
       return next();
     },
   },
