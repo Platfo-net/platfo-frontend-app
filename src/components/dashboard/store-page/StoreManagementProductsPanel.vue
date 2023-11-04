@@ -120,6 +120,11 @@ onMounted(async () => {
             :label="`${$t(
               'pages.panel.dashboard.manageStorePage.panels.productManagement.fields.price'
             )} *`"
+            :hint="
+              $t(
+                'pages.panel.dashboard.manageStorePage.panels.productManagement.fields.priceHint'
+              )
+            "
             lazy-rules
             color="accent"
             :rules="[

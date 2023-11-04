@@ -210,6 +210,7 @@ export default {
               fields: {
                 title: 'عنوان',
                 price: 'قیمت',
+                priceHint: 'واحد قیمت محصولات ریال است',
               },
               noProducts: 'محصولی ثبت نشده است. لطفا محصول جدید ثبت کنید.',
               informationFields: 'اطلاعات شیوه پرداخت',

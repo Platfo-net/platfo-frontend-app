@@ -124,12 +124,7 @@ const updateModel = async () => {
           }}
         </div>
         <template v-if="isEdit">
-          <q-input
-            type="text"
-            v-model="productModel.title"
-            step="0.01"
-            clearable
-          />
+          <q-input type="text" v-model="productModel.title" clearable />
         </template>
         <template v-else>
           <div class="text-body1">{{ productModel.title }}</div>
@@ -153,6 +148,11 @@ const updateModel = async () => {
             step="0.01"
             clearable
             min="0"
+            :hint="
+              $t(
+                'pages.panel.dashboard.manageStorePage.panels.productManagement.fields.priceHint'
+              )
+            "
           />
         </template>
         <template v-else>
