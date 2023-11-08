@@ -25,6 +25,8 @@ export default {
       requiredNumberField: 'مقدار عددی وارد کنید',
       requiredNumberFieldPositiveValue: 'مقدار عددی این فیلد باید مثبت باشد',
     },
+    shopOutOfReach: 'فروشگاه در دسترس نیست. لطفاً بعدا تلاش کنید.',
+    backToBot: 'بازگشت به بات',
   },
   layout: {
     appHeader: 'پلتفو',

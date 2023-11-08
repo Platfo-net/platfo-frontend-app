@@ -9,6 +9,7 @@ import TelegramShopProductItem from 'components/public/shop/TelegramShopProductI
 const route = useRoute();
 const { api, loading } = useApi();
 const products = ref<IProduct[]>([]);
+const showOutOfOrderDialog = ref(false);
 const getShopProductsPaginatedResponse = async () => {
   const { data } = await api.get<IPaginatedResponse<IProduct>>(
     `/shop/products/${route.params.shopId}/telegram-shop`
@@ -16,13 +17,38 @@ const getShopProductsPaginatedResponse = async () => {
   products.value = data.items;
 };
 
+function closeWebApp() {
+  window.Telegram.WebApp.close();
+}
+
 onMounted(async () => {
-  await getShopProductsPaginatedResponse();
+  try {
+    await getShopProductsPaginatedResponse();
+  } catch (err) {
+    showOutOfOrderDialog.value = true;
+  }
 });
 </script>
 
 <template>
   <q-page class="q-pa-md">
+    <q-dialog maximized persistent v-model="showOutOfOrderDialog">
+      <q-card class="bg-primary">
+        <div
+          class="flex column full-width full-height items-center justify-center"
+        >
+          <q-card-section>
+            <q-icon name="link_off" color="white" size="xl"></q-icon>
+            <p class="text-white">{{ $t('general.shopOutOfReach') }}</p>
+            <q-btn
+              color="white"
+              text-color="black"
+              :label="$t('general.backToBot')"
+            ></q-btn>
+          </q-card-section>
+        </div>
+      </q-card>
+    </q-dialog>
     <template v-if="loading">
       <q-inner-loading :showing="loading">
         <q-spinner-dots size="md" />
