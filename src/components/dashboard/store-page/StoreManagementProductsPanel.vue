@@ -58,7 +58,7 @@ const deleteProduct = async (productId: string) => {
 };
 const productModel = reactive<ICreateProduct>({
   category_id: null,
-  currency: 'IRR',
+  currency: 'IRT',
   image: '',
   price: 0,
   shop_id: route.params.storeId as string,

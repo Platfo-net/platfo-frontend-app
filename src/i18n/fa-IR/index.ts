@@ -25,6 +25,8 @@ export default {
       requiredNumberField: 'مقدار عددی وارد کنید',
       requiredNumberFieldPositiveValue: 'مقدار عددی این فیلد باید مثبت باشد',
     },
+    shopOutOfReach: 'فروشگاه در دسترس نیست. لطفاً بعدا تلاش کنید.',
+    backToBot: 'بازگشت به بات',
   },
   layout: {
     appHeader: 'پلتفو',
@@ -209,7 +211,7 @@ export default {
               fields: {
                 title: 'عنوان',
                 price: 'قیمت',
-                priceHint: 'واحد قیمت محصولات ریال است',
+                priceHint: 'واحد قیمت محصولات تومان است',
               },
               noProducts: 'محصولی ثبت نشده است. لطفا محصول جدید ثبت کنید.',
               informationFields: 'اطلاعات شیوه پرداخت',
