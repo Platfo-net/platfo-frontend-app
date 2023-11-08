@@ -44,6 +44,7 @@ onMounted(async () => {
               color="white"
               text-color="black"
               :label="$t('general.backToBot')"
+              @click="closeWebApp"
             ></q-btn>
           </q-card-section>
         </div>
