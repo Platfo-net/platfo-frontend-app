@@ -133,10 +133,10 @@ onMounted(async () => {
       <div>
         {{
           Intl.NumberFormat('fa', {
-            currency: 'IRR',
+            currency: 'IRT',
           }).format(shoppingCart.totalCartAmount())
         }}
-        ریال
+        تومان
       </div>
     </div>
   </div>

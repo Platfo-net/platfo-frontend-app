@@ -45,10 +45,10 @@ const shoppingCart = useShoppingCart();
           <div>
             {{
               Intl.NumberFormat('fa', {
-                currency: 'IRR',
+                currency: 'IRT',
               }).format(product.price * shoppingCart.getItemCount(product))
             }}
-            ریال
+            تومان
           </div>
         </div>
       </div>
