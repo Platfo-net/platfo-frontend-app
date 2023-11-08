@@ -157,7 +157,7 @@ const updateModel = async () => {
         </template>
         <template v-else>
           <div class="text-body1">
-            IRR {{ $n(parseFloat(productModel.price as string)) }}
+            {{ $n(parseFloat(productModel.price as string)) }} تومان
           </div>
         </template>
       </div>
