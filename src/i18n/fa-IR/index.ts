@@ -27,6 +27,7 @@ export default {
     },
     shopOutOfReach: 'فروشگاه در دسترس نیست. لطفاً بعدا تلاش کنید.',
     backToBot: 'بازگشت به بات',
+    platfoSystemError: 'خطای سیستمی رخ داده است. لطفا با پشتیبانی تماس بگیرید.',
   },
   layout: {
     appHeader: 'پلتفو',

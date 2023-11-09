@@ -4,15 +4,10 @@ import { useApi } from 'src/composables/use-api';
 import { onBeforeMount, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { IShop } from 'components/models';
-import StoreManagementProductsPanel from 'components/dashboard/store-page/StoreManagementProductsPanel.vue';
-import StoreManagementBasicInformationPanel from 'components/dashboard/store-page/StoreManagementBasicInformationPanel.vue';
-import StoreManagementPaymentMethodsPanel from 'src/components/dashboard/store-page/StoreManagementPaymentMethodsPanel.vue';
 const route = useRoute();
 const { api, loading } = useApi();
 
 const shop = ref<IShop>();
-
-const tab = ref('basics');
 
 onBeforeMount(() => {
   api
@@ -46,46 +41,31 @@ onBeforeMount(() => {
       </div>
       <q-tabs
         class="q-mb-md"
-        v-model="tab"
         align="left"
         active-bg-color="black"
         active-color="white"
         indicator-color="primary"
       >
-        <q-tab
-          name="basics"
+        <q-route-tab
+          :to="{ name: 'ManageStoreBasicInformation' }"
           :label="$t('pages.panel.dashboard.manageStorePage.tabs.basic')"
-        ></q-tab>
-        <q-tab
-          name="products"
+        ></q-route-tab>
+        <q-route-tab
+          :to="{ name: 'ManageStoreProducts' }"
           :label="$t('pages.panel.dashboard.manageStorePage.tabs.products')"
-        ></q-tab>
-        <q-tab
-          name="payment-config"
+        ></q-route-tab>
+        <q-route-tab
+          :to="{ name: 'ManageStorePaymentMethods' }"
           :label="
             $t(
               'pages.panel.dashboard.manageStorePage.tabs.paymentConfiguration'
             )
           "
-        ></q-tab>
+        ></q-route-tab>
       </q-tabs>
-      <q-tab-panels v-model="tab">
-        <q-tab-panel name="basics" class="q-pa-none">
-          <store-management-basic-information-panel
-            :title="shop.title"
-            :category="shop.category"
-            :description="shop.description"
-          />
-        </q-tab-panel>
-        <q-tab-panel name="products" class="q-pa-none">
-          <store-management-products-panel />
-        </q-tab-panel>
-        <q-tab-panel name="payment-config" class="q-pa-none">
-          <StoreManagementPaymentMethodsPanel />
-        </q-tab-panel>
-      </q-tab-panels>
+      <router-view />
     </template>
-    <template v-else>FUCK</template>
+    <template v-else>{{ $t('general.platfoSystemError') }} </template>
   </q-page>
 </template>
 
