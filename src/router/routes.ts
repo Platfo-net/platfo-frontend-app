@@ -55,6 +55,92 @@ const routes: RouteRecordRaw[] = [
             component: () =>
               import('pages/dashboard/store/ManageStorePage.vue'),
             path: 'manage/:storeId',
+            children: [
+              {
+                path: 'basic-information',
+                name: 'ManageStoreBasicInformation',
+                component: () =>
+                  import(
+                    'components/dashboard/store-page/StoreManagementBasicInformationPanel.vue'
+                  ),
+                meta: {
+                  breadcrumbs: [
+                    {
+                      label: 'pages.panel.dashboard.title',
+                      to: { name: 'Dashboard' },
+                    },
+                    {
+                      label: 'pages.panel.dashboard.storeListPage.title',
+                      to: { name: 'StoreListPage' },
+                    },
+                    {
+                      label: 'pages.panel.dashboard.manageStorePage.title',
+                      to: { name: 'ManageStoreBasicInformation' },
+                    },
+                    {
+                      label:
+                        'pages.panel.dashboard.manageStorePage.panels.basicInformation.title',
+                    },
+                  ],
+                },
+              },
+              {
+                path: 'products',
+                name: 'ManageStoreProducts',
+                component: () =>
+                  import(
+                    'components/dashboard/store-page/StoreManagementProductsPanel.vue'
+                  ),
+                meta: {
+                  breadcrumbs: [
+                    {
+                      label: 'pages.panel.dashboard.title',
+                      to: { name: 'Dashboard' },
+                    },
+                    {
+                      label: 'pages.panel.dashboard.storeListPage.title',
+                      to: { name: 'StoreListPage' },
+                    },
+                    {
+                      label: 'pages.panel.dashboard.manageStorePage.title',
+                      to: { name: 'ManageStoreBasicInformation' },
+                    },
+                    {
+                      label:
+                        'pages.panel.dashboard.manageStorePage.panels.productManagement.title',
+                    },
+                  ],
+                },
+              },
+              {
+                path: 'payment-methods',
+                name: 'ManageStorePaymentMethods',
+                component: () =>
+                  import(
+                    'components/dashboard/store-page/StoreManagementPaymentMethodsPanel.vue'
+                  ),
+                meta: {
+                  breadcrumbs: [
+                    {
+                      label: 'pages.panel.dashboard.title',
+                      to: { name: 'Dashboard' },
+                    },
+                    {
+                      label: 'pages.panel.dashboard.storeListPage.title',
+                      to: { name: 'StoreListPage' },
+                    },
+                    {
+                      label: 'pages.panel.dashboard.manageStorePage.title',
+                      to: { name: 'ManageStoreBasicInformation' },
+                    },
+                    {
+                      label:
+                        'pages.panel.dashboard.manageStorePage.panels.paymentConfiguration.title',
+                    },
+                  ],
+                },
+              },
+            ],
             meta: {
               breadcrumbs: [
                 {
