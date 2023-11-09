@@ -9,8 +9,6 @@ const { api, loading } = useApi();
 
 const shop = ref<IShop>();
 
-const tab = ref('basics');
-
 onBeforeMount(() => {
   api
     .get(`/shop/shop/${route.params.storeId}`)
@@ -43,7 +41,6 @@ onBeforeMount(() => {
       </div>
       <q-tabs
         class="q-mb-md"
-        v-model="tab"
         align="left"
         active-bg-color="black"
         active-color="white"
