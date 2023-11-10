@@ -21,6 +21,11 @@ export interface IProduct {
   updated_at: Date;
 }
 
+export interface IProductCategory {
+  id: string;
+  title: string;
+}
+
 export interface IPaymentMethod {
   title: string;
   description: string;

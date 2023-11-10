@@ -62,6 +62,12 @@ onBeforeMount(() => {
             )
           "
         ></q-route-tab>
+        <q-route-tab
+          :to="{ name: 'ManageStoreProductCategories' }"
+          :label="
+            $t('pages.panel.dashboard.manageStorePage.tabs.productCategories')
+          "
+        ></q-route-tab>
       </q-tabs>
       <router-view />
     </template>
