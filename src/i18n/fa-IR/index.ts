@@ -233,10 +233,11 @@ export default {
             productCategories: {
               title: 'دسته بندی محصولات',
               fields: {
-                title: 'عنوان',
+                title: '* عنوان',
+                titleHint: ''
               },
               noProductCategories:
-                'محصولی ثبت نشده است. لطفا محصول جدید ثبت کنید.',
+                'دسته بندی ثبت نشده است. لطفا دسته بندی جدید ثبت کنید.',
               notifications: {
                 createProductCategorySuccess:
                   'ایجاد دسته بندی جدید با موفقیت انجام شد.',
