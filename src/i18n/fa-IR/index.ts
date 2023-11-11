@@ -233,7 +233,7 @@ export default {
             productCategories: {
               title: 'دسته بندی محصولات',
               fields: {
-                title: '* عنوان',
+                title: 'عنوان',
                 titleHint: ''
               },
               noProductCategories:
