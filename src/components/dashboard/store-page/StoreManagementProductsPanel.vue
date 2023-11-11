@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue';
-import { IProduct } from 'components/models';
+import {IProduct, IProductCategory} from 'components/models';
 import { useApi } from 'src/composables/use-api';
 import { useRoute } from 'vue-router';
 import { ICreateProduct, IPaginatedResponse } from 'src/composables/types';
@@ -9,6 +9,7 @@ import ProductItem from './ProductItem.vue';
 import { useI18n } from 'vue-i18n';
 const { api, loading } = useApi();
 const products = ref<IProduct[]>([]);
+const productCategories = ref<IProductCategory[]>([]);
 const route = useRoute();
 const notify = useNotify();
 const { t } = useI18n();
@@ -20,9 +21,17 @@ const getProducts = async () => {
   products.value = response.data.items;
 };
 
+const getProductCategories = async () => {
+  const response = await api.get<IProductCategory[]>(`/shop/categories/${route.params.storeId}/all`)
+  productCategories.value = response.data;
+}
+
 const createNewProduct = async () => {
   try {
-    await api.post<IProduct>('/shop/products', productModel);
+    await api.post<IProduct>('/shop/products', {
+      ...productModel,
+      category_id: productModel.category_id,
+    });
     notify.success(
       t(
         'pages.panel.dashboard.manageStorePage.panels.productManagement.notifications.createProductSuccess'
@@ -66,8 +75,10 @@ const productModel = reactive<ICreateProduct>({
 });
 
 onMounted(async () => {
-  await getProducts();
-  // await createCategory();
+  await Promise.all([
+    getProducts(),
+    getProductCategories()
+  ])
 });
 </script>
 
@@ -109,6 +120,16 @@ onMounted(async () => {
                 $t('general.fields.requiredStringField'),
             ]"
           />
+          <q-select color="accent"
+                    lazy-rules class="q-mb-lg" :options="productCategories.map(x => ({ label: x.title, value: x.id }))"
+                    :loading="loading" square filled dense :label="`${$t(
+              'pages.panel.dashboard.manageStorePage.panels.productManagement.fields.category'
+            )} *`" v-model="productModel.category_id" emit-value map-options :rules="[
+              (val) =>
+                (val && val.length > 0) ||
+                $t('general.fields.requiredStringField'),
+            ]">
+          </q-select>
           <q-input
             class="q-mb-lg"
             dense
@@ -150,7 +171,7 @@ onMounted(async () => {
               icon="check"
               :label="$t('general.add')"
               size="sm"
-              :disable="!productModel.title.length || !productModel.price"
+              :disable="!productModel.title.length || !productModel.price || !productModel.category_id"
             ></q-btn>
           </div>
         </q-form>
