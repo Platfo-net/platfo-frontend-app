@@ -214,6 +214,7 @@ export default {
                 title: 'عنوان',
                 price: 'قیمت',
                 priceHint: 'واحد قیمت محصولات تومان است',
+                category: 'دسته بندی'
               },
               noProducts: 'محصولی ثبت نشده است. لطفا محصول جدید ثبت کنید.',
               informationFields: 'اطلاعات شیوه پرداخت',
