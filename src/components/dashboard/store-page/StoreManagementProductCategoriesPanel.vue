@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useApi } from 'src/composables/use-api';
 import { onMounted, reactive, ref } from 'vue';
-import { IProductCategory } from 'components/models'
+import { IProductCategory } from 'components/models';
 import { useRoute } from 'vue-router';
 import { AxiosError } from 'axios';
 import { useI18n } from 'vue-i18n';
@@ -19,13 +19,15 @@ const addItem = ref<boolean>(false);
 const productCategories = ref<IProductCategory[]>([]);
 const productCategoryModel = reactive<IProductCategory>({
   id: '',
-  title: ''
+  title: '',
 });
 
 const getProductCategories = async () => {
-  const response = await api.get<IProductCategory[]>(`/shop/categories/${route.params.storeId}/all`)
+  const response = await api.get<IProductCategory[]>(
+    `/shop/categories/${route.params.storeId}/all`
+  );
   productCategories.value = response.data;
-}
+};
 
 const addProductCategory = async () => {
   try {
@@ -33,14 +35,23 @@ const addProductCategory = async () => {
       title: productCategoryModel.title,
       shop_id: route.params.storeId,
     });
-    notify.success(t('pages.panel.dashboard.manageStorePage.panels.productCategories.notifications.createProductCategorySuccess'));
+    notify.success(
+      t(
+        'pages.panel.dashboard.manageStorePage.panels.productCategories.notifications.createProductCategorySuccess'
+      )
+    );
+    addItem.value = false;
     await getProductCategories();
   } catch (err) {
     if (err instanceof AxiosError) {
-      notify.error(t('pages.panel.dashboard.manageStorePage.panels.productCategories.notifications.createProductCategoryError'))
+      notify.error(
+        t(
+          'pages.panel.dashboard.manageStorePage.panels.productCategories.notifications.createProductCategoryError'
+        )
+      );
     }
   }
-}
+};
 
 const deleteProductCategory = async (productCategoryId: string) => {
   try {
@@ -63,28 +74,27 @@ const deleteProductCategory = async (productCategoryId: string) => {
 onMounted(async () => {
   await getProductCategories();
 });
-
 </script>
 
 <template>
   <q-card class="q-pa-lg" bordered flat>
     <q-card-section>
       <div class="row justify-between items-center q-mb-md">
-      <div class="text-h6">
-        {{
-          $t(
-            'pages.panel.dashboard.manageStorePage.panels.productCategories.title'
-          )
-        }}
+        <div class="text-h6">
+          {{
+            $t(
+              'pages.panel.dashboard.manageStorePage.panels.productCategories.title'
+            )
+          }}
+        </div>
+        <q-btn
+          :icon="addItem ? 'expand_less' : 'expand_more'"
+          :label="$t('general.new')"
+          size="sm"
+          color="accent"
+          @click="addItem = !addItem"
+        />
       </div>
-      <q-btn
-        :icon="addItem ? 'expand_less' : 'expand_more'"
-        :label="$t('general.new')"
-        size="sm"
-        color="accent"
-        @click="addItem = !addItem"
-      />
-    </div>
     </q-card-section>
     <q-card-section>
       <q-card v-show="addItem" class="q-pa-md full-width" bordered square flat>
@@ -128,34 +138,33 @@ onMounted(async () => {
     </q-card-section>
     <q-card-section>
       <div v-if="loading" class="flex justify-center items-lg-center">
-      <q-spinner-dots size="md" />
-    </div>
-    <template v-else>
-      <template v-if="!productCategories.length">
-        <p class="q-pa-none q-ma-none">
-          {{
-            $t(
-              'pages.panel.dashboard.manageStorePage.panels.productCategories.noProductCategories'
-            )
-          }}
-        </p>
-      </template>
+        <q-spinner-dots size="md" />
+      </div>
       <template v-else>
-        <div class="row q-gutter-sm">
-          <template v-for="(x, idx) in productCategories" :key="idx">
-            <product-category-item
-              :product-category="x"
-              show-edit
-              show-delete
-              :delete-fn="deleteProductCategory"
-            ></product-category-item>
-          </template>
-        </div>
+        <template v-if="!productCategories.length">
+          <p class="q-pa-none q-ma-none">
+            {{
+              $t(
+                'pages.panel.dashboard.manageStorePage.panels.productCategories.noProductCategories'
+              )
+            }}
+          </p>
+        </template>
+        <template v-else>
+          <div class="row q-gutter-sm">
+            <template v-for="(x, idx) in productCategories" :key="idx">
+              <product-category-item
+                :product-category="x"
+                show-edit
+                show-delete
+                :delete-fn="deleteProductCategory"
+              ></product-category-item>
+            </template>
+          </div>
+        </template>
       </template>
-    </template>
     </q-card-section>
   </q-card>
 </template>
 
-<style scoped lang="scss">
-</style>
+<style scoped lang="scss"></style>

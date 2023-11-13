@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { IProduct } from 'src/components/models';
+import { IProduct, IProductCategory } from 'src/components/models';
 import { useApi } from 'src/composables/use-api';
 import { useNotify } from 'src/composables/use-notify';
 import { reactive, ref } from 'vue';
@@ -12,6 +12,7 @@ const props = defineProps<{
   showEdit?: boolean;
   showDelete?: boolean;
   deleteFn?: (productId: string) => void;
+  categories: IProductCategory[];
 }>();
 
 const { api, loading } = useApi();
@@ -31,9 +32,20 @@ const revertModel = () => {
   });
 };
 
+const productCategory = ref(props.product.category?.id);
+
 const updateModel = async () => {
   try {
-    await api.put<IProduct>(`/shop/products/${props.product.id}`, productModel);
+    const { data } = await api.put<IProduct>(
+      `/shop/products/${props.product.id}`,
+      {
+        ...productModel,
+        category_id: productCategory.value,
+      }
+    );
+    Object.assign(productModel, {
+      ...data,
+    });
     notify.success(
       t(
         'pages.panel.dashboard.manageStorePage.panels.productManagement.notifications.updateProductSuccess'
@@ -48,6 +60,7 @@ const updateModel = async () => {
     revertModel();
   } finally {
     isEdit.value = false;
+    productCategory.value = productModel.category.id;
   }
 };
 </script>
@@ -128,6 +141,54 @@ const updateModel = async () => {
         </template>
         <template v-else>
           <div class="text-body1">{{ productModel.title }}</div>
+        </template>
+      </div>
+      <div class="column q-mb-md">
+        <div class="text-grey-8">
+          {{
+            $t(
+              'pages.panel.dashboard.manageStorePage.panels.productManagement.fields.title'
+            )
+          }}
+        </div>
+        <template v-if="isEdit">
+          <q-input type="text" v-model="productModel.title" clearable />
+        </template>
+        <template v-else>
+          <div class="text-body1">{{ productModel.title }}</div>
+        </template>
+      </div>
+      <div class="column q-mb-md">
+        <div class="text-grey-8">
+          {{
+            $t(
+              'pages.panel.dashboard.manageStorePage.panels.productManagement.fields.category'
+            )
+          }}
+        </div>
+        <template v-if="isEdit">
+          <q-select
+            color="accent"
+            lazy-rules
+            class="q-my-md"
+            :options="categories.map((x) => ({ label: x.title, value: x.id }))"
+            :loading="loading"
+            square
+            filled
+            dense
+            :label="`${$t(
+              'pages.panel.dashboard.manageStorePage.panels.productManagement.fields.category'
+            )} *`"
+            v-model="productCategory"
+            emit-value
+            map-options
+          >
+          </q-select>
+        </template>
+        <template v-else>
+          <div class="text-body1">
+            {{ productModel.category?.title || 'بدون دسته بندی' }}
+          </div>
         </template>
       </div>
       <!-- <div class="text-caption text-grey">
