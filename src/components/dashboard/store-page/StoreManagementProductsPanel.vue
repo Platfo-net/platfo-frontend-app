@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue';
-import {IProduct, IProductCategory} from 'components/models';
+import { IProduct, IProductCategory } from 'components/models';
 import { useApi } from 'src/composables/use-api';
 import { useRoute } from 'vue-router';
 import { ICreateProduct, IPaginatedResponse } from 'src/composables/types';
@@ -22,9 +22,11 @@ const getProducts = async () => {
 };
 
 const getProductCategories = async () => {
-  const response = await api.get<IProductCategory[]>(`/shop/categories/${route.params.storeId}/all`)
+  const response = await api.get<IProductCategory[]>(
+    `/shop/categories/${route.params.storeId}/all`
+  );
   productCategories.value = response.data;
-}
+};
 
 const createNewProduct = async () => {
   try {
@@ -75,10 +77,7 @@ const productModel = reactive<ICreateProduct>({
 });
 
 onMounted(async () => {
-  await Promise.all([
-    getProducts(),
-    getProductCategories()
-  ])
+  await Promise.all([getProducts(), getProductCategories()]);
 });
 </script>
 
@@ -120,15 +119,29 @@ onMounted(async () => {
                 $t('general.fields.requiredStringField'),
             ]"
           />
-          <q-select color="accent"
-                    lazy-rules class="q-mb-lg" :options="productCategories.map(x => ({ label: x.title, value: x.id }))"
-                    :loading="loading" square filled dense :label="`${$t(
+          <q-select
+            color="accent"
+            lazy-rules
+            class="q-mb-lg"
+            :options="
+              productCategories.map((x) => ({ label: x.title, value: x.id }))
+            "
+            :loading="loading"
+            square
+            filled
+            dense
+            :label="`${$t(
               'pages.panel.dashboard.manageStorePage.panels.productManagement.fields.category'
-            )} *`" v-model="productModel.category_id" emit-value map-options :rules="[
+            )} *`"
+            v-model="productModel.category_id"
+            emit-value
+            map-options
+            :rules="[
               (val) =>
                 (val && val.length > 0) ||
                 $t('general.fields.requiredStringField'),
-            ]">
+            ]"
+          >
           </q-select>
           <q-input
             class="q-mb-lg"
@@ -171,7 +184,11 @@ onMounted(async () => {
               icon="check"
               :label="$t('general.add')"
               size="sm"
-              :disable="!productModel.title.length || !productModel.price || !productModel.category_id"
+              :disable="
+                !productModel.title.length ||
+                !productModel.price ||
+                !productModel.category_id
+              "
             ></q-btn>
           </div>
         </q-form>
@@ -198,6 +215,7 @@ onMounted(async () => {
               show-edit
               show-delete
               :delete-fn="deleteProduct"
+              :categories="productCategories"
             />
           </template>
         </div>
