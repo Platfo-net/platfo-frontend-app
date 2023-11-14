@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue';
 import { useApi } from 'src/composables/use-api';
 import { useNotify } from 'src/composables/use-notify';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from 'stores/auth-store';
-import { ILoginApiResponse } from 'stores/types';
-import { IForgotPasswordState } from 'src/types';
+import { IForgotPasswordResponse } from 'stores/types';
 import { useI18n } from 'vue-i18n';
 
 const { api } = useApi();
@@ -14,22 +12,20 @@ const router = useRouter();
 const authStore = useAuthStore();
 const { t } = useI18n();
 
-const forgotPasswordState = reactive<IForgotPasswordState>({
-  phone_number: '',
-  phone_country_code: '+98',
-});
-
 const handleFormSubmit = async () => {
   try {
-    const { data } = await api.post<ILoginApiResponse>(
-      '/auth/forgot-password',
-      forgotPasswordState
-    );
+    const {
+      data: { token },
+    } = await api.post<IForgotPasswordResponse>('/auth/forgot-password', {
+      phone_number: authStore.changePasswordState.phone_number,
+      phone_country_code: authStore.changePasswordState.phone_country_code,
+    });
     notify.success(
       t('pages.public.forgotPassword.notifications.getTokenSuccess')
     );
+    authStore.actions.setChangePasswordStateToken(token);
     await router.replace({
-      name: 'LoginPage',
+      name: 'ChangePasswordPage',
     });
   } catch (err) {
     notify.error(t('pages.public.forgotPassword.notifications.getTokenError'));
@@ -48,7 +44,7 @@ const handleFormSubmit = async () => {
         <div class="q-gutter-md">
           <q-input
             name="phone_number"
-            v-model="forgotPasswordState.phone_number"
+            v-model="authStore.changePasswordState.phone_number"
             type="text"
             :label="$t('pages.public.login.fields.phoneNumber')"
             color="dark"
@@ -64,7 +60,7 @@ const handleFormSubmit = async () => {
           class="full-width q-mt-md"
           :label="$t('pages.public.forgotPassword.getToken')"
           type="submit"
-          :disable="forgotPasswordState.phone_number.length < 11"
+          :disable="authStore.changePasswordState.phone_number.length < 11"
         />
       </form>
       <div class="flex column justify-center end q-mt-md">
