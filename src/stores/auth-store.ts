@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { reactive, ref } from 'vue';
 import { AuthState, ILoginApiResponse } from 'stores/types';
 import { LocalStorage } from 'quasar';
-import { IRegisterFormState } from 'src/types';
+import { IChangePasswordFormState, IRegisterFormState } from 'src/types';
 
 const LS_AUTH_KEY = 'authentication';
 
@@ -22,10 +22,20 @@ export const useAuthStore = defineStore('auth_store', () => {
     phone_country_code: '+98',
     phone_number: '',
   });
+
+  const changePasswordState = reactive<IChangePasswordFormState>({
+    code: null,
+    password: '',
+    phone_country_code: '+98',
+    phone_number: '',
+    token: '',
+  });
+
   const otpToken = ref('');
   return {
     state,
     registerState,
+    changePasswordState,
     otpToken,
     actions: {
       setAuthState(authResponse: ILoginApiResponse) {
@@ -47,6 +57,15 @@ export const useAuthStore = defineStore('auth_store', () => {
       },
       setOtpToken(token: string) {
         otpToken.value = token;
+      },
+      setChangePasswordStateToken(token: string) {
+        changePasswordState.token = token;
+      },
+      clearChangePasswordState() {
+        changePasswordState.password = '';
+        changePasswordState.phone_number = '';
+        changePasswordState.code = null;
+        changePasswordState.token = '';
       },
     },
   };

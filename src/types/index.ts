@@ -6,6 +6,14 @@ export interface IRegisterFormState {
   password: string;
 }
 
+export interface IChangePasswordFormState {
+  phone_number: string;
+  phone_country_code: string;
+  code: number | null;
+  password: string;
+  token: string;
+}
+
 export interface IForgotPasswordState {
   phone_number: string;
   phone_country_code: string;
