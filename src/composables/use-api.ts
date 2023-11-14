@@ -13,7 +13,7 @@ export const useApi = () => {
   const loading = ref(false);
 
   const api = axios.create({
-    baseURL: 'https://dev-api.platfo.net/api/v1',
+    baseURL: process.env.API_BASEURL,
   });
 
   api.interceptors.request.use(

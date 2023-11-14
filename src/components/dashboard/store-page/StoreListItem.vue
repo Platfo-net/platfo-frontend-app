@@ -13,7 +13,10 @@ const props = defineProps<IShop>();
         size="sm"
         color="white"
         text-color="dark"
-        :to="{ name: 'ManageStorePage', params: { storeId: props.id } }"
+        :to="{
+          name: 'ManageStoreBasicInformation',
+          params: { storeId: props.id },
+        }"
         >{{
           $t('pages.panel.dashboard.storeListPage.storeListItem.manage')
         }}</q-btn

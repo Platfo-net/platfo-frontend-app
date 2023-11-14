@@ -28,6 +28,7 @@ export default {
     },
     shopOutOfReach: 'فروشگاه در دسترس نیست. لطفاً بعدا تلاش کنید.',
     backToBot: 'بازگشت به بات',
+    platfoSystemError: 'خطای سیستمی رخ داده است. لطفا با پشتیبانی تماس بگیرید.',
   },
   layout: {
     appHeader: 'پلتفو',
@@ -204,6 +205,7 @@ export default {
             basic: 'اطلاعات پایه',
             products: 'محصولات',
             paymentConfiguration: 'تنظیمات پرداخت',
+            productCategories: 'دسته بندی محصولات',
           },
           panels: {
             basicInformation: {
@@ -261,6 +263,32 @@ export default {
               messages: {
                 deleteAlertMessage1: 'آیا از حذف این محصول اطمینان دارید؟',
                 deleteAlertMessage2: 'این مصحول برای همیشه از بین خواهد رفت.',
+              },
+            },
+            productCategories: {
+              title: 'دسته بندی محصولات',
+              fields: {
+                title: '* عنوان',
+                titleHint: ''
+              },
+              noProductCategories:
+                'دسته بندی ثبت نشده است. لطفا دسته بندی جدید ثبت کنید.',
+              notifications: {
+                createProductCategorySuccess:
+                  'ایجاد دسته بندی جدید با موفقیت انجام شد.',
+                createProductCategoryError:
+                  'ایجاد دسته بندی جدید با خطا مواجه شد.',
+                deleteProductCategorySuccess:
+                  'حذف دسته بندی با موفقیت انجام شد.',
+                deleteProductCategoryError: 'حذف دسته بندی با خطا مواجه شد.',
+                updateProductCategorySuccess:
+                  'ویرایش دسته بندی با موفقیت انجام شد.',
+                updateProductCategoryError: 'ویرایش دسته بندی با خطا مواجه شد.',
+              },
+              messages: {
+                deleteAlertMessage1: 'آیا از حذف این دسته بندی اطمینان دارید؟',
+                deleteAlertMessage2:
+                  'این دسته بندی و محصولات مربوطه برای همیشه از بین خواهند رفت.',
               },
             },
           },
