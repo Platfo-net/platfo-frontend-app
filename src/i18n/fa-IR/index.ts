@@ -24,6 +24,7 @@ export default {
       requiredStringField: 'این فیلد نباید خالی باشد',
       requiredNumberField: 'مقدار عددی وارد کنید',
       requiredNumberFieldPositiveValue: 'مقدار عددی این فیلد باید مثبت باشد',
+      passwordsDoNotMatch: 'گذر واژه وارد شده یکسان نیست'
     },
     shopOutOfReach: 'فروشگاه در دسترس نیست. لطفاً بعدا تلاش کنید.',
     backToBot: 'بازگشت به بات',
@@ -46,6 +47,7 @@ export default {
           password: 'پسوورد',
         },
         notUser: 'هنوز کاربر نیستید؟',
+        forgotPassword: 'فراموشی رمز عبور',
         registerHere: 'اینجا ثبت نام کن.',
         notifications: {
           loginSuccess: 'ورود موفقیت آمیز',
@@ -69,6 +71,39 @@ export default {
           registerError: 'شماره یا پسوورد نادرست بود',
         },
         register: 'ثبت نام',
+      },
+      forgotPassword: {
+        title: 'فراموشی رمز عبور',
+        fields: {
+          phoneNumber: 'شماره موبایل',
+          phoneNumberHint: 'حداقل 10 رفم و با پسوند صفر. مثال: 09xxxxxxxxx',
+        },
+        notifications: {
+          getTokenSuccess: 'کد تایید ارسال شد',
+          getTokenError: 'خطا در ارسال کد تایید',
+        },
+        notUser: 'هنوز کاربر نیستید؟',
+        registerHere: 'اینجا ثبت نام کن.',
+        loginHere: 'اینجا وارد شوید.',
+        isUser: 'کاربر هستید؟',
+        getToken: 'دریافت کد تایید',
+      },
+      changePassword: {
+        title: 'تغییر رمز عبور',
+        fields: {
+          code: 'کد تایید',
+          newPassword: 'گذرواژه جدید',
+          repeatNewPassword: 'تکرار گذرواژه',
+        },
+        notifications: {
+          changePasswordSuccess: 'گذر واژه با موفقیت تغییر یافت',
+          changePasswordError: 'تغییر گذرواژه با خطا مواجه شد',
+        },
+        notUser: 'هنوز کاربر نیستید؟',
+        registerHere: 'اینجا ثبت نام کن.',
+        loginHere: 'اینجا وارد شوید.',
+        isUser: 'کاربر هستید؟',
+        resetPassword: 'تغییر رمز عبور',
       },
     },
     otp: {
