@@ -2,6 +2,7 @@ import { RouteRecordRaw } from 'vue-router';
 import { useAuthStore } from 'stores/auth-store';
 import { useApi } from 'src/composables/use-api';
 import { AxiosError } from 'axios';
+import { useNotify } from 'src/composables/use-notify';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -145,6 +146,17 @@ const routes: RouteRecordRaw[] = [
         path: 'change-password',
         name: 'ChangePasswordPage',
         component: () => import('pages/public/ChangePasswordPage.vue'),
+        beforeEnter: async (to, from, next) => {
+          const authStore = useAuthStore();
+          const notify = useNotify();
+          if (!authStore.changePasswordState.token) {
+            return next({
+              name: 'LoginPage',
+            });
+          } else {
+            next();
+          }
+        }
       },
       {
         path: 'confirm-phone',
