@@ -142,6 +142,11 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/public/ForgotPasswordPage.vue'),
       },
       {
+        path: 'change-password',
+        name: 'ChangePasswordPage',
+        component: () => import('pages/public/ChangePasswordPage.vue'),
+      },
+      {
         path: 'confirm-phone',
         name: 'OtpPhoneConfirmationPage',
         component: () => import('pages/public/OtpPhoneConfirmationPage.vue'),
