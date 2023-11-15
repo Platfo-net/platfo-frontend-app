@@ -48,7 +48,7 @@ const shoppingCart = useShoppingCart();
                 currency: 'IRT',
               }).format(product.price * shoppingCart.getItemCount(product))
             }}
-            تومان
+            <i class="icony icony-toman"></i>
           </div>
         </div>
       </div>
