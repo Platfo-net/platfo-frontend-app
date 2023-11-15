@@ -73,8 +73,10 @@ const deletePaymentMethod = async (paymentMethodId: string) => {
       </div>
     </q-card-section>
     <q-card-section>
-      <base-loading-spinner :loading="loading"></base-loading-spinner>
-      <template v-if="!paymentMethods.length">
+      <template v-if="loading">
+        <base-loading-spinner :loading="loading"></base-loading-spinner>
+      </template>
+      <template v-else-if="!paymentMethods.length">
         <p class="q-pa-none q-ma-none">
           {{
             $t(
