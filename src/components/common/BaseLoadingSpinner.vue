@@ -6,9 +6,11 @@ defineProps<{
 
 <template>
   <q-inner-loading :showing="loading">
-    <q-spinner></q-spinner>
-    <div class="q-my-md">
-      {{ $t('general.gettingData') }}
+    <div class="flex column items-center justify-center">
+      <q-spinner></q-spinner>
+      <div class="q-my-md">
+        {{ $t('general.gettingData') }}
+      </div>
     </div>
   </q-inner-loading>
 </template>
