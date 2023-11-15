@@ -97,8 +97,8 @@ onMounted(async () => {
         />
       </div>
     </q-card-section>
-    <q-card-section>
-      <q-card v-show="addItem" class="q-pa-md full-width" bordered square flat>
+    <q-card-section v-if="addItem">
+      <q-card class="q-pa-md full-width" bordered square flat>
         <q-form @submit.prevent="addProductCategory">
           <q-input
             class="q-mb-lg"
