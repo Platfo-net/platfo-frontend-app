@@ -24,11 +24,12 @@ export default {
       requiredStringField: 'این فیلد نباید خالی باشد',
       requiredNumberField: 'مقدار عددی وارد کنید',
       requiredNumberFieldPositiveValue: 'مقدار عددی این فیلد باید مثبت باشد',
-      passwordsDoNotMatch: 'گذر واژه وارد شده یکسان نیست'
+      passwordsDoNotMatch: 'گذر واژه وارد شده یکسان نیست',
     },
     shopOutOfReach: 'فروشگاه در دسترس نیست. لطفاً بعدا تلاش کنید.',
     backToBot: 'بازگشت به بات',
     platfoSystemError: 'خطای سیستمی رخ داده است. لطفا با پشتیبانی تماس بگیرید.',
+    gettingData: 'در حال دریافت اطلاعات',
   },
   layout: {
     appHeader: 'پلتفو',
@@ -249,7 +250,7 @@ export default {
                 title: 'عنوان',
                 price: 'قیمت',
                 priceHint: 'واحد قیمت محصولات تومان است',
-                category: 'دسته بندی'
+                category: 'دسته بندی',
               },
               noProducts: 'محصولی ثبت نشده است. لطفا محصول جدید ثبت کنید.',
               informationFields: 'اطلاعات شیوه پرداخت',
@@ -270,7 +271,7 @@ export default {
               title: 'دسته بندی محصولات',
               fields: {
                 title: 'عنوان',
-                titleHint: ''
+                titleHint: '',
               },
               noProductCategories:
                 'دسته بندی ثبت نشده است. لطفا دسته بندی جدید ثبت کنید.',
