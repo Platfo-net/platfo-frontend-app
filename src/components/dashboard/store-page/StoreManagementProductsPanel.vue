@@ -7,6 +7,7 @@ import { ICreateProduct, IPaginatedResponse } from 'src/composables/types';
 import { useNotify } from 'src/composables/use-notify';
 import ProductItem from './ProductItem.vue';
 import { useI18n } from 'vue-i18n';
+import BaseLoadingSpinner from 'components/common/BaseLoadingSpinner.vue';
 const { api, loading } = useApi();
 const products = ref<IProduct[]>([]);
 const productCategories = ref<IProductCategory[]>([]);
@@ -195,7 +196,7 @@ onMounted(async () => {
       </q-card>
     </div>
     <div v-if="loading" class="flex justify-center items-lg-center">
-      <q-spinner-dots size="md" />
+      <base-loading-spinner loading></base-loading-spinner>
     </div>
     <template v-else>
       <template v-if="!products.length">
