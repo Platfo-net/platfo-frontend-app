@@ -12,7 +12,7 @@ const products = ref<IProduct[]>([]);
 const showOutOfOrderDialog = ref(false);
 const getShopProductsPaginatedResponse = async () => {
   const { data } = await api.get<IPaginatedResponse<IProduct>>(
-    `/shop/products/${route.params.shopId}/telegram-shop`
+    `/shop/products/telegram/${route.params.shopId}/all`
   );
   products.value = data.items;
 };
