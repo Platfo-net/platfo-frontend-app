@@ -5,6 +5,7 @@ import { IPaginatedResponse } from 'src/composables/types';
 import { IProduct } from 'components/models';
 import { onMounted, ref } from 'vue';
 import TelegramShopProductItem from 'components/public/shop/TelegramShopProductItem.vue';
+import BaseLoadingSpinner from 'components/common/BaseLoadingSpinner.vue';
 
 const route = useRoute();
 const { api, loading } = useApi();
@@ -51,9 +52,7 @@ onMounted(async () => {
       </q-card>
     </q-dialog>
     <template v-if="loading">
-      <q-inner-loading :showing="loading">
-        <q-spinner-dots size="md" />
-      </q-inner-loading>
+      <base-loading-spinner loading></base-loading-spinner>
     </template>
     <template v-else-if="products.length > 0">
       <div class="row" v-for="product in products" :key="product.id">
