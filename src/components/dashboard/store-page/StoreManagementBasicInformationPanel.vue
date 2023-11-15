@@ -1,59 +1,57 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue';
-import { IShop } from 'components/models';
-import { useApi } from 'src/composables/use-api';
-import { useRoute } from 'vue-router';
+import { onMounted, reactive, ref } from 'vue';
 import { useNotify } from 'src/composables/use-notify';
 import { useI18n } from 'vue-i18n';
-
+import { useApi } from 'src/composables/use-api';
+import { useRoute } from 'vue-router';
+import { IShop } from 'components/models';
+import BaseLoadingSpinner from 'components/common/BaseLoadingSpinner.vue';
 const { api, loading } = useApi();
-
-const props = defineProps({
-  title: String,
-  category: String,
-  description: String,
-});
 
 const { t } = useI18n();
 
-const shopModel = reactive<Partial<IShop>>({
-  description: props.description,
-  title: props.title,
-  category: props.category,
-});
+const shopModel = ref<Partial<IShop>>({});
+const updateModel = ref<Partial<IShop>>({});
 
 const isEdit = ref(false);
 
 const route = useRoute();
 const notify = useNotify();
 
-const revertShopModel = () => {
-  Object.assign(shopModel, {
-    description: props.description,
-    title: props.title,
-    category: props.category,
-  });
-};
-
 const updateShop = async () => {
   try {
-    await api.put<IShop>(`/shop/shop/${route.params.storeId}`, shopModel);
+    await api.put<IShop>(
+      `/shop/shop/${route.params.storeId}`,
+      updateModel.value
+    );
     notify.success(
       t(
         'pages.panel.dashboard.manageStorePage.panels.basicInformation.notifications.updateShopSuccess'
       )
     );
+    shopModel.value = updateModel.value;
   } catch (err) {
     notify.error(
       t(
         'pages.panel.dashboard.manageStorePage.panels.basicInformation.notifications.updateShopError'
       )
     );
-    revertShopModel();
+    updateModel.value = shopModel.value;
   } finally {
     isEdit.value = false;
   }
 };
+
+const toggleEdit = () => {
+  isEdit.value = !isEdit.value;
+  Object.assign(updateModel.value, shopModel.value);
+};
+
+onMounted(async () => {
+  const r = await api.get(`/shop/shop/${route.params.storeId}`);
+  shopModel.value = r.data;
+  Object.assign(updateModel.value, shopModel.value);
+});
 </script>
 
 <template>
@@ -66,6 +64,7 @@ const updateShop = async () => {
           )
         }}
       </div>
+      <base-loading-spinner :loading="loading"></base-loading-spinner>
       <div class="q-gutter-sm">
         <q-btn
           :icon="!isEdit ? 'edit' : 'close'"
@@ -73,7 +72,7 @@ const updateShop = async () => {
           size="sm"
           :color="!isEdit ? 'accent' : 'negative'"
           :flat="!isEdit"
-          @click="isEdit = !isEdit"
+          @click="toggleEdit"
           :disable="loading"
         >
           <q-tooltip v-if="isEdit">
@@ -102,7 +101,7 @@ const updateShop = async () => {
           }}
         </div>
         <template v-if="isEdit">
-          <q-input type="text" v-model="shopModel.title" />
+          <q-input type="text" v-model="updateModel.title" />
         </template>
         <template v-else>
           <div class="text-body1">
@@ -119,7 +118,7 @@ const updateShop = async () => {
           }}
         </div>
         <template v-if="isEdit">
-          <q-input type="text" v-model="shopModel.category" />
+          <q-input type="text" v-model="updateModel.category" />
         </template>
         <template v-else>
           <div class="text-body1">
@@ -136,7 +135,7 @@ const updateShop = async () => {
           }}
         </div>
         <template v-if="isEdit">
-          <q-input type="text" v-model="shopModel.description" />
+          <q-input type="text" v-model="updateModel.description" />
         </template>
         <template v-else>
           <div class="text-body1">
