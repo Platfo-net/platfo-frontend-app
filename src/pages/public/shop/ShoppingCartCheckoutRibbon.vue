@@ -133,7 +133,7 @@ onMounted(async () => {
       color="primary"
     />
     <div class="flex column text-dark">
-      <div class="text-bold">جمع سبد خرید</div>
+      <div class="text-bold">{{ $t('general.payable') }}</div>
       <div>
         {{
           Intl.NumberFormat('fa', {
