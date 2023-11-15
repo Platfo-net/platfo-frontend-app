@@ -7,6 +7,7 @@ import { AxiosError } from 'axios';
 import { useI18n } from 'vue-i18n';
 import { useNotify } from 'src/composables/use-notify';
 import ProductCategoryItem from './ProductCategoryItem.vue';
+import BaseLoadingSpinner from 'components/common/BaseLoadingSpinner.vue';
 
 const { t } = useI18n();
 
@@ -137,31 +138,29 @@ onMounted(async () => {
       </q-card>
     </q-card-section>
     <q-card-section>
-      <div v-if="loading" class="flex justify-center items-lg-center">
-        <q-spinner-dots size="md" />
-      </div>
+      <template v-if="loading">
+        <base-loading-spinner :loading="loading"></base-loading-spinner>
+      </template>
+      <template v-else-if="!productCategories.length">
+        <p class="q-pa-none q-ma-none">
+          {{
+            $t(
+              'pages.panel.dashboard.manageStorePage.panels.productCategories.noProductCategories'
+            )
+          }}
+        </p>
+      </template>
       <template v-else>
-        <template v-if="!productCategories.length">
-          <p class="q-pa-none q-ma-none">
-            {{
-              $t(
-                'pages.panel.dashboard.manageStorePage.panels.productCategories.noProductCategories'
-              )
-            }}
-          </p>
-        </template>
-        <template v-else>
-          <div class="row q-gutter-sm">
-            <template v-for="(x, idx) in productCategories" :key="idx">
-              <product-category-item
-                :product-category="x"
-                show-edit
-                show-delete
-                :delete-fn="deleteProductCategory"
-              ></product-category-item>
-            </template>
-          </div>
-        </template>
+        <div class="row q-gutter-sm">
+          <template v-for="(x, idx) in productCategories" :key="idx">
+            <product-category-item
+              :product-category="x"
+              show-edit
+              show-delete
+              :delete-fn="deleteProductCategory"
+            ></product-category-item>
+          </template>
+        </div>
       </template>
     </q-card-section>
   </q-card>
