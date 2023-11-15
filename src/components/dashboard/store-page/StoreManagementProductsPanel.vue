@@ -84,7 +84,7 @@ onMounted(async () => {
 
 <template>
   <q-card class="q-pa-lg" bordered flat>
-    <div class="row justify-between items-center q-mb-md">
+    <q-card-section class="row justify-between items-center q-mb-md">
       <div class="text-h6">
         {{
           $t(
@@ -99,9 +99,9 @@ onMounted(async () => {
         color="accent"
         @click="addItem = !addItem"
       />
-    </div>
-    <div class="row q-my-md">
-      <q-card v-show="addItem" class="q-pa-md full-width" bordered square flat>
+    </q-card-section>
+    <div v-if="addItem" class="row q-my-md">
+      <q-card class="q-pa-md full-width" bordered square flat>
         <q-form @submit.prevent="createNewProduct">
           <q-input
             class="q-mb-lg"
@@ -195,10 +195,10 @@ onMounted(async () => {
         </q-form>
       </q-card>
     </div>
-    <div v-if="loading" class="flex justify-center items-lg-center">
+    <q-card-section v-if="loading">
       <base-loading-spinner loading></base-loading-spinner>
-    </div>
-    <template v-else>
+    </q-card-section>
+    <q-card-section v-else>
       <template v-if="!products.length">
         <p class="q-pa-none q-ma-none">
           {{
@@ -221,7 +221,7 @@ onMounted(async () => {
           </template>
         </div>
       </template>
-    </template>
+    </q-card-section>
   </q-card>
 </template>
 
