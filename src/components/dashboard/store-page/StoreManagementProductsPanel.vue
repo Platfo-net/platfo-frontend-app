@@ -210,7 +210,7 @@ onMounted(async () => {
       </template>
       <template v-else>
         <div class="row q-gutter-sm">
-          <template v-for="(product, idx) in products" :key="idx">
+          <template v-for="product in products" :key="product.id">
             <ProductItem
               :product="product"
               show-edit
