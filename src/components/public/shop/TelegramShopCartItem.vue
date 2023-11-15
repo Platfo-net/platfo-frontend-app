@@ -41,7 +41,6 @@ const shoppingCart = useShoppingCart();
           </div>
         </div>
         <div class="flex column">
-          <div>قیمت</div>
           <div>
             {{
               Intl.NumberFormat('fa', {
