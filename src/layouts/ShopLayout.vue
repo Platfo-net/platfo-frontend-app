@@ -1,5 +1,5 @@
 <template>
-  <q-layout class="font-vazir" view="lHh Lpr lFf" dir="rtl">
+  <q-layout class="font-vazir" view="lHh Lpr lFf">
     <q-footer bordered elevated class="bg-transparent blur">
       <q-slide-transition
         v-show="tab === 'shoppingCart' && shoppingCart.totalItems() > 0"
