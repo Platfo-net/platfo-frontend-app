@@ -3,6 +3,10 @@
   font-family: Vazirmatn, Roboto, serif;
 }
 
+.blur {
+  backdrop-filter: blur(12px);
+}
+
 body {
   background: white !important;
 }
