@@ -22,7 +22,7 @@ function closeWebApp() {
 const shopPaymentMethods = ref<IShopPaymentMethod[]>();
 const getShopPaymentMethods = async (): Promise<IShopPaymentMethod[]> => {
   const response = await api.get<IShopPaymentMethod[]>(
-    `/shop/payment-methods/${route.params.shopId}/telegram-shop/all`
+    `/shop/payment-methods/telegram/${route.params.shopId}/all`
   );
   return response.data;
 };
