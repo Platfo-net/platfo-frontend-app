@@ -106,7 +106,7 @@ const updateModel = async () => {
       bordered
       class="q-pa-md overflow-hidden card-hover non-selectable"
     >
-      <q-inner-loading :showing="loading" />
+      <!-- <q-inner-loading :showing="loading" /> -->
       <div class="row justify-end items-center q-mb-md q-gutter-sm">
         <q-btn
           :icon="!isEdit ? 'edit' : 'close'"
@@ -147,21 +147,6 @@ const updateModel = async () => {
         <div class="text-grey-8">
           {{
             $t(
-              'pages.panel.dashboard.manageStorePage.panels.productManagement.fields.title'
-            )
-          }}
-        </div>
-        <template v-if="isEdit">
-          <q-input type="text" v-model="productModel.title" clearable />
-        </template>
-        <template v-else>
-          <div class="text-body1">{{ productModel.title }}</div>
-        </template>
-      </div>
-      <div class="column q-mb-md">
-        <div class="text-grey-8">
-          {{
-            $t(
               'pages.panel.dashboard.manageStorePage.panels.productManagement.fields.category'
             )
           }}
@@ -172,7 +157,6 @@ const updateModel = async () => {
             lazy-rules
             class="q-my-md"
             :options="categories.map((x) => ({ label: x.title, value: x.id }))"
-            :loading="loading"
             square
             filled
             dense
