@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue';
-import { IProduct, IProductCategory } from 'components/models';
+import { IProduct, IProductCategory, IUploadProductImageResponse } from 'components/models';
 import { useApi } from 'src/composables/use-api';
 import { useRoute } from 'vue-router';
 import { ICreateProduct, IPaginatedResponse } from 'src/composables/types';
@@ -8,6 +8,8 @@ import { useNotify } from 'src/composables/use-notify';
 import ProductItem from './ProductItem.vue';
 import { useI18n } from 'vue-i18n';
 import BaseLoadingSpinner from 'components/common/BaseLoadingSpinner.vue';
+import BaseUploader from 'components/common/BaseUploader.vue';
+
 const { api, loading } = useApi();
 const products = ref<IProduct[]>([]);
 const productCategories = ref<IProductCategory[]>([]);
@@ -32,14 +34,22 @@ const getProductCategories = async () => {
 const createNewProduct = async () => {
   try {
     await api.post<IProduct>('/shop/products', {
-      ...productModel,
-      category_id: productModel.category_id,
+      ...productModel.value,
+      category_id: productModel.value.category_id,
     });
     notify.success(
       t(
         'pages.panel.dashboard.manageStorePage.panels.productManagement.notifications.createProductSuccess'
       )
     );
+    productModel.value = {
+      category_id: null,
+      currency: 'IRT',
+      image: '',
+      price: 0,
+      shop_id: route.params.storeId as string,
+      title: '',
+    };
     await getProducts();
     addItem.value = false;
   } catch (err) {
@@ -68,7 +78,7 @@ const deleteProduct = async (productId: string) => {
     );
   }
 };
-const productModel = reactive<ICreateProduct>({
+const productModel = ref<ICreateProduct>({
   category_id: null,
   currency: 'IRT',
   image: '',
@@ -76,6 +86,11 @@ const productModel = reactive<ICreateProduct>({
   shop_id: route.params.storeId as string,
   title: '',
 });
+
+const handleUploadedImage = (response: string) => {
+  const responseParsed = JSON.parse(response) as IUploadProductImageResponse;
+  productModel.value.image = responseParsed.filename;
+}
 
 onMounted(async () => {
   await Promise.all([getProducts(), getProductCategories()]);
@@ -103,6 +118,9 @@ onMounted(async () => {
     <div v-if="addItem" class="row q-my-md">
       <q-card class="q-pa-md full-width" bordered square flat>
         <q-form @submit.prevent="createNewProduct">
+          <div class="q-my-md">
+            <base-uploader @uploaded="handleUploadedImage"></base-uploader>
+          </div>
           <q-input
             class="q-mb-lg"
             square

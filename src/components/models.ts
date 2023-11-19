@@ -13,6 +13,7 @@ export interface ICategory {
 export interface IProduct {
   title: string;
   image: string;
+  image_url?: string;
   price: number;
   currency: string;
   id: string;
@@ -37,4 +38,10 @@ export interface IPaymentMethod {
 
 export interface ITelegramShopProductItemProps {
   product: IProduct;
+}
+
+
+export interface IUploadProductImageResponse {
+  filename: string;
+  url: string;
 }

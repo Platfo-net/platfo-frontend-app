@@ -31,6 +31,7 @@ export default {
     platfoSystemError: 'خطای سیستمی رخ داده است. لطفا با پشتیبانی تماس بگیرید.',
     gettingData: 'در حال دریافت اطلاعات',
     payable: 'قابل پرداخت',
+    upload2mbLimit: 'آپلود عکس (حداکثر ۲ مگابایت)',
   },
   layout: {
     appHeader: 'پلتفو',

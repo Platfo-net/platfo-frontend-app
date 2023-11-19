@@ -10,9 +10,7 @@ const shoppingCart = useShoppingCart();
     <div class="flex column q-pa-md">
       <div class="flex row" style="flex-wrap: nowrap;">
         <div class="full-width">
-          <div style="border-radius: 4px; overflow: hidden; width: 100px; height: 100px; object-fit: cover;">
-            <img src="data:image/webp;base64,UklGRmoBAABXRUJQVlA4TF4BAAAvY8AYAAUkRZIcSf//W57qtGr0TMNoVSTVFEmsyIyuUeeN6L8Dt5EUyXsMrSw+Ql5i+V9dXntvl6I84VbzEqy1XN5oQps9jj7WUCqUJtwmVXiKWmBzmtBiDS+ZjUQy1jThpnsP74gsMrJKExoaLzBvjb38LlZpwi3fVphXze+DNU0YpNDOyxj5SW80Ie7y/OdS5sEI1hXnDeonZZow7Chzr8RtPucJfil/G7RDYRNGPi5GCwpNGH4jkUV7mhC8maVklmhtsI+MJgzvUwLRkSawYz4rOpZLHCPQhEeRAqg8gT7qaAIxAkZtuqinCQ1u/Ak97lEG3PaTRnRr9eAJUYecsW4i6MNYmnCDEdT/jyZEKfytiWLk/0cTbiAKna/NRjSBfbb+G6hNRrD1XJF5wi1SBlDnNIF9VvzadANCVAVwSTSh7bI6fyMFI6EJbMrc9b79tvAYmsUTXmL5998rEg==" alt="Image">
-          </div>
+            <q-img style="border-radius: 4px; overflow: hidden; width: 100px; height: 100px; object-fit: cover;" class="shadow-3" :src="product.image_url" fit="cover" />
         </div>
         <div class="flex column full-width q-pa-sm">
             <div>{{ product.title }}</div>

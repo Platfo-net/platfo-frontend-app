@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { IProduct, IProductCategory } from 'src/components/models';
+import BaseUploader from 'components/common/BaseUploader.vue';
+import { IProduct, IProductCategory, IUploadProductImageResponse } from 'src/components/models';
 import { useApi } from 'src/composables/use-api';
 import { useNotify } from 'src/composables/use-notify';
 import { reactive, ref } from 'vue';
@@ -63,6 +64,13 @@ const updateModel = async () => {
     productCategory.value = productModel.category.id;
   }
 };
+
+const handleUploadedImage = (response: string) => {
+  const responseParsed = JSON.parse(response) as IUploadProductImageResponse;
+  productModel.image = responseParsed.filename;
+  productModel.image_url = responseParsed.url;
+}
+
 </script>
 
 <template>
@@ -126,6 +134,14 @@ const updateModel = async () => {
         />
         <template v-if="isEdit">
           <q-btn icon="save" size="sm" color="green" @click="updateModel" />
+        </template>
+      </div>
+      <div class="column q-mb-md">
+        <template v-if="isEdit">
+          <base-uploader @uploaded="handleUploadedImage"></base-uploader>
+        </template>
+        <template v-else>
+          <q-img :src="productModel.image_url" />
         </template>
       </div>
       <div class="column q-mb-md">
