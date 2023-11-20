@@ -24,9 +24,14 @@ export default {
       requiredStringField: 'این فیلد نباید خالی باشد',
       requiredNumberField: 'مقدار عددی وارد کنید',
       requiredNumberFieldPositiveValue: 'مقدار عددی این فیلد باید مثبت باشد',
+      passwordsDoNotMatch: 'گذر واژه وارد شده یکسان نیست',
     },
     shopOutOfReach: 'فروشگاه در دسترس نیست. لطفاً بعدا تلاش کنید.',
     backToBot: 'بازگشت به بات',
+    platfoSystemError: 'خطای سیستمی رخ داده است. لطفا با پشتیبانی تماس بگیرید.',
+    gettingData: 'در حال دریافت اطلاعات',
+    payable: 'قابل پرداخت',
+    upload2mbLimit: 'آپلود عکس (حداکثر ۲ مگابایت)',
   },
   layout: {
     appHeader: 'پلتفو',
@@ -45,6 +50,7 @@ export default {
           password: 'پسوورد',
         },
         notUser: 'هنوز کاربر نیستید؟',
+        forgotPassword: 'فراموشی رمز عبور',
         registerHere: 'اینجا ثبت نام کن.',
         notifications: {
           loginSuccess: 'ورود موفقیت آمیز',
@@ -68,6 +74,39 @@ export default {
           registerError: 'شماره یا پسوورد نادرست بود',
         },
         register: 'ثبت نام',
+      },
+      forgotPassword: {
+        title: 'فراموشی رمز عبور',
+        fields: {
+          phoneNumber: 'شماره موبایل',
+          phoneNumberHint: 'حداقل 10 رفم و با پسوند صفر. مثال: 09xxxxxxxxx',
+        },
+        notifications: {
+          getTokenSuccess: 'کد تایید ارسال شد',
+          getTokenError: 'خطا در ارسال کد تایید',
+        },
+        notUser: 'هنوز کاربر نیستید؟',
+        registerHere: 'اینجا ثبت نام کن.',
+        loginHere: 'اینجا وارد شوید.',
+        isUser: 'کاربر هستید؟',
+        getToken: 'دریافت کد تایید',
+      },
+      changePassword: {
+        title: 'تغییر رمز عبور',
+        fields: {
+          code: 'کد تایید',
+          newPassword: 'گذرواژه جدید',
+          repeatNewPassword: 'تکرار گذرواژه',
+        },
+        notifications: {
+          changePasswordSuccess: 'گذر واژه با موفقیت تغییر یافت',
+          changePasswordError: 'تغییر گذرواژه با خطا مواجه شد',
+        },
+        notUser: 'هنوز کاربر نیستید؟',
+        registerHere: 'اینجا ثبت نام کن.',
+        loginHere: 'اینجا وارد شوید.',
+        isUser: 'کاربر هستید؟',
+        resetPassword: 'تغییر رمز عبور',
       },
     },
     otp: {
@@ -169,6 +208,7 @@ export default {
             basic: 'اطلاعات پایه',
             products: 'محصولات',
             paymentConfiguration: 'تنظیمات پرداخت',
+            productCategories: 'دسته بندی محصولات',
           },
           panels: {
             basicInformation: {
@@ -212,6 +252,7 @@ export default {
                 title: 'عنوان',
                 price: 'قیمت',
                 priceHint: 'واحد قیمت محصولات تومان است',
+                category: 'دسته بندی',
               },
               noProducts: 'محصولی ثبت نشده است. لطفا محصول جدید ثبت کنید.',
               informationFields: 'اطلاعات شیوه پرداخت',
@@ -226,6 +267,32 @@ export default {
               messages: {
                 deleteAlertMessage1: 'آیا از حذف این محصول اطمینان دارید؟',
                 deleteAlertMessage2: 'این مصحول برای همیشه از بین خواهد رفت.',
+              },
+            },
+            productCategories: {
+              title: 'دسته بندی محصولات',
+              fields: {
+                title: 'عنوان',
+                titleHint: '',
+              },
+              noProductCategories:
+                'دسته بندی ثبت نشده است. لطفا دسته بندی جدید ثبت کنید.',
+              notifications: {
+                createProductCategorySuccess:
+                  'ایجاد دسته بندی جدید با موفقیت انجام شد.',
+                createProductCategoryError:
+                  'ایجاد دسته بندی جدید با خطا مواجه شد.',
+                deleteProductCategorySuccess:
+                  'حذف دسته بندی با موفقیت انجام شد.',
+                deleteProductCategoryError: 'حذف دسته بندی با خطا مواجه شد.',
+                updateProductCategorySuccess:
+                  'ویرایش دسته بندی با موفقیت انجام شد.',
+                updateProductCategoryError: 'ویرایش دسته بندی با خطا مواجه شد.',
+              },
+              messages: {
+                deleteAlertMessage1: 'آیا از حذف این دسته بندی اطمینان دارید؟',
+                deleteAlertMessage2:
+                  'این دسته بندی و محصولات مربوطه برای همیشه از بین خواهند رفت.',
               },
             },
           },

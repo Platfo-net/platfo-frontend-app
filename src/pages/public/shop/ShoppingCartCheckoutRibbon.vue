@@ -22,7 +22,7 @@ function closeWebApp() {
 const shopPaymentMethods = ref<IShopPaymentMethod[]>();
 const getShopPaymentMethods = async (): Promise<IShopPaymentMethod[]> => {
   const response = await api.get<IShopPaymentMethod[]>(
-    `/shop/payment-methods/${route.params.shopId}/telegram-shop/all`
+    `/shop/payment-methods/telegram/${route.params.shopId}/all`
   );
   return response.data;
 };
@@ -78,21 +78,25 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="flex row q-pa-md items-center justify-between bg-accent">
+  <div
+    class="flex row q-pa-md items-center justify-between blur"
+    style="border-bottom: 1px solid #e2e2e2"
+  >
     <q-dialog class="font-vazir" v-model="showConfirmDialog">
       <q-card>
         <q-card-section dir="rtl">
-          <div class="text-h4 text-negative text-bold">هشدار</div>
+          <div class="text-negative text-bold">هشدار</div>
         </q-card-section>
         <q-separator />
         <q-card-section dir="rtl">
           <p>آیا از محصولات انتخاب شده در سبد خرید اطمینان دارید؟</p>
         </q-card-section>
         <q-card-actions>
-          <q-btn color="primary" :loading="loading" @click="checkout"
+          <q-btn size="sm" color="primary" :loading="loading" @click="checkout"
             >بله</q-btn
           >
           <q-btn
+            size="sm"
             color="negative"
             :disable="loading"
             @click="showConfirmDialog = false"
@@ -105,7 +109,7 @@ onMounted(async () => {
     <q-dialog class="font-vazir" v-model="showCheckoutSuccessDialog">
       <q-card>
         <q-card-section dir="rtl">
-          <div class="text-h4 text-primary text-bold">ثبت موفق</div>
+          <div class="text-primary text-bold">ثبت موفق</div>
         </q-card-section>
         <q-separator />
         <q-card-section dir="rtl">
@@ -117,26 +121,26 @@ onMounted(async () => {
           </p>
         </q-card-section>
         <q-card-actions align="center">
-          <q-btn color="primary" @click="cleanup">بازگشت به بات</q-btn>
+          <q-btn size="sm" color="primary" @click="cleanup"
+            >بازگشت به بات</q-btn
+          >
         </q-card-actions>
       </q-card>
     </q-dialog>
     <q-btn
       @click="showConfirmDialog = true"
       label="ثبت سفارش"
-      color="white"
-      text-color="accent"
-      class="text-bold"
+      color="primary"
     />
-    <div class="flex column">
-      <div class="text-bold">جمع سبد خرید</div>
+    <div class="flex column text-dark">
+      <div class="text-bold">{{ $t('general.payable') }}</div>
       <div>
         {{
           Intl.NumberFormat('fa', {
             currency: 'IRT',
           }).format(shoppingCart.totalCartAmount())
         }}
-        تومان
+        <i class="icony icony-toman"></i>
       </div>
     </div>
   </div>

@@ -11,7 +11,7 @@
 const { configure } = require('quasar/wrappers');
 const path = require('path');
 
-module.exports = configure(function (/* ctx */) {
+module.exports = configure(function (ctx) {
   return {
     eslint: {
       // fix: true,
@@ -64,7 +64,7 @@ module.exports = configure(function (/* ctx */) {
 
       // publicPath: '/',
       // analyze: true,
-      // env: {},
+      env: require('dotenv').config().parsed,
       // rawDefine: {}
       // ignorePublicFolder: true,
       // minify: false,

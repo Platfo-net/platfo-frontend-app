@@ -5,6 +5,7 @@ import { onMounted, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { IPaymentMethod, IProduct } from 'components/models';
 import PaymentMethodItem from 'components/dashboard/store-page/PaymentMethodItem.vue';
+import BaseLoadingSpinner from 'components/common/BaseLoadingSpinner.vue';
 
 const { api, loading } = useApi();
 const route = useRoute();
@@ -73,9 +74,7 @@ const deletePaymentMethod = async (paymentMethodId: string) => {
     </q-card-section>
     <q-card-section>
       <template v-if="loading">
-        <q-inner-loading :showing="loading">
-          <q-spinner-dots size="md" />
-        </q-inner-loading>
+        <base-loading-spinner :loading="loading"></base-loading-spinner>
       </template>
       <template v-else-if="!paymentMethods.length">
         <p class="q-pa-none q-ma-none">

@@ -11,6 +11,10 @@ export interface ILoginApiResponse {
   token_type: string;
 }
 
+export interface IForgotPasswordResponse {
+  token: string;
+}
+
 export interface IShoppingCartItem {
   // product_id: string;
   product: IProduct;

@@ -23,8 +23,10 @@ const showPass = ref(true);
 
 const handleFormSubmit = async () => {
   try {
-    const {data} = await api
-      .post<ILoginApiResponse>('/auth/access-token-phone-number', loginState);
+    const { data } = await api.post<ILoginApiResponse>(
+      '/auth/access-token-phone-number',
+      loginState
+    );
     notify.success(t('pages.public.login.notifications.loginSuccess'));
     authStore.actions.setAuthState(data);
     await router.replace({
@@ -74,6 +76,11 @@ const handleFormSubmit = async () => {
               />
             </template>
           </q-input>
+          <small class="flex justify-end">
+            <router-link :to="{ name: 'ForgotPasswordPage' }">{{
+              $t('pages.public.login.forgotPassword')
+            }}</router-link>
+          </small>
         </div>
         <q-btn
           color="dark"
@@ -85,7 +92,7 @@ const handleFormSubmit = async () => {
           "
         />
       </form>
-      <div class="flex row justify-center items-center q-mt-md">
+      <div class="flex column justify-center items-center q-mt-md">
         <p>
           {{ $t('pages.public.login.notUser') }}
           <router-link :to="{ name: 'RegisterPage' }">{{

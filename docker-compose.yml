@@ -8,3 +8,5 @@ services:
     command: "nginx"
     ports:
       - 5050:80
+    env_file:
+      - .env

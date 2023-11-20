@@ -11,7 +11,7 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title> {{$t('layout.appHeader')}} </q-toolbar-title>
+        <q-toolbar-title> {{ $t('layout.appHeader') }} </q-toolbar-title>
       </q-toolbar>
     </q-header>
 

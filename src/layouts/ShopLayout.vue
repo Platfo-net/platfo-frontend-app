@@ -1,6 +1,6 @@
 <template>
-  <q-layout class="font-vazir" view="lHh Lpr lFf" dir="rtl">
-    <q-footer elevated>
+  <q-layout class="font-vazir" view="lHh Lpr lFf">
+    <q-footer bordered elevated class="bg-transparent blur">
       <q-slide-transition
         v-show="tab === 'shoppingCart' && shoppingCart.totalItems() > 0"
       >
@@ -14,20 +14,23 @@
           dense
           narrow-indicator
           shrink
+          active-color="primary"
+          content-class="text-black"
+          indicator-color="transparent"
         >
           <q-route-tab
             name="products"
             icon="home"
             label="محصولات"
             :to="{ name: 'ShopProductsListPage' }"
-            exact
+            :ripple="false"
           />
           <q-route-tab
             name="shoppingCart"
             icon="shopping_cart"
             label="سبد خرید"
             :to="{ name: 'ShopShoppingCartPage' }"
-            exact
+            :ripple="false"
           >
             <q-badge
               v-if="shoppingCart.totalItems() > 0"
@@ -41,7 +44,7 @@
         </q-tabs>
       </q-toolbar>
     </q-footer>
-    <q-page-container>
+    <q-page-container class="bg-grey-1">
       <router-view />
     </q-page-container>
   </q-layout>

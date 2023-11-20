@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { IProduct } from 'src/components/models';
+import BaseUploader from 'components/common/BaseUploader.vue';
+import { IProduct, IProductCategory, IUploadProductImageResponse } from 'src/components/models';
 import { useApi } from 'src/composables/use-api';
 import { useNotify } from 'src/composables/use-notify';
 import { reactive, ref } from 'vue';
@@ -12,6 +13,7 @@ const props = defineProps<{
   showEdit?: boolean;
   showDelete?: boolean;
   deleteFn?: (productId: string) => void;
+  categories: IProductCategory[];
 }>();
 
 const { api, loading } = useApi();
@@ -31,9 +33,20 @@ const revertModel = () => {
   });
 };
 
+const productCategory = ref(props.product.category?.id);
+
 const updateModel = async () => {
   try {
-    await api.put<IProduct>(`/shop/products/${props.product.id}`, productModel);
+    const { data } = await api.put<IProduct>(
+      `/shop/products/${props.product.id}`,
+      {
+        ...productModel,
+        category_id: productCategory.value,
+      }
+    );
+    Object.assign(productModel, {
+      ...data,
+    });
     notify.success(
       t(
         'pages.panel.dashboard.manageStorePage.panels.productManagement.notifications.updateProductSuccess'
@@ -48,8 +61,16 @@ const updateModel = async () => {
     revertModel();
   } finally {
     isEdit.value = false;
+    productCategory.value = productModel.category.id;
   }
 };
+
+const handleUploadedImage = (response: string) => {
+  const responseParsed = JSON.parse(response) as IUploadProductImageResponse;
+  productModel.image = responseParsed.filename;
+  productModel.image_url = responseParsed.url;
+}
+
 </script>
 
 <template>
@@ -93,7 +114,7 @@ const updateModel = async () => {
       bordered
       class="q-pa-md overflow-hidden card-hover non-selectable"
     >
-      <q-inner-loading :showing="loading" />
+      <!-- <q-inner-loading :showing="loading" /> -->
       <div class="row justify-end items-center q-mb-md q-gutter-sm">
         <q-btn
           :icon="!isEdit ? 'edit' : 'close'"
@@ -116,6 +137,14 @@ const updateModel = async () => {
         </template>
       </div>
       <div class="column q-mb-md">
+        <template v-if="isEdit">
+          <base-uploader @uploaded="handleUploadedImage"></base-uploader>
+        </template>
+        <template v-else>
+          <q-img :src="productModel.image_url" />
+        </template>
+      </div>
+      <div class="column q-mb-md">
         <div class="text-grey-8">
           {{
             $t(
@@ -128,6 +157,38 @@ const updateModel = async () => {
         </template>
         <template v-else>
           <div class="text-body1">{{ productModel.title }}</div>
+        </template>
+      </div>
+      <div class="column q-mb-md">
+        <div class="text-grey-8">
+          {{
+            $t(
+              'pages.panel.dashboard.manageStorePage.panels.productManagement.fields.category'
+            )
+          }}
+        </div>
+        <template v-if="isEdit">
+          <q-select
+            color="accent"
+            lazy-rules
+            class="q-my-md"
+            :options="categories.map((x) => ({ label: x.title, value: x.id }))"
+            square
+            filled
+            dense
+            :label="`${$t(
+              'pages.panel.dashboard.manageStorePage.panels.productManagement.fields.category'
+            )} *`"
+            v-model="productCategory"
+            emit-value
+            map-options
+          >
+          </q-select>
+        </template>
+        <template v-else>
+          <div class="text-body1">
+            {{ productModel.category?.title || 'بدون دسته بندی' }}
+          </div>
         </template>
       </div>
       <!-- <div class="text-caption text-grey">

@@ -13,12 +13,18 @@ export interface ICategory {
 export interface IProduct {
   title: string;
   image: string;
+  image_url?: string;
   price: number;
   currency: string;
   id: string;
   category: ICategory;
   created_at: Date;
   updated_at: Date;
+}
+
+export interface IProductCategory {
+  id: string;
+  title: string;
 }
 
 export interface IPaymentMethod {
@@ -32,4 +38,10 @@ export interface IPaymentMethod {
 
 export interface ITelegramShopProductItemProps {
   product: IProduct;
+}
+
+
+export interface IUploadProductImageResponse {
+  filename: string;
+  url: string;
 }

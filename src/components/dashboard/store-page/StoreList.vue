@@ -4,6 +4,7 @@ const { api, loading } = useApi();
 import StoreListItem from 'components/dashboard/store-page/StoreListItem.vue';
 import { IShop } from 'components/models';
 import { ref } from 'vue';
+import BaseLoadingSpinner from 'components/common/BaseLoadingSpinner.vue';
 const getShops = async () => {
   try {
     const { data } = await api.get<IShop[]>('/shop/shop/all');
@@ -23,8 +24,7 @@ getShops().then((data) => {
 <template>
   <div class="row q-col-gutter-md">
     <template v-if="loading"
-      ><q-inner-loading :showing="loading">
-        <q-spinner-dots size="50px" color="accent" /> </q-inner-loading
+      ><base-loading-spinner loading></base-loading-spinner
     ></template>
     <template v-else-if="shops.length < 1">
       <p>
