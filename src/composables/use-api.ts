@@ -36,6 +36,7 @@ export const useApi = () => {
       loading.value = false;
       return data;
     },
+    
     (err) => {
       loading.value = false;
       return Promise.reject(err);
