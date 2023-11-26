@@ -17,7 +17,8 @@ import { useAuthStore } from 'src/stores/auth-store';
 import { ref } from 'vue';
 const authStore = useAuthStore();
 
-const getUploadPath = () => 'https://api.platfo.net/api/v1/file/upload/shop/product';
+// const getUploadPath = () => 'https://api.platfo.net/api/v1/file/upload/shop/product';
+const getUploadPath = () => `${process.env.API_BASEURL}/file/upload/shop/product`;
 const uploadHeaders = ref<QUploaderHeaderItem[]>([
     { name: 'Authorization', value: 'Bearer ' + authStore.state.access_token },
 ]);

@@ -13,8 +13,7 @@ export const useApi = () => {
   const loading = ref(false);
 
   const api = axios.create({
-    // FIXME get me out of this misery. I should not be HARDCODED!
-    baseURL: 'https://api.platfo.net/api/v1',
+    baseURL: process.env.API_BASEURL
   });
 
   api.interceptors.request.use(

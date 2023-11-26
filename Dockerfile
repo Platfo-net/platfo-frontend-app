@@ -7,7 +7,8 @@ RUN npm install
 
 # build stage
 FROM develop-stage as build-stage
-RUN npm run build
+ARG API
+RUN API_BASEURL=${API} npm run build
 
 # production stage
 FROM steebchen/nginx-spa:stable as production-stage
