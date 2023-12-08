@@ -11,7 +11,7 @@ const shoppingCart = useShoppingCart();
     <div class="flex column q-pa-md">
       <div class="flex row" style="flex-wrap: nowrap;">
         <div class="full-width">
-          <q-img style="border-radius: 4px; overflow: hidden; width: 100px; height: 100px; object-fit: cover;" class="shadow-3" :src="product.image_url" fit="cover" />
+          <q-img style="border-radius: 4px; overflow: hidden; width: 100px; height: 100px; object-fit: cover;" :src="product.image_url" fit="cover" />
         </div>
         <div class="flex column full-width q-pa-sm">
             <div>{{ product.title }}</div>
