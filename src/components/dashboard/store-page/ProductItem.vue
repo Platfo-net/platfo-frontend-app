@@ -109,10 +109,11 @@ const handleUploadedImage = (response: string) => {
       </q-card>
     </q-dialog>
     <q-card
+      style="max-height: 378px; overflow-y: scroll;"
       id="product-card"
       flat
       bordered
-      class="q-pa-md overflow-hidden card-hover non-selectable"
+      class="q-pa-md card-hover non-selectable"
     >
       <!-- <q-inner-loading :showing="loading" /> -->
       <div class="row justify-end items-center q-mb-md q-gutter-sm">
@@ -141,7 +142,7 @@ const handleUploadedImage = (response: string) => {
           <base-uploader @uploaded="handleUploadedImage"></base-uploader>
         </template>
         <template v-else>
-          <q-img :src="productModel.image_url" />
+          <q-img style="width: 100px; max-height: 100px;" :src="productModel.image_url" />
         </template>
       </div>
       <div class="column q-mb-md">
