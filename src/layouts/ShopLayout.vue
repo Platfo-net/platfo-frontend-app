@@ -1,6 +1,6 @@
 <template>
   <q-layout class="font-vazir" view="lHh Lpr lFf">
-    <q-footer bordered elevated class="bg-transparent blur">
+    <q-footer bordered elevated class="bg-white">
       <q-slide-transition
         v-show="tab === 'shoppingCart' && shoppingCart.totalItems() > 0"
       >
@@ -14,7 +14,7 @@
           dense
           narrow-indicator
           shrink
-          active-color="primary"
+          active-color="orange"
           content-class="text-black"
           indicator-color="transparent"
         >

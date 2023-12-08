@@ -121,7 +121,7 @@ onMounted(async () => {
           </p>
         </q-card-section>
         <q-card-actions align="center">
-          <q-btn size="sm" color="primary" @click="cleanup"
+          <q-btn size="sm" color="orange" @click="cleanup"
             >بازگشت به بات</q-btn
           >
         </q-card-actions>
@@ -130,7 +130,7 @@ onMounted(async () => {
     <q-btn
       @click="showConfirmDialog = true"
       label="ثبت سفارش"
-      color="primary"
+      color="orange"
     />
     <div class="flex column text-dark">
       <div class="text-bold">{{ $t('general.payable') }}</div>
