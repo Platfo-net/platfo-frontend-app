@@ -2,7 +2,7 @@
 import { useShoppingCart } from 'stores/shopping-cart-store';
 import TelegramShopCartItem from 'components/public/shop/TelegramShopCartItem.vue';
 import { useRoute } from 'vue-router';
-import CartEmptyImg from './CartEmptyImg.vue';
+import CartEmptyImg from 'src/components/public/shop/CartEmptyImg.vue';
 const { params } = useRoute();
 const shoppingCart = useShoppingCart();
 </script>
