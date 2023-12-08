@@ -26,6 +26,13 @@
             :ripple="false"
           />
           <q-route-tab
+            name="categories"
+            icon="category"
+            label="دسته بندی"
+            :to="{ name: 'ShopCategoriesPage' }"
+            :ripple="false"
+          />
+          <q-route-tab
             name="shoppingCart"
             icon="shopping_cart"
             label="سبد خرید"
