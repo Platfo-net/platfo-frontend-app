@@ -295,6 +295,11 @@ const routes: RouteRecordRaw[] = [
         path: 'cart',
         component: () => import('pages/public/shop/ShopShoppingCartPage.vue'),
       },
+      {
+        name: 'ShopCategoriesPage',
+        path: 'categories',
+        component: () => import('pages/public/shop/ShopCategoriesPage.vue'),
+      },
     ],
   },
 
