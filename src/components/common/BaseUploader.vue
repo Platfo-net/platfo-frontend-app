@@ -8,6 +8,7 @@
         flat
         field-name="file"
         @uploaded="uploadedEventHandler"
+        auto-upload
     />
 </template>
 
