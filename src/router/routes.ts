@@ -300,6 +300,11 @@ const routes: RouteRecordRaw[] = [
         path: 'categories',
         component: () => import('pages/public/shop/ShopCategoriesPage.vue'),
       },
+      {
+        name: 'ShopCategoryProductsPage',
+        path: 'categories/:categoryId',
+        component: () => import('pages/public/shop/ShopCategoryProductsPage.vue'),
+      },
     ],
   },
 
