@@ -78,6 +78,14 @@ export interface IShopPaymentMethod {
   is_active: boolean;
 }
 
+export interface IShopShippingMethod {
+  id: string;
+  title: string;
+  price: string;
+  currency: string;
+  is_active: boolean;
+}
+
 export interface IShopOrderItem {
   product_id: string;
   count: number;
@@ -94,6 +102,7 @@ export interface ICreateShopOrderBody {
   address?: string;
   postal_code?: string;
   payment_method_id: string;
+  shipping_method_id: string | null;
 }
 
 export interface ICreateShopOrderResponse {
