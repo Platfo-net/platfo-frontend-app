@@ -169,6 +169,34 @@ const routes: RouteRecordRaw[] = [
                   ],
                 },
               },
+              {
+                path: 'shipping-methods',
+                name: 'ManageStoreShippingMethods',
+                component: () =>
+                  import(
+                    'components/dashboard/store-page/StoreManagementShippingMethodsPanel.vue'
+                  ),
+                meta: {
+                  breadcrumbs: [
+                    {
+                      label: 'pages.panel.dashboard.title',
+                      to: { name: 'Dashboard' },
+                    },
+                    {
+                      label: 'pages.panel.dashboard.storeListPage.title',
+                      to: { name: 'StoreListPage' },
+                    },
+                    {
+                      label: 'pages.panel.dashboard.manageStorePage.title',
+                      to: { name: 'ManageStoreBasicInformation' },
+                    },
+                    {
+                      label:
+                        'pages.panel.dashboard.manageStorePage.panels.shipmentMethods.title',
+                    },
+                  ],
+                },
+              },
             ],
             meta: {
               breadcrumbs: [
@@ -270,7 +298,7 @@ const routes: RouteRecordRaw[] = [
           } else {
             next();
           }
-        }
+        },
       },
       {
         path: 'confirm-phone',
@@ -303,7 +331,8 @@ const routes: RouteRecordRaw[] = [
       {
         name: 'ShopCategoryProductsPage',
         path: 'categories/:categoryId',
-        component: () => import('pages/public/shop/ShopCategoryProductsPage.vue'),
+        component: () =>
+          import('pages/public/shop/ShopCategoryProductsPage.vue'),
       },
     ],
   },

@@ -45,3 +45,19 @@ export interface ICheckTokenResponse {
     url: string;
   };
 }
+
+export type UpsertShipmentMethodType = {
+  id?: string;
+  title: string;
+  price: string;
+  currency: 'IRT' | 'IRR';
+  shop_id: string;
+};
+
+export type ShipmentMethodType = {
+  id: string;
+  title: string;
+  price: string;
+  currency: 'IRT' | 'IRR';
+  shop_id: string;
+};
