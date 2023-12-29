@@ -47,6 +47,12 @@ import BreadCrumbs from 'components/BreadCrumbs.vue';
           $t('pages.panel.dashboard.manageStorePage.tabs.productCategories')
         "
       ></q-route-tab>
+      <q-route-tab
+        :to="{ name: 'ManageStoreShippingMethods' }"
+        :label="
+          $t('pages.panel.dashboard.manageStorePage.tabs.shipmentMethods')
+        "
+      ></q-route-tab>
     </q-tabs>
     <router-view />
   </q-page>

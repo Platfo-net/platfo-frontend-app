@@ -301,25 +301,27 @@ export default {
               fields: {
                 title: 'عنوان',
                 titleHint: '',
+                price: 'قیمت',
+                priceHint: 'واحد قیمت محصولات تومان است',
               },
-              noProductCategories:
-                'دسته بندی ثبت نشده است. لطفا دسته بندی جدید ثبت کنید.',
+              noShipmentMethods:
+                'روش ارسالی ثبت نشده است. لطفا روش ارسال جدید ثبت کنید.',
               notifications: {
-                createProductCategorySuccess:
-                  'ایجاد دسته بندی جدید با موفقیت انجام شد.',
-                createProductCategoryError:
-                  'ایجاد دسته بندی جدید با خطا مواجه شد.',
-                deleteProductCategorySuccess:
-                  'حذف دسته بندی با موفقیت انجام شد.',
-                deleteProductCategoryError: 'حذف دسته بندی با خطا مواجه شد.',
-                updateProductCategorySuccess:
-                  'ویرایش دسته بندی با موفقیت انجام شد.',
-                updateProductCategoryError: 'ویرایش دسته بندی با خطا مواجه شد.',
+                createShipmentMethodSuccess:
+                  'ایجاد روش ارسال جدید با موفقیت انجام شد.',
+                createShipmentMethodError:
+                  'ایجاد روش ارسال جدید با خطا مواجه شد.',
+                deleteShipmentMethodSuccess:
+                  'حذف روش ارسال با موفقیت انجام شد.',
+                deleteShipmentMethodError: 'حذف روش ارسال با خطا مواجه شد.',
+                updateShipmentMethodSuccess:
+                  'ویرایش روش ارسال با موفقیت انجام شد.',
+                updateShipmentMethodError: 'ویرایش روش ارسال با خطا مواجه شد.',
               },
               messages: {
-                deleteAlertMessage1: 'آیا از حذف این دسته بندی اطمینان دارید؟',
+                deleteAlertMessage1: 'آیا از حذف این روش ارسال اطمینان دارید؟',
                 deleteAlertMessage2:
-                  'این دسته بندی و محصولات مربوطه برای همیشه از بین خواهند رفت.',
+                  'این روش ارسال برای همیشه از بین خواهند رفت.',
               },
             },
           },

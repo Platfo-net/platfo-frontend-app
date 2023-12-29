@@ -102,7 +102,7 @@ export interface ICreateShopOrderBody {
   address?: string;
   postal_code?: string;
   payment_method_id: string;
-  shipping_method_id: string | null;
+  shipment_method_id: string | null;
 }
 
 export interface ICreateShopOrderResponse {
