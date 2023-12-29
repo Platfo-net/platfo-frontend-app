@@ -8,7 +8,7 @@ import {
   ICreateShopOrderResponse,
   IShopOrderItem,
   IShopPaymentMethod,
-IShopShippingMethod,
+  IShopShippingMethod,
 } from 'src/composables/types';
 import { useNotify } from 'src/composables/use-notify';
 
@@ -44,7 +44,7 @@ const createdOrderId = ref<string>('');
 const dataToSend = reactive<ICreateShopOrderBody>({
   items: [],
   payment_method_id: '',
-  shipping_method_id: '',
+  shipment_method_id: '',
 });
 
 const checkout = async () => {
@@ -54,14 +54,12 @@ const checkout = async () => {
   }
   const shoppingCartItems =
     shoppingCart.get().items[route.params.shopId as string];
-  dataToSend.items = Object.keys(shoppingCartItems).map(
-    (k): IShopOrderItem => {
-      return {
-        product_id: k,
-        count: shoppingCartItems[k].count,
-      };
-    }
-  );
+  dataToSend.items = Object.keys(shoppingCartItems).map((k): IShopOrderItem => {
+    return {
+      product_id: k,
+      count: shoppingCartItems[k].count,
+    };
+  });
   try {
     const { data } = await api.post<ICreateShopOrderResponse>(
       `/shop/orders/telegram/${route.params.shopId}/${route.params.leadId}`,
@@ -87,7 +85,7 @@ onMounted(async () => {
   shopPaymentMethods.value = await getShopPaymentMethods();
   shopShippingMethods.value = await getShopShippingMethods();
   dataToSend.payment_method_id = shopPaymentMethods.value[0].id;
-  dataToSend.shipping_method_id = null;
+  dataToSend.shipment_method_id = null;
 });
 </script>
 
@@ -96,22 +94,75 @@ onMounted(async () => {
     class="flex row q-pa-md q-px-lg items-center justify-between blur"
     style="border-bottom: 1px solid #e2e2e2"
   >
-    <q-dialog v-model="showCheckoutDialog" persistent maximized transition-show="slide-up"
-      transition-hide="slide-down">
+    <q-dialog
+      v-model="showCheckoutDialog"
+      persistent
+      maximized
+      transition-show="slide-up"
+      transition-hide="slide-down"
+    >
       <q-card class="bg-white">
         <q-toolbar class="q-py-md bg-white shadow-10">
           <q-toolbar-title>تایید نهایی و پرداخت</q-toolbar-title>
-          <q-btn round flat icon="close" @click="showCheckoutDialog = false"></q-btn>
-          <div style="font-size: 1.5rem;" class="q-ml-lg text-bold"></div>
+          <q-btn
+            round
+            flat
+            icon="close"
+            @click="showCheckoutDialog = false"
+          ></q-btn>
+          <div style="font-size: 1.5rem" class="q-ml-lg text-bold"></div>
         </q-toolbar>
         <q-space></q-space>
         <q-card-section>
           <div class="text-body1">اطلاعات شخصی</div>
-          <q-input class="q-my-md" dense outlined color="orange" v-model="dataToSend.first_name" name="first_name" label="نام"></q-input>
-          <q-input class="q-my-md" dense outlined color="orange" v-model="dataToSend.last_name" name="last_name" label="نام خانوادگی"></q-input>
-          <q-input dir="ltr" class="q-my-md" dense outlined color="orange" v-model="dataToSend.email" name="email" label="ایمیل"></q-input>
-          <q-input dir="ltr" class="q-my-md" dense outlined color="orange" v-model="dataToSend.phone_number" name="phone_number" label="شماره تماس"></q-input>
-          <q-input class="q-my-md" dense outlined type="textarea" color="orange" v-model="dataToSend.address" name="address" label="آدرس محل سکونت"></q-input>
+          <q-input
+            class="q-my-md"
+            dense
+            outlined
+            color="orange"
+            v-model="dataToSend.first_name"
+            name="first_name"
+            label="نام"
+          ></q-input>
+          <q-input
+            class="q-my-md"
+            dense
+            outlined
+            color="orange"
+            v-model="dataToSend.last_name"
+            name="last_name"
+            label="نام خانوادگی"
+          ></q-input>
+          <q-input
+            dir="ltr"
+            class="q-my-md"
+            dense
+            outlined
+            color="orange"
+            v-model="dataToSend.email"
+            name="email"
+            label="ایمیل"
+          ></q-input>
+          <q-input
+            dir="ltr"
+            class="q-my-md"
+            dense
+            outlined
+            color="orange"
+            v-model="dataToSend.phone_number"
+            name="phone_number"
+            label="شماره تماس"
+          ></q-input>
+          <q-input
+            class="q-my-md"
+            dense
+            outlined
+            type="textarea"
+            color="orange"
+            v-model="dataToSend.address"
+            name="address"
+            label="آدرس محل سکونت"
+          ></q-input>
         </q-card-section>
         <q-card-section>
           <div class="text-body1">روش ارسال</div>
@@ -120,9 +171,20 @@ onMounted(async () => {
           </template>
           <template v-else>
             <q-list>
-              <q-item v-ripple class="q-my-md rounded-borders " style="border: 1px solid #e1e1e1;" v-for="shippingMethod in shopShippingMethods" :key="shippingMethod.id" tag="label">
+              <q-item
+                v-ripple
+                class="q-my-md rounded-borders"
+                style="border: 1px solid #e1e1e1"
+                v-for="shippingMethod in shopShippingMethods"
+                :key="shippingMethod.id"
+                tag="label"
+              >
                 <q-item-section avatar>
-                  <q-radio v-model="dataToSend.shipping_method_id" :val="shippingMethod.id" color="orange" />
+                  <q-radio
+                    v-model="dataToSend.shipment_method_id"
+                    :val="shippingMethod.id"
+                    color="orange"
+                  />
                 </q-item-section>
                 <q-item-section>
                   <q-item-label>{{ shippingMethod.title }}</q-item-label>
@@ -134,9 +196,20 @@ onMounted(async () => {
         <q-card-section>
           <div class="text-body1">روش پرداخت</div>
           <q-list>
-            <q-item v-ripple class="q-my-md rounded-borders " style="border: 1px solid #e1e1e1;" v-for="paymentMethod in shopPaymentMethods" :key="paymentMethod.id" tag="label">
+            <q-item
+              v-ripple
+              class="q-my-md rounded-borders"
+              style="border: 1px solid #e1e1e1"
+              v-for="paymentMethod in shopPaymentMethods"
+              :key="paymentMethod.id"
+              tag="label"
+            >
               <q-item-section avatar>
-                <q-radio v-model="dataToSend.payment_method_id" :val="paymentMethod.id" color="orange" />
+                <q-radio
+                  v-model="dataToSend.payment_method_id"
+                  :val="paymentMethod.id"
+                  color="orange"
+                />
               </q-item-section>
               <q-item-section>
                 <q-item-label>{{ paymentMethod.title }}</q-item-label>
@@ -145,7 +218,12 @@ onMounted(async () => {
           </q-list>
         </q-card-section>
         <q-card-section>
-          <q-btn @click="showConfirmDialog = true" class="full-width" color="orange">پرداخت سفارش</q-btn>
+          <q-btn
+            @click="showConfirmDialog = true"
+            class="full-width"
+            color="orange"
+            >پرداخت سفارش</q-btn
+          >
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -157,7 +235,10 @@ onMounted(async () => {
         </q-card-section>
         <q-separator />
         <q-card-section dir="rtl">
-          <p>آیا از محصولات انتخاب شده در سبد خرید و اطلاعات ثبت شده اطمینان دارید؟</p>
+          <p>
+            آیا از محصولات انتخاب شده در سبد خرید و اطلاعات ثبت شده اطمینان
+            دارید؟
+          </p>
         </q-card-section>
         <q-card-actions>
           <q-btn size="sm" color="primary" :loading="loading" @click="checkout"
@@ -189,9 +270,7 @@ onMounted(async () => {
           </p>
         </q-card-section>
         <q-card-actions align="center">
-          <q-btn size="sm" color="orange" @click="cleanup"
-            >بازگشت به بات</q-btn
-          >
+          <q-btn size="sm" color="orange" @click="cleanup">بازگشت به بات</q-btn>
         </q-card-actions>
       </q-card>
     </q-dialog>

@@ -209,6 +209,7 @@ export default {
             products: 'محصولات',
             paymentConfiguration: 'تنظیمات پرداخت',
             productCategories: 'دسته بندی محصولات',
+            shipmentMethods: 'روش های ارسال',
           },
           panels: {
             basicInformation: {
@@ -293,6 +294,34 @@ export default {
                 deleteAlertMessage1: 'آیا از حذف این دسته بندی اطمینان دارید؟',
                 deleteAlertMessage2:
                   'این دسته بندی و محصولات مربوطه برای همیشه از بین خواهند رفت.',
+              },
+            },
+            shipmentMethods: {
+              title: 'روش های ارسال',
+              fields: {
+                title: 'عنوان',
+                titleHint: '',
+                price: 'قیمت',
+                priceHint: 'واحد قیمت محصولات تومان است',
+              },
+              noShipmentMethods:
+                'روش ارسالی ثبت نشده است. لطفا روش ارسال جدید ثبت کنید.',
+              notifications: {
+                createShipmentMethodSuccess:
+                  'ایجاد روش ارسال جدید با موفقیت انجام شد.',
+                createShipmentMethodError:
+                  'ایجاد روش ارسال جدید با خطا مواجه شد.',
+                deleteShipmentMethodSuccess:
+                  'حذف روش ارسال با موفقیت انجام شد.',
+                deleteShipmentMethodError: 'حذف روش ارسال با خطا مواجه شد.',
+                updateShipmentMethodSuccess:
+                  'ویرایش روش ارسال با موفقیت انجام شد.',
+                updateShipmentMethodError: 'ویرایش روش ارسال با خطا مواجه شد.',
+              },
+              messages: {
+                deleteAlertMessage1: 'آیا از حذف این روش ارسال اطمینان دارید؟',
+                deleteAlertMessage2:
+                  'این روش ارسال برای همیشه از بین خواهند رفت.',
               },
             },
           },
