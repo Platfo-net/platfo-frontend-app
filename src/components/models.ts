@@ -27,6 +27,7 @@ export interface IProductCategory {
   image?: string;
   image_url?: string;
   title: string;
+  shop_id: string;
 }
 
 export interface IPaymentMethod {
