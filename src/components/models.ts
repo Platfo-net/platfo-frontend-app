@@ -42,8 +42,11 @@ export interface ITelegramShopProductItemProps {
   product: IProduct;
 }
 
-
 export interface IUploadProductImageResponse {
   filename: string;
   url: string;
+}
+export enum ImageType {
+  Product = 'product',
+  ProductCategory = 'category',
 }
