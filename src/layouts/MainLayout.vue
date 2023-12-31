@@ -3,7 +3,6 @@
     <q-header bordered>
       <q-toolbar>
         <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
-
         <q-toolbar-title> {{ $t('layout.appHeader') }} </q-toolbar-title>
       </q-toolbar>
     </q-header>
@@ -98,7 +97,7 @@
       </div> -->
     </q-drawer>
 
-    <q-page-container>
+    <q-page-container class="bg-grey-2">
       <router-view />
     </q-page-container>
   </q-layout>
