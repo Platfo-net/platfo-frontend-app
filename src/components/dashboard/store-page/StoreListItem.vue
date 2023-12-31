@@ -6,23 +6,16 @@ const props = defineProps<IShop>();
 
 <template>
   <div class="col-12 col-sm-6 col-lg-3">
-    <q-toolbar class="bg-accent text-white">
+    <q-toolbar class="bg-primary text-white" style="border-top-left-radius: 4px; border-top-right-radius: 4px;">
       <q-toolbar-title class="text-h6">{{ props.title }}</q-toolbar-title>
-      <q-btn
-        class="q-ml-lg"
-        size="sm"
-        color="white"
-        text-color="dark"
-        :to="{
-          name: 'ManageStoreBasicInformation',
-          params: { storeId: props.id },
-        }"
-        >{{
-          $t('pages.panel.dashboard.storeListPage.storeListItem.manage')
-        }}</q-btn
-      >
+      <q-btn class="q-ml-lg" size="sm" color="white" text-color="dark" :to="{
+        name: 'ManageStoreBasicInformation',
+        params: { storeId: props.id },
+      }">{{
+  $t('pages.panel.dashboard.storeListPage.storeListItem.manage')
+}}</q-btn>
     </q-toolbar>
-    <q-list bordered>
+    <q-list bordered class="bg-white" style="border-bottom-left-radius: 4px; border-bottom-right-radius: 4px;">
       <q-item class="q-my-sm">
         <q-item-section>
           <q-item-label caption>{{
@@ -39,7 +32,6 @@ const props = defineProps<IShop>();
           <q-item-label lines="1">{{ props.description }}</q-item-label>
         </q-item-section>
       </q-item>
-      <q-separator />
     </q-list>
   </div>
 </template>
