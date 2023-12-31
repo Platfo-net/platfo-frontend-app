@@ -14,14 +14,14 @@ export const useSidebar = () => {
       icon: 'shopping_cart',
       children: [
         {
-          title: 'ایجاد فروشگاه جدید',
-          to: { name: 'CreateStorePage' },
-          icon: 'add',
-        },
-        {
           title: 'فروشگاه های من',
           to: { name: 'StoreListPage' },
           icon: 'list',
+        },
+        {
+          title: 'ایجاد فروشگاه جدید',
+          to: { name: 'CreateStorePage' },
+          icon: 'add',
         },
       ],
     },
