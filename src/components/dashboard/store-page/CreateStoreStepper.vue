@@ -87,17 +87,11 @@ const handleRegisterTelegramBot = async () => {
 </script>
 
 <template>
-  <q-stepper class="full-height" v-model="step" vertical animated>
-    <q-step
-      :name="1"
-      :title="
-        $t(
-          'pages.panel.dashboard.createNewStorePage.steps.shopInformation.title'
-        )
-      "
-      icon="settings"
-      :done="step > 1"
-    >
+  <q-stepper flat bordered class="full-height" v-model="step" vertical animated>
+    <q-step :name="1" :title="$t(
+      'pages.panel.dashboard.createNewStorePage.steps.shopInformation.title'
+    )
+      " icon="settings" :done="step > 1">
       <p>
         {{
           $t(
@@ -107,66 +101,32 @@ const handleRegisterTelegramBot = async () => {
       </p>
       <div class="row q-col-gutter-lg q-mb-lg">
         <div class="col-12 col-md-6">
-          <q-input
-            v-model="createShopState.title"
-            color="accent"
-            :label="
-              $t(
-                'pages.panel.dashboard.createNewStorePage.steps.shopInformation.fields.title'
-              )
-            "
-            class="q-my-sm"
-            filled
-          />
-          <q-input
-            v-model="createShopState.category"
-            color="accent"
-            :label="
-              $t(
-                'pages.panel.dashboard.createNewStorePage.steps.shopInformation.fields.category'
-              )
-            "
-            class="q-my-sm"
-            filled
-          />
+          <q-input v-model="createShopState.title" color="accent" :label="$t(
+            'pages.panel.dashboard.createNewStorePage.steps.shopInformation.fields.title'
+          )
+            " class="q-my-sm" filled />
+          <q-input v-model="createShopState.category" color="accent" :label="$t(
+            'pages.panel.dashboard.createNewStorePage.steps.shopInformation.fields.category'
+          )
+            " class="q-my-sm" filled />
         </div>
         <div class="col-12 col-md-6">
-          <q-input
-            v-model="createShopState.description"
-            color="accent"
-            type="textarea"
-            :label="
-              $t(
-                'pages.panel.dashboard.createNewStorePage.steps.shopInformation.fields.description'
-              )
-            "
-            filled
-          />
+          <q-input v-model="createShopState.description" color="accent" type="textarea" :label="$t(
+            'pages.panel.dashboard.createNewStorePage.steps.shopInformation.fields.description'
+          )
+            " filled />
         </div>
       </div>
 
       <q-stepper-navigation>
-        <q-btn
-          :loading="loading"
-          @click="handleRegisterShop"
-          color="accent"
-          :label="$t('general.nextStep')"
-          :disable="
-  createShopState.title?.length! < 3 ||
-  createShopState.category?.length! < 3"
-        />
+        <q-btn :loading="loading" @click="handleRegisterShop" color="accent" :label="$t('general.nextStep')" :disable="createShopState.title?.length! < 3 ||
+          createShopState.category?.length! < 3" />
       </q-stepper-navigation>
     </q-step>
-    <q-step
-      :name="2"
-      :title="
-        $t(
-          'pages.panel.dashboard.createNewStorePage.steps.supportAccountConnection.title'
-        )
-      "
-      icon="key"
-      :done="step > 2"
-    >
+    <q-step :name="2" :title="$t(
+      'pages.panel.dashboard.createNewStorePage.steps.supportAccountConnection.title'
+    )
+      " icon="key" :done="step > 2">
       <p>
         {{
           $t(
@@ -189,13 +149,7 @@ const handleRegisterTelegramBot = async () => {
                 'pages.panel.dashboard.createNewStorePage.steps.supportAccountConnection.step1.part1'
               )
             }}
-            <a
-              href="https://t.me/Platfoshopsbot"
-              target="_blank"
-              class="text-bold"
-              dir="ltr"
-              >@Platfoshopsbot</a
-            >
+            <a href="https://t.me/Platfoshopsbot" target="_blank" class="text-bold" dir="ltr">@Platfoshopsbot</a>
             {{
               $t(
                 'pages.panel.dashboard.createNewStorePage.steps.supportAccountConnection.step1.part2'
@@ -203,10 +157,7 @@ const handleRegisterTelegramBot = async () => {
             }}
           </div>
           <div class="row justify-center full-width">
-            <q-img
-              src="~assets/platfoshopbot_qrcode.svg"
-              style="max-width: 200px"
-            ></q-img>
+            <q-img src="~assets/platfoshopbot_qrcode.svg" style="max-width: 200px"></q-img>
           </div>
         </li>
         <li>
@@ -235,15 +186,10 @@ const handleRegisterTelegramBot = async () => {
       </ol>
 
       <q-stepper-navigation>
-        <q-btn
-          @click="handleVerifySupportAccount"
-          color="accent"
-          :label="
-            $t(
-              'pages.panel.dashboard.createNewStorePage.steps.supportAccountConnection.verifyConnection'
-            )
-          "
-        />
+        <q-btn @click="handleVerifySupportAccount" color="accent" :label="$t(
+          'pages.panel.dashboard.createNewStorePage.steps.supportAccountConnection.verifyConnection'
+        )
+          " />
         <!--        <q-btn-->
         <!--          flat-->
         <!--          @click="step = 1"-->
@@ -253,16 +199,10 @@ const handleRegisterTelegramBot = async () => {
         <!--        />-->
       </q-stepper-navigation>
     </q-step>
-    <q-step
-      :name="3"
-      :title="
-        $t(
-          'pages.panel.dashboard.createNewStorePage.steps.telegramBotConnection.title'
-        )
-      "
-      icon="robot"
-      :done="step > 3"
-    >
+    <q-step :name="3" :title="$t(
+      'pages.panel.dashboard.createNewStorePage.steps.telegramBotConnection.title'
+    )
+      " icon="robot" :done="step > 3">
       <p>
         {{
           $t(
@@ -285,9 +225,7 @@ const handleRegisterTelegramBot = async () => {
                 'pages.panel.dashboard.createNewStorePage.steps.telegramBotConnection.step1.part1'
               )
             }}
-            <a href="https://t.me/Botfather" target="_blank" class="text-bold"
-              >@Botfather</a
-            >
+            <a href="https://t.me/Botfather" target="_blank" class="text-bold">@Botfather</a>
             {{
               $t(
                 'pages.panel.dashboard.createNewStorePage.steps.telegramBotConnection.step1.part2'
@@ -295,10 +233,7 @@ const handleRegisterTelegramBot = async () => {
             }}
           </div>
           <div class="row justify-center full-width">
-            <q-img
-              src="~assets/botfather_qrcode.svg"
-              style="max-width: 200px"
-            ></q-img>
+            <q-img src="~assets/botfather_qrcode.svg" style="max-width: 200px"></q-img>
           </div>
         </li>
         <li>
@@ -337,31 +272,18 @@ const handleRegisterTelegramBot = async () => {
       </ol>
       <div class="row q-mb-lg">
         <div class="col-12">
-          <q-input
-            type="text"
-            :label="
-              $t(
+          <q-input type="text" :label="$t(
                 'pages.panel.dashboard.createNewStorePage.steps.telegramBotConnection.step4.fields.botToken'
               )
-            "
-            color="accent"
-            filled
-            v-model="botToken"
-          ></q-input>
+              " color="accent" filled v-model="botToken"></q-input>
         </div>
       </div>
 
       <q-stepper-navigation>
-        <q-btn
-          color="accent"
-          :label="
-            $t(
-              'pages.panel.dashboard.createNewStorePage.steps.telegramBotConnection.step4.finish'
-            )
-          "
-          :disable="botToken.length < 3"
-          @click="handleRegisterTelegramBot"
-        />
+        <q-btn color="accent" :label="$t(
+          'pages.panel.dashboard.createNewStorePage.steps.telegramBotConnection.step4.finish'
+        )
+          " :disable="botToken.length < 3" @click="handleRegisterTelegramBot" />
         <!--        <q-btn-->
         <!--          flat-->
         <!--          @click="step = 2"-->
@@ -371,13 +293,8 @@ const handleRegisterTelegramBot = async () => {
         <!--        />-->
       </q-stepper-navigation>
     </q-step>
-    <q-step
-      :name="4"
-      :title="
-        $t('pages.panel.dashboard.createNewStorePage.steps.success.title')
-      "
-      icon="success"
-    >
+    <q-step :name="4" :title="$t('pages.panel.dashboard.createNewStorePage.steps.success.title')
+      " icon="success">
       <div class="text-h5 q-my-lg">
         {{
           $t(
@@ -385,15 +302,10 @@ const handleRegisterTelegramBot = async () => {
           )
         }}
       </div>
-      <q-btn
-        color="accent"
-        :label="
-          $t(
+      <q-btn color="accent" :label="$t(
             'pages.panel.dashboard.createNewStorePage.steps.success.backToShopList'
           )
-        "
-        :to="{ name: 'StoreListPage' }"
-      />
+          " :to="{ name: 'StoreListPage' }" />
     </q-step>
   </q-stepper>
 </template>
