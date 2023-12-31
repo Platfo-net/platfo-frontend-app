@@ -5,19 +5,15 @@ import LayoutBreadCrumbs from 'components/BreadCrumbs.vue';
 
 <template>
   <q-page class="q-pa-md">
-    <div class="row items-center q-mb-lg justify-between">
+    <div class="row items-center q-mb-lg justify-between bg-white q-pa-md rounded-borders"
+      style="border: 1px solid #e1e1e1;">
       <LayoutBreadCrumbs />
     </div>
     <div class="row items-center q-mb-lg justify-between">
       <div class="text-h5">
         {{ $t('pages.panel.dashboard.createNewStorePage.title') }}
       </div>
-      <q-btn
-        color="accent"
-        icon="chevron_left"
-        :to="{ name: 'StoreListPage' }"
-        :label="$t('general.goBack')"
-      ></q-btn>
+      <q-btn color="accent" icon="chevron_left" :to="{ name: 'StoreListPage' }" :label="$t('general.goBack')"></q-btn>
     </div>
     <CreateStoreStepper />
   </q-page>

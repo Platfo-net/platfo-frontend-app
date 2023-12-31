@@ -5,7 +5,8 @@ import LayoutBreadCrumbs from 'components/BreadCrumbs.vue';
 
 <template>
   <q-page class="q-pa-md">
-    <div class="row justify-between items-center q-mb-lg">
+    <div class="row items-center q-mb-lg justify-between bg-white q-pa-md rounded-borders"
+      style="border: 1px solid #e1e1e1;">
       <LayoutBreadCrumbs />
     </div>
 
@@ -13,11 +14,8 @@ import LayoutBreadCrumbs from 'components/BreadCrumbs.vue';
       <div class="text-h5">
         {{ $t('pages.panel.dashboard.storeListPage.title') }}
       </div>
-      <q-btn
-        color="accent"
-        :to="{ name: 'CreateStorePage' }"
-        :label="$t('pages.panel.dashboard.storeListPage.createNewStore')"
-      ></q-btn>
+      <q-btn color="accent" :to="{ name: 'CreateStorePage' }"
+        :label="$t('pages.panel.dashboard.storeListPage.createNewStore')"></q-btn>
     </div>
     <StoreList />
   </q-page>
