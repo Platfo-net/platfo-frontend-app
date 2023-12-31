@@ -16,7 +16,8 @@ import BreadCrumbs from 'components/BreadCrumbs.vue';
       </div>
       <q-btn color="accent" icon="chevron_left" :to="{ name: 'StoreListPage' }" :label="$t('general.goBack')"></q-btn>
     </div>
-    <q-tabs class="q-mb-md" align="left" active-bg-color="black" active-color="white" indicator-color="primary">
+    <q-tabs class="q-mb-md bg-white rounded-borders" style="border: 1px solid #e1e1e1" align="left"
+      active-bg-color="accent" active-color="white" indicator-color="accent">
       <q-route-tab :to="{ name: 'ManageStoreBasicInformation' }"
         :label="$t('pages.panel.dashboard.manageStorePage.tabs.basic')"></q-route-tab>
       <q-route-tab :to="{ name: 'ManageStoreProducts' }"
