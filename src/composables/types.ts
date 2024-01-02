@@ -76,12 +76,13 @@ export interface IShopPaymentMethod {
   id: string;
   information_fields: Record<string, string>;
   is_active: boolean;
+  items: IShopPaymentMethod[];
 }
 
 export interface IShopShippingMethod {
   id: string;
   title: string;
-  price: string;
+  price: string | number;
   currency: string;
   is_active: boolean;
 }
