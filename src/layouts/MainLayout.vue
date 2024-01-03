@@ -49,7 +49,7 @@
       </q-img>
     </q-drawer>
 
-    <q-page-container class="bg-grey-2">
+    <q-page-container class="bg-teal-1">
       <router-view />
     </q-page-container>
   </q-layout>

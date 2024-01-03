@@ -49,7 +49,7 @@
       </q-img>
     </q-drawer>
 
-    <q-page-container class="bg-grey-2">
+    <q-page-container class="bg-teal-1">
       <q-page class="q-pa-md">
         <BreadCrumbs />
         <router-view />
