@@ -1,14 +1,17 @@
 import { RouteLocationNamedRaw } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 
-type SidebarRoute = {
+export type SidebarRoute = {
   title: string;
   to?: RouteLocationNamedRaw;
   children?: SidebarRoute[];
   icon?: string;
+  activeClass?: string;
 };
 
 export const useSidebar = () => {
-  const routes: SidebarRoute[] = [
+  const { t } = useI18n();
+  const mainLayoutRoutes: SidebarRoute[] = [
     {
       title: 'فروشگاه',
       icon: 'shopping_cart',
@@ -26,7 +29,59 @@ export const useSidebar = () => {
       ],
     },
   ];
+
+  const manageShopLayoutRoutes: SidebarRoute[] = [
+    {
+      title: t('general.goBack'),
+      to: { name: 'Dashboard' },
+      icon: 'chevron_right',
+      activeClass: 'bg-transparent',
+    },
+    {
+      title: t(
+        'pages.panel.dashboard.manageStorePage.panels.basicInformation.title'
+      ),
+      to: { name: 'ManageStoreBasicInformation' },
+      icon: 'info',
+    },
+    {
+      title: t(
+        'pages.panel.dashboard.manageStorePage.panels.paymentConfiguration.title'
+      ),
+      to: { name: 'ManageStorePaymentMethods' },
+      icon: 'payment',
+    },
+    {
+      title: t(
+        'pages.panel.dashboard.manageStorePage.panels.shipmentMethods.title'
+      ),
+      to: { name: 'ManageStoreShippingMethods' },
+      icon: 'local_shipping',
+    },
+    {
+      title: 'مدیریت محصولات',
+      // to: { name: 'ManageStoreProducts' },
+      icon: 'inventory_2',
+      children: [
+        {
+          title: t(
+            'pages.panel.dashboard.manageStorePage.panels.productManagement.title'
+          ),
+          to: { name: 'ManageStoreProducts' },
+          icon: 'list',
+        },
+        {
+          title: t(
+            'pages.panel.dashboard.manageStorePage.panels.productCategories.title'
+          ),
+          to: { name: 'ManageStoreProductCategories' },
+          icon: 'category',
+        },
+      ],
+    },
+  ];
   return {
-    routes,
+    mainLayoutRoutes,
+    manageShopLayoutRoutes,
   };
 };
