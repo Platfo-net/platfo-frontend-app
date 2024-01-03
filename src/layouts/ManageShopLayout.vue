@@ -20,7 +20,7 @@
       style="border: 1px solid #e2e2e2"
     >
       <base-layout-sidebar-menu
-        :routes="mainLayoutRoutes"
+        :routes="manageShopLayoutRoutes"
       ></base-layout-sidebar-menu>
       <q-img class="absolute-top bg-primary" style="height: 161.6px">
         <div class="absolute-bottom bg-transparent">
@@ -50,7 +50,10 @@
     </q-drawer>
 
     <q-page-container class="bg-grey-2">
-      <router-view />
+      <q-page class="q-pa-md">
+        <BreadCrumbs />
+        <router-view />
+      </q-page>
     </q-page-container>
   </q-layout>
 </template>
@@ -60,6 +63,7 @@ import { ref } from 'vue';
 import { useAuthStore } from 'stores/auth-store';
 import { useRouter } from 'vue-router';
 import { useSidebar } from 'src/composables/use-sidebar';
+import BreadCrumbs from 'components/BreadCrumbs.vue';
 import BaseLayoutSidebarMenu from 'components/common/BaseLayoutSidebarMenu.vue';
 
 const authStore = useAuthStore();
@@ -72,7 +76,7 @@ const handleLogoutClick = () => {
   });
 };
 
-const { mainLayoutRoutes } = useSidebar();
+const { manageShopLayoutRoutes } = useSidebar();
 
 const leftDrawerOpen = ref(false);
 

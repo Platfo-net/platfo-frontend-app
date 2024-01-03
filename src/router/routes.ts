@@ -1,8 +1,42 @@
-import { RouteRecordRaw } from 'vue-router';
+import {
+  NavigationGuardNext,
+  RouteLocationNormalized,
+  RouteRecordRaw,
+} from 'vue-router';
 import { useAuthStore } from 'stores/auth-store';
 import { useApi } from 'src/composables/use-api';
 import { AxiosError } from 'axios';
 import { useNotify } from 'src/composables/use-notify';
+
+const beforeEnterAuth = async (
+  to: RouteLocationNormalized,
+  from: RouteLocationNormalized,
+  next: NavigationGuardNext
+) => {
+  const { api } = useApi();
+  const authStore = useAuthStore();
+
+  if (!authStore.state.isLoggedIn) {
+    return next({
+      name: 'LoginPage',
+      replace: true,
+    });
+  }
+  try {
+    const { data } = await api.post('/auth/check');
+  } catch (err) {
+    if (err instanceof AxiosError) {
+      // console.log(err.response);
+      authStore.actions.clearAuthState();
+      return next({
+        name: 'LoginPage',
+        replace: true,
+      });
+    }
+    // throw new Error('Unhandled error while verifying token.');
+  }
+  return next();
+};
 
 const routes: RouteRecordRaw[] = [
   {
@@ -11,12 +45,13 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/dashboard',
-    component: () => import('layouts/MainLayout.vue'),
+    // component: () => import('layouts/MainLayout.vue'),
     redirect: { name: 'StoreListPage' },
     name: 'Dashboard',
     children: [
       {
         path: 'store',
+        component: () => import('layouts/MainLayout.vue'),
         children: [
           {
             name: 'StoreListPage',
@@ -51,153 +86,20 @@ const routes: RouteRecordRaw[] = [
               ],
             },
           },
+        ],
+      },
+      {
+        name: 'ManageStorePage',
+        component: () => import('src/layouts/ManageShopLayout.vue'),
+        path: 'store/manage/:storeId',
+        children: [
           {
-            name: 'ManageStorePage',
+            path: 'basic-information',
+            name: 'ManageStoreBasicInformation',
             component: () =>
-              import('pages/dashboard/store/ManageStorePage.vue'),
-            path: 'manage/:storeId',
-            children: [
-              {
-                path: 'basic-information',
-                name: 'ManageStoreBasicInformation',
-                component: () =>
-                  import(
-                    'components/dashboard/store-page/StoreManagementBasicInformationPanel.vue'
-                  ),
-                meta: {
-                  breadcrumbs: [
-                    {
-                      label: 'pages.panel.dashboard.title',
-                      to: { name: 'Dashboard' },
-                    },
-                    {
-                      label: 'pages.panel.dashboard.storeListPage.title',
-                      to: { name: 'StoreListPage' },
-                    },
-                    {
-                      label: 'pages.panel.dashboard.manageStorePage.title',
-                      to: { name: 'ManageStoreBasicInformation' },
-                    },
-                    {
-                      label:
-                        'pages.panel.dashboard.manageStorePage.panels.basicInformation.title',
-                    },
-                  ],
-                },
-              },
-              {
-                path: 'products',
-                name: 'ManageStoreProducts',
-                component: () =>
-                  import(
-                    'components/dashboard/store-page/StoreManagementProductsPanel.vue'
-                  ),
-                meta: {
-                  breadcrumbs: [
-                    {
-                      label: 'pages.panel.dashboard.title',
-                      to: { name: 'Dashboard' },
-                    },
-                    {
-                      label: 'pages.panel.dashboard.storeListPage.title',
-                      to: { name: 'StoreListPage' },
-                    },
-                    {
-                      label: 'pages.panel.dashboard.manageStorePage.title',
-                      to: { name: 'ManageStoreBasicInformation' },
-                    },
-                    {
-                      label:
-                        'pages.panel.dashboard.manageStorePage.panels.productManagement.title',
-                    },
-                  ],
-                },
-              },
-              {
-                path: 'payment-methods',
-                name: 'ManageStorePaymentMethods',
-                component: () =>
-                  import(
-                    'components/dashboard/store-page/StoreManagementPaymentMethodsPanel.vue'
-                  ),
-                meta: {
-                  breadcrumbs: [
-                    {
-                      label: 'pages.panel.dashboard.title',
-                      to: { name: 'Dashboard' },
-                    },
-                    {
-                      label: 'pages.panel.dashboard.storeListPage.title',
-                      to: { name: 'StoreListPage' },
-                    },
-                    {
-                      label: 'pages.panel.dashboard.manageStorePage.title',
-                      to: { name: 'ManageStoreBasicInformation' },
-                    },
-                    {
-                      label:
-                        'pages.panel.dashboard.manageStorePage.panels.paymentConfiguration.title',
-                    },
-                  ],
-                },
-              },
-              {
-                path: 'product-categories',
-                name: 'ManageStoreProductCategories',
-                component: () =>
-                  import(
-                    'components/dashboard/store-page/StoreManagementProductCategoriesPanel.vue'
-                  ),
-                meta: {
-                  breadcrumbs: [
-                    {
-                      label: 'pages.panel.dashboard.title',
-                      to: { name: 'Dashboard' },
-                    },
-                    {
-                      label: 'pages.panel.dashboard.storeListPage.title',
-                      to: { name: 'StoreListPage' },
-                    },
-                    {
-                      label: 'pages.panel.dashboard.manageStorePage.title',
-                      to: { name: 'ManageStoreBasicInformation' },
-                    },
-                    {
-                      label:
-                        'pages.panel.dashboard.manageStorePage.panels.productCategories.title',
-                    },
-                  ],
-                },
-              },
-              {
-                path: 'shipping-methods',
-                name: 'ManageStoreShippingMethods',
-                component: () =>
-                  import(
-                    'components/dashboard/store-page/StoreManagementShippingMethodsPanel.vue'
-                  ),
-                meta: {
-                  breadcrumbs: [
-                    {
-                      label: 'pages.panel.dashboard.title',
-                      to: { name: 'Dashboard' },
-                    },
-                    {
-                      label: 'pages.panel.dashboard.storeListPage.title',
-                      to: { name: 'StoreListPage' },
-                    },
-                    {
-                      label: 'pages.panel.dashboard.manageStorePage.title',
-                      to: { name: 'ManageStoreBasicInformation' },
-                    },
-                    {
-                      label:
-                        'pages.panel.dashboard.manageStorePage.panels.shipmentMethods.title',
-                    },
-                  ],
-                },
-              },
-            ],
+              import(
+                'components/dashboard/store-page/StoreManagementBasicInformationPanel.vue'
+              ),
             meta: {
               breadcrumbs: [
                 {
@@ -208,11 +110,143 @@ const routes: RouteRecordRaw[] = [
                   label: 'pages.panel.dashboard.storeListPage.title',
                   to: { name: 'StoreListPage' },
                 },
-                { label: 'pages.panel.dashboard.manageStorePage.title' },
+                {
+                  label: 'pages.panel.dashboard.manageStorePage.title',
+                  to: { name: 'ManageStoreBasicInformation' },
+                },
+                {
+                  label:
+                    'pages.panel.dashboard.manageStorePage.panels.basicInformation.title',
+                },
+              ],
+            },
+          },
+          {
+            path: 'products',
+            name: 'ManageStoreProducts',
+            component: () =>
+              import(
+                'components/dashboard/store-page/StoreManagementProductsPanel.vue'
+              ),
+            meta: {
+              breadcrumbs: [
+                {
+                  label: 'pages.panel.dashboard.title',
+                  to: { name: 'Dashboard' },
+                },
+                {
+                  label: 'pages.panel.dashboard.storeListPage.title',
+                  to: { name: 'StoreListPage' },
+                },
+                {
+                  label: 'pages.panel.dashboard.manageStorePage.title',
+                  to: { name: 'ManageStoreBasicInformation' },
+                },
+                {
+                  label:
+                    'pages.panel.dashboard.manageStorePage.panels.productManagement.title',
+                },
+              ],
+            },
+          },
+          {
+            path: 'payment-methods',
+            name: 'ManageStorePaymentMethods',
+            component: () =>
+              import(
+                'components/dashboard/store-page/StoreManagementPaymentMethodsPanel.vue'
+              ),
+            meta: {
+              breadcrumbs: [
+                {
+                  label: 'pages.panel.dashboard.title',
+                  to: { name: 'Dashboard' },
+                },
+                {
+                  label: 'pages.panel.dashboard.storeListPage.title',
+                  to: { name: 'StoreListPage' },
+                },
+                {
+                  label: 'pages.panel.dashboard.manageStorePage.title',
+                  to: { name: 'ManageStoreBasicInformation' },
+                },
+                {
+                  label:
+                    'pages.panel.dashboard.manageStorePage.panels.paymentConfiguration.title',
+                },
+              ],
+            },
+          },
+          {
+            path: 'product-categories',
+            name: 'ManageStoreProductCategories',
+            component: () =>
+              import(
+                'components/dashboard/store-page/StoreManagementProductCategoriesPanel.vue'
+              ),
+            meta: {
+              breadcrumbs: [
+                {
+                  label: 'pages.panel.dashboard.title',
+                  to: { name: 'Dashboard' },
+                },
+                {
+                  label: 'pages.panel.dashboard.storeListPage.title',
+                  to: { name: 'StoreListPage' },
+                },
+                {
+                  label: 'pages.panel.dashboard.manageStorePage.title',
+                  to: { name: 'ManageStoreBasicInformation' },
+                },
+                {
+                  label:
+                    'pages.panel.dashboard.manageStorePage.panels.productCategories.title',
+                },
+              ],
+            },
+          },
+          {
+            path: 'shipping-methods',
+            name: 'ManageStoreShippingMethods',
+            component: () =>
+              import(
+                'components/dashboard/store-page/StoreManagementShippingMethodsPanel.vue'
+              ),
+            meta: {
+              breadcrumbs: [
+                {
+                  label: 'pages.panel.dashboard.title',
+                  to: { name: 'Dashboard' },
+                },
+                {
+                  label: 'pages.panel.dashboard.storeListPage.title',
+                  to: { name: 'StoreListPage' },
+                },
+                {
+                  label: 'pages.panel.dashboard.manageStorePage.title',
+                  to: { name: 'ManageStoreBasicInformation' },
+                },
+                {
+                  label:
+                    'pages.panel.dashboard.manageStorePage.panels.shipmentMethods.title',
+                },
               ],
             },
           },
         ],
+        meta: {
+          breadcrumbs: [
+            {
+              label: 'pages.panel.dashboard.title',
+              to: { name: 'Dashboard' },
+            },
+            {
+              label: 'pages.panel.dashboard.storeListPage.title',
+              to: { name: 'StoreListPage' },
+            },
+            { label: 'pages.panel.dashboard.manageStorePage.title' },
+          ],
+        },
       },
       {
         name: 'ContactsPage',
@@ -229,31 +263,7 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/dashboard/contacts/ContactsPage.vue'),
       },
     ],
-    beforeEnter: async (to, from, next) => {
-      const { api } = useApi();
-      const authStore = useAuthStore();
-
-      if (!authStore.state.isLoggedIn) {
-        return next({
-          name: 'LoginPage',
-          replace: true,
-        });
-      }
-      try {
-        const { data } = await api.post('/auth/check');
-      } catch (err) {
-        if (err instanceof AxiosError) {
-          // console.log(err.response);
-          authStore.actions.clearAuthState();
-          return next({
-            name: 'LoginPage',
-            replace: true,
-          });
-        }
-        // throw new Error('Unhandled error while verifying token.');
-      }
-      return next();
-    },
+    beforeEnter: beforeEnterAuth,
   },
   {
     path: '/auth',
