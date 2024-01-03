@@ -248,7 +248,7 @@ export default {
               },
             },
             productManagement: {
-              title: 'مدیریت محصولات',
+              title: 'محصولات',
               fields: {
                 title: 'عنوان',
                 price: 'قیمت',
