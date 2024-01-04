@@ -1,11 +1,16 @@
 <template>
   <q-card
+    bordered
+    flat
     class="q-hoverable shadow-4 cursor-pointer"
     v-ripple
-    style="border-radius: 7px; border-bottom: orange 5px solid"
     @click="goToShopCategoryProductsPage(id)"
   >
-    <q-img style="overflow: hidden" :src="getCategoryImageSrc()" fit="cover" />
+    <q-img
+      style="overflow: hidden; max-height: 150px"
+      :src="getCategoryImageSrc()"
+      fit="cover"
+    />
     <q-card-section class="text-center text-bold">
       <div>{{ title }}</div>
     </q-card-section>
