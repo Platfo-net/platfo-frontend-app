@@ -33,6 +33,12 @@ onMounted(async () => {
 
 <template>
   <q-page class="q-pa-md">
+    <code>
+      {{ window.Telegram.WebApp.initData }}
+    </code>
+    <code>
+      {{ window.Telegram.WebApp.initDataUnsafe }}
+    </code>
     <q-dialog maximized persistent v-model="showOutOfOrderDialog">
       <q-card class="bg-primary">
         <div
