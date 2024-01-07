@@ -18,12 +18,15 @@ const getShopProductsPaginatedResponse = async () => {
   products.value = data.items;
 };
 
+const initData = ref({});
+const initDataUnsafe = ref({});
+
 function closeWebApp() {
-  window.Telegram.WebApp.close();
+  initData.value = window.Telegram.WebApp.close();
 }
 
 function getInitData() {
-  return window.Telegram.WebApp.initData;
+  initDataUnsafe.value = window.Telegram.WebApp.initData;
 }
 
 function getInitDataUnsafe() {
@@ -33,6 +36,8 @@ function getInitDataUnsafe() {
 onMounted(async () => {
   try {
     await getShopProductsPaginatedResponse();
+    getInitData();
+    getInitDataUnsafe();
   } catch (err) {
     showOutOfOrderDialog.value = true;
   }
@@ -42,10 +47,10 @@ onMounted(async () => {
 <template>
   <q-page class="q-pa-md">
     <code>
-      {{ getInitData() }}
+      {{ initData }}
     </code>
     <code>
-      {{ getInitDataUnsafe() }}
+      {{ initDataUnsafe }}
     </code>
     <q-dialog maximized persistent v-model="showOutOfOrderDialog">
       <q-card class="bg-primary">
