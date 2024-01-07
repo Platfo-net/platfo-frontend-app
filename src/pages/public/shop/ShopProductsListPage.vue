@@ -22,6 +22,14 @@ function closeWebApp() {
   window.Telegram.WebApp.close();
 }
 
+function getInitData() {
+  return window.Telegram.WebApp.initData;
+}
+
+function getInitDataUnsafe() {
+  return window.Telegram.WebApp.initDataUnsafe;
+}
+
 onMounted(async () => {
   try {
     await getShopProductsPaginatedResponse();
@@ -34,10 +42,10 @@ onMounted(async () => {
 <template>
   <q-page class="q-pa-md">
     <code>
-      {{ window.Telegram.WebApp.initData }}
+      {{ getInitData() }}
     </code>
     <code>
-      {{ window.Telegram.WebApp.initDataUnsafe }}
+      {{ getInitDataUnsafe() }}
     </code>
     <q-dialog maximized persistent v-model="showOutOfOrderDialog">
       <q-card class="bg-primary">
