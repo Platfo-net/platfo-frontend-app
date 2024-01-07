@@ -33,25 +33,26 @@ function getInitDataUnsafe() {
   initDataUnsafe.value = window.Telegram.WebApp.initDataUnsafe;
 }
 
+const errorTg = ref();
+
 onMounted(async () => {
   try {
     await getShopProductsPaginatedResponse();
+  } catch (err) {
+    showOutOfOrderDialog.value = true;
+  }
+
+  try {
     getInitData();
     getInitDataUnsafe();
   } catch (err) {
-    showOutOfOrderDialog.value = true;
+    errorTg.value = err;
   }
 });
 </script>
 
 <template>
   <q-page class="q-pa-md">
-    <code>
-      {{ initData }}
-    </code>
-    <code>
-      {{ initDataUnsafe }}
-    </code>
     <q-dialog maximized persistent v-model="showOutOfOrderDialog">
       <q-card class="bg-primary">
         <div
@@ -79,6 +80,19 @@ onMounted(async () => {
       </div>
     </template>
     <template v-else> محصولی برای نمایش وجود ندارد. </template>
+
+    <div>initData:</div>
+    <div>
+      <pre><code>{{initData}}</code></pre>
+    </div>
+    <div>initDataUnsafe:</div>
+    <div>
+      <pre><code>{{initDataUnsafe}}</code></pre>
+    </div>
+    <div>Error:</div>
+    <div>
+      <pre><code>{{errorTg}}</code></pre>
+    </div>
   </q-page>
 </template>
 
