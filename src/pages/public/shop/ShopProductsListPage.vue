@@ -22,15 +22,15 @@ const initData = ref({});
 const initDataUnsafe = ref({});
 
 function closeWebApp() {
-  initData.value = window.Telegram.WebApp.close();
+  window.Telegram.WebApp.close();
 }
 
 function getInitData() {
-  initDataUnsafe.value = window.Telegram.WebApp.initData;
+  initData.value = window.Telegram.WebApp.initData;
 }
 
 function getInitDataUnsafe() {
-  return window.Telegram.WebApp.initDataUnsafe;
+  initDataUnsafe.value = window.Telegram.WebApp.initDataUnsafe;
 }
 
 onMounted(async () => {
