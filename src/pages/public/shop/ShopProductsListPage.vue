@@ -18,35 +18,15 @@ const getShopProductsPaginatedResponse = async () => {
   products.value = data.items;
 };
 
-const initData = ref({});
-const initDataUnsafe = ref({});
-
 function closeWebApp() {
   window.Telegram.WebApp.close();
 }
-
-function getInitData() {
-  initData.value = window.Telegram.WebApp.initData;
-}
-
-function getInitDataUnsafe() {
-  initDataUnsafe.value = window.Telegram.WebApp.initDataUnsafe;
-}
-
-const errorTg = ref();
 
 onMounted(async () => {
   try {
     await getShopProductsPaginatedResponse();
   } catch (err) {
     showOutOfOrderDialog.value = true;
-  }
-
-  try {
-    getInitData();
-    getInitDataUnsafe();
-  } catch (err) {
-    errorTg.value = err;
   }
 });
 </script>
@@ -80,19 +60,6 @@ onMounted(async () => {
       </div>
     </template>
     <template v-else> محصولی برای نمایش وجود ندارد. </template>
-
-    <div>initData:</div>
-    <div>
-      <pre><code>{{initData}}</code></pre>
-    </div>
-    <div>initDataUnsafe:</div>
-    <div>
-      <pre><code>{{initDataUnsafe}}</code></pre>
-    </div>
-    <div>Error:</div>
-    <div>
-      <pre><code>{{errorTg}}</code></pre>
-    </div>
   </q-page>
 </template>
 
