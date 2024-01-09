@@ -21,8 +21,10 @@ export const useProductsService = () => {
     return response.data;
   };
 
-  const getOneById = async (id: string) => {
-    const response = await shopApi.api.get<ProductType>(`/shop/products/${id}`);
+  const getOneById = async (id: string, shopId: string) => {
+    const response = await shopApi.api.get<ProductType>(
+      `/shop/products/${shopId}/${id}`
+    );
     return response.data;
   };
 
