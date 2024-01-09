@@ -108,7 +108,13 @@ onMounted(async () => {
       v-model:pagination="pagination"
     >
       <template v-slot:top-right>
-        <q-btn color="primary" label="محصول جدید" icon="add" flat></q-btn>
+        <q-btn
+          color="primary"
+          label="محصول جدید"
+          icon="add"
+          flat
+          :to="{ name: 'ManageStoreProductCreatePage' }"
+        ></q-btn>
       </template>
       <template v-slot:loading>
         <q-inner-loading showing color="primary" />
@@ -154,7 +160,7 @@ onMounted(async () => {
               dense
               size="sm"
               flat
-              :to="`products/${props.row.id}`"
+              :to="`products/${props.row.id}/edit`"
               label="ویرایش"
             ></q-btn>
           </div>
