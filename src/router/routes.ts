@@ -126,8 +126,10 @@ const routes: RouteRecordRaw[] = [
             name: 'ManageStoreProducts',
             component: () =>
               import(
-                'components/dashboard/store-page/StoreManagementProductsPanel.vue'
+                'pages/dashboard/store/ManageStore/Products/ManageStoreProductsListPage.vue'
+                // 'components/dashboard/store-page/StoreManagementProductsPanel.vue'
               ),
+
             meta: {
               breadcrumbs: [
                 {
@@ -145,6 +147,68 @@ const routes: RouteRecordRaw[] = [
                 {
                   label:
                     'pages.panel.dashboard.manageStorePage.panels.productManagement.title',
+                },
+              ],
+            },
+          },
+          {
+            path: 'products-old',
+            name: 'ManageStoreProductsOld',
+            component: () =>
+              import(
+                // 'pages/dashboard/store/ManageStore/Products/ManageStoreProductsListPage.vue'
+                'components/dashboard/store-page/StoreManagementProductsPanel.vue'
+              ),
+
+            meta: {
+              breadcrumbs: [
+                {
+                  label: 'pages.panel.dashboard.title',
+                  to: { name: 'Dashboard' },
+                },
+                {
+                  label: 'pages.panel.dashboard.storeListPage.title',
+                  to: { name: 'StoreListPage' },
+                },
+                {
+                  label: 'pages.panel.dashboard.manageStorePage.title',
+                  to: { name: 'ManageStoreBasicInformation' },
+                },
+                {
+                  label:
+                    'pages.panel.dashboard.manageStorePage.panels.productManagement.title',
+                },
+              ],
+            },
+          },
+          {
+            path: 'products/:productId',
+            name: 'ManageStoreProductEditPage',
+            component: import(
+              'pages/dashboard/store/ManageStore/Products/ManageStoreProductEditPage.vue'
+              // 'components/dashboard/store-page/StoreManagementProductsPanel.vue'
+            ),
+            meta: {
+              breadcrumbs: [
+                {
+                  label: 'pages.panel.dashboard.title',
+                  to: { name: 'Dashboard' },
+                },
+                {
+                  label: 'pages.panel.dashboard.storeListPage.title',
+                  to: { name: 'StoreListPage' },
+                },
+                {
+                  label: 'pages.panel.dashboard.manageStorePage.title',
+                  to: { name: 'ManageStoreBasicInformation' },
+                },
+                {
+                  label:
+                    'pages.panel.dashboard.manageStorePage.panels.productManagement.title',
+                  to: { name: 'ManageStoreProducts' },
+                },
+                {
+                  label: 'ویرایش محصول',
                 },
               ],
             },

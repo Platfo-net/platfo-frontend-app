@@ -61,3 +61,31 @@ export type ShipmentMethodType = {
   currency: 'IRT' | 'IRR';
   shop_id: string;
 };
+
+export type UpsertProductType = {
+  title: string;
+  image: string;
+  price: number;
+  currency: string;
+  category_id: string;
+};
+
+export type ProductType = {
+  id: string;
+  title: string;
+  image: string;
+  price: number;
+  currency: string;
+  category: ProductCategoryType;
+  created_at: Date;
+  updated_at: Date;
+  image_url: string;
+};
+
+export type ProductCategoryType = {
+  id: string;
+  image?: string;
+  image_url?: string;
+  title: string;
+  shop_id: string;
+};
