@@ -82,10 +82,15 @@ export type ProductType = {
   image_url: string;
 };
 
-export type ProductCategoryType = {
-  id: string;
-  image?: string;
-  image_url?: string;
+export type UpsertProductCategoryType = {
   title: string;
+  image: string;
   shop_id: string;
+};
+
+export type ProductCategoryType = {
+  title: string;
+  image: string;
+  id: string;
+  image_url: string;
 };

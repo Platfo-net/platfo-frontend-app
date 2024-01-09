@@ -182,10 +182,10 @@ const routes: RouteRecordRaw[] = [
             },
           },
           {
-            path: 'products/:productId',
+            path: 'products/:productId/edit',
             name: 'ManageStoreProductEditPage',
             component: import(
-              'pages/dashboard/store/ManageStore/Products/ManageStoreProductEditPage.vue'
+              'pages/dashboard/store/ManageStore/Products/ManageStoreUpsertProductPage.vue'
               // 'components/dashboard/store-page/StoreManagementProductsPanel.vue'
             ),
             meta: {
@@ -209,6 +209,37 @@ const routes: RouteRecordRaw[] = [
                 },
                 {
                   label: 'ویرایش محصول',
+                },
+              ],
+            },
+          },
+          {
+            path: 'products/create',
+            name: 'ManageStoreProductCreatePage',
+            component: import(
+              'pages/dashboard/store/ManageStore/Products/ManageStoreUpsertProductPage.vue'
+            ),
+            meta: {
+              breadcrumbs: [
+                {
+                  label: 'pages.panel.dashboard.title',
+                  to: { name: 'Dashboard' },
+                },
+                {
+                  label: 'pages.panel.dashboard.storeListPage.title',
+                  to: { name: 'StoreListPage' },
+                },
+                {
+                  label: 'pages.panel.dashboard.manageStorePage.title',
+                  to: { name: 'ManageStoreBasicInformation' },
+                },
+                {
+                  label:
+                    'pages.panel.dashboard.manageStorePage.panels.productManagement.title',
+                  to: { name: 'ManageStoreProducts' },
+                },
+                {
+                  label: 'ایجاد محصول',
                 },
               ],
             },
