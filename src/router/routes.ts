@@ -156,7 +156,6 @@ const routes: RouteRecordRaw[] = [
             name: 'ManageStoreProductsOld',
             component: () =>
               import(
-                // 'pages/dashboard/store/ManageStore/Products/ManageStoreProductsListPage.vue'
                 'components/dashboard/store-page/StoreManagementProductsPanel.vue'
               ),
 
@@ -184,10 +183,10 @@ const routes: RouteRecordRaw[] = [
           {
             path: 'products/:productId/edit',
             name: 'ManageStoreProductEditPage',
-            component: import(
-              'pages/dashboard/store/ManageStore/Products/ManageStoreUpsertProductPage.vue'
-              // 'components/dashboard/store-page/StoreManagementProductsPanel.vue'
-            ),
+            component: () =>
+              import(
+                'pages/dashboard/store/ManageStore/Products/ManageStoreUpsertProductPage.vue'
+              ),
             meta: {
               breadcrumbs: [
                 {
@@ -216,9 +215,10 @@ const routes: RouteRecordRaw[] = [
           {
             path: 'products/create',
             name: 'ManageStoreProductCreatePage',
-            component: import(
-              'pages/dashboard/store/ManageStore/Products/ManageStoreUpsertProductPage.vue'
-            ),
+            component: () =>
+              import(
+                'pages/dashboard/store/ManageStore/Products/ManageStoreUpsertProductPage.vue'
+              ),
             meta: {
               breadcrumbs: [
                 {
