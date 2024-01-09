@@ -185,7 +185,7 @@ const routes: RouteRecordRaw[] = [
             path: 'products/:productId',
             name: 'ManageStoreProductEditPage',
             component: import(
-              'pages/dashboard/store/ManageStore/Products/ManageStoreProductEditPage.vue'
+              'pages/dashboard/store/ManageStore/Products/ManageStoreUpsertProduct.vue'
               // 'components/dashboard/store-page/StoreManagementProductsPanel.vue'
             ),
             meta: {
