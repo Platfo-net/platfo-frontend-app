@@ -4,6 +4,7 @@ import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import TomanSymbol from 'components/common/TomanSymbol.vue';
 import { useQuery } from '@tanstack/vue-query';
+import { QTableColumn } from 'quasar';
 
 /** COMPONENT COMPOSABLES */
 const productsService = useProductsService();
@@ -105,7 +106,7 @@ onMounted(async () => {
       flat
       separator="cell"
       :rows="productsPaginatedResponse?.items"
-      :columns="columns"
+      :columns="columns as QTableColumn[]"
       row-key="name"
       :loading="isFetching"
       @request="tableOnRequestHandler"
@@ -175,18 +176,4 @@ onMounted(async () => {
 </template>
 
 <style lang="sass">
-.sticky-last-col
-
-  thead tr:last-child th:last-child
-    /* bg color is important for th; just specify one */
-    background-color: antiquewhite
-
-  td:last-child
-    background-color: antiquewhite
-
-  th:last-child,
-  td:last-child
-    position: sticky
-    right: 0
-    z-index: 1
 </style>
