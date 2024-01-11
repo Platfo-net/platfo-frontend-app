@@ -47,11 +47,6 @@ watch(response, (res) => {
   console.log(response);
   products.value = res?.items as ProductType[];
 });
-
-// onMounted(async () => {
-//     const data = await queries.getShopCategoryProducts(route.params.shopId as string, route.params.categoryId as string);
-//     products.value = data.items;
-// });
 </script>
 
 <style scoped>
