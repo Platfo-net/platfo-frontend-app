@@ -82,11 +82,16 @@ export type ProductType = {
   image_url: string;
 };
 
-export type UpsertProductCategoryType = {
+export type InsertProductCategoryType = {
   title: string;
   image: string;
   shop_id: string;
 };
+
+export type UpdateProductCategoryType = {
+  title: string;
+  image: string;
+}
 
 export type ProductCategoryType = {
   title: string;
