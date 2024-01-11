@@ -25,7 +25,9 @@ const upsertModel = ref<UpsertProductType>({
   price: 0,
   title: '',
 });
-const categories = ref<ProductCategoryType[]>([]);
+const { data: categories, isPending: categoriesPending } = productCategoriesService.queries.getAll(
+  route.params.storeId as string
+);
 const isEdit = ref<boolean>(route.fullPath.includes('edit'));
 const productId = route.params.productId as string;
 const product = ref<ProductType>({} as ProductType);
@@ -76,9 +78,6 @@ async function submitForm() {
 
 /** COMPONENT LIFECYCLE HANDLERS */
 onMounted(async () => {
-  categories.value = await productCategoriesService.queries.getAll(
-    route.params.storeId as string
-  );
   await initUpsertStates();
 });
 
@@ -92,7 +91,6 @@ onMounted(async () => {
     <q-card>
       <base-loading-spinner
         :loading="
-          productCategoriesService.loading.value ||
           productsService.loading.value
         "
       />
@@ -146,7 +144,7 @@ onMounted(async () => {
               lazy-rules
               class="q-mb-lg"
               :options="
-                categories.map((x) => ({ label: x.title, value: x.id }))
+                categories?.map((x) => ({ label: x.title, value: x.id }))
               "
               dense
               outlined
@@ -161,6 +159,7 @@ onMounted(async () => {
                   (val && val.length > 0) ||
                   $t('general.fields.requiredStringField'),
               ]"
+              :loading="categoriesPending"
             >
             </q-select>
           </div>
