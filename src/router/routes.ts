@@ -277,7 +277,7 @@ const routes: RouteRecordRaw[] = [
             name: 'ManageStoreProductCategories',
             component: () =>
               import(
-                'components/dashboard/store-page/StoreManagementProductCategoriesPanel.vue'
+                'pages/dashboard/store/ManageStore/ProductCategories/ManageStoreProductCategoriesPage.vue'
               ),
             meta: {
               breadcrumbs: [
@@ -296,6 +296,70 @@ const routes: RouteRecordRaw[] = [
                 {
                   label:
                     'pages.panel.dashboard.manageStorePage.panels.productCategories.title',
+                },
+              ],
+            },
+          },
+          {
+            path: 'product-categories/:categoryId/edit',
+            name: 'ManageStoreProductCategoryEditPage',
+            component: () =>
+              import(
+                'pages/dashboard/store/ManageStore/ProductCategories/ManageStoreProductCategoryEditPage.vue'
+              ),
+            meta: {
+              breadcrumbs: [
+                {
+                  label: 'pages.panel.dashboard.title',
+                  to: { name: 'Dashboard' },
+                },
+                {
+                  label: 'pages.panel.dashboard.storeListPage.title',
+                  to: { name: 'StoreListPage' },
+                },
+                {
+                  label: 'pages.panel.dashboard.manageStorePage.title',
+                  to: { name: 'ManageStoreBasicInformation' },
+                },
+                {
+                  label:
+                    'pages.panel.dashboard.manageStorePage.panels.productCategories.title',
+                    to: { name: 'ManageStoreProductCategories'},
+                },
+                {
+                  label: 'ویرایش دسته بندی',
+                },
+              ],
+            },
+          },
+          {
+            path: 'product-categories/create',
+            name: 'ManageStoreProductCategoryCreatePage',
+            component: () =>
+              import(
+                'pages/dashboard/store/ManageStore/ProductCategories/ManageStoreProductCategoryCreatePage.vue'
+              ),
+            meta: {
+              breadcrumbs: [
+                {
+                  label: 'pages.panel.dashboard.title',
+                  to: { name: 'Dashboard' },
+                },
+                {
+                  label: 'pages.panel.dashboard.storeListPage.title',
+                  to: { name: 'StoreListPage' },
+                },
+                {
+                  label: 'pages.panel.dashboard.manageStorePage.title',
+                  to: { name: 'ManageStoreBasicInformation' },
+                },
+                {
+                  label:
+                    'pages.panel.dashboard.manageStorePage.panels.productCategories.title',
+                    to: { name: 'ManageStoreProductCategories'},
+                },
+                {
+                  label: 'ایجاد دسته بندی',
                 },
               ],
             },
