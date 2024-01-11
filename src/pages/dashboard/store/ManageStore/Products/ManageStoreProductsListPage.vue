@@ -1,18 +1,27 @@
 <script setup lang="ts">
 import { useProductsService } from 'src/services/useProductsService';
 import { onMounted, ref } from 'vue';
-import { ProductType } from 'src/types';
 import { useRoute } from 'vue-router';
 import TomanSymbol from 'components/common/TomanSymbol.vue';
+import { useQuery } from '@tanstack/vue-query';
 
 /** COMPONENT COMPOSABLES */
 const productsService = useProductsService();
 const route = useRoute();
+
+const { data: productsPaginatedResponse, isFetching, refetch } = useQuery({
+  queryFn: async () => await productsService.queries.getAll(
+    route.params.storeId as string,
+    { page: pagination.value.page, page_size: pagination.value.rowsPerPage }
+  ),
+  queryKey: ['product-list']
+});
+
 /************************ */
 
 /** COMPONENT STATE */
 const tableRef = ref();
-const products = ref<ProductType[]>([]);
+// const products = ref<ProductType[]>([]);
 const columns = [
   { name: 'title', label: 'عنوان', field: 'title', align: 'left' },
   {
@@ -72,15 +81,10 @@ async function tableOnRequestHandler(_props: any) {
   await loadData();
   pagination.value.page = _props.pagination.page;
   pagination.value.rowsPerPage = _props.pagination.rowsPerPage;
-  // pagination.value.rowsNumber = _props.pagination.rowsNumber;
 }
 async function loadData() {
-  const paginatedResponse = await productsService.queries.getAll(
-    route.params.storeId as string,
-    { page: pagination.value.page, page_size: pagination.value.rowsPerPage }
-  );
-  pagination.value.rowsNumber = paginatedResponse.pagination.total_count;
-  products.value = paginatedResponse.items;
+  await refetch();
+  pagination.value.rowsNumber = productsPaginatedResponse.value?.pagination.total_count as number;
 }
 /********************** */
 
@@ -100,10 +104,10 @@ onMounted(async () => {
       bordered
       flat
       separator="cell"
-      :rows="products"
+      :rows="productsPaginatedResponse?.items"
       :columns="columns"
       row-key="name"
-      :loading="productsService.loading.value"
+      :loading="isFetching"
       @request="tableOnRequestHandler"
       v-model:pagination="pagination"
     >
