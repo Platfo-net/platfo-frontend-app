@@ -1,9 +1,9 @@
 <template>
   <q-page class="q-pa-md">
-    <template v-if="loading">
-      <base-loading-spinner loading></base-loading-spinner>
+    <template v-if="isPending">
+      <base-loading-spinner :loading="isPending"></base-loading-spinner>
     </template>
-    <template v-if="categories.length > 0">
+    <template v-if="categories && categories.length > 0">
       <div class="row q-col-gutter-md">
         <div
           class="col-6"
@@ -24,21 +24,21 @@
 
 <script setup lang="ts">
 import BaseLoadingSpinner from 'src/components/common/BaseLoadingSpinner.vue';
-import { IProductCategory } from 'src/components/models';
 import TelegramShopCategoryItem from 'src/components/public/shop/TelegramShopCategoryItem.vue';
 import { useTelegramShopService } from 'src/services/useTelegramShopService';
-import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 const {
-  loading,
   queries: { getShopCategories },
 } = useTelegramShopService();
-const categories = ref<IProductCategory[]>([]);
+
 const route = useRoute();
 
-onMounted(async () => {
-  categories.value = await getShopCategories(route.params.shopId as string);
-});
+const { data: categories, isPending } = getShopCategories(route.params.shopId as string)
+// const categories = ref<IProductCategory[]>([]);
+
+// onMounted(async () => {
+//   categories.value = await getShopCategories(route.params.shopId as string);
+// });
 </script>
 
 <style scoped></style>

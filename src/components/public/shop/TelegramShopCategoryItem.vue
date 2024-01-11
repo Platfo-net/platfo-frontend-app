@@ -19,6 +19,7 @@
 
 <script setup lang="ts">
 import { IProductCategory } from 'src/components/models';
+import { ProductCategoryType } from 'src/types';
 import { useRouter } from 'vue-router';
 const router = useRouter();
 function goToShopCategoryProductsPage(categoryId: string) {
@@ -33,7 +34,7 @@ function goToShopCategoryProductsPage(categoryId: string) {
 const getCategoryImageSrc = () => {
   return props.image_url || 'https://placehold.co/100x100';
 };
-const props = defineProps<IProductCategory>();
+const props = defineProps<ProductCategoryType>();
 </script>
 
 <style scoped></style>

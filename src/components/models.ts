@@ -1,3 +1,5 @@
+import { ProductType } from "src/types";
+
 export interface IShop {
   id: string;
   title: string;
@@ -40,7 +42,7 @@ export interface IPaymentMethod {
 }
 
 export interface ITelegramShopProductItemProps {
-  product: IProduct;
+  product: ProductType;
 }
 
 export interface IUploadProductImageResponse {

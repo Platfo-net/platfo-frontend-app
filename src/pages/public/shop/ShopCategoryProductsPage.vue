@@ -7,8 +7,8 @@
         </q-toolbar>
     </q-header>
     <q-page class="q-pa-md">
-        <template v-if="loading">
-            <base-loading-spinner loading></base-loading-spinner>
+        <template v-if="isPending">
+            <base-loading-spinner :loading="isPending"></base-loading-spinner>
         </template>
         <template v-else>
             <template v-if="products.length > 0">
@@ -31,21 +31,27 @@
 
 <script setup lang="ts">
 import BaseLoadingSpinner from 'src/components/common/BaseLoadingSpinner.vue';
-import { IProduct } from 'src/components/models';
 import NothingToShowImg from 'src/components/public/shop/NothingToShowImg.vue';
 import TelegramShopProductItem from 'src/components/public/shop/TelegramShopProductItem.vue';
 import { useTelegramShopService } from 'src/services/useTelegramShopService';
-import { onMounted, ref } from 'vue';
+import { ProductType } from 'src/types';
+import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
-const { loading, queries } = useTelegramShopService();
+const { queries } = useTelegramShopService();
 const route = useRoute();
-const products = ref<IProduct[]>([]);
+const { data: response, isPending } = queries.getShopCategoryProducts(route.params.shopId as string, route.params.categoryId as string);
+const products = ref<ProductType[]>([]);
 
-onMounted(async () => {
-    const data = await queries.getShopCategoryProducts(route.params.shopId as string, route.params.categoryId as string);
-    products.value = data.items;
+watch(response, (res) => {
+  console.log(response);
+  products.value = res?.items as ProductType[];
 });
+
+// onMounted(async () => {
+//     const data = await queries.getShopCategoryProducts(route.params.shopId as string, route.params.categoryId as string);
+//     products.value = data.items;
+// });
 </script>
 
 <style scoped>
