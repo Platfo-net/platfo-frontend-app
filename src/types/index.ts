@@ -99,3 +99,66 @@ export type ProductCategoryType = {
   id: string;
   image_url: string;
 };
+
+export type OrderItemType = {
+  count: number;
+  price: number;
+  currency: string;
+  title: string;
+  image: string;
+}
+
+export enum OrderStatusEnum {
+  UNPAID = 'UNPAID',
+  PAYMENT_CHECK = 'PAYMENT_CHECK',
+  ACCEPTED = 'ACCEPTED',
+  PREPARATION = 'PREPARATION',
+  SENT = 'SENT',
+  DECLINED = 'DECLINED',
+  PAYMENT_DECLINED = 'PAYMENT_DECLINED',
+}
+
+export type OrderType = {
+  first_name: string;
+  last_name: string;
+  phone_number: string;
+  email: string;
+  state: string;
+  city: string;
+  address: string;
+  postal_code: string;
+  id: string;
+  total_amount: number;
+  currency: string;
+  items: OrderItemType[];
+  payment_method: string;
+  shipment_method: string;
+  status: OrderStatusEnum;
+  payment_information: unknown;
+}
+
+export type OrderListType = {
+  id: string;
+  order_number: number;
+  total_amount: number;
+  currency: string;
+  created_at: Date;
+  first_name: string;
+  last_name: string;
+  phone_number: string;
+  city: string;
+  payment_method: string;
+  shipment_method: string;
+  status: OrderStatusEnum;
+}
+
+export type PaginationParamsType = {
+  page: number;
+  page_size: number;
+}
+
+export type TablePaginationType = {
+  page: number;
+  rowsPerPage: number;
+  rowsNumber: number;
+};
