@@ -392,6 +392,33 @@ const routes: RouteRecordRaw[] = [
               ],
             },
           },
+          {
+            path: 'orders',
+            name: 'ManageStoreOrdersListPage',
+            component: () =>
+              import(
+                'pages/dashboard/store/ManageStore/Orders/ManageStoreOrdersListPage.vue'
+              ),
+            meta: {
+              breadcrumbs: [
+                {
+                  label: 'pages.panel.dashboard.title',
+                  to: { name: 'Dashboard' },
+                },
+                {
+                  label: 'pages.panel.dashboard.storeListPage.title',
+                  to: { name: 'StoreListPage' },
+                },
+                {
+                  label: 'pages.panel.dashboard.manageStorePage.title',
+                  to: { name: 'ManageStoreBasicInformation' },
+                },
+                {
+                  label: 'سفارش ها'
+                },
+              ],
+            },
+          },
         ],
         meta: {
           breadcrumbs: [

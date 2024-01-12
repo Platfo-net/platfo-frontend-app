@@ -79,6 +79,11 @@ export const useSidebar = () => {
         },
       ],
     },
+    {
+      title: 'سفارش ها',
+      icon: 'list',
+      to: { name: 'ManageStoreOrdersListPage' },
+    }
   ];
   return {
     mainLayoutRoutes,
