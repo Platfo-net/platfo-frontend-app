@@ -84,7 +84,7 @@ onMounted(async () => {
               dense
               size="sm"
               flat
-              :to="`orders/${props.row.id}`"
+              :to="`orders/${props.row.id}?order_number=${props.row.order_number}`"
               label="جزئیات"
             ></q-btn>
           </div>
