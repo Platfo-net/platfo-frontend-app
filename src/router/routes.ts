@@ -324,7 +324,7 @@ const routes: RouteRecordRaw[] = [
                 {
                   label:
                     'pages.panel.dashboard.manageStorePage.panels.productCategories.title',
-                    to: { name: 'ManageStoreProductCategories'},
+                  to: { name: 'ManageStoreProductCategories' },
                 },
                 {
                   label: 'ویرایش دسته بندی',
@@ -356,7 +356,7 @@ const routes: RouteRecordRaw[] = [
                 {
                   label:
                     'pages.panel.dashboard.manageStorePage.panels.productCategories.title',
-                    to: { name: 'ManageStoreProductCategories'},
+                  to: { name: 'ManageStoreProductCategories' },
                 },
                 {
                   label: 'ایجاد دسته بندی',
@@ -394,30 +394,66 @@ const routes: RouteRecordRaw[] = [
           },
           {
             path: 'orders',
-            name: 'ManageStoreOrdersListPage',
-            component: () =>
-              import(
-                'pages/dashboard/store/ManageStore/Orders/ManageStoreOrdersListPage.vue'
-              ),
-            meta: {
-              breadcrumbs: [
-                {
-                  label: 'pages.panel.dashboard.title',
-                  to: { name: 'Dashboard' },
+            children: [
+              {
+                name: 'ManageStoreOrdersListPage',
+                path: '',
+                component: () =>
+                  import(
+                    'pages/dashboard/store/ManageStore/Orders/ManageStoreOrdersListPage.vue'
+                  ),
+                meta: {
+                  breadcrumbs: [
+                    {
+                      label: 'pages.panel.dashboard.title',
+                      to: { name: 'Dashboard' },
+                    },
+                    {
+                      label: 'pages.panel.dashboard.storeListPage.title',
+                      to: { name: 'StoreListPage' },
+                    },
+                    {
+                      label: 'pages.panel.dashboard.manageStorePage.title',
+                      to: { name: 'ManageStoreBasicInformation' },
+                    },
+                    {
+                      label: 'سفارش ها',
+                    },
+                  ],
                 },
-                {
-                  label: 'pages.panel.dashboard.storeListPage.title',
-                  to: { name: 'StoreListPage' },
+              },
+              {
+                path: ':orderId',
+                name: 'ManageStoreOrderDetailsPage',
+                component: () =>
+                  import(
+                    'pages/dashboard/store/ManageStore/Orders/ManageStoreOrderDetailsPage.vue'
+                  ),
+                meta: {
+                  breadcrumbs: [
+                    {
+                      label: 'pages.panel.dashboard.title',
+                      to: { name: 'Dashboard' },
+                    },
+                    {
+                      label: 'pages.panel.dashboard.storeListPage.title',
+                      to: { name: 'StoreListPage' },
+                    },
+                    {
+                      label: 'pages.panel.dashboard.manageStorePage.title',
+                      to: { name: 'ManageStoreBasicInformation' },
+                    },
+                    {
+                      label: 'سفارش ها',
+                      to: { name: 'ManageStoreOrdersListPage' },
+                    },
+                    {
+                      label: 'جزئیات سفارش',
+                    },
+                  ],
                 },
-                {
-                  label: 'pages.panel.dashboard.manageStorePage.title',
-                  to: { name: 'ManageStoreBasicInformation' },
-                },
-                {
-                  label: 'سفارش ها'
-                },
-              ],
-            },
+              },
+            ],
           },
         ],
         meta: {
