@@ -91,7 +91,7 @@ export type InsertProductCategoryType = {
 export type UpdateProductCategoryType = {
   title: string;
   image: string;
-}
+};
 
 export type ProductCategoryType = {
   title: string;
@@ -106,7 +106,7 @@ export type OrderItemType = {
   currency: string;
   title: string;
   image: string;
-}
+};
 
 export enum OrderStatusEnum {
   UNPAID = 'UNPAID',
@@ -135,7 +135,7 @@ export type OrderType = {
   shipment_method: string;
   status: OrderStatusEnum;
   payment_information: unknown;
-}
+};
 
 export type OrderListType = {
   id: string;
@@ -150,15 +150,25 @@ export type OrderListType = {
   payment_method: string;
   shipment_method: string;
   status: OrderStatusEnum;
-}
+};
 
 export type PaginationParamsType = {
   page: number;
   page_size: number;
-}
+};
 
 export type TablePaginationType = {
   page: number;
   rowsPerPage: number;
   rowsNumber: number;
+};
+
+export type ApiLocaleType = {
+  fa: string;
+  en: string;
+};
+
+export type OrderStatusConstantType = {
+  value: OrderStatusEnum;
+  title: ApiLocaleType;
 };
