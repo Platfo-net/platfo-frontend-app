@@ -172,3 +172,29 @@ export type OrderStatusConstantType = {
   value: OrderStatusEnum;
   title: ApiLocaleType;
 };
+
+export type UserRoleType = {
+  name: string;
+  description: string;
+  persian_name: string;
+  id: string;
+};
+
+export type UserProfileImageType = {
+  filename: string;
+  url: string;
+};
+
+export type UserInformationType = {
+  id: string;
+  phone_number: string;
+  phone_country_code: string;
+  email: string;
+  is_active: boolean;
+  first_name: string;
+  last_name: string;
+  created_at: Date;
+  updated_at: Date;
+  role: UserRoleType;
+  profile_image: UserProfileImageType;
+};
