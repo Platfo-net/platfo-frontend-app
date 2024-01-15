@@ -198,3 +198,25 @@ export type UserInformationType = {
   role: UserRoleType;
   profile_image: UserProfileImageType;
 };
+
+export type PaymentMethodInformationFieldKeyType = string;
+export type PaymentMethodInformationFieldValueType = {
+  name: string;
+  title: string;
+  is_required: boolean;
+  type: 'string' | 'number';
+};
+export type PaymentMethodInformationFields = Record<
+  PaymentMethodInformationFieldKeyType,
+  PaymentMethodInformationFieldValueType
+>;
+
+export type PaymentMethodType = {
+  id: string;
+  title: string;
+  description: string;
+  information_fields: PaymentMethodInformationFields;
+  information: Record<string, unknown>;
+  is_active: boolean;
+  items: PaymentMethodType[];
+};
