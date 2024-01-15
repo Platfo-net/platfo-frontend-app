@@ -249,7 +249,8 @@ const routes: RouteRecordRaw[] = [
             name: 'ManageStorePaymentMethods',
             component: () =>
               import(
-                'components/dashboard/store-page/StoreManagementPaymentMethodsPanel.vue'
+                // 'components/dashboard/store-page/StoreManagementPaymentMethodsPanel.vue'
+                'pages/dashboard/store/ManageStore/PaymentMethods/ManageStorePaymentMethodsPage.vue'
               ),
             meta: {
               breadcrumbs: [
