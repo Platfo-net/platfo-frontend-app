@@ -32,6 +32,11 @@ export default {
     gettingData: 'در حال دریافت اطلاعات',
     payable: 'قابل پرداخت',
     upload2mbLimit: 'آپلود عکس (حداکثر ۲ مگابایت)',
+    paymentMethods: {
+      onSpot: 'پرداخت در محل',
+      cardTransfer: 'کارت به کارت',
+      paymentGateway: 'پرداخت آنلاین',
+    },
   },
   layout: {
     appHeader: 'پلتفو',
