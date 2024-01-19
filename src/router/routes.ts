@@ -58,6 +58,7 @@ const routes: RouteRecordRaw[] = [
             component: () => import('pages/dashboard/store/StoreListPage.vue'),
             path: 'list',
             meta: {
+              title: 'فروشگاه های من | پلتفو',
               breadcrumbs: [
                 {
                   label: 'pages.panel.dashboard.title',
@@ -73,6 +74,7 @@ const routes: RouteRecordRaw[] = [
               import('pages/dashboard/store/CreateStorePage.vue'),
             path: 'create',
             meta: {
+              title: 'ایجاد فروشگاه | پلتفو',
               breadcrumbs: [
                 {
                   label: 'pages.panel.dashboard.title',
@@ -101,6 +103,7 @@ const routes: RouteRecordRaw[] = [
                 'components/dashboard/store-page/StoreManagementBasicInformationPanel.vue'
               ),
             meta: {
+              title: 'اطلاعات پایه | پلتفو',
               breadcrumbs: [
                 {
                   label: 'pages.panel.dashboard.title',
@@ -131,6 +134,7 @@ const routes: RouteRecordRaw[] = [
               ),
 
             meta: {
+              title: 'محصولات | پلتفو',
               breadcrumbs: [
                 {
                   label: 'pages.panel.dashboard.title',
@@ -188,6 +192,7 @@ const routes: RouteRecordRaw[] = [
                 'pages/dashboard/store/ManageStore/Products/ManageStoreUpsertProductPage.vue'
               ),
             meta: {
+              title: 'ویرایش محصول | پلتفو',
               breadcrumbs: [
                 {
                   label: 'pages.panel.dashboard.title',
@@ -220,6 +225,7 @@ const routes: RouteRecordRaw[] = [
                 'pages/dashboard/store/ManageStore/Products/ManageStoreUpsertProductPage.vue'
               ),
             meta: {
+              title: 'ایجاد محصول | پلتفو',
               breadcrumbs: [
                 {
                   label: 'pages.panel.dashboard.title',
@@ -253,6 +259,7 @@ const routes: RouteRecordRaw[] = [
                 'pages/dashboard/store/ManageStore/PaymentMethods/ManageStorePaymentMethodsPage.vue'
               ),
             meta: {
+              title: 'روش های پرداخت | پلتفو',
               breadcrumbs: [
                 {
                   label: 'pages.panel.dashboard.title',
@@ -281,6 +288,7 @@ const routes: RouteRecordRaw[] = [
                 'pages/dashboard/store/ManageStore/ProductCategories/ManageStoreProductCategoriesPage.vue'
               ),
             meta: {
+              title: 'دسته بندی محصولات | پلتفو',
               breadcrumbs: [
                 {
                   label: 'pages.panel.dashboard.title',
@@ -309,6 +317,7 @@ const routes: RouteRecordRaw[] = [
                 'pages/dashboard/store/ManageStore/ProductCategories/ManageStoreProductCategoryEditPage.vue'
               ),
             meta: {
+              title: 'ویرایش دسته بندی محصولات | پلتفو',
               breadcrumbs: [
                 {
                   label: 'pages.panel.dashboard.title',
@@ -341,6 +350,7 @@ const routes: RouteRecordRaw[] = [
                 'pages/dashboard/store/ManageStore/ProductCategories/ManageStoreProductCategoryCreatePage.vue'
               ),
             meta: {
+              title: 'ایجاد دسته بندی جدید | پلتفو',
               breadcrumbs: [
                 {
                   label: 'pages.panel.dashboard.title',
@@ -373,6 +383,7 @@ const routes: RouteRecordRaw[] = [
                 'components/dashboard/store-page/StoreManagementShippingMethodsPanel.vue'
               ),
             meta: {
+              title: 'روش های ارسال | پلتفو',
               breadcrumbs: [
                 {
                   label: 'pages.panel.dashboard.title',
@@ -404,6 +415,7 @@ const routes: RouteRecordRaw[] = [
                     'pages/dashboard/store/ManageStore/Orders/ManageStoreOrdersListPage.vue'
                   ),
                 meta: {
+                  title: 'سفارش ها | پلتفو',
                   breadcrumbs: [
                     {
                       label: 'pages.panel.dashboard.title',
@@ -431,6 +443,7 @@ const routes: RouteRecordRaw[] = [
                     'pages/dashboard/store/ManageStore/Orders/ManageStoreOrderDetailsPage.vue'
                   ),
                 meta: {
+                  title: 'جزئیات سفارش | پلتفو',
                   breadcrumbs: [
                     {
                       label: 'pages.panel.dashboard.title',
@@ -471,20 +484,20 @@ const routes: RouteRecordRaw[] = [
           ],
         },
       },
-      {
-        name: 'ContactsPage',
-        path: 'contacts',
-        meta: {
-          breadcrumbs: [
-            {
-              label: 'pages.panel.dashboard.title',
-              to: { name: 'Dashboard' },
-            },
-            { label: 'My Contacts' },
-          ],
-        },
-        component: () => import('pages/dashboard/contacts/ContactsPage.vue'),
-      },
+      // {
+      //   name: 'ContactsPage',
+      //   path: 'contacts',
+      //   meta: {
+      //     breadcrumbs: [
+      //       {
+      //         label: 'pages.panel.dashboard.title',
+      //         to: { name: 'Dashboard' },
+      //       },
+      //       { label: 'My Contacts' },
+      //     ],
+      //   },
+      //   component: () => import('pages/dashboard/contacts/ContactsPage.vue'),
+      // },
     ],
     beforeEnter: beforeEnterAuth,
   },
@@ -506,16 +519,25 @@ const routes: RouteRecordRaw[] = [
           }
           next();
         },
+        meta: {
+          title: 'ورود | پلتفو',
+        },
       },
       {
         path: 'register',
         name: 'RegisterPage',
         component: () => import('pages/public/RegisterPage.vue'),
+        meta: {
+          title: 'ثبت نام | پلتفو',
+        },
       },
       {
         path: 'forgot-password',
         name: 'ForgotPasswordPage',
         component: () => import('pages/public/ForgotPasswordPage.vue'),
+        meta: {
+          title: 'فراموشی رمز | پلتفو',
+        },
       },
       {
         path: 'change-password',
@@ -532,11 +554,17 @@ const routes: RouteRecordRaw[] = [
             next();
           }
         },
+        meta: {
+          title: 'تغییر رمز | پلتفو',
+        },
       },
       {
         path: 'confirm-phone',
         name: 'OtpPhoneConfirmationPage',
         component: () => import('pages/public/OtpPhoneConfirmationPage.vue'),
+        meta: {
+          title: 'تایید شماره همراه | پلتفو',
+        },
       },
     ],
   },
@@ -574,6 +602,9 @@ const routes: RouteRecordRaw[] = [
     path: '/not-authorized',
     name: 'NotAuthorized',
     component: () => import('pages/NotAuthorizedPage.vue'),
+    meta: {
+      title: 'عملایت غیر مجاز | پلتفو',
+    },
   },
 
   // Always leave this as last one,
@@ -581,6 +612,9 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue'),
+    meta: {
+      title: 'یافت نشد | پلتفو',
+    },
   },
 ];
 

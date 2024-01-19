@@ -23,6 +23,13 @@ import { ref } from 'vue';
 import { useSidebar } from 'src/composables/use-sidebar';
 import BaseLayoutSidebarMenu from 'components/common/BaseLayoutSidebarMenu.vue';
 import BaseLayoutSidebarUserInfo from 'src/components/common/BaseLayoutSidebarUserInfo.vue';
+import { useMeta } from 'quasar';
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+useMeta(() => ({
+  title: route.meta.title as string,
+}))
 
 const { mainLayoutRoutes } = useSidebar();
 
