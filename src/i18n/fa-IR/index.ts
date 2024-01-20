@@ -36,6 +36,7 @@ export default {
       onSpot: 'پرداخت در محل',
       cardTransfer: 'کارت به کارت',
       paymentGateway: 'پرداخت آنلاین',
+      zarrinPal: 'زرین پال',
     },
   },
   layout: {

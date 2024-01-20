@@ -211,12 +211,26 @@ export type PaymentMethodInformationFields = Record<
   PaymentMethodInformationFieldValueType
 >;
 
+export type PaymentMethodGroupType = {
+  title: string;
+  items: PaymentMethodType[];
+};
+
 export type PaymentMethodType = {
+  id: string;
+  title: string;
+  description: string;
+  // information_fields: PaymentMethodInformationFields;
+  // information: Record<string, unknown>;
+  is_active: boolean;
+  // items: PaymentMethodType[];
+};
+
+export type PaymentMethodDetailType = {
   id: string;
   title: string;
   description: string;
   information_fields: PaymentMethodInformationFields;
   information: Record<string, unknown>;
   is_active: boolean;
-  items: PaymentMethodType[];
 };

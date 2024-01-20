@@ -281,6 +281,39 @@ const routes: RouteRecordRaw[] = [
             },
           },
           {
+            path: 'payment-methods/:paymentMethodId',
+            name: 'ManageStorePaymentMethodEditPage',
+            component: () =>
+              import(
+                'pages/dashboard/store/ManageStore/PaymentMethods/ManageStorePaymentMethodEditPage.vue'
+              ),
+            meta: {
+              title: 'ویرایش روش پرداخت | پلتفو',
+              breadcrumbs: [
+                {
+                  label: 'pages.panel.dashboard.title',
+                  to: { name: 'Dashboard' },
+                },
+                {
+                  label: 'pages.panel.dashboard.storeListPage.title',
+                  to: { name: 'StoreListPage' },
+                },
+                {
+                  label: 'pages.panel.dashboard.manageStorePage.title',
+                  to: { name: 'ManageStoreBasicInformation' },
+                },
+                {
+                  label:
+                    'pages.panel.dashboard.manageStorePage.panels.paymentConfiguration.title',
+                  to: { name: 'ManageStorePaymentMethods' },
+                },
+                {
+                  label: 'ویرایش روش پرداخت',
+                },
+              ],
+            },
+          },
+          {
             path: 'product-categories',
             name: 'ManageStoreProductCategories',
             component: () =>

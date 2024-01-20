@@ -1,13 +1,24 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query';
 import { useApi } from 'src/composables/use-api';
-import { PaymentMethodInformationFields, PaymentMethodType } from 'src/types';
+import {
+  PaymentMethodDetailType,
+  PaymentMethodGroupType,
+  PaymentMethodInformationFields,
+  PaymentMethodType,
+} from 'src/types';
 
 const usePaymentMethodsService = () => {
   const platfoApi = useApi();
   const queryClient = useQueryClient();
   const getAll = async (shopId: string) => {
-    const response = await platfoApi.api.get<PaymentMethodType[]>(
+    const response = await platfoApi.api.get<PaymentMethodGroupType[]>(
       `/shop/payment-methods/${shopId}/all`
+    );
+    return response.data;
+  };
+  const getById = async (id: string) => {
+    const response = await platfoApi.api.get<PaymentMethodDetailType>(
+      `/shop/payment-methods/${id}`
     );
     return response.data;
   };
@@ -27,18 +38,23 @@ const usePaymentMethodsService = () => {
           queryFn: async () => await getAll(shopId),
           queryKey: ['payment-methods', { shopId }],
         }),
+      getById: (id: string) =>
+        useQuery({
+          queryFn: async () => await getById(id),
+          queryKey: ['payment-methods', { id }],
+        }),
     },
     mutations: {
-      updateInformation: (shopId: string) =>
+      updateInformation: (id: string) =>
         useMutation({
           mutationFn: async (data: {
             id: string;
             newInformation: PaymentMethodInformationFields;
           }) => await updateInformation(data.id, data.newInformation),
-          mutationKey: ['update-payment-method', { shopId }],
+          mutationKey: ['update-payment-method', { id }],
           onSuccess: () => {
             queryClient.invalidateQueries({
-              queryKey: ['payment-methods', { shopId }],
+              queryKey: ['payment-methods', { id }],
             });
           },
         }),
