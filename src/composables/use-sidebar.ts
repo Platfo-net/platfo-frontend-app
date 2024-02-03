@@ -38,9 +38,10 @@ export const useSidebar = () => {
       activeClass: 'bg-transparent',
     },
     {
-      title: t(
-        'pages.panel.dashboard.manageStorePage.panels.basicInformation.title'
-      ),
+      title:
+        t(
+          'pages.panel.dashboard.manageStorePage.panels.basicInformation.title'
+        ) + ' و اعتبار حساب',
       to: { name: 'ManageStoreBasicInformation' },
       icon: 'info',
     },
@@ -83,7 +84,7 @@ export const useSidebar = () => {
       title: 'سفارش ها',
       icon: 'list',
       to: { name: 'ManageStoreOrdersListPage' },
-    }
+    },
   ];
   return {
     mainLayoutRoutes,
