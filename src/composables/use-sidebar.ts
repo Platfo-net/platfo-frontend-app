@@ -46,20 +46,6 @@ export const useSidebar = () => {
       icon: 'info',
     },
     {
-      title: t(
-        'pages.panel.dashboard.manageStorePage.panels.paymentConfiguration.title'
-      ),
-      to: { name: 'ManageStorePaymentMethods' },
-      icon: 'payment',
-    },
-    {
-      title: t(
-        'pages.panel.dashboard.manageStorePage.panels.shipmentMethods.title'
-      ),
-      to: { name: 'ManageStoreShippingMethods' },
-      icon: 'local_shipping',
-    },
-    {
       title: 'مدیریت محصولات',
       // to: { name: 'ManageStoreProducts' },
       icon: 'inventory_2',
@@ -80,6 +66,21 @@ export const useSidebar = () => {
         },
       ],
     },
+    {
+      title: t(
+        'pages.panel.dashboard.manageStorePage.panels.paymentConfiguration.title'
+      ),
+      to: { name: 'ManageStorePaymentMethods' },
+      icon: 'payment',
+    },
+    {
+      title: t(
+        'pages.panel.dashboard.manageStorePage.panels.shipmentMethods.title'
+      ),
+      to: { name: 'ManageStoreShippingMethods' },
+      icon: 'local_shipping',
+    },
+    
     {
       title: 'سفارش ها',
       icon: 'list',
