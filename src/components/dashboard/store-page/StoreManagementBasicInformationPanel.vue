@@ -61,25 +61,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <q-card bordered flat class="q-mb-md">
-    <q-card-section>
-      <div class="row justify-between items-center">
-        <div class="text-h6">اعتبار حساب</div>
-        <q-btn color="dark" flat>افزودن اعتبار</q-btn>
-      </div>
-    </q-card-section>
-    <q-card-section>
-      <div class="row">
-        <div class="col-md-6 col-12">
-          <div class="text-body2 q-mb-md">اعتبار تا</div>
-          <div>
-            {{ new Date(shopCredit?.expires_at as string).toLocaleString('fa-IR') }}
-          </div>
-        </div>
-      </div>
-    </q-card-section>
-  </q-card>
-  <q-card class="q-pa-lg" bordered flat>
+  <q-card class="q-pa-lg q-mb-md" bordered flat>
     <div class="row justify-between items-center q-mb-md">
       <div class="text-h6">
         {{
@@ -168,6 +150,24 @@ onMounted(async () => {
         </template>
       </div>
     </div>
+  </q-card>
+  <q-card bordered flat>
+    <q-card-section>
+      <div class="row justify-between items-center">
+        <div class="text-h6">اعتبار حساب</div>
+        <q-btn color="dark" flat>افزودن اعتبار</q-btn>
+      </div>
+    </q-card-section>
+    <q-card-section>
+      <div class="row">
+        <div class="col-md-6 col-12">
+          <div class="text-body2 q-mb-md">اعتبار تا</div>
+          <div>
+            {{ new Date(shopCredit?.expires_at as string).toLocaleString('fa-IR') }}
+          </div>
+        </div>
+      </div>
+    </q-card-section>
   </q-card>
 </template>
 
