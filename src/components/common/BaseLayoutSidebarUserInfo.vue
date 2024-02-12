@@ -34,8 +34,8 @@ const handleLogoutClick = () => {
   <q-img class="absolute-top bg-primary" style="height: 161.6px">
     <div class="absolute-bottom bg-transparent">
       <template v-if="isLoading"><q-skeleton type="QAvatar" /></template>
-      <q-avatar v-else size="56px" class="q-mb-sm">
-        <img loading="eager" :src="userInfo?.profile_image ? userInfo?.profile_image.url : '/100x100.png'" />
+      <q-avatar square v-else size="56px" class="q-mb-sm">
+        <img loading="eager" :src="userInfo?.profile_image ? userInfo?.profile_image.url : '/avatar.png'" />
       </q-avatar>
       <div class="flex row items-center justify-between">
         <div>
@@ -46,7 +46,7 @@ const handleLogoutClick = () => {
         </div>
 
         <q-btn class="q-ma-md" round text-color="white" icon="logout" flat @click="handleLogoutClick" dense>
-          <q-tooltip>خروج</q-tooltip></q-btn>
+          <q-tooltip class="bg-red-4">خروج</q-tooltip></q-btn>
       </div>
     </div>
   </q-img>
