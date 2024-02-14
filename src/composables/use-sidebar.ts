@@ -38,25 +38,12 @@ export const useSidebar = () => {
       activeClass: 'bg-transparent',
     },
     {
-      title: t(
-        'pages.panel.dashboard.manageStorePage.panels.basicInformation.title'
-      ),
+      title:
+        t(
+          'pages.panel.dashboard.manageStorePage.panels.basicInformation.title'
+        ) + ' و اعتبار حساب',
       to: { name: 'ManageStoreBasicInformation' },
       icon: 'info',
-    },
-    {
-      title: t(
-        'pages.panel.dashboard.manageStorePage.panels.paymentConfiguration.title'
-      ),
-      to: { name: 'ManageStorePaymentMethods' },
-      icon: 'payment',
-    },
-    {
-      title: t(
-        'pages.panel.dashboard.manageStorePage.panels.shipmentMethods.title'
-      ),
-      to: { name: 'ManageStoreShippingMethods' },
-      icon: 'local_shipping',
     },
     {
       title: 'مدیریت محصولات',
@@ -80,10 +67,25 @@ export const useSidebar = () => {
       ],
     },
     {
+      title: t(
+        'pages.panel.dashboard.manageStorePage.panels.paymentConfiguration.title'
+      ),
+      to: { name: 'ManageStorePaymentMethods' },
+      icon: 'payment',
+    },
+    {
+      title: t(
+        'pages.panel.dashboard.manageStorePage.panels.shipmentMethods.title'
+      ),
+      to: { name: 'ManageStoreShippingMethods' },
+      icon: 'local_shipping',
+    },
+    
+    {
       title: 'سفارش ها',
       icon: 'list',
       to: { name: 'ManageStoreOrdersListPage' },
-    }
+    },
   ];
   return {
     mainLayoutRoutes,

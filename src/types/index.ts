@@ -234,3 +234,8 @@ export type PaymentMethodDetailType = {
   information: Record<string, unknown>;
   is_active: boolean;
 };
+
+export type ShopCreditType = {
+  expires_at: string;
+  is_expired: boolean;
+};
