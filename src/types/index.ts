@@ -234,3 +234,9 @@ export type PaymentMethodDetailType = {
   information: Record<string, unknown>;
   is_active: boolean;
 };
+
+export type ShopTableType = {
+  title: string;
+  id: string;
+  url: string;
+};
