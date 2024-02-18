@@ -245,3 +245,8 @@ export type ShopTableType = {
   id: string;
   url: string;
 };
+
+export type ShopCategoryType = {
+  value: string;
+  title: string;
+}
