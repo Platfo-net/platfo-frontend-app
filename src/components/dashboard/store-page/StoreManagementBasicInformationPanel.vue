@@ -126,7 +126,7 @@ onMounted(async () => {
           }}
         </div>
         <template v-if="isEdit">
-          <q-select v-model="updateModel.category" outlined dense label="دسته بندی" :loading="isCategoriesLoading"
+          <q-select v-model="updateModel.category" :loading="isCategoriesLoading"
             lazy-rules :options="shopCategories?.map(({ title, value }) => ({ label: title, value }))" emit-value
             map-options :rules="[(val) => (val && val.length > 0) || 'لطفاً گزینه ای را انتخاب کنید']">
           </q-select>
@@ -151,6 +151,38 @@ onMounted(async () => {
         <template v-else>
           <div class="text-body1">
             {{ shopModel.description }}
+          </div>
+        </template>
+      </div>
+      <div class="column col-12 col-md-4">
+        <div class="text-caption text-grey-7">
+          تم رنگی فروشگاه
+        </div>
+        <template v-if="isEdit">
+          <q-input
+            v-model="updateModel.color_code"
+            class="my-input"
+          >
+            <template v-slot:append>
+              <q-icon name="colorize" class="cursor-pointer">
+                <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                  <q-color v-model="updateModel.color_code" default-value="#ff9800" no-header no-footer />
+                </q-popup-proxy>
+              </q-icon>
+            </template>
+          </q-input>
+          <!-- <q-color v-model="updateModel.color_code" class="q-my-md my-picker"  /> -->
+          <!-- <input type="color" v-model="" /> -->
+        </template>
+        <template v-else>
+          <div class="text-body1">
+            <template v-if="!shopModel.color_code">
+              تعریف نشده. پیشفرض
+              <span dir="ltr"><code>#ff9800</code></span>
+            </template>
+            <template v-else>
+              <code>{{ shopModel.color_code }}</code>
+            </template>
           </div>
         </template>
       </div>
