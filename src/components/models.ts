@@ -5,6 +5,7 @@ export interface IShop {
   title: string;
   description: string;
   category: string;
+  color_code: string;
 }
 
 export interface ICategory {
