@@ -181,7 +181,10 @@ onMounted(async () => {
               <span dir="ltr"><code>#ff9800</code></span>
             </template>
             <template v-else>
-              <code>{{ shopModel.color_code }}</code>
+              <div class="flex row q-gutter-md items-center">
+                <code>{{ shopModel.color_code }}</code>
+                <div :style="{ width: '20px', height: '20px', borderRadius: '1000px', border: '1px solid black', backgroundColor: shopModel.color_code }"></div>
+              </div>
             </template>
           </div>
         </template>
