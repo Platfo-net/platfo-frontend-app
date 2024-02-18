@@ -6,6 +6,12 @@ import { useNotify } from 'src/composables/use-notify';
 import { ICreateShopResponse } from 'src/composables/types';
 // import { AxiosError } from 'axios';
 import { useI18n } from 'vue-i18n';
+import { useShopService } from 'src/services/useShopService';
+
+const shopService = useShopService();
+
+const { data: shopCategories, isPending: isCategoriesLoading } = shopService.queries.getShopCategories();
+
 
 const { t } = useI18n();
 const { api, loading } = useApi();
@@ -105,10 +111,14 @@ const handleRegisterTelegramBot = async () => {
             'pages.panel.dashboard.createNewStorePage.steps.shopInformation.fields.title'
           )
             " class="q-my-sm" filled />
-          <q-input v-model="createShopState.category" color="accent" :label="$t(
+          <q-select v-model="createShopState.category" outlined filled label="دسته بندی" :loading="isCategoriesLoading"
+            lazy-rules :options="shopCategories?.map(({ title, value }) => ({ label: title, value }))" emit-value
+            map-options :rules="[(val) => (val && val.length > 0) || 'لطفاً گزینه ای را انتخاب کنید']">
+          </q-select>
+          <!-- <q-input v-model="createShopState.category" color="accent" :label="$t(
             'pages.panel.dashboard.createNewStorePage.steps.shopInformation.fields.category'
           )
-            " class="q-my-sm" filled />
+            " class="q-my-sm" filled /> -->
         </div>
         <div class="col-12 col-md-6">
           <q-input v-model="createShopState.description" color="accent" type="textarea" :label="$t(
