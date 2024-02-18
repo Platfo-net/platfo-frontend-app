@@ -1,6 +1,6 @@
 import { useApi } from 'src/composables/use-api';
 import { useQuery } from '@tanstack/vue-query';
-import { ShopCreditType } from 'src/types';
+import { ShopCategoryType, ShopCreditType } from 'src/types';
 
 export const useShopService = () => {
   const platfoApi = useApi();
@@ -12,12 +12,22 @@ export const useShopService = () => {
     return response.data;
   };
 
+  const getShopCategories = async () => {
+    const response = await platfoApi.api.get<ShopCategoryType[]>(`/constants/shop-categories`);
+    return response.data;
+  }
+
   return {
     queries: {
       getShopCredit: (shopId: string) =>
         useQuery({
           queryKey: ['shop-credit', { shopId }],
           queryFn: async () => await getShopCredit(shopId),
+        }),
+      getShopCategories: () =>
+        useQuery({
+          queryKey: ['shop-categories'],
+          queryFn: async () => await getShopCategories(),
         }),
     },
   };
