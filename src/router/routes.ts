@@ -281,6 +281,36 @@ const routes: RouteRecordRaw[] = [
             },
           },
           {
+            path: 'tables',
+            name: 'ManageStoreTablesListPage',
+            component: () =>
+              import(
+                // 'components/dashboard/store-page/StoreManagementPaymentMethodsPanel.vue'
+                'pages/dashboard/store/ManageStore/Tables/ManageStoreTablesListPage.vue'
+              ),
+            meta: {
+              title: 'میز ها | پلتفو',
+              breadcrumbs: [
+                {
+                  label: 'pages.panel.dashboard.title',
+                  to: { name: 'Dashboard' },
+                },
+                {
+                  label: 'pages.panel.dashboard.storeListPage.title',
+                  to: { name: 'StoreListPage' },
+                },
+                {
+                  label: 'pages.panel.dashboard.manageStorePage.title',
+                  to: { name: 'ManageStoreBasicInformation' },
+                },
+                {
+                  label:
+                    'مدیریت میزها',
+                },
+              ],
+            },
+          },
+          {
             path: 'payment-methods/:paymentMethodId',
             name: 'ManageStorePaymentMethodEditPage',
             component: () =>

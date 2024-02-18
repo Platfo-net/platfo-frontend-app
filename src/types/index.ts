@@ -239,3 +239,9 @@ export type ShopCreditType = {
   expires_at: string;
   is_expired: boolean;
 };
+
+export type ShopTableType = {
+  title: string;
+  id: string;
+  url: string;
+};

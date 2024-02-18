@@ -31,6 +31,12 @@ const usePaymentMethodsService = () => {
     );
     return response.data;
   };
+  const changeIsActive = async (id: string, is_active: boolean) => {
+    const response = await platfoApi.api.put(`/shop/payment-methods/${id}/change-is-active`, {
+      is_active: !is_active
+    })
+    return response.data;
+  }
   return {
     queries: {
       getAll: (shopId: string) =>
@@ -58,6 +64,18 @@ const usePaymentMethodsService = () => {
             });
           },
         }),
+        changeIsActive: (shopId: string) => useMutation({
+          mutationFn: async (dto: {
+            id: string,
+            is_active: boolean
+          }) => await changeIsActive(dto.id, dto.is_active),
+          mutationKey: ['change-payment-method-is-active'],
+          onSuccess: () => {
+            queryClient.invalidateQueries({
+              queryKey: ['payment-methods', { shopId }],
+            });
+          },
+        })
     },
   };
 };

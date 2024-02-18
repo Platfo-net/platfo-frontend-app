@@ -86,6 +86,11 @@ export const useSidebar = () => {
       icon: 'list',
       to: { name: 'ManageStoreOrdersListPage' },
     },
+    {
+      title: 'مدیریت میزها',
+      icon: 'bento',
+      to: { name: 'ManageStoreTablesListPage' },
+    }
   ];
   return {
     mainLayoutRoutes,
