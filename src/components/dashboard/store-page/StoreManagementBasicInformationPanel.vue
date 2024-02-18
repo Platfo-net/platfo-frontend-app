@@ -63,7 +63,6 @@ onMounted(async () => {
 </script>
 
 <template>
-  {{ shopCategories }}
   <q-card class="q-pa-lg q-mb-md" bordered flat>
     <div class="row justify-between items-center q-mb-md">
       <div class="text-h6">
