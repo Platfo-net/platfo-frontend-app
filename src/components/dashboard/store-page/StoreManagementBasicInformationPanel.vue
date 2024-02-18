@@ -177,7 +177,7 @@ onMounted(async () => {
         <template v-else>
           <div class="text-body1">
             <template v-if="!shopModel.color_code">
-              تعریف نشده. پیشفرض
+              تعریف نشده. پیش فرض
               <span dir="ltr"><code>#ff9800</code></span>
             </template>
             <template v-else>
