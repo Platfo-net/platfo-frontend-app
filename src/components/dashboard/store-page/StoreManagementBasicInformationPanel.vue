@@ -24,6 +24,8 @@ const { data: shopCredit } = shopService.queries.getShopCredit(
   route.params.storeId as string
 );
 
+const { data: shopCategories, isPending: isCategoriesLoading } = shopService.queries.getShopCategories();
+
 const updateShop = async () => {
   try {
     await api.put<IShop>(
@@ -61,6 +63,7 @@ onMounted(async () => {
 </script>
 
 <template>
+  {{ shopCategories }}
   <q-card class="q-pa-lg q-mb-md" bordered flat>
     <div class="row justify-between items-center q-mb-md">
       <div class="text-h6">
@@ -124,11 +127,14 @@ onMounted(async () => {
           }}
         </div>
         <template v-if="isEdit">
-          <q-input type="text" v-model="updateModel.category" />
+          <q-select v-model="updateModel.category" outlined dense label="دسته بندی" :loading="isCategoriesLoading"
+            lazy-rules :options="shopCategories?.map(({ title, value }) => ({ label: title, value }))" emit-value
+            map-options :rules="[(val) => (val && val.length > 0) || 'لطفاً گزینه ای را انتخاب کنید']">
+          </q-select>
         </template>
         <template v-else>
           <div class="text-body1">
-            {{ shopModel.category }}
+            {{ shopCategories?.find(x => x.value == shopModel.category)?.title }}
           </div>
         </template>
       </div>
@@ -155,7 +161,7 @@ onMounted(async () => {
     <q-card-section>
       <div class="row justify-between items-center">
         <div class="text-h6">اعتبار حساب</div>
-        <q-btn color="dark" flat>افزودن اعتبار</q-btn>
+        <q-btn color="dark" flat disable>افزودن اعتبار</q-btn>
       </div>
     </q-card-section>
     <q-card-section>
