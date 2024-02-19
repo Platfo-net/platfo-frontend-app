@@ -17,7 +17,7 @@ const shoppingCart = useShoppingCart();
         <div class="flex column full-width q-pa-sm">
           <div>{{ product.title }}</div>
           <div class="flex row q-my-sm">
-            <q-icon name="category" color="deep-purple"></q-icon>
+            <q-icon name="category" color="primary"></q-icon>
             <small class="q-ml-sm">{{ product.category?.title || 'بدون دسته بندی' }}</small>
           </div>
         </div>
