@@ -3,7 +3,7 @@
         <q-toolbar>
             <q-toolbar-title class="text-black">{{ route.query.categoryTitle }}</q-toolbar-title>
             <q-space></q-space>
-            <q-btn  round :to="{name: 'ShopCategoriesPage'}" icon="chevron_left" text-color="orange"></q-btn>
+            <q-btn  round :to="{name: 'ShopCategoriesPage'}" icon="chevron_left" text-color="primary"></q-btn>
         </q-toolbar>
     </q-header>
     <q-page class="q-pa-md">
@@ -21,7 +21,7 @@
                     <div style="max-width: 320px;" class="text-center">
                         <nothing-to-show-img></nothing-to-show-img>
                         <h5 class="text-bold">محصولی یافت نشد</h5>
-                        <q-btn color="orange" :to="{name: 'ShopCategoriesPage'}">بازگشت</q-btn>
+                        <q-btn color="primary" :to="{name: 'ShopCategoriesPage'}">بازگشت</q-btn>
                     </div>
                 </div>
             </template>

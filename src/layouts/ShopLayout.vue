@@ -14,7 +14,7 @@
           dense
           narrow-indicator
           shrink
-          active-color="orange"
+          active-color="primary"
           content-class="text-black"
           indicator-color="transparent"
         >
@@ -58,20 +58,43 @@
 </template>
 
 <script setup lang="ts">
+import { setCssVar, getCssVar } from 'quasar'
 import { onMounted, ref } from 'vue';
 import { useShoppingCart } from 'stores/shopping-cart-store';
 import ShoppingCartCheckoutRibbon from 'pages/public/shop/ShoppingCartCheckoutRibbon.vue';
+import { useRoute } from 'vue-router';
+import { ShopInformationType } from 'src/types';
+import { useApi } from 'src/composables/use-api';
+import { useTelegramShopStore } from 'src/stores/telegram-shop-store';
 
 const tab = ref<string>('products');
+const { api } = useApi();
 
 const shoppingCart = useShoppingCart();
+const route = useRoute()
+const telegramShopStore = useTelegramShopStore();
 
-onMounted(() => {
+const getShopInformation = async (shopId: string) => {
+  const response = await api.get<ShopInformationType>(`/shop/shop/telegram/info/${shopId}`)
+  return response.data;
+}
+
+
+
+onMounted(async () => {
   const telegramScript = document.createElement('script');
   telegramScript.setAttribute(
     'src',
     'https://telegram.org/js/telegram-web-app.js'
   );
   document.head.appendChild(telegramScript);
+  const shopInformation = await getShopInformation(route.params.shopId as string);
+  telegramShopStore.setTheme({
+    color: shopInformation.color_code,
+  });
+  setCssVar('primary', shopInformation.color_code);
 });
 </script>
+
+<style lang="scss">
+</style>

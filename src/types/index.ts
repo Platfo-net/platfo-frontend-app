@@ -250,3 +250,9 @@ export type ShopCategoryType = {
   value: string;
   title: string;
 }
+
+export type ShopInformationType = {
+  id: string;
+  title: string;
+  color_code: string;
+};

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/vue-query';
 import { useApi } from '../composables/use-api';
 import { IPaginatedResponse } from 'src/composables/types';
-import { ProductCategoryType, ProductType } from 'src/types';
+import { ProductCategoryType, ProductType, ShopInformationType } from 'src/types';
 
 const shopApi = useApi();
 
@@ -20,6 +20,11 @@ export const useTelegramShopService = () => {
       return response.data;
     }
 
+    const getShopInformation = async (shopId: string) => {
+      const response = await shopApi.api.get<ShopInformationType>(`/shop/shop/telegram/info/${shopId}`)
+      return response.data;
+    }
+
     return {
         queries: {
             getShopCategories: (shopId: string) => useQuery({
@@ -33,6 +38,10 @@ export const useTelegramShopService = () => {
             getShopProducts: (shopId: string) => useQuery({
               queryFn: async () => await getShopProducts(shopId),
               queryKey: ['tgshop-products', { shopId }],
+            }),
+            getShopInformation: (shopId: string) => useQuery({
+              queryFn: async () => await getShopInformation(shopId),
+              queryKey: ['shop-information', { shopId }]
             })
         },
     }

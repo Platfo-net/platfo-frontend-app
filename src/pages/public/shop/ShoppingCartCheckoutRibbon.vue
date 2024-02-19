@@ -126,7 +126,7 @@ onMounted(async () => {
             class="q-my-md"
             dense
             outlined
-            color="orange"
+            color="primary"
             v-model="dataToSend.first_name"
             name="first_name"
             label="نام"
@@ -135,7 +135,7 @@ onMounted(async () => {
             class="q-my-md"
             dense
             outlined
-            color="orange"
+            color="primary"
             v-model="dataToSend.last_name"
             name="last_name"
             label="نام خانوادگی"
@@ -145,7 +145,7 @@ onMounted(async () => {
             class="q-my-md"
             dense
             outlined
-            color="orange"
+            color="primary"
             v-model="dataToSend.phone_number"
             name="phone_number"
             label="شماره تماس"
@@ -155,7 +155,7 @@ onMounted(async () => {
             dense
             outlined
             type="textarea"
-            color="orange"
+            color="primary"
             v-model="dataToSend.address"
             name="address"
             label="آدرس محل سکونت"
@@ -180,7 +180,7 @@ onMounted(async () => {
                   <q-radio
                     v-model="dataToSend.shipment_method_id"
                     :val="shippingMethod.id"
-                    color="orange"
+                    color="primary"
                   />
                 </q-item-section>
                 <q-item-section>
@@ -224,7 +224,7 @@ onMounted(async () => {
                       <q-radio
                         v-model="dataToSend.payment_method_id"
                         :val="innerPm.id"
-                        color="orange"
+                        color="primary"
                       />
                     </q-item-section>
                     <q-item-section>
@@ -246,7 +246,7 @@ onMounted(async () => {
                     <q-radio
                       v-model="dataToSend.payment_method_id"
                       :val="paymentMethod.id"
-                      color="orange"
+                      color="primary"
                     />
                   </q-item-section>
                   <q-item-section>
@@ -277,10 +277,10 @@ onMounted(async () => {
                 <toman-symbol :size="16"></toman-symbol>
               </div>
             </div>
-            <!-- <q-btn @click="showCheckoutDialog = true" label="مرحله&zwnj;ی بعد" color="orange" /> -->
+            <!-- <q-btn @click="showCheckoutDialog = true" label="مرحله&zwnj;ی بعد" color="primary" /> -->
             <q-btn
               @click="showConfirmDialog = true"
-              color="orange"
+              color="primary"
               :disable="!enableCheckout"
               >پرداخت سفارش</q-btn
             >
@@ -331,7 +331,7 @@ onMounted(async () => {
           </p>
         </q-card-section>
         <q-card-actions align="center">
-          <q-btn size="sm" color="orange" @click="cleanup">بازگشت به بات</q-btn>
+          <q-btn size="sm" color="primary" @click="cleanup">بازگشت به بات</q-btn>
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -349,7 +349,7 @@ onMounted(async () => {
     <q-btn
       @click="showCheckoutDialog = true"
       label="مرحله&zwnj;ی بعد"
-      color="orange"
+      color="primary"
     />
   </div>
 </template>
