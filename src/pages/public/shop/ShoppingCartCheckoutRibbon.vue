@@ -208,7 +208,29 @@ onMounted(async () => {
             v-for="paymentMethod in shopPaymentMethods"
             :key="paymentMethod.id"
           >
-            <template v-if="paymentMethod.items.length">
+          <div dir="ltr">
+            <!-- <pre><code>{{ paymentMethod }}</code></pre> -->
+            <q-list>
+              <q-item
+                class="q-my-md rounded-borders"
+                style="border: 1px solid #e1e1e1"
+                tag="label"
+              >
+                <q-item-section avatar>
+                  <q-radio
+                    v-model="dataToSend.payment_method_id"
+                    :val="paymentMethod.id"
+                    color="primary"
+                  />
+                </q-item-section>
+                <q-item-section>
+                  <q-item-label>{{ paymentMethod.title }}</q-item-label>
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </div>
+          
+            <!-- <template v-if="paymentMethod.items.length">
               <template
                 v-for="innerPm in paymentMethod.items"
                 :key="innerPm.id"
@@ -233,8 +255,8 @@ onMounted(async () => {
                   </q-item>
                 </q-list>
               </template>
-            </template>
-            <template v-else>
+            </template> -->
+            <!-- <template>
               <div class="q-ml-lg q-my-md">پرداخت نقدی</div>
               <q-list>
                 <q-item
@@ -254,7 +276,7 @@ onMounted(async () => {
                   </q-item-section>
                 </q-item>
               </q-list>
-            </template>
+            </template> -->
           </template>
         </q-card-section>
         <q-card-section>
