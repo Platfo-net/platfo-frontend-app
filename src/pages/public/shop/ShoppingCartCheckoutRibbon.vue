@@ -69,8 +69,11 @@ const checkout = async () => {
   });
   try {
     const { data } = await api.post<ICreateShopOrderResponse>(
-      `/shop/orders/telegram/${route.params.shopId}/${route.params.leadId}`,
-      dataToSend
+      `/shop/orders/telegram/${route.params.shopId}/${route.params.leadId || route.query.table || ''}`,
+      {
+        ...dataToSend,
+        table_id: route.query.table || null
+      }
     );
     createdOrderId.value = data.order_number;
     showConfirmDialog.value = false;

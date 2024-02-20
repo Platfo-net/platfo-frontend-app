@@ -22,21 +22,21 @@
             name="products"
             icon="home"
             label="محصولات"
-            :to="{ name: 'ShopProductsListPage' }"
+            :to="isTableShop ? { name: 'ShopTableProductsListPage', query: { table: route.query.table } } : { name: 'ShopProductsListPage' }"
             :ripple="false"
           />
           <q-route-tab
             name="categories"
             icon="category"
             label="دسته بندی"
-            :to="{ name: 'ShopCategoriesPage' }"
+            :to="isTableShop ? { name: 'ShopTableCategoriesPage', query: { table: route.query.table } } : { name: 'ShopCategoriesPage' }"
             :ripple="false"
           />
           <q-route-tab
             name="shoppingCart"
             icon="shopping_cart"
             label="سبد خرید"
-            :to="{ name: 'ShopShoppingCartPage' }"
+            :to="isTableShop ? { name: 'ShopTableShoppingCartPage', query: { table: route.query.table } } : { name: 'ShopShoppingCartPage' }"
             :ripple="false"
           >
             <q-badge
@@ -58,7 +58,7 @@
 </template>
 
 <script setup lang="ts">
-import { setCssVar, getCssVar } from 'quasar'
+import { setCssVar } from 'quasar'
 import { onMounted, ref } from 'vue';
 import { useShoppingCart } from 'stores/shopping-cart-store';
 import ShoppingCartCheckoutRibbon from 'pages/public/shop/ShoppingCartCheckoutRibbon.vue';
@@ -78,6 +78,8 @@ const getShopInformation = async (shopId: string) => {
   const response = await api.get<ShopInformationType>(`/shop/shop/telegram/info/${shopId}`)
   return response.data;
 }
+
+const isTableShop = ref(route.query.table ? true : false)
 
 
 
