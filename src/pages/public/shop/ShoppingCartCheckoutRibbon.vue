@@ -153,7 +153,7 @@ onMounted(async () => {
             name="phone_number"
             label="شماره تماس"
           ></q-input>
-          <q-input
+          <!-- <q-input
             class="q-my-md"
             dense
             outlined
@@ -162,7 +162,7 @@ onMounted(async () => {
             v-model="dataToSend.address"
             name="address"
             label="آدرس محل سکونت"
-          ></q-input>
+          ></q-input> -->
         </q-card-section>
         <q-card-section>
           <div class="text-body1">روش ارسال</div>
