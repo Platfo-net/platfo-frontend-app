@@ -30,7 +30,8 @@ const columns = [
   { name: 'first_name', label: 'نام', field: 'first_name', align: 'left' },
   { name: 'last_name', label: 'نام خانوادگی', field: 'last_name', align: 'left' },
   { name: 'phone_number', label: 'شماره تماس', field: 'phone_number', align: 'left' },
-  { name: 'city', label: 'شهر', field: 'city', align: 'left' },
+  { name: 'table', label: 'میز', field: 'table', align: 'left' },
+  // { name: 'city', label: 'شهر', field: 'city', align: 'left' },
   { name: 'shipment_method', label: 'روش ارسال', field: 'shipment_method', align: 'left' },
   { name: 'payment_method', label: 'روش پرداخت', field: 'payment_method', align: 'left' },
   {
@@ -76,6 +77,11 @@ onMounted(async () => {
     >
       <template v-slot:loading>
         <q-inner-loading showing color="primary" />
+      </template>
+      <template v-slot:body-cell-table="props">
+        <q-td :props="props">
+            {{ props.value ? props.value.title : '' }}
+        </q-td>
       </template>
       <template v-slot:body-cell-actions="props">
         <q-td :props="props">
