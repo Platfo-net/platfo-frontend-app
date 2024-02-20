@@ -208,10 +208,10 @@ onMounted(async () => {
             v-for="paymentMethod in shopPaymentMethods"
             :key="paymentMethod.id"
           >
-          <div dir="ltr">
-            <!-- <pre><code>{{ paymentMethod }}</code></pre> -->
+          <!-- <div dir="ltr">
             <q-list>
               <q-item
+                v-if="paymentMethod.is_active"
                 class="q-my-md rounded-borders"
                 style="border: 1px solid #e1e1e1"
                 tag="label"
@@ -228,14 +228,14 @@ onMounted(async () => {
                 </q-item-section>
               </q-item>
             </q-list>
-          </div>
+          </div> -->
           
-            <!-- <template v-if="paymentMethod.items.length">
+            <template v-if="paymentMethod.items.length">
               <template
                 v-for="innerPm in paymentMethod.items"
                 :key="innerPm.id"
               >
-                <div class="q-ml-lg q-my-md">پراخت آنلاین</div>
+                <!-- <div class="q-ml-lg q-my-md">{{  }}</div> -->
                 <q-list>
                   <q-item
                     class="q-my-md rounded-borders"
@@ -255,7 +255,7 @@ onMounted(async () => {
                   </q-item>
                 </q-list>
               </template>
-            </template> -->
+            </template>
             <!-- <template>
               <div class="q-ml-lg q-my-md">پرداخت نقدی</div>
               <q-list>
