@@ -3,7 +3,9 @@
         <q-toolbar>
             <q-toolbar-title class="text-black">{{ route.query.categoryTitle }}</q-toolbar-title>
             <q-space></q-space>
-            <q-btn  round :to="{name: 'ShopCategoriesPage'}" icon="chevron_left" text-color="primary"></q-btn>
+            <q-btn  round :to="isTableShop ? {name: 'ShopTableCategoriesPage', query: {
+                table: route.query.table
+            } } : { name: 'ShopCategoriesPage' }" icon="chevron_left" text-color="primary"></q-btn>
         </q-toolbar>
     </q-header>
     <q-page class="q-pa-md">
@@ -21,7 +23,9 @@
                     <div style="max-width: 320px;" class="text-center">
                         <nothing-to-show-img></nothing-to-show-img>
                         <h5 class="text-bold">محصولی یافت نشد</h5>
-                        <q-btn color="primary" :to="{name: 'ShopCategoriesPage'}">بازگشت</q-btn>
+                        <q-btn color="primary" :to="isTableShop ? {name: 'ShopTableCategoriesPage', query: {
+                            table: route.query.table
+                        } } : {name: 'ShopCategoriesPage'}">بازگشت</q-btn>
                     </div>
                 </div>
             </template>
@@ -42,6 +46,7 @@ const { queries } = useTelegramShopService();
 const route = useRoute();
 const { data: response, isPending } = queries.getShopCategoryProducts(route.params.shopId as string, route.params.categoryId as string);
 const products = ref<ProductType[]>([]);
+const isTableShop = ref(route.query.table ? true : false)
 
 watch(response, (res) => {
   console.log(response);

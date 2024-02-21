@@ -20,10 +20,19 @@
 <script setup lang="ts">
 import { IProductCategory } from 'src/components/models';
 import { ProductCategoryType } from 'src/types';
-import { useRouter } from 'vue-router';
+import { ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 const router = useRouter();
+const route = useRoute();
+const isTableShop = ref(route.query.table ? true : false)
 function goToShopCategoryProductsPage(categoryId: string) {
-  router.push({
+  router.push(isTableShop.value === true ? {
+    name: 'ShopTableCategoryProductsPage',
+    params: {
+      categoryId,
+    },
+    query: { categoryTitle: props.title, table: route.query.table },
+  } : {
     name: 'ShopCategoryProductsPage',
     params: {
       categoryId,
