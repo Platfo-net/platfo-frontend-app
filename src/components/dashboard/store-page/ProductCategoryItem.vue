@@ -1,10 +1,15 @@
 <script setup lang="ts">
-import { IProductCategory } from 'src/components/models';
+import {
+  ImageType,
+  IProductCategory,
+  IUploadProductImageResponse,
+} from 'src/components/models';
 import { useApi } from 'src/composables/use-api';
 import { useNotify } from 'src/composables/use-notify';
 import { reactive, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
+import BaseUploader from 'components/common/BaseUploader.vue';
 
 const { t } = useI18n();
 const route = useRoute();
@@ -34,10 +39,10 @@ const revertModel = () => {
 
 const updateModel = async () => {
   try {
-    await api.put<IProductCategory>(`/shop/categories/${props.productCategory.id}`, {
-        title: productCategoryModel.title,
-        shop_id: route.params.storeId
-    });
+    await api.put<IProductCategory>(
+      `/shop/categories/${props.productCategory.id}`,
+      { ...productCategoryModel }
+    );
     notify.success(
       t(
         'pages.panel.dashboard.manageStorePage.panels.productCategories.notifications.updateProductCategorySuccess'
@@ -53,6 +58,12 @@ const updateModel = async () => {
   } finally {
     isEdit.value = false;
   }
+};
+
+const handleUploadedImage = (response: string) => {
+  const responseParsed = JSON.parse(response) as IUploadProductImageResponse;
+  productCategoryModel.image = responseParsed.filename;
+  productCategoryModel.image_url = responseParsed.url;
 };
 </script>
 
@@ -123,6 +134,20 @@ const updateModel = async () => {
                 {{ product?.category?.title }}
             </div> -->
       <div class="column q-mb-md">
+        <template v-if="isEdit">
+          <base-uploader
+            :image-type="ImageType.ProductCategory"
+            @uploaded="handleUploadedImage"
+          ></base-uploader>
+        </template>
+        <template v-else>
+          <q-img
+            style="width: 100px; max-height: 100px"
+            :src="productCategoryModel.image_url"
+          />
+        </template>
+      </div>
+      <div class="column q-mb-md">
         <div class="text-grey-8">
           {{
             $t(
@@ -131,15 +156,11 @@ const updateModel = async () => {
           }}
         </div>
         <template v-if="isEdit">
-          <q-input
-            type="text"
-            v-model="productCategoryModel.title"
-            clearable
-          />
+          <q-input type="text" v-model="productCategoryModel.title" clearable />
         </template>
         <template v-else>
           <div class="text-body1">
-            {{productCategoryModel.title}}
+            {{ productCategoryModel.title }}
           </div>
         </template>
       </div>

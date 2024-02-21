@@ -76,6 +76,15 @@ export interface IShopPaymentMethod {
   id: string;
   information_fields: Record<string, string>;
   is_active: boolean;
+  items: IShopPaymentMethod[];
+}
+
+export interface IShopShippingMethod {
+  id: string;
+  title: string;
+  price: string | number;
+  currency: string;
+  is_active: boolean;
 }
 
 export interface IShopOrderItem {
@@ -94,6 +103,7 @@ export interface ICreateShopOrderBody {
   address?: string;
   postal_code?: string;
   payment_method_id: string;
+  shipment_method_id: string | null;
 }
 
 export interface ICreateShopOrderResponse {

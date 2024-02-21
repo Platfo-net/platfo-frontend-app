@@ -1,34 +1,31 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
-import { useApi } from 'src/composables/use-api';
-import { IPaginatedResponse } from 'src/composables/types';
-import { IProduct } from 'components/models';
-import { onMounted, ref } from 'vue';
+import { ref, watch } from 'vue';
 import TelegramShopProductItem from 'components/public/shop/TelegramShopProductItem.vue';
 import BaseLoadingSpinner from 'components/common/BaseLoadingSpinner.vue';
+import { useTelegramShopService } from 'src/services/useTelegramShopService';
 
+const { queries: { getShopProducts } } = useTelegramShopService();
 const route = useRoute();
-const { api, loading } = useApi();
-const products = ref<IProduct[]>([]);
+const { data: products, isPending, isError } = getShopProducts(route.params.shopId as string);
+// const products = ref<IProduct[]>([]);
 const showOutOfOrderDialog = ref(false);
-const getShopProductsPaginatedResponse = async () => {
-  const { data } = await api.get<IPaginatedResponse<IProduct>>(
-    `/shop/products/telegram/${route.params.shopId}/all`
-  );
-  products.value = data.items;
-};
 
 function closeWebApp() {
   window.Telegram.WebApp.close();
 }
 
-onMounted(async () => {
-  try {
-    await getShopProductsPaginatedResponse();
-  } catch (err) {
-    showOutOfOrderDialog.value = true;
-  }
-});
+watch(isError, (err) => {
+  showOutOfOrderDialog.value = err;
+})
+
+// onMounted(async () => {
+//   try {
+//     await getShopProductsPaginatedResponse();
+//   } catch (err) {
+//     showOutOfOrderDialog.value = true;
+//   }
+// });
 </script>
 
 <template>
@@ -51,11 +48,11 @@ onMounted(async () => {
         </div>
       </q-card>
     </q-dialog>
-    <template v-if="loading">
-      <base-loading-spinner loading></base-loading-spinner>
+    <template v-if="isPending">
+      <base-loading-spinner :loading="isPending"></base-loading-spinner>
     </template>
-    <template v-else-if="products.length > 0">
-      <div class="row" v-for="product in products" :key="product.id">
+    <template v-else-if="products && products.items.length > 0">
+      <div class="row" v-for="product in products.items" :key="product.id">
         <telegram-shop-product-item :product="product" />
       </div>
     </template>

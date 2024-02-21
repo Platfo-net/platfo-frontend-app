@@ -5,15 +5,13 @@ import LayoutBreadCrumbs from 'components/BreadCrumbs.vue';
 
 <template>
   <q-page class="q-pa-md">
-    <div class="row items-center q-mb-lg justify-between">
-      <LayoutBreadCrumbs />
-    </div>
+    <LayoutBreadCrumbs />
     <div class="row items-center q-mb-lg justify-between">
       <div class="text-h5">
         {{ $t('pages.panel.dashboard.createNewStorePage.title') }}
       </div>
       <q-btn
-        color="accent"
+        color="dark"
         icon="chevron_left"
         :to="{ name: 'StoreListPage' }"
         :label="$t('general.goBack')"

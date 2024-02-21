@@ -3,7 +3,10 @@ services:
   spa:
     image: platfo_spa
     container_name: platfo_spa
-    build: .
+    build:
+      context: .
+      args:
+        API: ${API_BASEURL}
     restart: always
     command: "nginx"
     ports:

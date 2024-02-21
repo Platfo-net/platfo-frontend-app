@@ -1,13 +1,18 @@
 <script setup lang="ts">
 import { useApi } from 'src/composables/use-api';
 import { onMounted, reactive, ref } from 'vue';
-import { IProductCategory } from 'components/models';
+import {
+  ImageType,
+  IProductCategory,
+  IUploadProductImageResponse,
+} from 'components/models';
 import { useRoute } from 'vue-router';
 import { AxiosError } from 'axios';
 import { useI18n } from 'vue-i18n';
 import { useNotify } from 'src/composables/use-notify';
 import ProductCategoryItem from './ProductCategoryItem.vue';
 import BaseLoadingSpinner from 'components/common/BaseLoadingSpinner.vue';
+import BaseUploader from 'components/common/BaseUploader.vue';
 
 const { t } = useI18n();
 
@@ -21,6 +26,7 @@ const productCategories = ref<IProductCategory[]>([]);
 const productCategoryModel = reactive<IProductCategory>({
   id: '',
   title: '',
+  shop_id: route.params.storeId as string,
 });
 
 const getProductCategories = async () => {
@@ -32,10 +38,7 @@ const getProductCategories = async () => {
 
 const addProductCategory = async () => {
   try {
-    await api.post('/shop/categories', {
-      title: productCategoryModel.title,
-      shop_id: route.params.storeId,
-    });
+    await api.post('/shop/categories', productCategoryModel);
     notify.success(
       t(
         'pages.panel.dashboard.manageStorePage.panels.productCategories.notifications.createProductCategorySuccess'
@@ -72,6 +75,12 @@ const deleteProductCategory = async (productCategoryId: string) => {
   }
 };
 
+const handleUploadedImage = (response: string) => {
+  const responseParsed = JSON.parse(response) as IUploadProductImageResponse;
+  productCategoryModel.image = responseParsed.filename;
+  productCategoryModel.image_url = responseParsed.url;
+};
+
 onMounted(async () => {
   await getProductCategories();
 });
@@ -100,23 +109,32 @@ onMounted(async () => {
     <q-card-section v-if="addItem">
       <q-card class="q-pa-md full-width" bordered square flat>
         <q-form @submit.prevent="addProductCategory">
-          <q-input
-            class="q-mb-lg"
-            square
-            filled
-            v-model="productCategoryModel.title"
-            :label="`${$t(
-              'pages.panel.dashboard.manageStorePage.panels.productManagement.fields.title'
-            )} *`"
-            color="accent"
-            lazy-rules
-            dense
-            :rules="[
-              (val) =>
-                (val && val.length > 0) ||
-                $t('general.fields.requiredStringField'),
-            ]"
-          />
+          <div class="row q-col-gutter-md">
+            <div class="col-md-6 col-12">
+              <base-uploader
+                :image-type="ImageType.ProductCategory"
+                @uploaded="handleUploadedImage"
+              ></base-uploader>
+              <q-input
+                class="q-mb-lg"
+                square
+                filled
+                v-model="productCategoryModel.title"
+                :label="`${$t(
+                  'pages.panel.dashboard.manageStorePage.panels.productManagement.fields.title'
+                )} *`"
+                color="accent"
+                lazy-rules
+                dense
+                :rules="[
+                  (val) =>
+                    (val && val.length > 0) ||
+                    $t('general.fields.requiredStringField'),
+                ]"
+              />
+            </div>
+            <div class="col-md-6 col-12"></div>
+          </div>
           <div class="row q-gutter-md items-center">
             <q-btn
               @click="addItem = false"

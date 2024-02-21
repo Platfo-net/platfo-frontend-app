@@ -14,3 +14,21 @@ body {
 html[dir="rtl"], [dir="rtl"] body, [dir="rtl"] #q-app {
   font-family: Vazirmatn, "Roboto", "-apple-system", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
+
+.sticky-last-col {
+  thead tr:last-child th:last-child {
+    /* bg color is important for th; just specify one */
+    background-color: antiquewhite;
+  }
+
+  td:last-child {
+    background-color: antiquewhite;
+  }
+
+  th:last-child,
+  td:last-child {
+    position: sticky;
+    right: 0;
+    z-index: 1;
+  }
+}

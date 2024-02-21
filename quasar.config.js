@@ -12,13 +12,14 @@ const { configure } = require('quasar/wrappers');
 const path = require('path');
 
 module.exports = configure(function (ctx) {
+  require('dotenv').config({ override: false });
   return {
     eslint: {
       // fix: true,
       // include: [],
       // exclude: [],
       // rawOptions: {},
-      warnings: true,
+      warnings: false,
       errors: true,
     },
 
@@ -28,7 +29,7 @@ module.exports = configure(function (ctx) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
-    boot: ['i18n', 'axios'],
+    boot: ['i18n', 'axios', 'tanstack'],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
     css: ['app.scss'],
@@ -64,7 +65,9 @@ module.exports = configure(function (ctx) {
 
       // publicPath: '/',
       // analyze: true,
-      env: require('dotenv').config().parsed,
+      env: {
+        API_BASEURL: process.env.API_BASEURL,
+      },
       // rawDefine: {}
       // ignorePublicFolder: true,
       // minify: false,

@@ -1,0 +1,1 @@
+const telegramShopStore = telegramShopStore();

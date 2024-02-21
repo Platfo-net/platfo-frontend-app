@@ -1,40 +1,18 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-header bordered>
-      <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
-
+      <q-toolbar class="mobile-only">
+        <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
         <q-toolbar-title> {{ $t('layout.appHeader') }} </q-toolbar-title>
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
-      <div class="flex column justify-between full-height">
-        <q-list>
-          <q-item-label header>{{ $t('layout.links.title') }}</q-item-label>
-          <EssentialLink
-            v-for="link in essentialLinks"
-            :key="link.title"
-            v-bind="link"
-          />
-        </q-list>
-        <q-btn
-          class="q-ma-md"
-          color="negative"
-          :label="$t('layout.logout')"
-          @click="handleLogoutClick"
-        />
-      </div>
+    <q-drawer v-model="leftDrawerOpen" show-if-above style="border: 1px solid #e2e2e2">
+      <base-layout-sidebar-menu :routes="mainLayoutRoutes"></base-layout-sidebar-menu>
+      <base-layout-sidebar-user-info></base-layout-sidebar-user-info>
     </q-drawer>
 
-    <q-page-container>
+    <q-page-container class="bg-teal-1">
       <router-view />
     </q-page-container>
   </q-layout>
@@ -42,29 +20,18 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import EssentialLink, {
-  EssentialLinkProps,
-} from 'components/EssentialLink.vue';
-import { useAuthStore } from 'stores/auth-store';
-import { useRouter } from 'vue-router';
+import { useSidebar } from 'src/composables/use-sidebar';
+import BaseLayoutSidebarMenu from 'components/common/BaseLayoutSidebarMenu.vue';
+import BaseLayoutSidebarUserInfo from 'src/components/common/BaseLayoutSidebarUserInfo.vue';
+import { useMeta } from 'quasar';
+import { useRoute } from 'vue-router';
 
-const authStore = useAuthStore();
-const router = useRouter();
+const route = useRoute();
+useMeta(() => ({
+  title: route.meta.title as string,
+}))
 
-const handleLogoutClick = () => {
-  authStore.actions.clearAuthState();
-  router.replace({
-    name: 'LoginPage',
-  });
-};
-
-const essentialLinks: EssentialLinkProps[] = [
-  {
-    title: 'layout.links.myStores',
-    icon: 'storefront',
-    link: { name: 'StoreListPage' },
-  },
-];
+const { mainLayoutRoutes } = useSidebar();
 
 const leftDrawerOpen = ref(false);
 

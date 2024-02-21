@@ -1,8 +1,11 @@
+import { ProductType } from "src/types";
+
 export interface IShop {
   id: string;
   title: string;
   description: string;
   category: string;
+  color_code: string;
 }
 
 export interface ICategory {
@@ -24,7 +27,10 @@ export interface IProduct {
 
 export interface IProductCategory {
   id: string;
+  image?: string;
+  image_url?: string;
   title: string;
+  shop_id: string;
 }
 
 export interface IPaymentMethod {
@@ -37,11 +43,14 @@ export interface IPaymentMethod {
 }
 
 export interface ITelegramShopProductItemProps {
-  product: IProduct;
+  product: ProductType;
 }
-
 
 export interface IUploadProductImageResponse {
   filename: string;
   url: string;
+}
+export enum ImageType {
+  Product = 'product',
+  ProductCategory = 'category',
 }

@@ -5,6 +5,12 @@ import StoreListItem from 'components/dashboard/store-page/StoreListItem.vue';
 import { IShop } from 'components/models';
 import { ref } from 'vue';
 import BaseLoadingSpinner from 'components/common/BaseLoadingSpinner.vue';
+import { useShopService } from 'src/services/useShopService';
+
+const shopService = useShopService();
+
+const { data: shopCategories, isPending: isCategoriesLoading } = shopService.queries.getShopCategories();
+
 const getShops = async () => {
   try {
     const { data } = await api.get<IShop[]>('/shop/shop/all');
@@ -35,7 +41,7 @@ getShops().then((data) => {
     </template>
     <template v-else v-for="(shop, idx) in shops" :key="`${idx}-${shop.id}`">
       <StoreListItem
-        :category="shop.category"
+        :category="(shopCategories?.find(x => x.value == shop.category)?.title as string)"
         :description="shop.description"
         :id="shop.id"
         :title="shop.title"

@@ -4,7 +4,11 @@ const route = useRoute();
 </script>
 
 <template>
-  <template v-if="route.meta.breadcrumbs">
+  <div
+    class="row items-center q-mb-lg justify-between bg-white q-pa-md rounded-borders"
+    style="border: 1px solid #e1e1e1"
+    v-if="route.meta.breadcrumbs"
+  >
     <q-breadcrumbs>
       <q-breadcrumbs-el
         v-for="bc in route.meta.breadcrumbs"
@@ -13,7 +17,7 @@ const route = useRoute();
         :key="bc.label"
       />
     </q-breadcrumbs>
-  </template>
+  </div>
 </template>
 
 <style scoped></style>

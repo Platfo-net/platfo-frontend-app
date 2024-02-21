@@ -6,6 +6,7 @@ import { useApi } from 'src/composables/use-api';
 import { useRoute } from 'vue-router';
 import { IShop } from 'components/models';
 import BaseLoadingSpinner from 'components/common/BaseLoadingSpinner.vue';
+import { useShopService } from 'src/services/useShopService';
 const { api, loading } = useApi();
 
 const { t } = useI18n();
@@ -17,6 +18,13 @@ const isEdit = ref(false);
 
 const route = useRoute();
 const notify = useNotify();
+const shopService = useShopService();
+
+const { data: shopCredit } = shopService.queries.getShopCredit(
+  route.params.storeId as string
+);
+
+const { data: shopCategories, isPending: isCategoriesLoading } = shopService.queries.getShopCategories();
 
 const updateShop = async () => {
   try {
@@ -55,7 +63,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <q-card class="q-pa-lg" bordered flat>
+  <q-card class="q-pa-lg q-mb-md" bordered flat>
     <div class="row justify-between items-center q-mb-md">
       <div class="text-h6">
         {{
@@ -118,11 +126,14 @@ onMounted(async () => {
           }}
         </div>
         <template v-if="isEdit">
-          <q-input type="text" v-model="updateModel.category" />
+          <q-select v-model="updateModel.category" :loading="isCategoriesLoading"
+            lazy-rules :options="shopCategories?.map(({ title, value }) => ({ label: title, value }))" emit-value
+            map-options :rules="[(val) => (val && val.length > 0) || 'لطفاً گزینه ای را انتخاب کنید']">
+          </q-select>
         </template>
         <template v-else>
           <div class="text-body1">
-            {{ shopModel.category }}
+            {{ shopCategories?.find(x => x.value == shopModel.category)?.title }}
           </div>
         </template>
       </div>
@@ -143,7 +154,60 @@ onMounted(async () => {
           </div>
         </template>
       </div>
+      <div class="column col-12 col-md-4">
+        <div class="text-caption text-grey-7">
+          تم رنگی فروشگاه
+        </div>
+        <template v-if="isEdit">
+          <q-input
+            v-model="updateModel.color_code"
+            class="my-input"
+          >
+            <template v-slot:append>
+              <q-icon name="colorize" class="cursor-pointer">
+                <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                  <q-color v-model="updateModel.color_code" default-value="#ff9800" no-header no-footer />
+                </q-popup-proxy>
+              </q-icon>
+            </template>
+          </q-input>
+          <!-- <q-color v-model="updateModel.color_code" class="q-my-md my-picker"  /> -->
+          <!-- <input type="color" v-model="" /> -->
+        </template>
+        <template v-else>
+          <div class="text-body1">
+            <template v-if="!shopModel.color_code">
+              تعریف نشده. پیش فرض
+              <span dir="ltr"><code>#ff9800</code></span>
+            </template>
+            <template v-else>
+              <div class="flex row q-gutter-md items-center">
+                <code>{{ shopModel.color_code }}</code>
+                <div :style="{ width: '20px', height: '20px', borderRadius: '1000px', border: '1px solid black', backgroundColor: shopModel.color_code }"></div>
+              </div>
+            </template>
+          </div>
+        </template>
+      </div>
     </div>
+  </q-card>
+  <q-card bordered flat>
+    <q-card-section>
+      <div class="row justify-between items-center">
+        <div class="text-h6">اعتبار حساب</div>
+        <q-btn color="dark" flat disable>افزودن اعتبار</q-btn>
+      </div>
+    </q-card-section>
+    <q-card-section>
+      <div class="row">
+        <div class="col-md-6 col-12">
+          <div class="text-body2 q-mb-md">اعتبار تا</div>
+          <div>
+            {{ new Date(shopCredit?.expires_at as string).toLocaleString('fa-IR') }}
+          </div>
+        </div>
+      </div>
+    </q-card-section>
   </q-card>
 </template>
 
