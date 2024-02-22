@@ -66,7 +66,7 @@ module.exports = configure(function (ctx) {
       // publicPath: '/',
       // analyze: true,
       env: {
-        API_BASEURL: process.env.API_BASEURL,
+        API_BASEURL: process.env.API_BASEURL || 'https://api.platfo.net/api/v1',
       },
       // rawDefine: {}
       // ignorePublicFolder: true,
