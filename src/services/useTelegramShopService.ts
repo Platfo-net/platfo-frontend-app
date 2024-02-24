@@ -20,6 +20,16 @@ export const useTelegramShopService = () => {
       return response.data;
     }
 
+    const getShopProductsRaw = async (shopId: string, params: {
+      page: number;
+      page_size: number;
+    } = { page: 1, page_size: 10 }) => {
+      const response = await shopApi.api.get<IPaginatedResponse<ProductType>>(`/shop/products/telegram/${shopId}/all`, {
+        params,
+      });
+      return response.data;
+    }
+
     const getShopInformation = async (shopId: string) => {
       const response = await shopApi.api.get<ShopInformationType>(`/shop/shop/telegram/info/${shopId}`)
       return response.data;
@@ -42,7 +52,8 @@ export const useTelegramShopService = () => {
             getShopInformation: (shopId: string) => useQuery({
               queryFn: async () => await getShopInformation(shopId),
               queryKey: ['shop-information', { shopId }]
-            })
+            }),
+            getShopProductsRaw,
         },
     }
 }

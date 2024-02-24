@@ -256,3 +256,9 @@ export type ShopInformationType = {
   title: string;
   color_code: string;
 };
+
+export type PaginationType = {
+  page: number;
+  rowsPerPage: number;
+  rowsNumber: number;
+};
