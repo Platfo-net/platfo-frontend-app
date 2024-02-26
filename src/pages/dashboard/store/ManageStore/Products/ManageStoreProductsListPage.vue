@@ -5,10 +5,12 @@ import { useRoute } from 'vue-router';
 import TomanSymbol from 'components/common/TomanSymbol.vue';
 import { useQuery } from '@tanstack/vue-query';
 import { QTableColumn } from 'quasar';
+import { useNotify } from 'src/composables/use-notify';
 
 /** COMPONENT COMPOSABLES */
 const productsService = useProductsService();
 const route = useRoute();
+const notify = useNotify();
 
 const { data: productsPaginatedResponse, isFetching, refetch } = useQuery({
   queryFn: async () => await productsService.queries.getAll(
@@ -67,6 +69,8 @@ const pagination = ref<PaginationType>({
   page: 1,
   rowsPerPage: 20,
 });
+const showDeleteAlert = ref<boolean>(false);
+const toDeleteId = ref<string>('')
 /****************** */
 
 /** COMPONENT DEFINES */
@@ -79,13 +83,25 @@ type PaginationType = {
 
 /** COMPONENT FUNCTIONS */
 async function tableOnRequestHandler(_props: any) {
-  await loadData();
   pagination.value.page = _props.pagination.page;
   pagination.value.rowsPerPage = _props.pagination.rowsPerPage;
+  await loadData();
 }
 async function loadData() {
   await refetch();
   pagination.value.rowsNumber = productsPaginatedResponse.value?.pagination.total_count as number;
+}
+
+const handleDeleteBtnClick = async (id: string) => {
+  try {
+    await productsService.mutations.remove(id)
+    notify.success('حذف محصول موفقیت آمیز')
+    refetch();
+    showDeleteAlert.value = false;
+  } catch (err) {
+    notify.error('خطا در حذف محصول');
+    showDeleteAlert.value = false;
+  }
 }
 /********************** */
 
@@ -98,6 +114,31 @@ onMounted(async () => {
 
 <template>
   <div class="q-my-md">
+    <q-dialog v-model="showDeleteAlert" persistent>
+      <q-card>
+        <q-card-section>
+          <div class="row items-center q-gutter-md">
+            <q-icon name="info_outline" color="negative" size="md" />
+            <div class="text-h6 text-negative">هشدار</div>
+          </div>
+        </q-card-section>
+        <q-separator />
+        <q-card-section>
+          آیا از حذف این محصول مطمئن هستید؟
+          <span class="text-negative text-bold">این محصول برای همیشه از بین خواهد رفت.</span>
+        </q-card-section>
+        <q-separator />
+        <q-card-actions align="right">
+          <q-btn label="انصراف" color="negative" v-close-popup />
+          <q-btn
+            flat
+            label="بله"
+            color="primary"
+            @click="handleDeleteBtnClick(toDeleteId)"
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
     <q-table
       ref="tableRef"
       class="sticky-last-col"
@@ -167,6 +208,18 @@ onMounted(async () => {
               flat
               :to="`products/${props.row.id}/edit`"
               label="ویرایش"
+              class="q-ml-md"
+            ></q-btn>
+            <q-btn
+              dense
+              size="sm"
+              flat
+              color="red"
+              icon="delete"
+              @click="() => {
+                toDeleteId = props.row.id;
+                showDeleteAlert = true;
+              }"
             ></q-btn>
           </div>
         </q-td>

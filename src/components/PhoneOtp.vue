@@ -24,7 +24,7 @@ function handleOnComplete(value: any) {
       token: authStore.otpToken,
     })
     .then((d) => {
-      notify.success('Phone verified.');
+      notify.success('شماره احراز هویت شد');
       router.replace({ name: 'LoginPage' });
     })
     .catch((err) => {

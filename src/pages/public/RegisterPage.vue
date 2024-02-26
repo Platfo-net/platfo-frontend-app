@@ -39,7 +39,7 @@ const handleFormSubmit = () => {
         .catch(() => {
           notify.error('Error while calling OTP');
         });
-      notify.success('Successful', 'Register was successful');
+      notify.success('Successful', 'ثبت نام موفقیت آمیز');
       router.replace({
         name: 'OtpPhoneConfirmationPage',
       });
@@ -63,7 +63,7 @@ const handleFormSubmit = () => {
             router.replace({ name: 'OtpPhoneConfirmationPage' });
           })
           .catch(() => {
-            notify.error('Error while calling OTP');
+            notify.error('خطا در ارسال کد');
           });
       } else {
         notify.error('Error', err.response.data.detail);
