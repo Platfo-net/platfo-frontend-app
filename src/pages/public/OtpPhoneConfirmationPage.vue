@@ -3,6 +3,11 @@ import PhoneOtp from 'components/PhoneOtp.vue';
 import { useAuthStore } from 'stores/auth-store';
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
+import { ISendActivationCodeResponse } from 'src/composables/types';
+import { useApi } from 'src/composables/use-api';
+import { useNotify } from 'src/composables/use-notify';
+const { api, loading } = useApi();
+const notify = useNotify();
 const authStore = useAuthStore();
 const router = useRouter();
 if (!authStore.otpToken) {
@@ -10,13 +15,39 @@ if (!authStore.otpToken) {
 }
 const resendEmail = ref(false);
 const counterSeconds = ref(120);
-const timeout = setInterval(() => {
+const timeout = ref(setInterval(() => {
   counterSeconds.value -= 1;
   if (counterSeconds.value == 0) {
     resendEmail.value = true;
-    clearInterval(timeout);
+    clearInterval(timeout.value);
   }
-}, 1000);
+}, 1000));
+const handleResendCode = async () => {
+  console.log('fuck my life')
+  try {
+    const { data: { token } } = await api
+      .post<ISendActivationCodeResponse>(
+        '/auth/send-activation-code-by-sms',
+        {
+          phone_number: authStore.registerState.phone_number,
+          phone_country_code: authStore.registerState.phone_country_code,
+        }
+      )
+      resendEmail.value = false;
+      counterSeconds.value = 120;
+      timeout.value = setInterval(() => {
+        counterSeconds.value -= 1;
+        if (counterSeconds.value == 0) {
+          resendEmail.value = true;
+          clearInterval(timeout.value);
+        }
+      }, 1000);
+      authStore.actions.setOtpToken(token);
+      notify.success('ارسال مجدد موفقیت آمیز')
+  } catch {
+    notify.error('خطا در ارسال مجدد کد تایید')
+  }
+}
 </script>
 
 <template>
@@ -32,6 +63,7 @@ const timeout = setInterval(() => {
       </q-card-section>
       <q-card-section class="flex items-center justify-center">
         <q-btn color="dark" :disable="!resendEmail"
+          @click="() => handleResendCode()"
           >{{ $t('pages.otp.resendConfirmation') }}
           {{ counterSeconds > 0 ? counterSeconds : '' }}</q-btn
         >
