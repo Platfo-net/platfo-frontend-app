@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
-import { onMounted, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 import TelegramShopProductItem from 'components/public/shop/TelegramShopProductItem.vue';
 import BaseLoadingSpinner from 'components/common/BaseLoadingSpinner.vue';
 import { useTelegramShopService } from 'src/services/useTelegramShopService';
@@ -10,12 +10,12 @@ import { useQuery } from '@tanstack/vue-query';
 
 // const { queries: { getShopProducts } } = useTelegramShopService();
 
-const tableRef = ref();
+// const tableRef = ref();
 
 const pagination = ref<PaginationType>({
   rowsNumber: 0,
   page: 1,
-  rowsPerPage: 5,
+  rowsPerPage: 20,
 });
 
 const telegramShopService = useTelegramShopService();
@@ -123,15 +123,12 @@ watch(isError, (err) => {
     <template v-else-if="products && products.items.length > 0">
       <q-table
         grid
-        class="sticky-last-col"
-        bordered
-        flat
-        separator="cell"
-        :rows="products?.items"
+        :rows="products.items"
         :columns="columns as QTableColumn[]"
         row-key="name"
         :loading="isFetching"
         hide-pagination
+        v-model:pagination="pagination"
       >
         <template v-slot:loading>
           <q-inner-loading showing color="primary" />

@@ -12,7 +12,7 @@ import { useRoute } from 'vue-router';
 const pagination = ref<PaginationType>({
   rowsNumber: 0,
   page: 1,
-  rowsPerPage: 5,
+  rowsPerPage: 20,
 });
 
 const telegramShopService = useTelegramShopService();
@@ -95,6 +95,7 @@ const columns = [
                 row-key="name"
                 :loading="isFetching"
                 hide-pagination
+                v-model:pagination="pagination"
             >
                 <template v-slot:loading>
                 <q-inner-loading showing color="primary" />
