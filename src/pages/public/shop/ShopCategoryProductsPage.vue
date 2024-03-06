@@ -12,7 +12,7 @@ import { useRoute } from 'vue-router';
 const pagination = ref<PaginationType>({
   rowsNumber: 0,
   page: 1,
-  rowsPerPage: 20,
+  rowsPerPage: 50,
 });
 
 const telegramShopService = useTelegramShopService();
