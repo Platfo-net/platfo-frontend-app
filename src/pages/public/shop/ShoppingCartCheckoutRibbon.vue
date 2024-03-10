@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useShoppingCart } from 'stores/shopping-cart-store';
 import { useApi } from 'src/composables/use-api';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { computed, onMounted, reactive, ref } from 'vue';
 import {
   ICreateShopOrderBody,
@@ -16,10 +16,13 @@ import TomanSymbol from 'src/components/common/TomanSymbol.vue';
 const { api, loading } = useApi();
 const notify = useNotify();
 const route = useRoute();
+const router = useRouter();
 const shoppingCart = useShoppingCart();
 function closeWebApp() {
   window.Telegram.WebApp.close();
 }
+
+const isTableShop = ref(route.query.table ? true : false)
 
 const shopPaymentMethods = ref<IShopPaymentMethod[]>();
 const shopShippingMethods = ref<IShopShippingMethod[]>();
@@ -88,7 +91,13 @@ const cleanup = () => {
   createdOrderId.value = '';
   showCheckoutSuccessDialog.value = false;
   showConfirmDialog.value = false;
-  closeWebApp();
+  showCheckoutDialog.value = false;
+  if (isTableShop.value == false) {
+    closeWebApp();
+  } else {
+    router.push({ name: 'ShopTableProductsListPage', query: { table: route.query.table } })
+    return;
+  }
 };
 
 onMounted(async () => {
@@ -294,9 +303,9 @@ onMounted(async () => {
                     currency: 'IRT',
                   }).format(
                     shoppingCart.totalCartAmount() +
-                      (shopShippingMethods?.find(
+                      ((shopShippingMethods?.find(
                         (x) => x.id === dataToSend.shipment_method_id
-                      )?.price as number)
+                      )?.price as number) || 0)
                   )
                 }}
                 <toman-symbol :size="16"></toman-symbol>
@@ -350,13 +359,13 @@ onMounted(async () => {
         <q-card-section dir="rtl">
           <p>شماره سفارش شما ثبت شد:</p>
           <p class="text-bold">{{ createdOrderId }}</p>
-          <p>
+          <!-- <p>
             لطفا برای مشاهده سفارش و پرداخت آن، گزینه «بازگشت به بات» را انتخاب
             کنید.
-          </p>
+          </p> -->
         </q-card-section>
         <q-card-actions align="center">
-          <q-btn size="sm" color="primary" @click="cleanup">بازگشت به بات</q-btn>
+          <q-btn size="sm" color="primary" @click="cleanup">بازگشت</q-btn>
         </q-card-actions>
       </q-card>
     </q-dialog>
