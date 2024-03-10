@@ -37,7 +37,7 @@ const shoppingCart = useShoppingCart();
         <div class="flex row">
           <template v-if="shoppingCart.getItemCount(product) > 0">
             <div class="flex row q-pa-sm justify-center items-center"
-              style="border: 1px solid #e2e2e2; border-radius: 4px; box-shadow: #e2e2e2 0px 0px 15px;">
+              style="border: 1px solid #e2e2e2; border-radius: 4px; box-shadow: #e2e2e2 0px 0px 15px; width: 143px;">
               <q-btn @click="shoppingCart.add(product)" class="q-mx-sm" icon="add" color="white" text-color="grey-8"
                 size="sm" dense flat></q-btn>
               <small class="q-mx-sm">{{ shoppingCart.getItemCount(product) }}</small>
