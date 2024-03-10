@@ -303,9 +303,9 @@ onMounted(async () => {
                     currency: 'IRT',
                   }).format(
                     shoppingCart.totalCartAmount() +
-                      (shopShippingMethods?.find(
+                      ((shopShippingMethods?.find(
                         (x) => x.id === dataToSend.shipment_method_id
-                      )?.price as number)
+                      )?.price as number) || 0)
                   )
                 }}
                 <toman-symbol :size="16"></toman-symbol>
