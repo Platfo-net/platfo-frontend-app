@@ -110,7 +110,7 @@ watch(isError, (err) => {
             <q-btn
               color="white"
               text-color="black"
-              :label="$t('general.backToBot')"
+              :label="$t('general.goBack')"
               @click="closeWebApp"
             ></q-btn>
           </q-card-section>
