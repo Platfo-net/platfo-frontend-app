@@ -47,7 +47,7 @@ const shoppingCart = useShoppingCart();
           </template>
           <template v-else>
             <div class="flex row">
-              <q-btn color="dark" label="افزودن به سبد خرید" @click="shoppingCart.add(product)" style="width: 143px;"></q-btn>
+              <q-btn color="dark" label="افزودن" @click="shoppingCart.add(product)" style="width: 143px;"></q-btn>
             </div>
           </template>
         </div>
