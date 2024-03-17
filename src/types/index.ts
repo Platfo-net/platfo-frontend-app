@@ -262,3 +262,18 @@ export type PaginationType = {
   rowsPerPage: number;
   rowsNumber: number;
 };
+
+export type ShopPlanType = {
+  id: string;
+  title: string;
+  description: string;
+  is_active: boolean;
+  extend_days: number;
+  extend_count: number;
+  original_price: number;
+  discounted_price: number;
+  currency: string;
+  discount_percentage: number;
+  module: string;
+  features: string[];
+}
