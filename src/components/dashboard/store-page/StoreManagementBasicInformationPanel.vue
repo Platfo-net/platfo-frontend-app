@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, reactive, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useNotify } from 'src/composables/use-notify';
 import { useI18n } from 'vue-i18n';
 import { useApi } from 'src/composables/use-api';
@@ -7,6 +7,7 @@ import { useRoute } from 'vue-router';
 import { IShop } from 'components/models';
 import BaseLoadingSpinner from 'components/common/BaseLoadingSpinner.vue';
 import { useShopService } from 'src/services/useShopService';
+import { getDaysFromNow } from 'src/utils';
 const { api, loading } = useApi();
 
 const { t } = useI18n();
@@ -197,13 +198,14 @@ onMounted(async () => {
         <div class="text-h6">اعتبار حساب</div>
         <q-btn color="dark" flat disable>افزودن اعتبار</q-btn>
       </div>
+      
     </q-card-section>
     <q-card-section>
       <div class="row">
         <div class="col-md-6 col-12">
-          <div class="text-body2 q-mb-md">اعتبار تا</div>
-          <div>
-            {{ new Date(shopCredit?.expires_at as string).toLocaleString('fa-IR') }}
+          <div class="text-body2 q-mb-md">اعتبار باقی مانده</div>
+          <div class="">
+            {{ getDaysFromNow(new Date(shopCredit?.expires_at as string)) }} روز
           </div>
         </div>
       </div>
