@@ -38,6 +38,11 @@ export const useSidebar = () => {
       activeClass: 'bg-transparent',
     },
     {
+      title: 'پیشخوان',
+      to: { name: 'ManageStoreIndexPage' },
+      icon: 'dashboard',
+    },
+    {
       title:
         t(
           'pages.panel.dashboard.manageStorePage.panels.basicInformation.title'
@@ -80,7 +85,7 @@ export const useSidebar = () => {
       to: { name: 'ManageStoreShippingMethods' },
       icon: 'local_shipping',
     },
-    
+
     {
       title: 'سفارش ها',
       icon: 'list',
@@ -90,7 +95,7 @@ export const useSidebar = () => {
       title: 'مدیریت میزها',
       icon: 'bento',
       to: { name: 'ManageStoreTablesListPage' },
-    }
+    },
   ];
   return {
     mainLayoutRoutes,

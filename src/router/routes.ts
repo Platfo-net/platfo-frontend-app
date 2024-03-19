@@ -96,6 +96,34 @@ const routes: RouteRecordRaw[] = [
         path: 'store/manage/:storeId',
         children: [
           {
+            path: 'index',
+            name: 'ManageStoreIndexPage',
+            component: () =>
+              import(
+                'pages/dashboard/store/ManageStore/Index/ManageStoreIndexPage.vue'
+              ),
+            meta: {
+              title: 'پیشخوان | پلتفو',
+              breadcrumbs: [
+                {
+                  label: 'pages.panel.dashboard.title',
+                  to: { name: 'Dashboard' },
+                },
+                {
+                  label: 'pages.panel.dashboard.storeListPage.title',
+                  to: { name: 'StoreListPage' },
+                },
+                {
+                  label: 'pages.panel.dashboard.manageStorePage.title',
+                  to: { name: 'ManageStoreIndexPage' },
+                },
+                {
+                  label: 'پیشخوان',
+                },
+              ],
+            },
+          },
+          {
             path: 'basic-information',
             name: 'ManageStoreBasicInformation',
             component: () =>
@@ -304,8 +332,7 @@ const routes: RouteRecordRaw[] = [
                   to: { name: 'ManageStoreBasicInformation' },
                 },
                 {
-                  label:
-                    'مدیریت میزها',
+                  label: 'مدیریت میزها',
                 },
               ],
             },
