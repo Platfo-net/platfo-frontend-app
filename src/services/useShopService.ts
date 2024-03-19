@@ -1,6 +1,6 @@
 import { useApi } from 'src/composables/use-api';
 import { useMutation, useQuery } from '@tanstack/vue-query';
-import { ShopCategoryType, ShopCreditType, ShopPlanType } from 'src/types';
+import { DashboardDailyReportType, DashboardMonthlyReportType, ShopCategoryType, ShopCreditType, ShopPlanType } from 'src/types';
 
 export const useShopService = () => {
   const platfoApi = useApi();
@@ -29,6 +29,17 @@ export const useShopService = () => {
     return response.data;
   }
 
+  const dashboardCharts = async (shopId: string) => {
+    const reportResponses = await Promise.all([
+      await platfoApi.api.post<DashboardDailyReportType>(`/shop/dashboard/${shopId}/daily`),
+      await platfoApi.api.post<DashboardMonthlyReportType>(`/shop/dashboard/${shopId}/monthly`)
+    ]);
+    return {
+      dialyData: reportResponses[0].data,
+      monthlyData: reportResponses[1].data,
+    }
+  }
+
   return {
     queries: {
       getShopCredit: (shopId: string) =>
@@ -45,6 +56,12 @@ export const useShopService = () => {
         useQuery({
           queryKey: ['shop-plans'],
           queryFn: async () => await getShopPlans(),
+          refetchOnWindowFocus: false,
+        }),
+      getDashboardCharts: (shopId: string) => 
+        useQuery({
+          queryKey: ['dashboard-charts'],
+          queryFn: async () => await dashboardCharts(shopId),
           refetchOnWindowFocus: false,
         }),
     },

@@ -13,11 +13,12 @@
 <script setup lang="ts">
 type TomanSymbolPropsType = {
   size: number;
+  color?: string;
 }
 
-const symbolClass = () => `width: ${props.size}px; height: ${props.size}px; fill: black;`
 
 const props = defineProps<TomanSymbolPropsType>();
+const symbolClass = () => `width: ${props.size}px; height: ${props.size}px; fill: ${props.color || 'black'};`
 </script>
 
 <style scoped></style>

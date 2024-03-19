@@ -234,7 +234,12 @@ const handleExtendBtn = async (planId: string) => {
     <q-card-section>
       <div class="row justify-between items-center">
         <div class="text-h6">اعتبار حساب</div>
-        <q-btn color="dark" flat @click="showPlans = true">افزودن اعتبار</q-btn>
+        <q-btn color="dark" flat @click="showPlans = true" :disable="getDaysFromNow(new Date(shopCredit?.expires_at as string)) > 5">
+          افزودن اعتبار
+          <q-tooltip class="bg-primary" v-if="getDaysFromNow(new Date(shopCredit?.expires_at as string)) > 5">
+            به اندازه کافی اعتبار دارید
+          </q-tooltip>
+          ‍</q-btn>
       </div>
     </q-card-section>
     <q-card-section>

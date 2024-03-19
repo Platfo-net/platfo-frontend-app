@@ -277,3 +277,31 @@ export type ShopPlanType = {
   module: string;
   features: string[];
 }
+
+export type DashboardDailyReportType = {
+  today_orders_count: number;
+  today_orders_sum: number;
+  today_orders_average: number;
+};
+
+
+export type DashboardMonthlyReportType = {
+  orders_count: [
+    {
+      date: Date;
+      value: number;
+    }
+  ];
+  orders_amount: [
+    {
+      date: Date;
+      value: number;
+    }
+  ];
+  orders_average: [
+    {
+      date: Date;
+      value: number;
+    }
+  ];
+};
