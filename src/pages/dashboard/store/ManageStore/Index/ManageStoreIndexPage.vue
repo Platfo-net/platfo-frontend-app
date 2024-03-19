@@ -127,7 +127,7 @@ const generateChartOptionsSeries = (chartId: string, data: { date: Date, value: 
     </div>
   </div>
   <div class="row q-col-gutter-md">
-    <div class="col-md-4">
+    <div class="col-12 col-md-4">
       <q-card bordered flat>
         <q-inner-loading  :showing="isFetching">
           <q-spinner></q-spinner>
@@ -140,7 +140,7 @@ const generateChartOptionsSeries = (chartId: string, data: { date: Date, value: 
           </q-card-section>
       </q-card>
     </div>
-    <div class="col-md-4">
+    <div class="col-12 col-md-4">
       <q-card bordered flat>
         <q-inner-loading :showing="isFetching">
           <q-spinner></q-spinner>
@@ -153,7 +153,7 @@ const generateChartOptionsSeries = (chartId: string, data: { date: Date, value: 
           </q-card-section>
       </q-card>
     </div>
-    <div class="col-md-4">
+    <div class="col-12 col-md-4">
       <q-card bordered flat>
         <q-inner-loading :showing="isFetching">
           <q-spinner></q-spinner>
