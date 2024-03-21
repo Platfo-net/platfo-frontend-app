@@ -30,13 +30,10 @@ export const useShopService = () => {
   }
 
   const dashboardCharts = async (shopId: string) => {
-    const reportResponses = await Promise.all([
-      await platfoApi.api.post<DashboardDailyReportType>(`/shop/dashboard/${shopId}/daily`),
-      await platfoApi.api.post<DashboardMonthlyReportType>(`/shop/dashboard/${shopId}/monthly`)
-    ]);
+    const response = await platfoApi.api.post<DashboardMonthlyReportType>(`/shop/dashboard/${shopId}/monthly`)
     return {
-      dialyData: reportResponses[0].data,
-      monthlyData: reportResponses[1].data,
+      // dialyData: reportResponses[0].data,
+      monthlyData: response.data,
     }
   }
 

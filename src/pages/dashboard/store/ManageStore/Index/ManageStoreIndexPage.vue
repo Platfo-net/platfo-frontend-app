@@ -59,7 +59,7 @@ const generateChartOptionsSeries = (chartId: string, data: { date: Date, value: 
 
 <template>
   <q-card flat bordered class="full-width q-mb-md">
-    <q-card-section class="text-h6">
+    <q-card-section class="text-h6 text-bold">
       دسترسی سریع
     </q-card-section>
     <q-card-section>
@@ -85,88 +85,63 @@ const generateChartOptionsSeries = (chartId: string, data: { date: Date, value: 
       </div>
     </q-card-section>
   </q-card>
-  <div class="row q-col-gutter-md q-mb-md">
-    <div class="col-12 col-md-4">
-      <q-card bordered flat class="bg-primary text-white">
-        <q-inner-loading :showing="isFetching">
-          <q-spinner></q-spinner>
-        </q-inner-loading>
-        <q-card-section class="text-h6">
-          تعداد سفارش های امروز
-        </q-card-section>
-        <q-card-section class="text-h4">
-          {{ chartData?.dialyData.today_orders_count || 0 }}
-        </q-card-section>
-      </q-card>
-    </div>
-    <div class="col-12 col-md-4">
-      <q-card bordered flat class="bg-primary text-white">
-        <q-inner-loading :showing="isFetching">
-          <q-spinner></q-spinner>
-        </q-inner-loading>
-        <q-card-section class="text-h6">
-          مجموع سفارش های امروز
-        </q-card-section>
-        <q-card-section class="text-h4">
-          {{ chartData?.dialyData.today_orders_sum || 0}} <toman-symbol color="white" :size="24"></toman-symbol>
-        </q-card-section>
-      </q-card>
-    </div>
-    <div class="col-12 col-md-4">
-      <q-card bordered flat class="bg-primary text-white">
-        <q-inner-loading :showing="isFetching">
-          <q-spinner></q-spinner>
-        </q-inner-loading>
-        <q-card-section class="text-h6">
-          میانگین سفارش های امروز
-        </q-card-section>
-        <q-card-section class="text-h4">
-          {{ chartData?.dialyData.today_orders_average || 0 }} <toman-symbol color="white" :size="24"></toman-symbol>
-        </q-card-section>
-      </q-card>
-    </div>
-  </div>
-  <div class="row q-col-gutter-md">
-    <div class="col-12 col-md-4">
-      <q-card bordered flat>
-        <q-inner-loading  :showing="isFetching">
-          <q-spinner></q-spinner>
-        </q-inner-loading>
-          <q-card-section class="text-body2">
-            تعداد سفارش های ۳۰ روز اخیر
-          </q-card-section>
-          <q-card-section>
-            <apexchart type="area" v-bind="generateChartOptionsSeries('monthly-order-count', chartData?.monthlyData.orders_count || [], 'سفارش ها')"></apexchart>
-          </q-card-section>
-      </q-card>
-    </div>
-    <div class="col-12 col-md-4">
-      <q-card bordered flat>
-        <q-inner-loading :showing="isFetching">
-          <q-spinner></q-spinner>
-        </q-inner-loading>
-          <q-card-section class="text-body2">
-            مجموع سفارش های ۳۰ روز اخیر
-          </q-card-section>
-          <q-card-section>
-            <apexchart type="area" v-bind="generateChartOptionsSeries('monthly-order-amount', chartData?.monthlyData.orders_amount || [], 'سفارش ها')"></apexchart>
-          </q-card-section>
-      </q-card>
-    </div>
-    <div class="col-12 col-md-4">
-      <q-card bordered flat>
-        <q-inner-loading :showing="isFetching">
-          <q-spinner></q-spinner>
-        </q-inner-loading>
-          <q-card-section class="text-body2">
-            میانگین سفارش های ۳۰ روز اخیر
-          </q-card-section>
-          <q-card-section>
-            <apexchart type="area" v-bind="generateChartOptionsSeries('monthly-order-average', chartData?.monthlyData.orders_average || [], 'سفارش ها')"></apexchart>
-          </q-card-section>
-      </q-card>
-    </div>
-  </div>
+  <q-card bordered flat>
+    <q-card-section class="text-h6 text-bold">
+      وضعیت ۳۰ روز گذشته
+    </q-card-section>
+    <q-card-section>
+      <div class="row q-col-gutter-md q-mb-md">
+        <div class="col-12 col-md-4">
+          <q-card bordered flat class="bg-primary text-white">
+            <q-inner-loading :showing="isFetching">
+              <q-spinner></q-spinner>
+            </q-inner-loading>
+            <q-card-section class="text-h6">
+              تعداد سفارش ها
+            </q-card-section>
+            <q-card-section class="text-h4">
+              {{ chartData?.monthlyData.orders_total_count || 0 }}
+            </q-card-section>
+            <q-card-section class="bg-white">
+              <apexchart type="area" v-bind="generateChartOptionsSeries('monthly-order-count', chartData?.monthlyData.orders_count_per_day || [], 'سفارش ها')"></apexchart>
+            </q-card-section>
+          </q-card>
+        </div>
+        <div class="col-12 col-md-4">
+          <q-card bordered flat class="bg-primary text-white">
+            <q-inner-loading :showing="isFetching">
+              <q-spinner></q-spinner>
+            </q-inner-loading>
+            <q-card-section class="text-h6">
+              مجموع سفارش ها
+            </q-card-section>
+            <q-card-section class="text-h4">
+              {{ chartData?.monthlyData.orders_total_amount || 0}} <toman-symbol color="white" :size="24"></toman-symbol>
+            </q-card-section>
+            <q-card-section class="bg-white">
+              <apexchart type="area" v-bind="generateChartOptionsSeries('monthly-order-amount', chartData?.monthlyData.orders_amount_per_day || [], 'سفارش ها')"></apexchart>
+            </q-card-section>
+          </q-card>
+        </div>
+        <div class="col-12 col-md-4">
+          <q-card bordered flat class="bg-primary text-white">
+            <q-inner-loading :showing="isFetching">
+              <q-spinner></q-spinner>
+            </q-inner-loading>
+            <q-card-section class="text-h6">
+              میانگین سفارش ها
+            </q-card-section>
+            <q-card-section class="text-h4">
+              {{ chartData?.monthlyData.orders_total_average || 0 }} <toman-symbol color="white" :size="24"></toman-symbol>
+            </q-card-section>
+            <q-card-section class="bg-white">
+              <apexchart type="area" v-bind="generateChartOptionsSeries('monthly-order-average', chartData?.monthlyData.orders_average_per_day || [], 'سفارش ها')"></apexchart>
+            </q-card-section>
+          </q-card>
+        </div>
+      </div>
+    </q-card-section>
+  </q-card>
 </template>
 
 <style scoped></style>

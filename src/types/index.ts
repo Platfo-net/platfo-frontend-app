@@ -284,24 +284,16 @@ export type DashboardDailyReportType = {
   today_orders_average: number;
 };
 
+export type ChartKeyValuePairType = {
+  date: Date;
+  value: number;
+};
 
 export type DashboardMonthlyReportType = {
-  orders_count: [
-    {
-      date: Date;
-      value: number;
-    }
-  ];
-  orders_amount: [
-    {
-      date: Date;
-      value: number;
-    }
-  ];
-  orders_average: [
-    {
-      date: Date;
-      value: number;
-    }
-  ];
+  orders_count_per_day: ChartKeyValuePairType[];
+  orders_amount_per_day: ChartKeyValuePairType[];
+  orders_average_per_day: ChartKeyValuePairType[];
+  orders_total_count: number;
+  orders_total_amount: number;
+  orders_total_average: number;
 };
