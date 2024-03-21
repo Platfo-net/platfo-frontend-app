@@ -22,14 +22,8 @@ const route = useRoute();
 const notify = useNotify();
 const shopService = useShopService();
 
-const { data: shopCredit } = shopService.queries.getShopCredit(
-  route.params.storeId as string
-);
 
 const { data: shopCategories, isPending: isCategoriesLoading } = shopService.queries.getShopCategories();
-const { data: shopPlans } = shopService.queries.getAllPlans();
-const { mutateAsync } = shopService.mutations.extendShopPlan(route.params.storeId as string);
-const showPlans = ref<boolean>(false);
 
 const updateShop = async () => {
   try {
@@ -65,43 +59,10 @@ onMounted(async () => {
   shopModel.value = r.data;
   Object.assign(updateModel.value, shopModel.value);
 });
-
-const handleExtendBtn = async (planId: string) => {
-  const { payment_url } = await mutateAsync(planId);
-  window.location.assign(payment_url);
-}
 </script>
 
 <template>
-  <q-dialog full-width v-model="showPlans" >
-    <q-card>
-      <q-card-section class="text-h6">
-        پلن ها
-      </q-card-section>
-      <q-card-section>
-        <div class="row q-col-gutter-md">
-          <div class="col-12 col-md-4">
-            <div class="q-mb-md" v-for="plan in shopPlans" :key="plan.id">
-              <q-card v-if="plan.is_active">
-                <q-card-section style="border-bottom: 1px solid #e2e2e2;">
-                  {{ plan.title }}
-                </q-card-section>
-                <q-card-section>
-                  میزان اعتبار: {{ plan.extend_days }} روز
-                </q-card-section>
-                <q-card-section>
-                  قیمت: {{ plan.original_price }} <toman-symbol :size="16"></toman-symbol>
-                </q-card-section>
-                <q-card-section>
-                  <q-btn @click="handleExtendBtn(plan.id)" color="primary" class="full-width">افزودن اعبتار</q-btn>
-                </q-card-section>
-              </q-card>
-            </div>
-          </div>
-        </div>
-      </q-card-section>
-    </q-card>
-  </q-dialog>
+  
   <q-card class="q-pa-lg q-mb-md" bordered flat>
     <div class="row justify-between items-center q-mb-md">
       <div class="text-h6">
@@ -230,29 +191,7 @@ const handleExtendBtn = async (planId: string) => {
       </div>
     </div>
   </q-card>
-  <q-card bordered flat>
-    <q-card-section>
-      <div class="row justify-between items-center">
-        <div class="text-h6">اعتبار حساب</div>
-        <q-btn color="dark" flat @click="showPlans = true" :disable="getDaysFromNow(new Date(shopCredit?.expires_at as string)) > 5">
-          افزودن اعتبار
-          <q-tooltip class="bg-primary" v-if="getDaysFromNow(new Date(shopCredit?.expires_at as string)) > 5">
-            به اندازه کافی اعتبار دارید
-          </q-tooltip>
-          ‍</q-btn>
-      </div>
-    </q-card-section>
-    <q-card-section>
-      <div class="row">
-        <div class="col-md-6 col-12">
-          <div class="text-body2 q-mb-md">اعتبار باقی مانده</div>
-          <div>
-            {{ getDaysFromNow(new Date(shopCredit?.expires_at as string)) || 0 }} روز
-          </div>
-        </div>
-      </div>
-    </q-card-section>
-  </q-card>
+  
 </template>
 
 <style scoped lang="scss"></style>

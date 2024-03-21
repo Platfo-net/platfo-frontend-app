@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ApexOptions } from 'apexcharts';
 import TomanSymbol from 'src/components/common/TomanSymbol.vue';
 import { useShopService } from 'src/services/useShopService';
+import { generateChartOptionsSeries, getDaysFromNow } from 'src/utils';
+import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 
@@ -13,6 +14,14 @@ const route = useRoute();
 /** COMPONENT STATE */
 
 const { data: chartData, isFetching } = shopService.queries.getDashboardCharts(route.params.storeId as string);
+const { data: shopCredit } = shopService.queries.getShopCredit(
+  route.params.storeId as string
+);
+const { data: shopPlans } = shopService.queries.getAllPlans();
+const { mutateAsync } = shopService.mutations.extendShopPlan(route.params.storeId as string);
+const showPlans = ref<boolean>(false);
+const redirectingToPg = ref<boolean>(false);
+
 
 /****************** */
 
@@ -21,35 +30,12 @@ const { data: chartData, isFetching } = shopService.queries.getDashboardCharts(r
 /******************** */
 
 /** COMPONENT FUNCTIONS */
-const generateChartOptionsSeries = (chartId: string, data: { date: Date, value: number }[], seriesName: string): {
-  options: ApexOptions,
-  series: ApexAxisChartSeries,
-} => ({
-  options: {
-    chart: {
-      id: chartId,
-      toolbar: {
-        show: false,
-      },
-      fontFamily: 'VazirMatn'
-    },
-    xaxis: {
-      categories: data.map(x => new Date(x.date).toLocaleDateString('fa-IR')),
-      offsetY: 50,
-      offsetX: -40,
-    },
-    stroke: {
-      curve: 'smooth',
-    },
-    dataLabels: {
-      enabled: false
-    },
-  },
-  series: [{
-    data: data.map(x => x.value),
-    name: seriesName,
-  }]
-});
+const handleExtendBtn = async (planId: string) => {
+  const { payment_url } = await mutateAsync(planId);
+  showPlans.value = false;
+  redirectingToPg.value = true;
+  window.location.assign(payment_url);
+}
 /********************** */
 
 /** COMPONENT LIFECYCLE HANDLERS */
@@ -58,6 +44,44 @@ const generateChartOptionsSeries = (chartId: string, data: { date: Date, value: 
 </script>
 
 <template>
+  <q-dialog v-model="redirectingToPg" persistent >
+    <q-card>
+      <q-card-section class="flex column full-width justify-center items-center text-body1">
+        <div>در حال انتقال به صفحه پرداخت.</div>
+        <div>لطفاً شکیبا باشید...</div>
+        <q-circular-progress class="q-my-md" indeterminate size="md" color="primary"></q-circular-progress>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
+  <q-dialog full-width v-model="showPlans" >
+    <q-card>
+      <q-card-section class="text-h6">
+        پلن ها
+      </q-card-section>
+      <q-card-section>
+        <div class="row q-col-gutter-md">
+          <div class="col-12 col-md-4" v-for="plan in shopPlans" :key="plan.id">
+            <div class="q-mb-md">
+              <q-card v-if="plan.is_active">
+                <q-card-section style="border-bottom: 1px solid #e2e2e2;">
+                  {{ plan.title }}
+                </q-card-section>
+                <q-card-section>
+                  میزان اعتبار: {{ plan.extend_days }} روز
+                </q-card-section>
+                <q-card-section>
+                  قیمت: {{ plan.original_price }} <toman-symbol :size="16"></toman-symbol>
+                </q-card-section>
+                <q-card-section>
+                  <q-btn @click="handleExtendBtn(plan.id)" color="primary" class="full-width">افزودن اعبتار</q-btn>
+                </q-card-section>
+              </q-card>
+            </div>
+          </div>
+        </div>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
   <q-card flat bordered class="full-width q-mb-md">
     <q-card-section class="text-h6 text-bold">
       دسترسی سریع
@@ -85,7 +109,7 @@ const generateChartOptionsSeries = (chartId: string, data: { date: Date, value: 
       </div>
     </q-card-section>
   </q-card>
-  <q-card bordered flat>
+  <q-card bordered flat class="q-mb-md">
     <q-card-section class="text-h6 text-bold">
       وضعیت ۳۰ روز گذشته
     </q-card-section>
@@ -139,6 +163,24 @@ const generateChartOptionsSeries = (chartId: string, data: { date: Date, value: 
             </q-card-section>
           </q-card>
         </div>
+      </div>
+    </q-card-section>
+  </q-card>
+  <q-card bordered flat>
+    <q-card-section>
+      <div class="row justify-between items-center">
+        <div class="text-h6 flex column">اعتبار حساب</div>
+        <q-btn color="dark" flat @click="showPlans = true" :disable="getDaysFromNow(new Date(shopCredit?.expires_at as string)) > 7">
+          افزودن اعتبار
+          <q-tooltip class="bg-primary" v-if="getDaysFromNow(new Date(shopCredit?.expires_at as string)) > 7">
+            به اندازه کافی اعتبار دارید
+          </q-tooltip>
+          ‍</q-btn>
+      </div>
+    </q-card-section>
+    <q-card-section class="flex column justify-center full-width items-center q-my-md">
+      <div class="text-h4">
+        {{ getDaysFromNow(new Date(shopCredit?.expires_at as string)) || 0 }} روز باقیمانده
       </div>
     </q-card-section>
   </q-card>
