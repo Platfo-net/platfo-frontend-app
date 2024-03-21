@@ -41,67 +41,6 @@ const handleFormSubmit = async () => {
 
 <template>
   <q-page class="flex justify-center items-center bg-grey-3 q-pa-lg">
-    <!-- <q-card
-      class="q-pa-md"
-      style="min-width: 300px; width: 100%; max-width: 995px; max-height: 595px; border-radius: 35px;"
-    >
-      <div class="text-h6">{{ $t('pages.public.login.title') }}</div>
-      <form @submit.prevent="handleFormSubmit">
-        <div class="q-gutter-md">
-          <q-input
-            name="phone_number"
-            v-model="loginState.phone_number"
-            type="text"
-            :label="$t('pages.public.login.fields.phoneNumber')"
-            color="dark"
-            :rules="[
-              (val) => !!val || $t('general.fields.requiredStringField'),
-            ]"
-            dir="ltr"
-          />
-          <q-input
-            v-model="loginState.password"
-            :type="showPass ? 'password' : 'text'"
-            :label="$t('pages.public.login.fields.password')"
-            color="dark"
-            :rules="[
-              (val) => !!val || $t('general.fields.requiredStringField'),
-            ]"
-            dir="ltr"
-          >
-            <template v-slot:append>
-              <q-icon
-                :name="showPass ? 'visibility_off' : 'visibility'"
-                class="cursor-pointer"
-                @click="showPass = !showPass"
-              />
-            </template>
-          </q-input>
-          <small class="flex justify-end">
-            <router-link :to="{ name: 'ForgotPasswordPage' }">{{
-              $t('pages.public.login.forgotPassword')
-            }}</router-link>
-          </small>
-        </div>
-        <q-btn
-          color="dark"
-          class="full-width q-mt-md"
-          :label="$t('pages.public.login.login')"
-          type="submit"
-          :disable="
-            loginState.password.length < 1 || loginState.phone_number.length < 1
-          "
-        />
-      </form>
-      <div class="flex column justify-center items-center q-mt-md">
-        <p>
-          {{ $t('pages.public.login.notUser') }}
-          <router-link :to="{ name: 'RegisterPage' }">{{
-            $t('pages.public.login.registerHere')
-          }}</router-link>
-        </p>
-      </div>
-    </q-card> -->
     <q-card
     flat
       style="min-width: 300px; width: 100%; max-width: 995px; max-height: 595px; border-radius: 35px;"
