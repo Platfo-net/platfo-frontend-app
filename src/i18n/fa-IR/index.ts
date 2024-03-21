@@ -50,14 +50,14 @@ export default {
   pages: {
     public: {
       login: {
-        title: 'ورود به پلتفو',
+        title: 'ورود به دنیای پلتفو',
         fields: {
           phoneNumber: 'شماره موبایل',
-          password: 'پسوورد',
+          password: 'رمز عبور',
         },
-        notUser: 'هنوز کاربر نیستید؟',
-        forgotPassword: 'فراموشی رمز عبور',
-        registerHere: 'اینجا ثبت نام کن.',
+        notUser: 'هنوز کاربر پلتفو نیستید؟',
+        forgotPassword: 'بازیابی رمز عبور',
+        registerHere: 'ایجاد حساب',
         notifications: {
           loginSuccess: 'ورود موفقیت آمیز',
           loginError: 'شماره یا پسوورد نادرست بود',
