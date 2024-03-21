@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue';
-import { IRegisterFormState } from 'src/types';
+import { ref } from 'vue';
 import { useApi } from 'src/composables/use-api';
 import { useRouter } from 'vue-router';
 import { useNotify } from 'src/composables/use-notify';
 import { ISendActivationCodeResponse } from 'src/composables/types';
 import { useAuthStore } from 'stores/auth-store';
-import SignupImage from 'src/components/public/shop/SignUPImage.vue';
+import SignupImage from 'src/components/public/shop/SignupImage.vue';
 
 const authStore = useAuthStore();
 // const registerState = reactive<IRegisterFormState>({
