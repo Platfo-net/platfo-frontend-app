@@ -95,7 +95,7 @@ const handleFormSubmit = async () => {
           <q-btn
             rounded
             color="secondary"
-            class="full-width q-mt-md"
+            class="full-width q-mt-md q-pa-md"
             :label="$t('pages.public.login.login')"
             type="submit"
             :disable="

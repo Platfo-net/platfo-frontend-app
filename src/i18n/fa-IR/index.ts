@@ -65,21 +65,21 @@ export default {
         login: 'ورود',
       },
       register: {
-        title: 'ثبت نام در پلتفو',
+        title: 'ایجاد حساب در پلتفو',
         fields: {
           firstname: 'نام',
           lastname: 'نام خانوادگی',
           phoneCountryCode: 'کد کشور',
           phoneNumber: 'شماره موبایل',
-          password: 'پسوورد',
+          password: 'رمز عبور',
         },
-        isUser: 'کاربر هستید؟',
-        loginHere: 'اینجا وارد شوید.',
+        isUser: 'کاربر پلتفو هستید؟',
+        loginHere: 'ورود',
         notifications: {
           registerSuccess: 'ثبت نام موفقیت آمیز',
           registerError: 'شماره یا پسوورد نادرست بود',
         },
-        register: 'ثبت نام',
+        register: 'ایجاد حساب',
       },
       forgotPassword: {
         title: 'فراموشی رمز عبور',
