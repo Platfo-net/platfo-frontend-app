@@ -13,7 +13,7 @@
     </q-drawer>
 
     <q-page-container class="bg-teal-1">
-      <q-page class="q-pa-md">
+      <q-page class="q-pa-md container">
         <BreadCrumbs />
         <router-view />
       </q-page>
