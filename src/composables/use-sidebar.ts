@@ -46,7 +46,7 @@ export const useSidebar = () => {
       title:
         t(
           'pages.panel.dashboard.manageStorePage.panels.basicInformation.title'
-        ) + ' و اعتبار حساب',
+        ),
       to: { name: 'ManageStoreBasicInformation' },
       icon: 'info',
     },
