@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { ProductCategoryType, ProductType, UpsertProductType } from 'src/types';
+import { ProductType, UpsertProductType, ProductVariantType, ProductAttributeType } from 'src/types';
 import BaseUploader from 'components/common/BaseUploader.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useProductsService } from 'src/services/useProductsService';
@@ -8,6 +8,7 @@ import BaseLoadingSpinner from 'components/common/BaseLoadingSpinner.vue';
 import { useProductCategoriesService } from 'src/services/useProductCategoriesService';
 import { useNotify } from 'src/composables/use-notify';
 import { IUploadProductImageResponse } from 'components/models';
+import { QTableColumn } from 'quasar';
 
 /** COMPONENT COMPOSABLES */
 const route = useRoute();
@@ -24,6 +25,8 @@ const upsertModel = ref<UpsertProductType>({
   image: '',
   price: 0,
   title: '',
+  attributes: [],
+  variants: [],
 });
 const { data: categories, isPending: categoriesPending } = productCategoriesService.queries.getAll(
   route.params.storeId as string
@@ -32,6 +35,59 @@ const isEdit = ref<boolean>(route.fullPath.includes('edit'));
 const productId = route.params.productId as string;
 const product = ref<ProductType>({} as ProductType);
 const newImageUrl = ref('');
+const productVariantTableColumns = [
+  { name: 'title', label: 'عنوان', field: 'title', align: 'left' },
+  {
+    name: 'price',
+    label: 'قیمت',
+    field: 'price',
+    align: 'left',
+  },
+  {
+    name: 'is_available',
+    label: 'وضعیت موجودی',
+    field: 'is_available',
+    align: 'left',
+  },
+  {
+    name: 'actions',
+    label: 'عملیات',
+    field: 'actions',
+    align: 'left',
+  },
+];
+const productAttributesTableColumns = [
+  {
+    name: 'key',
+    label: 'عنوان',
+    field: 'key',
+    align: 'left',
+  },
+  {
+    name: 'value',
+    label: 'مقدار',
+    field: 'value',
+    align: 'left',
+  },
+  {
+    name: 'actions',
+    label: 'عملیات',
+    field: 'actions',
+    align: 'left',
+  },
+];
+const productVariantModel = ref<Partial<ProductVariantType>>({
+  title: '',
+  price: 0,
+  currency: 'IRT',
+  is_available: true,
+});
+const productAttributeModel = ref<Partial<ProductAttributeType>>({
+  key: '',
+  value: '',
+});
+const showCreateVariantDialog = ref<boolean>(false);
+const showCreateAttributeDialog = ref<boolean>(false);
 /****************** */
 
 /** COMPONENT DEFINES */
@@ -51,6 +107,8 @@ async function initUpsertStates() {
     upsertModel.value.image = product.value.image;
     upsertModel.value.price = product.value.price;
     upsertModel.value.title = product.value.title;
+    upsertModel.value.variants = product.value.variants;
+    upsertModel.value.attributes = product.value.attributes;
   }
 }
 
@@ -87,6 +145,136 @@ onMounted(async () => {
 </script>
 
 <template>
+  <q-dialog v-model="showCreateVariantDialog" @hide="x => productVariantModel = {
+    id: '',
+    title: '',
+    price: 0,
+    currency: 'IRT',
+    is_available: false
+  }">
+    <q-card style="min-width: 367px;">
+      <q-card-section>
+        <div class="text-h6">گونه جدید</div>
+      </q-card-section>
+      <q-card-section>
+        <q-form @submit="() => {
+          upsertModel.variants?.push(productVariantModel as ProductVariantType)
+          productVariantModel = {
+            id: '',
+            title: '',
+            price: 0,
+            currency: 'IRT',
+            is_available: false
+          };
+          showCreateVariantDialog = false;
+        }">
+          <q-input
+              class="q-mb-md"
+              outlined
+              label="عنوان"
+              type="text"
+              v-model="productVariantModel.title"
+              dense
+              lazy-rules
+              :rules="[
+                (val) =>
+                  (val && val.length > 0) ||
+                  $t('general.fields.requiredStringField'),
+              ]"
+            ></q-input>
+            <q-input
+              class="q-mb-md"
+              outlined
+              type="number"
+              v-model="productVariantModel.price"
+              dense
+              :label="`${$t(
+                'pages.panel.dashboard.manageStorePage.panels.productManagement.fields.price'
+              )} *`"
+              :hint="
+                $t(
+                  'pages.panel.dashboard.manageStorePage.panels.productManagement.fields.priceHint'
+                )
+              "
+              lazy-rules
+            ></q-input>
+            <div class="flex justify-between items-center row q-mb-md">
+              <div>وضعیت موجودی</div>
+              <div>
+                <q-toggle
+                  v-model="productVariantModel.is_available"
+                  checked-icon="check"
+                  color="primary"
+                  unchecked-icon="clear"
+                  :label="productVariantModel.is_available ? 'موجود' : 'نا موجود'"
+                />
+              </div>
+            </div>
+            <q-btn
+              type="submit"
+              class="q-mb-md"
+              color="primary"
+              label='افزودن'
+            ></q-btn>
+        </q-form>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
+  <q-dialog v-model="showCreateAttributeDialog" @hide="() => productAttributeModel = {
+    key: '',
+    value: '',
+  }">
+    <q-card style="min-width: 367px;">
+      <q-card-section>
+        <div class="text-h6">ویژگی جدید</div>
+      </q-card-section>
+      <q-card-section>
+        <q-form @submit="() => {
+          upsertModel.attributes?.push(productAttributeModel as ProductAttributeType)
+          productAttributeModel = {
+            key: '',
+            value: ''
+          };
+          showCreateAttributeDialog = false;
+        }">
+          <q-input
+              class="q-mb-md"
+              outlined
+              label="عنوان"
+              type="text"
+              v-model="productAttributeModel.key"
+              dense
+              lazy-rules
+              :rules="[
+                (val) =>
+                  (val && val.length > 0) ||
+                  $t('general.fields.requiredStringField'),
+              ]"
+            ></q-input>
+            <q-input
+              class="q-mb-md"
+              outlined
+              type="text"
+              v-model="productAttributeModel.value"
+              dense
+              label="مقدار"
+              :rules="[
+                (val) =>
+                  (val && val.length > 0) ||
+                  $t('general.fields.requiredStringField'),
+              ]"
+              lazy-rules
+            ></q-input>
+            <q-btn
+              type="submit"
+              class="q-mb-md"
+              color="primary"
+              label='افزودن'
+            ></q-btn>
+        </q-form>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
   <q-form @submit="submitForm">
     <q-card>
       <base-loading-spinner
@@ -172,6 +360,57 @@ onMounted(async () => {
             <base-uploader @uploaded="handleUploadedImage" />
           </div>
         </div>
+      </q-card-section>
+      <q-card-section>
+        <q-table flat bordered title="گونه های محصول" :columns="productVariantTableColumns as QTableColumn[]" :rows="upsertModel.variants">
+          <template v-slot:top-right>
+            <q-btn @click="showCreateVariantDialog = true" color="dark">افزودن</q-btn>
+          </template>
+          <template v-slot:body-cell-is_available="props">
+            <q-td :props="props">
+              <q-badge :color="props.row.is_available ? 'green' : 'negative'">{{ props.row.is_available ? 'موجود' : 'نا موجود' }}</q-badge>
+            </q-td>
+          </template>
+          <template v-slot:body-cell-actions="props">
+            <q-td :props="props">
+              <div>
+                <q-btn
+                  dense
+                  size="sm"
+                  flat
+                  color="red"
+                  icon="delete"
+                  @click="() => {
+                    upsertModel.variants = upsertModel.variants?.filter(x => x.title !== props.row.title);
+                  }"
+                ></q-btn>
+              </div>
+            </q-td>
+          </template>
+        </q-table>
+      </q-card-section>
+      <q-card-section>
+        <q-table flat bordered title="ویژگی های محصول" :columns="productAttributesTableColumns as QTableColumn[]" :rows="upsertModel.attributes">
+          <template v-slot:top-right>
+            <q-btn @click="showCreateAttributeDialog = true" color="dark">افزودن</q-btn>
+          </template>
+          <template v-slot:body-cell-actions="props">
+            <q-td :props="props">
+              <div>
+                <q-btn
+                  dense
+                  size="sm"
+                  flat
+                  color="red"
+                  icon="delete"
+                  @click="() => {
+                    upsertModel.attributes = upsertModel.attributes?.filter(x => x.key !== props.row.key);
+                  }"
+                ></q-btn>
+              </div>
+            </q-td>
+          </template>
+        </q-table>
       </q-card-section>
       <q-card-section>
         <q-btn

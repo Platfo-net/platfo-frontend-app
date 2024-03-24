@@ -68,7 +68,22 @@ export type UpsertProductType = {
   price: number;
   currency: string;
   category_id: string;
+  variants: ProductVariantType[];
+  attributes: ProductAttributeType[];
 };
+
+export type ProductVariantType = {
+  id: string;
+  title: string;
+  price: number;
+  currency: string;
+  is_available: boolean;
+}
+
+export type ProductAttributeType = {
+  key: string;
+  value: string;
+}
 
 export type ProductType = {
   id: string;
@@ -80,6 +95,8 @@ export type ProductType = {
   created_at: Date;
   updated_at: Date;
   image_url: string;
+  variants: ProductVariantType[];
+  attributes: ProductAttributeType[];
 };
 
 export type InsertProductCategoryType = {
