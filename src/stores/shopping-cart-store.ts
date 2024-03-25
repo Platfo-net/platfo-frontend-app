@@ -4,12 +4,13 @@ import { IShoppingCart, IShoppingCartItem } from 'stores/types';
 import { LocalStorage } from 'quasar';
 import { IProduct } from 'components/models';
 import { useRoute } from 'vue-router';
+import { ProductType, ProductVariantType, ShoppingCartType } from 'src/types';
 
 export const SHOPPING_CART_KEY = 'shopping-cart-v2.1';
 export const useShoppingCart = defineStore('shopping-cart-store', () => {
   const { params } = useRoute();
-  const initializeCart = (): IShoppingCart => {
-    let shoppingCart = LocalStorage.getItem<IShoppingCart>(SHOPPING_CART_KEY);
+  const initializeCart = (): ShoppingCartType => {
+    let shoppingCart = LocalStorage.getItem<ShoppingCartType>(SHOPPING_CART_KEY);
     if (shoppingCart) {
       if (!shoppingCart.items[params.shopId as string]) {
         shoppingCart.items[params.shopId as string] = {};
@@ -24,7 +25,7 @@ export const useShoppingCart = defineStore('shopping-cart-store', () => {
     return shoppingCart;
   };
 
-  const shoppingCart = reactive<IShoppingCart>(initializeCart());
+  const shoppingCart = reactive<ShoppingCartType>(initializeCart());
 
   const update = () => {
     LocalStorage.set(SHOPPING_CART_KEY, shoppingCart);
@@ -38,18 +39,35 @@ export const useShoppingCart = defineStore('shopping-cart-store', () => {
     LocalStorage.set(SHOPPING_CART_KEY, shoppingCart);
   };
 
-  const getItemCount = (product: IProduct) => {
-    return shoppingCart.items[params.shopId as string]?.[product.id]?.count;
+  const getItemCount = (product: ProductType, variant?: ProductVariantType) => {
+    if (!variant && !shoppingCart.items[params.shopId as string]?.[product.id]?.variant) {
+      return shoppingCart.items[params.shopId as string]?.[product.id]?.count;
+    } else {
+      return shoppingCart.items[params.shopId as string]?.[product.id]?.count;
+    }
   };
 
-  const add = (product: IProduct) => {
-    if (shoppingCart.items[params.shopId as string][product.id]) {
-      shoppingCart.items[params.shopId as string][product.id].count += 1;
+  const add = (product: ProductType, variant?: ProductVariantType) => {
+    if (!variant) {
+      if (shoppingCart.items[params.shopId as string][product.id]) {
+        shoppingCart.items[params.shopId as string][product.id].count += 1;
+      } else {
+        shoppingCart.items[params.shopId as string][product.id] = {
+          count: 1,
+          product,
+        };
+      }
     } else {
-      shoppingCart.items[params.shopId as string][product.id] = {
-        count: 1,
-        product,
-      };
+      if (shoppingCart.items[params.shopId as string][product.id] && shoppingCart.items[params.shopId as string][product.id].variant) {
+        shoppingCart.items[params.shopId as string][product.id].count += 1;
+        shoppingCart.items[params.shopId as string][product.id].variant = variant;
+      } else {
+        shoppingCart.items[params.shopId as string][product.id] = {
+          count: 1,
+          product,
+          variant,
+        };
+      }
     }
     update();
   };

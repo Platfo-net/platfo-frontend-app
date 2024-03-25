@@ -314,3 +314,13 @@ export type DashboardMonthlyReportType = {
   orders_total_amount: number;
   orders_total_average: number;
 };
+
+export type ShoppingCartItemType = {
+  product: ProductType;
+  count: number;
+  variant?: ProductVariantType;
+}
+
+export type ShoppingCartType = {
+  items: Record<string, Record<string, ShoppingCartItemType>>;
+}
