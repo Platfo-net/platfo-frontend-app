@@ -2,11 +2,14 @@
 import { ITelegramShopProductItemProps } from 'components/models';
 import TomanSymbol from 'src/components/common/TomanSymbol.vue';
 import { useShoppingCart } from 'stores/shopping-cart-store';
-defineProps<ITelegramShopProductItemProps>();
+import { ref } from 'vue';
+const props = defineProps<ITelegramShopProductItemProps>();
 const shoppingCart = useShoppingCart();
+const hasVariants = ref<boolean>(props.product.variants.length ? true : false);
 </script>
 
 <template>
+  hasVariants: {{ hasVariants }}
   <q-card class="col-12 q-mb-md" bordered flat style="border-radius: 7px;">
     <div class="flex column q-pa-md">
       <div class="flex row" style="flex-wrap: nowrap;">
@@ -22,7 +25,7 @@ const shoppingCart = useShoppingCart();
           </div>
         </div>
       </div>
-      <div class="flex row justify-between items-center q-py-md q-px-sm">
+      <div v-if="!hasVariants" class="flex row justify-between items-center q-py-md q-px-sm">
         <div class="flex row">
           <div>
             {{
@@ -50,6 +53,41 @@ const shoppingCart = useShoppingCart();
               <q-btn color="dark" label="افزودن" @click="shoppingCart.add(product)" style="width: 143px;"></q-btn>
             </div>
           </template>
+        </div>
+      </div>
+      <div v-else v-for="(variant, idx) in props.product.variants" :key="variant.id" class="q-mb-md" :style="idx % 2 == 0 ? 'border-bottom: 1px solid #e2e2e2;' : ''"  >
+        <div class="flex row">
+          {{ variant.title }}
+        </div>
+        <div class="flex row justify-between items-center q-py-md q-px-sm">
+          <div class="flex row">
+            <div>
+              {{
+                Intl.NumberFormat('fa', {
+                  currency: 'IRT',
+                }).format(variant.price)
+              }}
+              <toman-symbol :size="16"></toman-symbol>
+            </div>
+          </div>
+          <div class="flex row">
+            <template v-if="shoppingCart.getItemCount(product, variant) > 0">
+              <div class="flex row q-pa-sm justify-between items-center"
+                style="border: 1px solid #e2e2e2; border-radius: 4px; box-shadow: #e2e2e2 0px 0px 15px; width: 143px;">
+                <q-btn @click="shoppingCart.add(product, variant)" class="q-mx-sm" icon="add" color="white" text-color="grey-8"
+                  size="sm" dense flat></q-btn>
+                <small class="q-mx-sm">{{ shoppingCart.getItemCount(product, variant) }}</small>
+                <q-btn @click="shoppingCart.remove(product)" class="q-mx-sm"
+                  :icon="shoppingCart.getItemCount(product) === 1 ? 'delete' : 'remove'"
+                  :text-color="shoppingCart.getItemCount(product) === 1 ? 'red-8' : 'dark'" size="sm" dense flat></q-btn>
+              </div>
+            </template>
+            <template v-else>
+              <div class="flex row">
+                <q-btn color="dark" label="افزودن" @click="shoppingCart.add(product)" style="width: 143px;"></q-btn>
+              </div>
+            </template>
+          </div>
         </div>
       </div>
     </div>
