@@ -12,6 +12,10 @@ export const generateChartOptionsSeries = (chartId: string, data: { date: Date, 
   } => ({
     options: {
       chart: {
+        type: 'area',
+        sparkline: {
+          enabled: true
+        },
         id: chartId,
         toolbar: {
           show: false,
@@ -24,7 +28,7 @@ export const generateChartOptionsSeries = (chartId: string, data: { date: Date, 
         offsetX: -40,
       },
       stroke: {
-        curve: 'smooth',
+        curve: 'straight',
         width: 2,
       },
       dataLabels: {
@@ -32,22 +36,14 @@ export const generateChartOptionsSeries = (chartId: string, data: { date: Date, 
       },
       colors: ['#019990'],
       fill: {
-        gradient: {
-          enabled: true,
-          opacityFrom: 0.55,
-          opacityTo: 0
-        }
+        opacity: 0.3,
       },
       tooltip: {
         theme: "dark"
       },
       yaxis: {
-        min: 0,
-      },
-      markers: {
-        size: 1,
-        strokeColor: '#019990',
-        strokeWidth: 2
+        // min: 0,
+        show: false,
       },
     },
     series: [{
