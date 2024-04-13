@@ -25,7 +25,8 @@ const { data: products, isFetching, refetch, isError, isPending } = useQuery({
     route.params.shopId as string,
     { page: pagination.value.page, page_size: pagination.value.rowsPerPage }
   ),
-  queryKey: ['shop-product-list']
+  queryKey: ['shop-product-list'],
+  refetchOnWindowFocus: false,
 });
 
 // watch(isSuccess, () => {

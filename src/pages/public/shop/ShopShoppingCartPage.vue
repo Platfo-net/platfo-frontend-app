@@ -3,14 +3,15 @@ import { useShoppingCart } from 'stores/shopping-cart-store';
 import TelegramShopCartItem from 'components/public/shop/TelegramShopCartItem.vue';
 import { useRoute } from 'vue-router';
 import CartEmptyImg from 'src/components/public/shop/CartEmptyImg.vue';
-const { params } = useRoute();
-const shoppingCart = useShoppingCart();
+// const { params } = useRoute();
+// const shoppingCart = useShoppingCart();
+const shopCart = useShoppingCart().get();
 </script>
 
 <template>
   <q-page class="q-pa-md">
     <template
-      v-if="!Object.keys(shoppingCart.get().items[params.shopId]).length"
+      v-if="!shopCart.items.length"
     >
       <div class="fullscreen flex column justify-center items-center" style="z-index: 0;">
         <div style="max-width: 320px;" class="text-center">
@@ -21,10 +22,10 @@ const shoppingCart = useShoppingCart();
     </template>
     <template v-else>
       <div
-        v-for="shoppingCartItem in shoppingCart.get().items[params.shopId]"
-        :key="shoppingCartItem.product.id"
+        v-for="item in shopCart.items"
+        :key="item.product.id + item.variant?.id"
       >
-        <telegram-shop-cart-item :product="shoppingCartItem.product" />
+        <telegram-shop-cart-item :item="item" />
       </div>
     </template>
   </q-page>
