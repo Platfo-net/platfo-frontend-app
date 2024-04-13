@@ -1,4 +1,4 @@
-import { ProductType } from "src/types";
+import { ProductType, ShoppingCartItemType } from "src/types";
 
 export interface IShop {
   id: string;
@@ -44,6 +44,10 @@ export interface IPaymentMethod {
 
 export interface ITelegramShopProductItemProps {
   product: ProductType;
+}
+
+export interface TelegramShopCartItemProps {
+  item: ShoppingCartItemType;
 }
 
 export interface IUploadProductImageResponse {

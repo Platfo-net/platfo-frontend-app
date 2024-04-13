@@ -317,10 +317,17 @@ export type DashboardMonthlyReportType = {
 
 export type ShoppingCartItemType = {
   product: ProductType;
+  variant: ProductVariantType | null;
   count: number;
-  variant?: ProductVariantType;
+  is_variant: boolean;
+  price: number;
+}
+
+export type ShopShoppingCart = {
+  shop_id: string;
+  items: ShoppingCartItemType[];
 }
 
 export type ShoppingCartType = {
-  items: Record<string, Record<string, ShoppingCartItemType>>;
+  shop_carts: ShopShoppingCart[];
 }
