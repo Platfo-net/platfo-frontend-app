@@ -56,7 +56,7 @@ const shopCart = useShoppingCart();
       </template>
       <template v-else>
         <div class="flex row">
-          <q-btn color="dark" label="افزودن" @click="shopCart.add(product, variant)" style="width: 143px;"></q-btn>
+          <q-btn color="dark" :label="variant.is_available ? 'افزودن' : 'ناموجود'" @click="shopCart.add(product, variant)" style="width: 143px;" :disable="!variant.is_available"></q-btn>
         </div>
       </template>
     </div>
