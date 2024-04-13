@@ -90,6 +90,7 @@ export interface IShopShippingMethod {
 export interface IShopOrderItem {
   product_id: string;
   count: number;
+  variant_id?: string;
 }
 
 export interface ICreateShopOrderBody {
