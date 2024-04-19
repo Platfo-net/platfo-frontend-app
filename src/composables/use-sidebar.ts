@@ -28,6 +28,17 @@ export const useSidebar = () => {
         },
       ],
     },
+    {
+      title: 'چت بات',
+      icon: 'smart_toy',
+      children: [
+        {
+          title: 'چت بات های من',
+          to: { name: 'ChatbotListPage' },
+          icon: 'list',
+        },
+      ],
+    },
   ];
 
   const manageShopLayoutRoutes: SidebarRoute[] = [
@@ -97,8 +108,28 @@ export const useSidebar = () => {
       to: { name: 'ManageStoreTablesListPage' },
     },
   ];
+
+  const manageChatbotLayoutRoutes: SidebarRoute[] = [
+    {
+      title: t('general.goBack'),
+      to: { name: 'ChatbotListPage' },
+      icon: 'chevron_right',
+      activeClass: 'bg-transparent',
+    },
+    {
+      title: 'اطلاعات بات',
+      to: { name: 'ManageChatbotBasicInformationPage' },
+      icon: 'info',
+    },
+    {
+      title: 'پایگاه دانش',
+      to: { name: 'ManageChatbotKnowledgeBaseListPage' },
+      icon: 'list',
+    },
+  ]
   return {
     mainLayoutRoutes,
     manageShopLayoutRoutes,
+    manageChatbotLayoutRoutes,
   };
 };
