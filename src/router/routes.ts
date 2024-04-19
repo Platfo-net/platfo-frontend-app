@@ -607,7 +607,7 @@ const routes: RouteRecordRaw[] = [
           {
             path: 'basic-information',
             name: 'ManageChatbotBasicInformationPage',
-            component: () => import('pages/dashboard/chatbot/ManageChatbot/ManageChatbotBasicInformationPage.vue'),
+            component: () => import('pages/dashboard/chatbot/ManageChatBot/ManageChatbotBasicInformationPage.vue'),
             meta: {
               title: 'اطلاعات پایه چت بات | پلتفو',
               breadcrumbs: [
