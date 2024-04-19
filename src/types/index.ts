@@ -331,3 +331,17 @@ export type ShopShoppingCart = {
 export type ShoppingCartType = {
   shop_carts: ShopShoppingCart[];
 }
+
+export interface ChatbotBaseType {
+  name: string;
+  description?: string;
+  prompt?: string;
+  user_id?: string;
+}
+
+export interface Chatbot extends ChatbotBaseType {
+  uuid: string;
+  created_at: Date;
+  udpated_at: Date;
+}
+
