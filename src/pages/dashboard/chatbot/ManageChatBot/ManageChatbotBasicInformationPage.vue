@@ -1,20 +1,23 @@
 <script setup lang="ts">
 import {useChatbotService} from 'src/services/useChatbotService';
 import { Chatbot } from 'src/types';
-import { ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
+import { ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 
 /** COMPONENT COMPOSABLES */
 const chatbotService = useChatbotService();
 const route = useRoute();
+const router = useRouter();
 /********************** */
 
 /** COMPONENT STATE */
 const editChatbotModel = ref<Partial<Chatbot>>();
 const showEditChatbotModal = ref<boolean>(false);
-const { data: chatbot, isPending: chatbotDataIsPending, isSuccess: chatbotDataLoadingSuccess } = chatbotService.queries.getChatbot(route.params.chatbotId as string)
+const showConfirmDeleteChatbotModal = ref<boolean>(false);
+const { data: chatbot } = chatbotService.queries.getChatbot(route.params.chatbotId as string)
 const { mutateAsync: updateChatbot, isPending: updateChatbotIsPending } = chatbotService.mutations.updateChatbot(route.params.chatbotId as string)
+const { mutateAsync: deleteChatbot, isPending: deleteChatbotIsPending } = chatbotService.mutations.deleteChatbot(route.params.chatbotId as string)
 /****************** */
 
 /** COMPONENT DEFINES */
@@ -26,9 +29,7 @@ const { mutateAsync: updateChatbot, isPending: updateChatbotIsPending } = chatbo
 /********************** */
 
 /** COMPONENT LIFECYCLE HANDLERS */
-// watch(chatbotDataLoadingSuccess, (nv, ov) => {
-//   if (nv === true && chatbot.value) editChatbotModel.value = { ...chatbot.value };
-// })
+
 /******************************* */
 </script>
 
@@ -77,14 +78,38 @@ const { mutateAsync: updateChatbot, isPending: updateChatbotIsPending } = chatbo
       </q-card-section>
     </q-card>
   </q-dialog>
+  <q-dialog v-model="showConfirmDeleteChatbotModal">
+    <q-card style="min-width: 367px;">
+      <q-card-section>
+        
+        <div class="text-body2">آیا از حذف این بات اطمینان دارید؟</div>
+      </q-card-section>
+      <q-card-actions>
+        <q-btn color="negative" flat label="انصراف" @click="showConfirmDeleteChatbotModal = false" :disable="deleteChatbotIsPending"></q-btn>
+        <q-btn color="primary" label="بله" :loading="deleteChatbotIsPending" @click="async () => {
+          await deleteChatbot();
+          router.replace({ name: 'ChatbotListPage' })
+        }" ></q-btn>
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
   <q-page class="q-pa-md container">
     <q-card class="q-pa-lg q-mb-md" bordered flat>
       <q-card-section class="row justify-between items-center">
-        <div class="text-h6">اطلاعات بات</div>
-        <q-btn @click="() => {
-          editChatbotModel = { ...chatbot };
-          showEditChatbotModal = true;
-        }" label="ویرایش" color="dark"></q-btn>
+        <div class="text-h6"><q-icon name="info" class="q-mr-md"></q-icon>اطلاعات بات</div>
+        <div class="row flex items-center">
+          <q-btn
+            color="negative"
+            label='حذف این بات'
+            flat
+            class="q-mr-sm"
+            @click="showConfirmDeleteChatbotModal = true"
+          ></q-btn>
+          <q-btn @click="() => {
+            editChatbotModel = { ...chatbot };
+            showEditChatbotModal = true;
+          }" label="ویرایش" color="dark"></q-btn>
+        </div>
       </q-card-section>
       <q-card-section>
         <div class="row q-col-gutter-md">
