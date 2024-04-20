@@ -32,7 +32,6 @@ export const useChatbotService = () => {
     const response = await platfoApi.api.put<Chatbot, AxiosResponse<Chatbot>, ChatbotBaseType>('/chatbot/' + chatbotId, {
       name: dto.name,
       description: dto.description,
-      prompt: dto.prompt,
       user_id: dto.user_id,
     });
     return response.data;
