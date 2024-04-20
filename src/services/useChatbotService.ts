@@ -28,21 +28,20 @@ export const useChatbotService = () => {
     return response.data;
   }
 
+  const deleteChatbot = async (chatbotId: string) => {
+    await platfoApi.api.delete<Chatbot>('/chatbot/' + chatbotId);
+    return;
+  }
+
   const updateChatbot = async (chatbotId: string, dto: Chatbot) => {
     const response = await platfoApi.api.put<Chatbot, AxiosResponse<Chatbot>, ChatbotBaseType>('/chatbot/' + chatbotId, {
       name: dto.name,
       description: dto.description,
       user_id: dto.user_id,
+      prompt: dto.prompt,
     });
     return response.data;
   }
-
-  // const createChatbot = async () => {
-  //   const response = await platfoApi.api.get<Chatbot[]>(
-  //     '/chatbot/',
-  //   );
-  //   return response.data;
-  // };
 
   return {
     clientData: {
@@ -71,6 +70,13 @@ export const useChatbotService = () => {
       updateChatbot: (chatbotId: string) => useMutation({
         mutationKey: ['update-chatbot', { chatbotId }],
         mutationFn: async (dto: Chatbot) => await updateChatbot(chatbotId, dto),
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['chatbot', { chatbotId }] })
+        },
+      }),
+      deleteChatbot: (chatbotId: string) => useMutation({
+        mutationKey: ['delete-chatbot', { chatbotId }],
+        mutationFn: async () => await deleteChatbot(chatbotId),
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: ['chatbot', { chatbotId }] })
         },
