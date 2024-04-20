@@ -93,38 +93,36 @@ const { mutateAsync: deleteChatbot, isPending: deleteChatbotIsPending } = chatbo
       </q-card-actions>
     </q-card>
   </q-dialog>
-  <q-page class="q-pa-md container">
-    <q-card class="q-pa-lg q-mb-md" bordered flat>
-      <q-card-section class="row justify-between items-center">
-        <div class="text-h6"><q-icon name="info" class="q-mr-md"></q-icon>اطلاعات بات</div>
-        <div class="row flex items-center">
-          <q-btn
-            color="negative"
-            label='حذف این بات'
-            flat
-            class="q-mr-sm"
-            @click="showConfirmDeleteChatbotModal = true"
-          ></q-btn>
-          <q-btn @click="() => {
-            editChatbotModel = { ...chatbot };
-            showEditChatbotModal = true;
-          }" label="ویرایش" color="dark"></q-btn>
+  <q-card class="q-pa-md q-mb-md" bordered flat>
+    <q-card-section class="row justify-between items-center">
+      <div class="text-h6"><q-icon name="info" class="q-mr-md"></q-icon>اطلاعات بات</div>
+      <div class="row flex items-center">
+        <q-btn
+          color="negative"
+          label='حذف این بات'
+          flat
+          class="q-mr-sm"
+          @click="showConfirmDeleteChatbotModal = true"
+        ></q-btn>
+        <q-btn @click="() => {
+          editChatbotModel = { ...chatbot };
+          showEditChatbotModal = true;
+        }" label="ویرایش" color="dark"></q-btn>
+      </div>
+    </q-card-section>
+    <q-card-section>
+      <div class="row q-col-gutter-md">
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="text-h6">نام</div>
+          <div >{{ chatbot?.name }}</div>
         </div>
-      </q-card-section>
-      <q-card-section>
-        <div class="row q-col-gutter-md">
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="text-h6">نام</div>
-            <div >{{ chatbot?.name }}</div>
-          </div>
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="text-h6">شرح</div>
-            <div >{{ chatbot?.description || 'بدون شرح' }}</div>
-          </div>
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="text-h6">شرح</div>
+          <div >{{ chatbot?.description || 'بدون شرح' }}</div>
         </div>
-      </q-card-section>
-    </q-card>
-  </q-page>
+      </div>
+    </q-card-section>
+  </q-card>
 </template>
 
 <style scoped></style>
