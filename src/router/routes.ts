@@ -632,7 +632,23 @@ const routes: RouteRecordRaw[] = [
                   to: { name: 'Dashboard' },
                 },
                 { label: 'چت بات های من', to: { name: 'ChatbotListPage' } },
-                { label: 'تنظیمات چت بات' },
+                { label: 'تنظیمات' },
+              ],
+            },
+          },
+          {
+            path: 'knowledgebase',
+            name: 'ManageChatbotKnowledgeBasePage',
+            component: () => import('pages/dashboard/chatbot/ManageChatBot/ManageChatbotKnowledgeBasePage.vue'),
+            meta: {
+              title: 'پایگاه دانش چت بات | پلتفو',
+              breadcrumbs: [
+                {
+                  label: 'pages.panel.dashboard.title',
+                  to: { name: 'Dashboard' },
+                },
+                { label: 'چت بات های من', to: { name: 'ChatbotListPage' } },
+                { label: 'پایگاه دانش' },
               ],
             },
           }

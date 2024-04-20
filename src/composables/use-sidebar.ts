@@ -128,7 +128,7 @@ export const useSidebar = () => {
     },
     {
       title: 'پایگاه دانش',
-      to: { name: 'ManageChatbotKnowledgeBaseListPage' },
+      to: { name: 'ManageChatbotKnowledgeBasePage' },
       icon: 'list',
     },
   ]
