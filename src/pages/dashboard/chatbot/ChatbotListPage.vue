@@ -34,7 +34,6 @@ const { mutateAsync, isPending: createChatbotIsPending } = chatbotService.mutati
   <q-dialog v-model="showCreateChatbotDialog" @hide="x => createChatbotModel = {
     name: '',
     description: '',
-    prompt: '',
   }">
     <q-card style="min-width: 367px;">
       <q-card-section>
@@ -58,15 +57,6 @@ const { mutateAsync, isPending: createChatbotIsPending } = chatbotService.mutati
                   (val && val.length > 0) ||
                   $t('general.fields.requiredStringField'),
               ]"
-            ></q-input>
-            <q-input
-              class="q-mb-md"
-              outlined
-              type="textarea"
-              v-model="createChatbotModel.prompt"
-              dense
-              label="پرامپت"
-              lazy-rules
             ></q-input>
             <q-input
               class="q-mb-md"
@@ -110,12 +100,6 @@ const { mutateAsync, isPending: createChatbotIsPending } = chatbotService.mutati
                     }">{{ $t('pages.panel.dashboard.storeListPage.storeListItem.manage')}}</q-btn>
             </q-toolbar>
             <q-list bordered class="bg-white" style="border-bottom-left-radius: 4px; border-bottom-right-radius: 4px;">
-                <q-item class="q-my-sm">
-                    <q-item-section>
-                    <q-item-label caption>پرامپت</q-item-label>
-                    <q-item-label lines="1">{{ chatbot.prompt ?? 'بدون پرامپت' }}</q-item-label>
-                    </q-item-section>
-                </q-item>
                 <q-item class="q-my-sm">
                     <q-item-section>
                     <q-item-label caption>شرح</q-item-label>
