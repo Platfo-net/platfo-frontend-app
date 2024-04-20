@@ -122,6 +122,11 @@ export const useSidebar = () => {
       icon: 'info',
     },
     {
+      title: 'تنظیمات',
+      to: { name: 'ManageChatbotConfigurationPage' },
+      icon: 'settings',
+    },
+    {
       title: 'پایگاه دانش',
       to: { name: 'ManageChatbotKnowledgeBaseListPage' },
       icon: 'list',

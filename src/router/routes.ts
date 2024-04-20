@@ -619,6 +619,22 @@ const routes: RouteRecordRaw[] = [
                 { label: 'اطلاعات پایه' },
               ],
             },
+          },
+          {
+            path: 'configuration',
+            name: 'ManageChatbotConfigurationPage',
+            component: () => import('pages/dashboard/chatbot/ManageChatBot/ManageChatbotConfigurationPage.vue'),
+            meta: {
+              title: 'تنظیمات چت بات | پلتفو',
+              breadcrumbs: [
+                {
+                  label: 'pages.panel.dashboard.title',
+                  to: { name: 'Dashboard' },
+                },
+                { label: 'چت بات های من', to: { name: 'ChatbotListPage' } },
+                { label: 'تنظیمات چت بات' },
+              ],
+            },
           }
         ]
       },
