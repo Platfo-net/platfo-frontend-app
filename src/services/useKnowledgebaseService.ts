@@ -89,9 +89,9 @@ export const useKnowledgebaseService = (chatbotId: string) => {
           mutationFn: async (dto: { id: string; putdata: KnowledgebaseBase }) =>
             await updateKnowledgebase(dto.id, {
               name: dto.putdata.name,
-              chatbot_id: dto.putdata.chatbot_id,
-              file_path: dto.putdata.file_path,
-              type: dto.putdata.type,
+              // chatbot_id: dto.putdata.chatbot_id,
+              // file_path: dto.putdata.file_path,
+              // type: dto.putdata.type,
             }),
           onSuccess: () => {
             queryClient.invalidateQueries({

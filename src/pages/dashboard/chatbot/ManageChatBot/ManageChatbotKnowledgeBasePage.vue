@@ -83,7 +83,7 @@ const handleSubmit = async () => {
       $t('general.fields.requiredStringField'),
   ]" class="q-mb-md" outlined type="text" v-model="upsertKnowledgebaseModel!.name" dense label="نام"
             lazy-rules></q-input>
-          <q-uploader :headers="[
+          <q-uploader v-if="!isEdit" :headers="[
     { name: 'Authorization', value: 'Bearer ' + authStore.state.access_token },
   ]" url="https://dev-api.platfo.net/api/v1/knowledge_base/upload/" :multiple="false" auto-upload field-name="file"
             flat bordered no-thumbnails label="فایل دانش (فقط pdf یا txt)" class="q-mb-md full-width"
