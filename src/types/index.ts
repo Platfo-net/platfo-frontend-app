@@ -78,12 +78,12 @@ export type ProductVariantType = {
   price: number;
   currency: string;
   is_available: boolean;
-}
+};
 
 export type ProductAttributeType = {
   key: string;
   value: string;
-}
+};
 
 export type ProductType = {
   id: string;
@@ -266,7 +266,7 @@ export type ShopTableType = {
 export type ShopCategoryType = {
   value: string;
   title: string;
-}
+};
 
 export type ShopInformationType = {
   id: string;
@@ -293,7 +293,7 @@ export type ShopPlanType = {
   discount_percentage: number;
   module: string;
   features: string[];
-}
+};
 
 export type DashboardDailyReportType = {
   today_orders_count: number;
@@ -321,16 +321,16 @@ export type ShoppingCartItemType = {
   count: number;
   is_variant: boolean;
   price: number;
-}
+};
 
 export type ShopShoppingCart = {
   shop_id: string;
   items: ShoppingCartItemType[];
-}
+};
 
 export type ShoppingCartType = {
   shop_carts: ShopShoppingCart[];
-}
+};
 
 export interface ChatbotBaseType {
   name: string;
@@ -345,3 +345,18 @@ export interface Chatbot extends ChatbotBaseType {
   udpated_at: Date;
 }
 
+export type KnowledgebaseFileType = 'pdf' | 'txt';
+
+export interface KnowledgebaseBase {
+  name: string;
+  metadatas?: any;
+  type?: KnowledgebaseFileType;
+  file_path?: string;
+  chatbot_id?: string;
+}
+
+export interface Knowledgebase extends KnowledgebaseBase {
+  uuid?: string;
+  created_at?: Date;
+  updated_at?: Date;
+}

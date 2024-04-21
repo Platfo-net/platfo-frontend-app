@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {useChatbotService} from 'src/services/useChatbotService';
+import { useChatbotService } from 'src/services/useChatbotService';
 import { Chatbot } from 'src/types';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
@@ -38,26 +38,12 @@ const { mutateAsync: updateChatbot, isPending: updateChatbotIsPending } = chatbo
       </q-card-section>
       <q-card-section>
         <q-form @submit="async () => {
-          await updateChatbot(editChatbotModel as Chatbot);
-          showEditChatbotModal = false;
-        }">
-            <q-input
-              class="q-mb-md"
-              outlined
-              type="textarea"
-              v-model="editChatbotModel!.prompt"
-              
-              dense
-              label="پراپمت"
-              lazy-rules
-            ></q-input>
-            <q-btn
-              type="submit"
-              class="q-mb-md"
-              color="primary"
-              label='ویرایش'
-              :loading="updateChatbotIsPending"
-            ></q-btn>
+    await updateChatbot(editChatbotModel as Chatbot);
+    showEditChatbotModal = false;
+  }">
+          <q-input class="q-mb-md" outlined type="textarea" v-model="editChatbotModel!.prompt" dense label="پراپمت"
+            lazy-rules></q-input>
+          <q-btn type="submit" class="q-mb-md" color="primary" label='ویرایش' :loading="updateChatbotIsPending"></q-btn>
         </q-form>
       </q-card-section>
     </q-card>
@@ -66,15 +52,15 @@ const { mutateAsync: updateChatbot, isPending: updateChatbotIsPending } = chatbo
     <q-card-section class="row justify-between items-center">
       <div class="text-h6"><q-icon name="settings" class="q-mr-md"></q-icon>تنظیمات بات</div>
       <q-btn @click="() => {
-        editChatbotModel = { ...chatbot };
-        showEditChatbotModal = true;
-      }" label="ویرایش" color="dark"></q-btn>
+    editChatbotModel = { ...chatbot };
+    showEditChatbotModal = true;
+  }" label="ویرایش" color="dark"></q-btn>
     </q-card-section>
     <q-card-section>
       <div class="row q-col-gutter-md">
         <div class="col-12 col-md-6 col-lg-4">
           <div class="text-h6">پرامپت</div>
-          <div >{{ chatbot?.prompt || 'تنظیم نشده است' }}</div>
+          <div>{{ chatbot?.prompt || 'تنظیم نشده است' }}</div>
         </div>
       </div>
     </q-card-section>
