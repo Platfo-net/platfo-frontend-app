@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { E } from 'app/dist/spa/assets/index.c9156537';
 import { QTableColumn, useQuasar } from 'quasar';
 import { useKnowledgebaseService } from 'src/services/useKnowledgebaseService';
 import { useAuthStore } from 'src/stores/auth-store';
-import { KnowledgebaseBase, KnowledgebaseFileType, Knowledgebase } from 'src/types';
+import { KnowledgebaseFileType, Knowledgebase } from 'src/types';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 
@@ -90,7 +89,7 @@ const handleSubmit = async () => {
             accept=".txt, .pdf" @rejected="uploadFileRejected" @uploaded="uploadedEventHandler">
           </q-uploader>
           <q-btn type="submit" class="q-mb-md" color="primary" :label="isEdit ? 'ذخیره تغییرات' : 'ایجاد دانش جدید'"
-            :loading="createKnowledgebaseIsPending"></q-btn>
+            :loading="isEdit ? updateKnowledgebaseIsPending : createKnowledgebaseIsPending"></q-btn>
         </q-form>
       </q-card-section>
     </q-card>
