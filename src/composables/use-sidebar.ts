@@ -39,6 +39,11 @@ export const useSidebar = () => {
         },
       ],
     },
+    {
+      title: 'مدیریت بات',
+      icon: 'list',
+      to: { name: 'BotListPage' },
+    },
   ];
 
   const manageShopLayoutRoutes: SidebarRoute[] = [
@@ -54,10 +59,9 @@ export const useSidebar = () => {
       icon: 'dashboard',
     },
     {
-      title:
-        t(
-          'pages.panel.dashboard.manageStorePage.panels.basicInformation.title'
-        ),
+      title: t(
+        'pages.panel.dashboard.manageStorePage.panels.basicInformation.title'
+      ),
       to: { name: 'ManageStoreBasicInformation' },
       icon: 'info',
     },
@@ -131,7 +135,7 @@ export const useSidebar = () => {
       to: { name: 'ManageChatbotKnowledgeBasePage' },
       icon: 'list',
     },
-  ]
+  ];
   return {
     mainLayoutRoutes,
     manageShopLayoutRoutes,

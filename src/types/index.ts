@@ -360,3 +360,17 @@ export interface Knowledgebase extends KnowledgebaseBase {
   created_at?: Date;
   updated_at?: Date;
 }
+
+export interface TelegramBotBase {
+  first_name: string;
+  username: string;
+  welcome_message: string;
+  button_name: string;
+  app_link: string;
+  image: string;
+  image_url: string;
+}
+
+export interface TelegramBot extends TelegramBotBase {
+  id: string;
+}

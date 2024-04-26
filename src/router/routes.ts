@@ -585,7 +585,8 @@ const routes: RouteRecordRaw[] = [
           {
             path: 'list',
             name: 'ChatbotListPage',
-            component: () => import('pages/dashboard/chatbot/ChatbotListPage.vue'),
+            component: () =>
+              import('pages/dashboard/chatbot/ChatbotListPage.vue'),
             meta: {
               title: 'چت بات های من | پلتفو',
               breadcrumbs: [
@@ -596,8 +597,8 @@ const routes: RouteRecordRaw[] = [
                 { label: 'چت بات های من' },
               ],
             },
-          }
-        ]
+          },
+        ],
       },
       {
         path: '/manage/chatbot/:chatbotId',
@@ -607,7 +608,10 @@ const routes: RouteRecordRaw[] = [
           {
             path: 'basic-information',
             name: 'ManageChatbotBasicInformationPage',
-            component: () => import('pages/dashboard/chatbot/ManageChatBot/ManageChatbotBasicInformationPage.vue'),
+            component: () =>
+              import(
+                'pages/dashboard/chatbot/ManageChatBot/ManageChatbotBasicInformationPage.vue'
+              ),
             meta: {
               title: 'اطلاعات پایه چت بات | پلتفو',
               breadcrumbs: [
@@ -623,7 +627,10 @@ const routes: RouteRecordRaw[] = [
           {
             path: 'configuration',
             name: 'ManageChatbotConfigurationPage',
-            component: () => import('pages/dashboard/chatbot/ManageChatBot/ManageChatbotConfigurationPage.vue'),
+            component: () =>
+              import(
+                'pages/dashboard/chatbot/ManageChatBot/ManageChatbotConfigurationPage.vue'
+              ),
             meta: {
               title: 'تنظیمات چت بات | پلتفو',
               breadcrumbs: [
@@ -639,7 +646,10 @@ const routes: RouteRecordRaw[] = [
           {
             path: 'knowledgebase',
             name: 'ManageChatbotKnowledgeBasePage',
-            component: () => import('pages/dashboard/chatbot/ManageChatBot/ManageChatbotKnowledgeBasePage.vue'),
+            component: () =>
+              import(
+                'pages/dashboard/chatbot/ManageChatBot/ManageChatbotKnowledgeBasePage.vue'
+              ),
             meta: {
               title: 'پایگاه دانش چت بات | پلتفو',
               breadcrumbs: [
@@ -651,9 +661,97 @@ const routes: RouteRecordRaw[] = [
                 { label: 'پایگاه دانش' },
               ],
             },
-          }
-        ]
+          },
+        ],
       },
+      //#endregion
+      //#region Bots
+      {
+        path: '/bot',
+        component: () => import('layouts/MainLayout.vue'),
+        redirect: { name: 'BotListPage' },
+        children: [
+          {
+            path: 'list',
+            name: 'BotListPage',
+            component: () => import('pages/dashboard/bots/BotListPage.vue'),
+            meta: {
+              title: 'مدیریت بات | پلتفو',
+              breadcrumbs: [
+                {
+                  label: 'pages.panel.dashboard.title',
+                  to: { name: 'Dashboard' },
+                },
+                { label: 'مدیریت بات' },
+              ],
+            },
+          },
+        ],
+      },
+      // {
+      //   path: '/manage/chatbot/:chatbotId',
+      //   component: () => import('layouts/ManageChatbotLayout.vue'),
+      //   redirect: { name: 'ManageChatbotBasicInformationPage' },
+      //   children: [
+      //     {
+      //       path: 'basic-information',
+      //       name: 'ManageChatbotBasicInformationPage',
+      //       component: () =>
+      //         import(
+      //           'pages/dashboard/chatbot/ManageChatBot/ManageChatbotBasicInformationPage.vue'
+      //         ),
+      //       meta: {
+      //         title: 'اطلاعات پایه چت بات | پلتفو',
+      //         breadcrumbs: [
+      //           {
+      //             label: 'pages.panel.dashboard.title',
+      //             to: { name: 'Dashboard' },
+      //           },
+      //           { label: 'چت بات های من', to: { name: 'ChatbotListPage' } },
+      //           { label: 'اطلاعات پایه' },
+      //         ],
+      //       },
+      //     },
+      //     {
+      //       path: 'configuration',
+      //       name: 'ManageChatbotConfigurationPage',
+      //       component: () =>
+      //         import(
+      //           'pages/dashboard/chatbot/ManageChatBot/ManageChatbotConfigurationPage.vue'
+      //         ),
+      //       meta: {
+      //         title: 'تنظیمات چت بات | پلتفو',
+      //         breadcrumbs: [
+      //           {
+      //             label: 'pages.panel.dashboard.title',
+      //             to: { name: 'Dashboard' },
+      //           },
+      //           { label: 'چت بات های من', to: { name: 'ChatbotListPage' } },
+      //           { label: 'تنظیمات' },
+      //         ],
+      //       },
+      //     },
+      //     {
+      //       path: 'knowledgebase',
+      //       name: 'ManageChatbotKnowledgeBasePage',
+      //       component: () =>
+      //         import(
+      //           'pages/dashboard/chatbot/ManageChatBot/ManageChatbotKnowledgeBasePage.vue'
+      //         ),
+      //       meta: {
+      //         title: 'پایگاه دانش چت بات | پلتفو',
+      //         breadcrumbs: [
+      //           {
+      //             label: 'pages.panel.dashboard.title',
+      //             to: { name: 'Dashboard' },
+      //           },
+      //           { label: 'چت بات های من', to: { name: 'ChatbotListPage' } },
+      //           { label: 'پایگاه دانش' },
+      //         ],
+      //       },
+      //     },
+      //   ],
+      // },
       //#endregion
       // {
       //   name: 'ContactsPage',
