@@ -367,7 +367,7 @@ export interface TelegramBotBase {
   welcome_message: string;
   button_name: string;
   app_link: string;
-  image: string;
+  image: string | File;
   image_url: string;
 }
 
