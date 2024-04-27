@@ -40,7 +40,7 @@ export const useSidebar = () => {
       ],
     },
     {
-      title: 'مدیریت بات',
+      title: 'پلتفرم ها',
       icon: 'list',
       to: { name: 'BotListPage' },
     },

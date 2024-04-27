@@ -676,13 +676,13 @@ const routes: RouteRecordRaw[] = [
             name: 'BotListPage',
             component: () => import('pages/dashboard/bots/BotListPage.vue'),
             meta: {
-              title: 'مدیریت بات | پلتفو',
+              title: 'پلتفرم ها | پلتفو',
               breadcrumbs: [
                 {
                   label: 'pages.panel.dashboard.title',
                   to: { name: 'Dashboard' },
                 },
-                { label: 'مدیریت بات' },
+                { label: 'پلتفرم ها' },
               ],
             },
           },

@@ -40,7 +40,7 @@ const { data: telegramBots, isLoading: telegramBotsIsLoading } = botService.tele
         <BreadCrumbs />
         <div class="row justify-between items-center q-mb-lg">
             <div class="text-h5">
-                مدیریت بات
+                پلتفرم ها
             </div>
         </div>
         <q-card bordered flat>
