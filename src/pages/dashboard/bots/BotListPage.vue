@@ -64,24 +64,18 @@ const { data: telegramBots, isLoading: telegramBotsIsLoading } = botService.tele
                                 <q-btn size="sm" color="dark" label="ثبت بات جدید در پلفتو" disable></q-btn>
                             </div>
                             <p class="text-body2">در این بخش، میتوانید بات های تلگرام خود را در پلتفو مدیریت کنید.</p>
-                            <q-linear-progress v-if="telegramBotsIsLoading" stripe size="10px" indeterminate />
+                            <q-linear-progress v-if="telegramBotsIsLoading" stripe size="2px" indeterminate />
                             <template v-else>
-                                <!-- <nothing-to-show-img v-if="!telegramBots?.length"></nothing-to-show-img> -->
-                                <!-- <template v-else> -->
-                                <!-- <pre dir="ltr"><code>{{ telegramBots }}</code></pre> -->
-                                <div class="row q-col-gutter-md">
-                                    <div class="col-12 col-md-6" v-for="tbot in telegramBots" :key="tbot.id">
-                                        <telegram-bot-item :bot="tbot"></telegram-bot-item>
-                                        <!-- <q-card v-ripple bordered flat v-for="tbot in telegramBots" :key="tbot.id"
-                                            class="cursor-pointer">
-                                            <q-card-section>
-                                                <div class="text-grey">یوزرنیم</div>
-                                                <small><code dir="ltr">@{{ tbot.username }}</code></small>
-                                            </q-card-section>
-                                        </q-card> -->
-                                    </div>
+                                <div v-if="!telegramBots?.length" class="text-h6 text-grey">
+                                    شما باتی را به پلتفو متصل نکردید...
                                 </div>
-                                <!-- </template> -->
+                                <template v-else>
+                                    <div class="row q-col-gutter-md">
+                                        <div class="col-12 col-md-6" v-for="tbot in telegramBots" :key="tbot.id">
+                                            <telegram-bot-item :bot="tbot"></telegram-bot-item>
+                                        </div>
+                                    </div>
+                                </template>
                             </template>
                         </q-tab-panel>
                         <q-tab-panel name="instagram">
