@@ -46,7 +46,7 @@ const { data: telegramBots, isLoading: telegramBotsIsLoading } = botService.tele
         <q-card bordered flat>
             <q-splitter :horizontal="isMobile()" v-model="splitterModel" :limits="[20]" disable>
                 <template v-slot:before>
-                    <q-list>
+                    <q-list v-if="!isMobile()">
                         <q-item v-for="link in botTabs" :key="link.botType" clickable v-ripple
                             :active="link.botType === tab" @click="tab = link.botType">
                             <q-item-section avatar>
@@ -55,6 +55,9 @@ const { data: telegramBots, isLoading: telegramBotsIsLoading } = botService.tele
                             <q-item-section>{{ link.title }}</q-item-section>
                         </q-item>
                     </q-list>
+                    <q-tabs v-else>
+
+                    </q-tabs>
                 </template>
                 <template v-slot:after>
                     <q-tab-panels v-model="tab">
