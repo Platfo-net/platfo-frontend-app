@@ -12,7 +12,7 @@
       <base-layout-sidebar-user-info></base-layout-sidebar-user-info>
     </q-drawer>
 
-    <q-page-container class="bg-teal-1">
+    <q-page-container class="bg-grey-3">
       <router-view />
     </q-page-container>
   </q-layout>

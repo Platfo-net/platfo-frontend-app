@@ -12,7 +12,7 @@
       <base-layout-sidebar-user-info></base-layout-sidebar-user-info>
     </q-drawer>
 
-    <q-page-container class="bg-teal-1">
+    <q-page-container class="bg-grey-3">
       <q-page class="q-pa-md container">
         <BreadCrumbs />
         <router-view />
