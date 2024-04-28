@@ -70,9 +70,8 @@ const { data: telegramBots, isLoading: telegramBotsIsLoading } = botService.tele
                                 <!-- <template v-else> -->
                                 <!-- <pre dir="ltr"><code>{{ telegramBots }}</code></pre> -->
                                 <div class="row q-col-gutter-md">
-                                    <div class="col-12">
-                                        <telegram-bot-item v-for="tbot in telegramBots" :key="tbot.id"
-                                            :bot="tbot"></telegram-bot-item>
+                                    <div class="col-12 col-md-6" v-for="tbot in telegramBots" :key="tbot.id">
+                                        <telegram-bot-item :bot="tbot"></telegram-bot-item>
                                         <!-- <q-card v-ripple bordered flat v-for="tbot in telegramBots" :key="tbot.id"
                                             class="cursor-pointer">
                                             <q-card-section>
