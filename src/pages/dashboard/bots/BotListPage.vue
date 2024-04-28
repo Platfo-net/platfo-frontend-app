@@ -55,8 +55,9 @@ const { data: telegramBots, isLoading: telegramBotsIsLoading } = botService.tele
                             <q-item-section>{{ link.title }}</q-item-section>
                         </q-item>
                     </q-list>
-                    <q-tabs v-else>
-
+                    <q-tabs v-model="tab" v-else>
+                        <q-tab v-for="link in botTabs" :key="link.botType" :label="link.title"
+                            :name="link.botType"></q-tab>
                     </q-tabs>
                 </template>
                 <template v-slot:after>
