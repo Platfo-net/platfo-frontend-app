@@ -23,7 +23,6 @@ const timeout = ref(setInterval(() => {
   }
 }, 1000));
 const handleResendCode = async () => {
-  console.log('fuck my life')
   try {
     const { data: { token } } = await api
       .post<ISendActivationCodeResponse>(
