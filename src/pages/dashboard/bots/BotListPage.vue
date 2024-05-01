@@ -68,7 +68,7 @@ const { data: telegramBots, isLoading: telegramBotsIsLoading } = botService.tele
                                 <q-btn size="sm" color="dark" label="ثبت بات جدید در پلفتو" disable></q-btn>
                             </div>
                             <p class="text-body2">در این بخش، میتوانید بات های تلگرام خود را در پلتفو مدیریت کنید.</p>
-                            <q-linear-progress v-if="telegramBotsIsLoading" stripe size="2px" indeterminate />
+                            <q-linear-progress v-if="telegramBotsIsLoading" size="2px" indeterminate />
                             <template v-else>
                                 <div v-if="!telegramBots?.length" class="text-h6 text-grey">
                                     شما باتی را به پلتفو متصل نکردید...

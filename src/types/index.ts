@@ -337,6 +337,7 @@ export interface ChatbotBaseType {
   description?: string;
   prompt?: string;
   user_id?: string;
+  temperature: number;
 }
 
 export interface Chatbot extends ChatbotBaseType {

@@ -1,6 +1,6 @@
 import { useApi } from 'src/composables/use-api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query';
-import { TelegramBot } from 'src/types';
+import { Chatbot, TelegramBot } from 'src/types';
 
 export const useBotService = () => {
   const platfoApi = useApi();
@@ -18,6 +18,17 @@ export const useBotService = () => {
               );
               return response.data;
             },
+          }),
+        getBotChatbot: (botId: string) =>
+          useQuery({
+            queryKey: ['telegramBotChatbot', { botId }],
+            queryFn: async () => {
+              const response = await platfoApi.api.get<Chatbot>(
+                '/telegram-bot/' + botId + '/chatbot'
+              );
+              return response.data;
+            },
+            retry: false,
           }),
       },
       mutations: {
@@ -39,6 +50,39 @@ export const useBotService = () => {
             onSuccess: () => {
               queryClient.invalidateQueries({
                 queryKey: ['telegramBotList'],
+              });
+            },
+          }),
+        registerChatbot: (botId: string) =>
+          useMutation({
+            mutationKey: ['registerChatbot'],
+            mutationFn: async (chatbotId: string) => {
+              const response = await platfoApi.api.post(
+                '/telegram-bot/' + botId + '/chatbot',
+                {
+                  chatbot_id: chatbotId,
+                }
+              );
+              return response.data;
+            },
+            onSuccess: () => {
+              queryClient.invalidateQueries({
+                queryKey: ['telegramBotChatbot', { botId }],
+              });
+            },
+          }),
+        deleteChatbot: (botId: string) =>
+          useMutation({
+            mutationKey: ['deleteChatbot'],
+            mutationFn: async () => {
+              const response = await platfoApi.api.delete(
+                '/telegram-bot/' + botId + '/chatbot'
+              );
+              return response.data;
+            },
+            onSuccess: () => {
+              queryClient.invalidateQueries({
+                queryKey: ['telegramBotChatbot', { botId }],
               });
             },
           }),

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useBotService } from 'src/services/useBotService';
+import { useChatbotService } from 'src/services/useChatbotService';
 import { TelegramBot } from 'src/types';
 import { ref } from 'vue';
 
@@ -8,6 +9,7 @@ const props = defineProps<{
     bot: TelegramBot
 }>();
 const botService = useBotService();
+const chatbotService = useChatbotService();
 /************************ */
 
 /** COMPONENT DEFINES */
@@ -17,6 +19,12 @@ const botService = useBotService();
 /** COMPONENT STATE */
 const updateModel = ref<TelegramBot>({ ...props.bot });
 const { mutateAsync: updateBotAsync, isPending: isUpdatingBot } = botService.telegram.mutations.updateBot(props.bot.id);
+const { data: chatbot, isLoading: chatbotIsLoading, isError: chatbotIsError, error: chatbotError } = botService.telegram.queries.getBotChatbot(props.bot.id);
+const { data: chatbotList, isLoading: chatbotListLoading } = chatbotService.queries.getChatbotList();
+const { mutateAsync: registerChatbotAsync } = botService.telegram.mutations.registerChatbot(props.bot.id);
+const { mutateAsync: deleteChatbotAsync } = botService.telegram.mutations.deleteChatbot(props.bot.id);
+const showRegisterChatbot = ref(false)
+const chatbotId = ref<string>();
 /****************** */
 
 /** COMPONENT FUNCTIONS */
@@ -32,6 +40,24 @@ const handleSubmit = async () => {
 </script>
 
 <template>
+    <q-dialog v-model="showRegisterChatbot" @hide="chatbotId = undefined">
+        <q-card style="min-width: 367px;">
+            <q-form @submit.prevent="async () => {
+        await registerChatbotAsync(chatbotId as string);
+        showRegisterChatbot = false;
+    }">
+                <q-card-section class="text-body1">
+                    ثبت چت بات
+                    <q-select lazy-rules class="q-my-md"
+                        :options="chatbotList?.map((x) => ({ label: x.name, value: x.uuid }))" outlined label="چت بات"
+                        v-model="chatbotId" emit-value map-options :loading="chatbotListLoading">
+                    </q-select>
+                    <q-btn :disable="chatbotId === void 0" type="submit" color="primary" label="ثبت چت بات"
+                        class="full-width"></q-btn>
+                </q-card-section>
+            </q-form>
+        </q-card>
+    </q-dialog>
     <q-form @submit.prevent="handleSubmit">
         <q-card flat bordered class="bg-grey-12">
             <q-card flat>
@@ -79,6 +105,35 @@ const handleSubmit = async () => {
                     <q-input dir="ltr" clearable class="bg-white" outlined label="لینک اپلیکیشن" type="url"
                         v-model="updateModel.app_link"></q-input>
                 </q-card-section>
+                <q-expansion-item default-opened header-class="text-body1" label="چت بات"
+                    style="border-top: 1px solid #e2e2e2; border-bottom: 1px solid #e2e2e2;">
+                    <q-linear-progress v-if="chatbotIsLoading" size="2px" indeterminate></q-linear-progress>
+                    <q-item v-if="chatbotIsError && chatbotError?.response.status === 404">
+                        <q-item-section>چت باتی ثبت نشده است</q-item-section>
+                        <q-item-section>
+                            <q-btn @click="showRegisterChatbot = true" color="secondary">ثبت چت بات</q-btn>
+                        </q-item-section>
+                    </q-item>
+                    <q-item v-else-if="chatbot">
+                        <q-list>
+                            <q-item>
+                                <q-item-section class="text-bold">نام</q-item-section>
+                                <q-item-section>{{ chatbot.name }}</q-item-section>
+                            </q-item>
+                            <q-item>
+                                <q-item-section class="text-bold">تمپرچر</q-item-section>
+                                <q-item-section>{{ chatbot.temperature }}</q-item-section>
+                            </q-item>
+                            <q-item>
+                                <q-btn round size="sm" icon='delete' rounded color="negative" @click="async () => {
+        await deleteChatbotAsync();
+        chatbot = undefined;
+    }"></q-btn>
+                                <q-item-section class="text-bold"></q-item-section>
+                            </q-item>
+                        </q-list>
+                    </q-item>
+                </q-expansion-item>
                 <!-- <q-card-section>
                     <q-file clearable class="bg-white" outlined label="عکس بات" type="file" v-model="updateModel.image">
                         <template v-slot:prepend>
