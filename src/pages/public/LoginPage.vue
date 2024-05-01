@@ -86,7 +86,7 @@ const handleFormSubmit = async () => {
           </div>
         </div>
       </q-card-section>
-      <q-card-section class="bg-secondary col-12 col-md-6 mobile-hide" style="border-radius: 35px;">
+      <q-card-section class="bg-primary col-12 col-md-6 mobile-hide" style="border-radius: 35px;">
         <login-image />
       </q-card-section>
     </q-card>
