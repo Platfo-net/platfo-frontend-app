@@ -60,6 +60,11 @@ export const useBotService = () => {
               );
               return response.data;
             },
+            onSuccess: () => {
+              queryClient.invalidateQueries({
+                queryKey: ['telegramBotList'],
+              });
+            },
           }),
         updateBot: (botId: string) =>
           useMutation({
