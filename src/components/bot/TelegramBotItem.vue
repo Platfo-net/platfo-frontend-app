@@ -6,7 +6,8 @@ import { ref } from 'vue';
 
 /** COMPONENT COMPOSABLES */
 const props = defineProps<{
-    bot: TelegramBot
+    bot: TelegramBot;
+    showBotConfig?: boolean;
 }>();
 const botService = useBotService();
 const chatbotService = useChatbotService();
@@ -84,43 +85,45 @@ const handleSubmit = async () => {
                 </div>
             </q-card-section>
         </q-card>
-        <q-expansion-item header-style="border-top: 1px solid #e2e2e2" header-class="text-body1" label="تنظیمات بات"
-            class="bg-white">
-            <q-form @submit.prevent="handleSubmit">
-                <q-item>
-                    <q-input clearable class="bg-white full-width" outlined label="پیام خوش آمد گویی" type="textarea"
-                        v-model="updateModel.welcome_message"></q-input>
-                </q-item>
-                <q-item><q-input clearable class="bg-white full-width" outlined label="عنوان دکمه" type="text"
-                        v-model="updateModel.button_name"></q-input></q-item>
-                <q-item><q-input dir="ltr" clearable class="bg-white full-width" outlined label="لینک اپلیکیشن"
-                        type="url" v-model="updateModel.app_link"></q-input></q-item>
-                <q-item><q-btn class="q-mb-md full-width" type="submit"
-                        :color="isFormChangedChanged() ? 'primary' : 'grey'" :disable="!isFormChangedChanged()"
-                        label="ذخیره تغییرات" :loading="isUpdatingBot"></q-btn></q-item>
+        <template v-if="showBotConfig">
+            <q-expansion-item header-style="border-top: 1px solid #e2e2e2" header-class="text-body1" label="تنظیمات بات"
+                class="bg-white">
+                <q-form @submit.prevent="handleSubmit">
+                    <q-item>
+                        <q-input clearable class="bg-white full-width" outlined label="پیام خوش آمد گویی"
+                            type="textarea" v-model="updateModel.welcome_message"></q-input>
+                    </q-item>
+                    <q-item><q-input clearable class="bg-white full-width" outlined label="عنوان دکمه" type="text"
+                            v-model="updateModel.button_name"></q-input></q-item>
+                    <q-item><q-input dir="ltr" clearable class="bg-white full-width" outlined label="لینک اپلیکیشن"
+                            type="url" v-model="updateModel.app_link"></q-input></q-item>
+                    <q-item><q-btn class="q-mb-md full-width" type="submit"
+                            :color="isFormChangedChanged() ? 'primary' : 'grey'" :disable="!isFormChangedChanged()"
+                            label="ذخیره تغییرات" :loading="isUpdatingBot"></q-btn></q-item>
 
-            </q-form>
-        </q-expansion-item>
-        <q-expansion-item default-opened header-style="border-top: 1px solid #e2e2e2" header-class="text-body1"
-            label="اتصال چت بات" class="bg-white">
-            <q-linear-progress v-if="chatbotIsLoading" size="2px" indeterminate></q-linear-progress>
-            <div v-if="chatbotIsError && chatbotError?.response.status === 404"
-                class="flex row items-center justify-between q-pa-md">
-                <div>چت باتی ثبت نشده است</div>
-                <q-btn @click="showRegisterChatbot = true" color="secondary">ثبت چت بات</q-btn>
-            </div>
-            <div v-else-if="chatbot" class="flex row items-center justify-between q-pa-md">
-                <div class="flex column">
-                    <div class="text-grey-6 q-mb-sm">نام بات تلگرام</div>
-                    <div class="text-body2">{{ chatbot.name }}</div>
+                </q-form>
+            </q-expansion-item>
+            <q-expansion-item default-opened header-style="border-top: 1px solid #e2e2e2" header-class="text-body1"
+                label="اتصال چت بات" class="bg-white">
+                <q-linear-progress v-if="chatbotIsLoading" size="2px" indeterminate></q-linear-progress>
+                <div v-if="chatbotIsError && chatbotError?.response.status === 404"
+                    class="flex row items-center justify-between q-pa-md">
+                    <div>چت باتی ثبت نشده است</div>
+                    <q-btn @click="showRegisterChatbot = true" color="secondary">ثبت چت بات</q-btn>
                 </div>
-                <q-btn color="negative" @click="async () => {
+                <div v-else-if="chatbot" class="flex row items-center justify-between q-pa-md">
+                    <div class="flex column">
+                        <div class="text-grey-6 q-mb-sm">نام بات تلگرام</div>
+                        <div class="text-body2">{{ chatbot.name }}</div>
+                    </div>
+                    <q-btn color="negative" @click="async () => {
         await deleteChatbotAsync();
         chatbot = undefined;
     }" round icon="delete" :loading="chatbotIsDeleting" flat>
-                </q-btn>
-            </div>
-        </q-expansion-item>
+                    </q-btn>
+                </div>
+            </q-expansion-item>
+        </template>
     </q-card>
 </template>
 

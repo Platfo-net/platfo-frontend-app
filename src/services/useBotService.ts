@@ -1,6 +1,7 @@
 import { useApi } from 'src/composables/use-api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query';
 import { Chatbot, TelegramBot } from 'src/types';
+import { MaybeRefOrGetter, Ref } from 'vue';
 
 export const useBotService = () => {
   const platfoApi = useApi();
@@ -30,8 +31,36 @@ export const useBotService = () => {
             },
             retry: false,
           }),
+        getBotInformation: (
+          botToken: Ref<string>,
+          enabled?: MaybeRefOrGetter<boolean>
+        ) =>
+          useQuery({
+            queryKey: ['telegramBotInformation', botToken.value],
+            queryFn: async () => {
+              const response = await platfoApi.api.get<TelegramBot>(
+                'telegram/me?token=' + botToken.value
+              );
+              return response.data;
+            },
+            enabled,
+            retry: false,
+          }),
       },
       mutations: {
+        addBot: () =>
+          useMutation({
+            mutationKey: ['addTelegramBot'],
+            mutationFn: async (bot_token: string) => {
+              const response = await platfoApi.api.post<TelegramBot>(
+                '/telegram',
+                {
+                  bot_token,
+                }
+              );
+              return response.data;
+            },
+          }),
         updateBot: (botId: string) =>
           useMutation({
             mutationFn: async (bot: TelegramBot) => {
