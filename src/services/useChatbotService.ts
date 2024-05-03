@@ -39,6 +39,7 @@ export const useChatbotService = () => {
       description: dto.description,
       user_id: dto.user_id,
       prompt: dto.prompt,
+      temperature: dto.temperature,
     });
     return response.data;
   };

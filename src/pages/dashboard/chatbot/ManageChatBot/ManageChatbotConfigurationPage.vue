@@ -11,7 +11,7 @@ const route = useRoute();
 /********************** */
 
 /** COMPONENT STATE */
-const editChatbotModel = ref<Partial<Chatbot>>();
+const editChatbotModel = ref<Partial<Chatbot>>({});
 const showEditChatbotModal = ref<boolean>(false);
 const { data: chatbot } = chatbotService.queries.getChatbot(route.params.chatbotId as string)
 const { mutateAsync: updateChatbot, isPending: updateChatbotIsPending } = chatbotService.mutations.updateChatbot(route.params.chatbotId as string)
@@ -34,16 +34,30 @@ const { mutateAsync: updateChatbot, isPending: updateChatbotIsPending } = chatbo
   <q-dialog v-model="showEditChatbotModal" @hide="() => editChatbotModel = { ...chatbot }">
     <q-card style="min-width: 367px;">
       <q-card-section>
-        <div class="text-h6">ویرایش بات جدید</div>
+        <div class="text-h6">تنظیم بات</div>
       </q-card-section>
       <q-card-section>
         <q-form @submit="async () => {
     await updateChatbot(editChatbotModel as Chatbot);
     showEditChatbotModal = false;
   }">
-          <q-input class="q-mb-md" outlined type="textarea" v-model="editChatbotModel!.prompt" dense label="پراپمت"
+          <q-input class="q-mb-md" outlined type="textarea" v-model="editChatbotModel!.prompt" dense label="دستور متنی"
             lazy-rules></q-input>
-          <q-btn type="submit" class="q-mb-md" color="primary" label='ویرایش' :loading="updateChatbotIsPending"></q-btn>
+          <div class="text-grey-8">میزان خلاقیت</div>
+          <q-item>
+            <q-item-section side>
+              کم
+            </q-item-section>
+            <q-item-section>
+              <q-slider v-model="editChatbotModel!.temperature" markers marker-labels snap :min="0" :max="1"
+                :step="0.25" />
+            </q-item-section>
+            <q-item-section side>
+              زیاد
+            </q-item-section>
+          </q-item>
+          <q-btn type="submit" class="q-my-md full-width" color="primary" label='اعمال تغییرات'
+            :loading="updateChatbotIsPending"></q-btn>
         </q-form>
       </q-card-section>
     </q-card>
@@ -54,13 +68,19 @@ const { mutateAsync: updateChatbot, isPending: updateChatbotIsPending } = chatbo
       <q-btn @click="() => {
     editChatbotModel = { ...chatbot };
     showEditChatbotModal = true;
-  }" label="ویرایش" color="dark"></q-btn>
+  }" label="تنظیم" flat color="dark"></q-btn>
     </q-card-section>
     <q-card-section>
       <div class="row q-col-gutter-md">
         <div class="col-12 col-md-6 col-lg-4">
-          <div class="text-h6">پرامپت</div>
-          <div>{{ chatbot?.prompt || 'تنظیم نشده است' }}</div>
+          <div class="text-body1 text-grey-8 q-mb-md">دستور متنی</div>
+          <textarea class="q-pa-sm full-width rounded-borders" style="border: 1px solid grey" disabled rows="16"
+            :value="chatbot?.prompt"></textarea>
+          <!-- <q-input class="q-mt-md" outlined type="textarea" v-model="chatbot.prompt" disable rows="25"></q-input> -->
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="text-body1 text-grey-8 q-mb-md">میزان خلاقیت</div>
+          <div>{{ chatbot?.temperature }} / 1</div>
         </div>
       </div>
     </q-card-section>
