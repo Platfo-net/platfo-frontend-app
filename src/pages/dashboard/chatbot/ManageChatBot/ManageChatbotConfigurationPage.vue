@@ -77,7 +77,7 @@ const { mutateAsync: updateChatbot, isPending: updateChatbotIsPending } = chatbo
           <div class="flex row q-mb-md">
             <div class="text-body1 text-grey-8 q-mr-md">دستور متنی</div>
             <q-icon name="info_outline" color="blue" size="xs">
-              <q-tooltip max-width="200px">
+              <q-tooltip :hide-delay="2000" class="bg-blue" style="font-size: small;" max-width="200px">
                 گذاره‌ای است که شرایط و نحوه پاسخگویی هوش مصنوعی را مشخص می‌کند و توصیه می‌شود که به زبان انگلیسی نوشته
                 شود.
               </q-tooltip>
@@ -91,7 +91,7 @@ const { mutateAsync: updateChatbot, isPending: updateChatbotIsPending } = chatbo
           <div class="flex row q-mb-md">
             <div class="text-body1 text-grey-8 q-mr-md">میزان خلاقیت</div>
             <q-icon name="info_outline" color="blue" size="xs">
-              <q-tooltip max-width="200px">
+              <q-tooltip :hide-delay="2000" class="bg-blue" style="font-size: small;" max-width="200px">
                 خلاقیت مدل زبانی یک پارامتر در مدل است که میزان خلاقیت پاسخ‌ها را تعیین می‌کند. مقدار ۰٪ به معنای این
                 است
                 که پاسخ‌ها بسیار مستقیم و مشخص خواهند بود، مقدار ۱۰۰٪ به معنای این است که پاسخ‌ها می‌توانند بسیار
