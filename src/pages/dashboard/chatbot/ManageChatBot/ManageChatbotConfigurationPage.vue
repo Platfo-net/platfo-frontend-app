@@ -68,19 +68,38 @@ const { mutateAsync: updateChatbot, isPending: updateChatbotIsPending } = chatbo
       <q-btn @click="() => {
     editChatbotModel = { ...chatbot };
     showEditChatbotModal = true;
-  }" label="تنظیم" flat color="dark"></q-btn>
+  }" label="ویرایش" color="dark"></q-btn>
     </q-card-section>
     <q-card-section>
       <q-linear-progress v-if="chatbotIsLoading" size="2px" indeterminate></q-linear-progress>
       <div v-else class="row q-col-gutter-md">
         <div class="col-12 col-md-6">
-          <div class="text-body1 text-grey-8 q-mb-md">دستور متنی</div>
+          <div class="flex row q-mb-md">
+            <div class="text-body1 text-grey-8 q-mr-md">دستور متنی</div>
+            <q-icon name="info_outline" color="blue" size="xs">
+              <q-tooltip max-width="200px">
+                گذاره‌ای است که شرایط و نحوه پاسخگویی هوش مصنوعی را مشخص می‌کند و توصیه می‌شود که به زبان انگلیسی نوشته
+                شود.
+              </q-tooltip>
+            </q-icon>
+          </div>
           <textarea dir="ltr" class="q-pa-sm full-width rounded-borders" style="border: 1px solid grey" disabled
             rows="16" :value="chatbot?.prompt"></textarea>
           <!-- <q-input class="q-mt-md" outlined type="textarea" v-model="chatbot.prompt" disable rows="25"></q-input> -->
         </div>
         <div class="col-12 col-md-6 ">
-          <div class="text-body1 text-grey-8 q-mb-md">میزان خلاقیت</div>
+          <div class="flex row q-mb-md">
+            <div class="text-body1 text-grey-8 q-mr-md">میزان خلاقیت</div>
+            <q-icon name="info_outline" color="blue" size="xs">
+              <q-tooltip max-width="200px">
+                خلاقیت مدل زبانی یک پارامتر در مدل است که میزان خلاقیت پاسخ‌ها را تعیین می‌کند. مقدار ۰٪ به معنای این
+                است
+                که پاسخ‌ها بسیار مستقیم و مشخص خواهند بود، مقدار ۱۰۰٪ به معنای این است که پاسخ‌ها می‌توانند بسیار
+                متفاوت،
+                گاهی عجیب و خلاقانه باشند.
+              </q-tooltip>
+            </q-icon>
+          </div>
           <div style="font-size: x-large;">%{{ chatbot?.temperature * 100 }}</div>
         </div>
       </div>
