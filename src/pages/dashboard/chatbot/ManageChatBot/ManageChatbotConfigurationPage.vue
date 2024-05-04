@@ -13,7 +13,7 @@ const route = useRoute();
 /** COMPONENT STATE */
 const editChatbotModel = ref<Partial<Chatbot>>({});
 const showEditChatbotModal = ref<boolean>(false);
-const { data: chatbot } = chatbotService.queries.getChatbot(route.params.chatbotId as string)
+const { data: chatbot, isLoading: chatbotIsLoading } = chatbotService.queries.getChatbot(route.params.chatbotId as string)
 const { mutateAsync: updateChatbot, isPending: updateChatbotIsPending } = chatbotService.mutations.updateChatbot(route.params.chatbotId as string)
 /****************** */
 
@@ -49,8 +49,8 @@ const { mutateAsync: updateChatbot, isPending: updateChatbotIsPending } = chatbo
               کم
             </q-item-section>
             <q-item-section>
-              <q-slider v-model="editChatbotModel!.temperature" markers marker-labels snap :min="0" :max="1"
-                :step="0.25" />
+              <q-slider v-model="editChatbotModel!.temperature" markers :marker-labels="(val) => `%${val * 100}`" snap
+                :min="0" :max="1" :step="0.25" />
             </q-item-section>
             <q-item-section side>
               زیاد
@@ -71,16 +71,17 @@ const { mutateAsync: updateChatbot, isPending: updateChatbotIsPending } = chatbo
   }" label="تنظیم" flat color="dark"></q-btn>
     </q-card-section>
     <q-card-section>
-      <div class="row q-col-gutter-md">
-        <div class="col-12 col-md-6 col-lg-4">
+      <q-linear-progress v-if="chatbotIsLoading" size="2px" indeterminate></q-linear-progress>
+      <div v-else class="row q-col-gutter-md">
+        <div class="col-12 col-md-6">
           <div class="text-body1 text-grey-8 q-mb-md">دستور متنی</div>
           <textarea dir="ltr" class="q-pa-sm full-width rounded-borders" style="border: 1px solid grey" disabled
             rows="16" :value="chatbot?.prompt"></textarea>
           <!-- <q-input class="q-mt-md" outlined type="textarea" v-model="chatbot.prompt" disable rows="25"></q-input> -->
         </div>
-        <div class="col-12 col-md-6 col-lg-4">
+        <div class="col-12 col-md-6 ">
           <div class="text-body1 text-grey-8 q-mb-md">میزان خلاقیت</div>
-          <div style="font-size: larger;">{{ chatbot?.temperature }}</div>
+          <div style="font-size: x-large;">%{{ chatbot?.temperature * 100 }}</div>
         </div>
       </div>
     </q-card-section>
