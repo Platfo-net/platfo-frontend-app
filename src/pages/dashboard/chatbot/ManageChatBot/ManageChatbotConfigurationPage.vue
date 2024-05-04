@@ -41,8 +41,8 @@ const { mutateAsync: updateChatbot, isPending: updateChatbotIsPending } = chatbo
     await updateChatbot(editChatbotModel as Chatbot);
     showEditChatbotModal = false;
   }">
-          <q-input class="q-mb-md" outlined type="textarea" v-model="editChatbotModel!.prompt" dense label="دستور متنی"
-            lazy-rules></q-input>
+          <q-input dir="ltr" class="q-mb-md" outlined type="textarea" v-model="editChatbotModel!.prompt" dense
+            label="دستور متنی" lazy-rules></q-input>
           <div class="text-grey-8">میزان خلاقیت</div>
           <q-item>
             <q-item-section side>
@@ -74,13 +74,13 @@ const { mutateAsync: updateChatbot, isPending: updateChatbotIsPending } = chatbo
       <div class="row q-col-gutter-md">
         <div class="col-12 col-md-6 col-lg-4">
           <div class="text-body1 text-grey-8 q-mb-md">دستور متنی</div>
-          <textarea class="q-pa-sm full-width rounded-borders" style="border: 1px solid grey" disabled rows="16"
-            :value="chatbot?.prompt"></textarea>
+          <textarea dir="ltr" class="q-pa-sm full-width rounded-borders" style="border: 1px solid grey" disabled
+            rows="16" :value="chatbot?.prompt"></textarea>
           <!-- <q-input class="q-mt-md" outlined type="textarea" v-model="chatbot.prompt" disable rows="25"></q-input> -->
         </div>
         <div class="col-12 col-md-6 col-lg-4">
           <div class="text-body1 text-grey-8 q-mb-md">میزان خلاقیت</div>
-          <div>{{ chatbot?.temperature }} / 1</div>
+          <div style="font-size: larger;">{{ chatbot?.temperature }}</div>
         </div>
       </div>
     </q-card-section>
