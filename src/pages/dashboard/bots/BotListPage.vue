@@ -124,8 +124,8 @@ const handleAddTelegramBot = async () => {
                         <q-tab-panel name="telegram">
                             <div class="flex row justify-between q-mb-md">
                                 <div class="text-h6">بات های تلگرام من</div>
-                                <q-btn @click="showCreateTelegramBot = true" size="sm" color="dark"
-                                    label="ثبت بات جدید در پلفتو"></q-btn>
+                                <q-btn unelevated @click="showCreateTelegramBot = true" size="md" color="teal-1"
+                                    text-color="teal" label="ثبت بات جدید در پلفتو"></q-btn>
                             </div>
                             <p class="text-body2">در این بخش، میتوانید بات های تلگرام خود را در پلتفو مدیریت کنید.</p>
                             <q-linear-progress v-if="telegramBotsIsLoading" size="2px" indeterminate />
