@@ -126,6 +126,11 @@ export const useSidebar = () => {
       icon: 'info',
     },
     {
+      title: 'مدیریت اعتبار',
+      to: { name: 'ManageChatbotCreditPage' },
+      icon: 'payment',
+    },
+    {
       title: 'تنظیمات',
       to: { name: 'ManageChatbotConfigurationPage' },
       icon: 'settings',

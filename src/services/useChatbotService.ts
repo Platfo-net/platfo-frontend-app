@@ -1,6 +1,6 @@
 import { useApi } from 'src/composables/use-api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query';
-import { Chatbot, ChatbotBaseType } from 'src/types';
+import { Chatbot, ChatbotBaseType, ChatbotCreditSubscriptionTransactionResponse, ChatbotCreditsResponse, ChatbotSubscriptionPlansResponse } from 'src/types';
 import { AxiosResponse } from 'axios';
 
 export const useChatbotService = () => {
@@ -49,6 +49,53 @@ export const useChatbotService = () => {
       cachedChatbotData: (chatbotId: string) =>
         queryClient.getQueryData<Chatbot>(['chatbot', { chatbotId }]),
       chatbotList: queryClient.getQueryData<Chatbot[]>(['chatbotList']),
+    },
+    credit: {
+      queries: {
+        getChatbotCredit: (chatbotId: string) => useQuery({
+          queryKey: ['chatbot-credit', { chatbotId }],
+          queryFn: async () => {
+            const response = await platfoApi.api.get<ChatbotCreditsResponse>('/chatbot-credit/' + chatbotId + '/credits');
+            return response.data;
+          },
+          retry: false,
+          refetchOnWindowFocus: false,
+        }),
+        getChatbotCreditTransactions: (chatbotId: string) => useQuery({
+          queryKey: ['chatbot-credit-transactions', { chatbotId }],
+          queryFn: async () => {
+            const response = await platfoApi.api.get<ChatbotCreditSubscriptionTransactionResponse>('/chatbot-credit/' + chatbotId + '/transaction');
+            return response.data;
+          },
+          retry: false,
+          refetchOnWindowFocus: false,
+        }),
+        getChatbotSubscriptionPlans: () => useQuery({
+          queryKey: ['chatbot-subscription-plans'],
+          queryFn: async () => {
+            const response = await platfoApi.api.get<ChatbotSubscriptionPlansResponse>('/chatbot-credit/plans');
+            return response.data;
+          },
+          refetchOnWindowFocus: false,
+        }),
+      },
+      mutations: {
+        buyPlan: (chatbotId: string) => useMutation({
+          mutationKey: ['buyPlan'],
+          mutationFn: async (dto: { planId: string }) => {
+            const response = await platfoApi.api.get('/chatbot-credit/' + chatbotId + '/plans/' + dto.planId + '/buy?chatbot_plan_id=' + dto.planId);
+            return response.data;
+          },
+          onSuccess: () => {
+            queryClient.invalidateQueries({
+              queryKey: ['chatbot-credit', { chatbotId }],
+            });
+            queryClient.invalidateQueries({
+              queryKey: ['chatbot-credit-transactions', { chatbotId }],
+            });
+          }
+        }),
+      },
     },
     queries: {
       getChatbotList: () =>

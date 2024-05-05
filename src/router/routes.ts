@@ -625,6 +625,25 @@ const routes: RouteRecordRaw[] = [
             },
           },
           {
+            path: 'credit',
+            name: 'ManageChatbotCreditPage',
+            component: () =>
+              import(
+                'pages/dashboard/chatbot/ManageChatBot/ManageChatbotCreditPage.vue'
+              ),
+            meta: {
+              title: 'مدیریت اعتبار چت بات | پلتفو',
+              breadcrumbs: [
+                {
+                  label: 'pages.panel.dashboard.title',
+                  to: { name: 'Dashboard' },
+                },
+                { label: 'چت بات های من', to: { name: 'ChatbotListPage' } },
+                { label: 'مدیریت اعتبار' },
+              ],
+            },
+          },
+          {
             path: 'configuration',
             name: 'ManageChatbotConfigurationPage',
             component: () =>
