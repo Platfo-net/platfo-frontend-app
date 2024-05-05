@@ -28,17 +28,20 @@ const { data: chatbotCredits, isLoading: chatbotCreditsIsLoading } = chatbotServ
 </script>
 
 <template>
-  <q-card bordered flat class="bg-grey-1">
+  <q-card bordered flat class="bg-blue-1 text-blue" style="">
     <q-card-section v-if="chatbotCreditsIsLoading">
-      <q-linear-progress indeterminate size="2px" color="primary" ></q-linear-progress>
+      <q-linear-progress indeterminate size="2px" color="primary"></q-linear-progress>
     </q-card-section>
     <q-card-section v-else-if="!chatbotCredits || chatbotCredits.length < 1">
       شما در حال حاضر در طرحی اشتراک ندارید
     </q-card-section>
     <q-card-section v-else>
-      <div class="text-blue">وضعیت اشتراک(های) من</div>
+      <div class="flex row">
+        <q-icon name="info_outline" size="sm" class="q-mr-md"></q-icon>
+        <div class="text-blue">وضعیت اشتراک(های) من</div>
+      </div>
       <q-list>
-        <q-expansion-item label="اعتبار دوره" dense class="q-my-md rounded-borders" >
+        <q-expansion-item label="اعتبار دوره" dense class="q-my-md rounded-borders">
           <q-item>
             <q-item-section class="felx column">
               <div class="text-grey-8">از تاریخ</div>
