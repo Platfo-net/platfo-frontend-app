@@ -109,7 +109,8 @@ const handleSubmit = async () => {
                 <div v-if="chatbotIsError && chatbotError?.response.status === 404"
                     class="flex row items-center justify-between q-pa-md">
                     <div>چت باتی ثبت نشده است</div>
-                    <q-btn @click="showRegisterChatbot = true" color="secondary">ثبت چت بات</q-btn>
+                    <q-btn @click="showRegisterChatbot = true" color="blue-1" text-color="blue" unelevated>ثبت چت
+                        بات</q-btn>
                 </div>
                 <div v-else-if="chatbot" class="flex row items-center justify-between q-pa-md">
                     <div class="flex column">
