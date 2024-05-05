@@ -3,13 +3,14 @@
 
 /************************ */
 
+/** COMPONENT DEFINES */
+
+/******************** */
+
 /** COMPONENT STATE */
 
 /****************** */
 
-/** COMPONENT DEFINES */
-
-/******************** */
 
 /** COMPONENT FUNCTIONS */
 
