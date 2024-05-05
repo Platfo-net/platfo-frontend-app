@@ -109,8 +109,8 @@ const { mutateAsync: buyPlan, isPending: butPlanIsPending } = chatbotService.cre
                                 <template v-slot:body-cell-actions="props">
                                     <q-td>
                                         <q-btn :label="!props.row.is_paid ? 'پرداخت' : 'پرداخت شده'"
-                                            :color="props.row.is_paid ? 'grey-1' : 'blue-1'"
-                                            :text-color="props.row.is_paid ? 'grey' : 'blue'" size="sm" unelevated
+                                            :color="props.row.is_paid ? 'grey-4' : 'teal-1'"
+                                            :text-color="props.row.is_paid ? 'grey' : 'teal'" size="sm" unelevated
                                             :disable="props.row.is_paid"></q-btn>
                                     </q-td>
                                 </template>
