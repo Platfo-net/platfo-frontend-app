@@ -40,7 +40,7 @@ const { mutateAsync: buyPlan, isPending: butPlanIsPending } = chatbotService.cre
 
 <template>
     <q-card flat bordered>
-        <q-layout container style="min-height: 800px;" view="hHh lpR fFf">
+        <q-layout container style="min-height: 800px; max-height: 800px;" view="hHh lpR fFf">
             <q-header bordered class="bg-white text-primary" height-hint="98">
                 <q-toolbar>
                     <!-- <q-toolbar-title>مدیریت اعتبار</q-toolbar-title> -->
@@ -48,8 +48,8 @@ const { mutateAsync: buyPlan, isPending: butPlanIsPending } = chatbotService.cre
                         :label="showCreditDrawer ? 'بستن منو' : 'منو'" @click="showCreditDrawer = !showCreditDrawer" />
                 </q-toolbar>
             </q-header>
-            <q-drawer class="flex column justify-between q-pa-md" show-if-above v-model="showCreditDrawer" side="left"
-                bordered>
+            <q-drawer class="flex column justify-between q-pa-md overflow-auto" show-if-above v-model="showCreditDrawer"
+                side="left" bordered>
                 <q-list dense>
                     <template v-for="section in creditSections" :key="section.id">
                         <q-expansion-item
@@ -137,11 +137,11 @@ const { mutateAsync: buyPlan, isPending: butPlanIsPending } = chatbotService.cre
                                                 <p class="q-ma-none">{{ plan.description }}</p>
                                             </q-card-section>
                                             <q-card-section>
-                                                <div v-if="!plan.original_price" class="text-h6">
+                                                <div v-if="!plan.price" class="text-h6">
                                                     رایگان!
                                                 </div>
                                                 <div v-else class="text-h6">
-                                                    {{ plan.original_price }} <TomanSymbol :size="24"></TomanSymbol> /
+                                                    {{ plan.price }} <TomanSymbol :size="24"></TomanSymbol> /
                                                     در
                                                     ماه
                                                 </div>
@@ -149,26 +149,36 @@ const { mutateAsync: buyPlan, isPending: butPlanIsPending } = chatbotService.cre
                                             <q-card-section style="border-top: 1px solid #e2e2e2;">
                                                 <q-list>
                                                     <q-item>
-                                                        <q-item-section side><q-icon
-                                                                name="done"></q-icon></q-item-section>
+                                                        <q-item-section side><q-icon name="done"
+                                                                color="teal"></q-icon></q-item-section>
                                                         <q-item-section>{{ plan.extend_days }} روزه</q-item-section>
                                                     </q-item>
                                                     <q-item>
-                                                        <q-item-section side><q-icon
-                                                                name="done"></q-icon></q-item-section>
+                                                        <q-item-section side><q-icon name="done"
+                                                                color="teal"></q-icon></q-item-section>
                                                         <q-item-section>{{ plan.extend_token_count }}
                                                             توکن</q-item-section>
                                                     </q-item>
                                                     <q-item>
-                                                        <q-item-section side><q-icon
-                                                                name="done"></q-icon></q-item-section>
+                                                        <q-item-section side><q-icon name="done"
+                                                                color="teal"></q-icon></q-item-section>
                                                         <q-item-section>{{ plan.extend_chat_count }} چت</q-item-section>
                                                     </q-item>
                                                 </q-list>
                                             </q-card-section>
                                             <q-card-section style="border-top: 1px solid #e2e2e2;">
+                                                <div>فیچر ها</div>
+                                                <q-list>
+                                                    <q-item v-for="feature in plan.features" :key="feature.title">
+                                                        <q-item-section side><q-icon name="done"
+                                                                color="teal"></q-icon></q-item-section>
+                                                        <q-item-section>{{ feature.title }} </q-item-section>
+                                                    </q-item>
+                                                </q-list>
+                                            </q-card-section>
+                                            <q-card-section style="border-top: 1px solid #e2e2e2;">
                                                 <q-btn class="full-width" unelevated
-                                                    :label="plan.original_price ? 'خرید اشتراک' : 'فعال سازی اشتراک'"
+                                                    :label="plan.price ? 'خرید اشتراک' : 'فعال سازی اشتراک'"
                                                     color="teal-1" text-color="teal" @click="async () => {
                         await buyPlan({
                             planId: plan.uuid,

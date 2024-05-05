@@ -382,9 +382,13 @@ export type ChatbotCreditType = {
   is_extra: boolean;
   remaining_chat_count: number;
   remaining_token_count: number;
-}
+};
 
 export type ChatbotCreditsResponse = ChatbotCreditType[];
+
+export type ChatbotSubscriptionPlanFeature = {
+  title: string;
+};
 
 export type ChatbotSubscriptionPlan = {
   uuid: string;
@@ -395,10 +399,10 @@ export type ChatbotSubscriptionPlan = {
   extend_days: number;
   extend_chat_count: number;
   extend_token_count: number;
-  original_price: number;
+  price: number;
   currency: string;
-  features: any[]
-}
+  features: ChatbotSubscriptionPlanFeature[];
+};
 
 export type ChatbotSubscriptionPlansResponse = ChatbotSubscriptionPlan[];
 
@@ -414,6 +418,7 @@ export type ChatbotCreditSubscriptionTransaction = {
   extend_days: number;
   extend_chat_count: number;
   extend_token_count: number;
-}
+};
 
-export type ChatbotCreditSubscriptionTransactionResponse = ChatbotCreditSubscriptionTransaction[];
+export type ChatbotCreditSubscriptionTransactionResponse =
+  ChatbotCreditSubscriptionTransaction[];
