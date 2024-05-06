@@ -140,6 +140,11 @@ export const useSidebar = () => {
       to: { name: 'ManageChatbotKnowledgeBasePage' },
       icon: 'list',
     },
+    {
+      title: 'بات های متصل',
+      to: { name: 'ManageChatbotConnectedBotsPage' },
+      icon: 'smart_toy',
+    },
   ];
   return {
     mainLayoutRoutes,

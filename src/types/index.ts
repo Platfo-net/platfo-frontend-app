@@ -422,3 +422,7 @@ export type ChatbotCreditSubscriptionTransaction = {
 
 export type ChatbotCreditSubscriptionTransactionResponse =
   ChatbotCreditSubscriptionTransaction[];
+
+export type ChatbotConnectedTelegramBot = { uuid: string; username: string };
+export type ChatbotConnectedTelegramBotsApiResponse =
+  ChatbotConnectedTelegramBot[];

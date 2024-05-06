@@ -681,6 +681,25 @@ const routes: RouteRecordRaw[] = [
               ],
             },
           },
+          {
+            path: 'connected-bots',
+            name: 'ManageChatbotConnectedBotsPage',
+            component: () =>
+              import(
+                'pages/dashboard/chatbot/ManageChatBot/ManageChatbotConnectedBotsPage.vue'
+              ),
+            meta: {
+              title: 'بات های متصل | پلتفو',
+              breadcrumbs: [
+                {
+                  label: 'pages.panel.dashboard.title',
+                  to: { name: 'Dashboard' },
+                },
+                { label: 'چت بات های من', to: { name: 'ChatbotListPage' } },
+                { label: 'بات های متصل' },
+              ],
+            },
+          },
         ],
       },
       //#endregion
