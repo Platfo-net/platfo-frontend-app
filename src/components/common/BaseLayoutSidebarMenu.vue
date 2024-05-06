@@ -31,27 +31,28 @@ defineProps<BaseLayoutSidebarMenuProps>();
 
 <template>
   <q-scroll-area style="height: calc(100% - 161.6px); margin-top: 161.6px">
-    <q-list padding>
+    <q-list dense class="q-pa-md">
       <div v-for="(_route, idx) in routes" :key="_route.title + idx">
-        <q-item :active-class="_route.activeClass?.length ? _route.activeClass : 'bg-grey-3'
+        <q-item dense class="q-my-sm rounded-borders" :active-class="_route.activeClass?.length ? _route.activeClass : 'bg-blue-1 text-blue'
         " clickable v-if="!_route.children?.length" :to="_route.to">
           <q-item-section avatar>
-            <q-icon :name="_route.icon"></q-icon>
+            <q-icon size="sm" :name="_route.icon"></q-icon>
           </q-item-section>
           <q-item-section>
             {{ _route.title }}
           </q-item-section>
         </q-item>
-        <q-expansion-item :default-opened="_route.children.map(x => x.to?.name).includes(route.name!)" v-else
-          :label="_route.title" :icon="_route.icon">
+        <q-expansion-item header-class="rounded-borders" dense class="q-my-sm rounded-borders"
+          :default-opened="_route.children.map(x => x.to?.name).includes(route.name!)" v-else :label="_route.title"
+          :icon="_route.icon">
           <div v-for="(innerRoute, innerIdx) in _route.children" :key="innerRoute.title + innerIdx">
-            <q-item :active-class="innerRoute.activeClass?.length
+            <q-item dense :active-class="innerRoute.activeClass?.length
         ? innerRoute.activeClass
-        : 'bg-grey-3'
-        " v-if="!innerRoute.children?.length" :key="innerRoute.title + innerIdx" class="q-pl-xl" clickable
-              :to="innerRoute.to">
+        : 'bg-blue-1 text-blue'
+        " v-if="!innerRoute.children?.length" :key="innerRoute.title + innerIdx"
+              class="q-pl-xl q-my-sm rounded-borders" clickable :to="innerRoute.to">
               <q-item-section avatar>
-                <q-icon :name="innerRoute.icon"></q-icon>
+                <q-icon size="xs" :name="innerRoute.icon"></q-icon>
               </q-item-section>
               <q-item-section>
                 {{ innerRoute.title }}
