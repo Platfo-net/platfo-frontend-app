@@ -21,7 +21,7 @@ defineProps<BaseLayoutSidebarMenuProps>();
 /******************** */
 
 /** COMPONENT FUNCTIONS */
-
+const isInnerRouteActive = (sidebarRoute: SidebarRoute) => sidebarRoute.children?.map(x => x.to?.name).includes(route.name as string);
 /********************** */
 
 /** COMPONENT LIFECYCLE HANDLERS */
@@ -42,8 +42,8 @@ defineProps<BaseLayoutSidebarMenuProps>();
             {{ _route.title }}
           </q-item-section>
         </q-item>
-        <q-expansion-item header-class="rounded-borders" dense class="q-my-sm rounded-borders"
-          :default-opened="_route.children.map(x => x.to?.name).includes(route.name!)" v-else :label="_route.title"
+        <q-expansion-item :header-class="`rounded-borders ${isInnerRouteActive(_route) ? 'text-blue' : ''}`" dense
+          class="q-my-sm rounded-borders" :default-opened="isInnerRouteActive(_route)" v-else :label="_route.title"
           :icon="_route.icon">
           <div v-for="(innerRoute, innerIdx) in _route.children" :key="innerRoute.title + innerIdx">
             <q-item dense :active-class="innerRoute.activeClass?.length
