@@ -90,7 +90,7 @@ const { mutateAsync: buyPlan, isPending: butPlanIsPending } = chatbotService.cre
                         { label: 'تعداد چت', name: 'extend_chat_count', field: 'extend_chat_count', align: 'left' },
                         { label: 'تعداد توکن', name: 'extend_token_count', field: 'extend_token_count', align: 'left' },
                         { label: 'عملیات', name: 'actions', field: 'actions', align: 'left' },
-                    ]" :rows="chatbotCreditSubscriptionTransactions"
+                    ]" :rows="chatbotCreditSubscriptionTransactions || []"
                                 :loading="chatbotCreditSubscriptionTransactionsIsLoading">
                                 <template v-slot:body-cell-is_paid="props">
                                     <q-td>
