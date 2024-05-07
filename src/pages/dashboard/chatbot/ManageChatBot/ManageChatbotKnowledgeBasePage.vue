@@ -102,7 +102,7 @@ const handleSubmit = async () => {
       </div>
     </q-card-section>
     <q-card-section>
-      <q-table flat bordered :columns="TABLE_COLUMNS" :rows="knowledgebaseList">
+      <q-table flat bordered :columns="TABLE_COLUMNS" :rows="knowledgebaseList || []">
         <template v-slot:body-cell-actions="props">
           <q-td :props="props">
             <div>
