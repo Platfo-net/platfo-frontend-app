@@ -4,12 +4,11 @@ import TelegramBotItem from 'src/components/bot/TelegramBotItem.vue';
 import { computed, h, reactive, ref } from 'vue';
 import { isMobile } from 'src/utils'
 import { useBotService } from 'src/services/useBotService.ts';
-import { ifError } from 'assert';
-import { useQuasar } from 'quasar';
+import { useNotify } from 'src/composables/use-notify';
 
 /** COMPONENT COMPOSABLES */
 const botService = useBotService();
-const $q = useQuasar();
+const notify = useNotify();
 /************************ */
 
 /** COMPONENT DEFINES */
@@ -53,16 +52,10 @@ const handleAddTelegramBot = async () => {
     try {
         await addTelegramBotAsync(createTelegramBotToken.value);
         createTelegramBotToken.value = '';
-        $q.notify({
-            color: 'positive',
-            message: 'بات با موفقیت اضافه شد',
-        });
+        notify.success('بات با موفقیت اضافه شد');
         showCreateTelegramBot.value = false;
     } catch (err) {
-        $q.notify({
-            color: 'negative',
-            message: 'افزودن بات با خطا مواجه شد',
-        });
+        notify.error('افزودن بات با خطا مواجه شد');
     }
 }
 /********************** */
@@ -125,7 +118,7 @@ const handleAddTelegramBot = async () => {
                             <div class="flex row justify-between q-mb-md">
                                 <div class="text-h6">بات های تلگرام من</div>
                                 <q-btn unelevated @click="showCreateTelegramBot = true" size="md" color="teal-1"
-                                    text-color="teal" label="ثبت بات جدید در پلفتو"></q-btn>
+                                    text-color="teal" label="ثبت بات جدید"></q-btn>
                             </div>
                             <p class="text-body2">در این بخش، میتوانید بات های تلگرام خود را در پلتفو مدیریت کنید.</p>
                             <q-linear-progress v-if="telegramBotsIsLoading" size="2px" indeterminate />
