@@ -133,7 +133,7 @@ const handleSubmit = async () => {
                         <div class="text-body2">{{ chatbot.name }}</div>
                     </div>
                     <q-btn color="red-1" text-color="red" @click="async () => {
-        await deleteChatbotAsync();
+        await deleteChatbotAsync({ botId: bot.id, chatbotId: chatbot?.uuid! });
         chatbot = undefined;
     }" round icon="delete" :loading="chatbotIsDeleting" unelevated size="sm">
                     </q-btn>

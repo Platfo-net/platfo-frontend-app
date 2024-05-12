@@ -105,7 +105,7 @@ export const useBotService = () => {
             mutationKey: ['registerChatbot'],
             mutationFn: async (chatbotId: string) => {
               const response = await platfoApi.api.post(
-                '/telegram-bot/' + botId + '/chatbot',
+                '/telegram-bot/' + botId + '/chatbot/' + chatbotId + '/connect',
                 {
                   chatbot_id: chatbotId,
                 }
@@ -121,9 +121,13 @@ export const useBotService = () => {
         deleteChatbot: (botId: string) =>
           useMutation({
             mutationKey: ['deleteChatbot'],
-            mutationFn: async () => {
+            mutationFn: async (dto: { botId: string; chatbotId: string }) => {
               const response = await platfoApi.api.delete(
-                '/telegram-bot/' + botId + '/chatbot'
+                '/telegram-bot/' +
+                  dto.botId +
+                  '/chatbot/' +
+                  dto.chatbotId +
+                  '/disconnect'
               );
               return response.data;
             },
