@@ -3,6 +3,7 @@ import { useBotService } from 'src/services/useBotService';
 import { useChatbotService } from 'src/services/useChatbotService';
 import { TelegramBot } from 'src/types';
 import { ref } from 'vue';
+import { useNotify } from 'src/composables/use-notify'
 
 /** COMPONENT COMPOSABLES */
 const props = defineProps<{
@@ -11,6 +12,7 @@ const props = defineProps<{
 }>();
 const botService = useBotService();
 const chatbotService = useChatbotService();
+const notify = useNotify();
 /************************ */
 
 /** COMPONENT DEFINES */
@@ -61,11 +63,19 @@ const handleSubmit = async () => {
             </q-form>
         </q-card>
     </q-dialog>
-
     <q-card flat bordered class="bg-grey-12">
         <q-card flat>
             <q-card-section>
-                <div class="row justify-between">
+                <div class="row justify-end">
+                    <div v-if="showBotConfig" class="flex row justify-end q-mb-md">
+                        <q-btn label="حذف بات" @click="async () => {
+        await deleteBotAsync();
+        notify.success('بات با موفقیت حذف شد');
+    }" icon="delete" rounded unelevated color="red-1" text-color="red" size="sm" :loading="deleteBotIsDeleting">
+                        </q-btn>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="q-mr-md">
                         <q-img :src="updateModel.image_url" class="rounded-borders bg-grey-12" height="100px"
                             width="100px" style="border: 1px solid #e2e2e2;"></q-img>
@@ -83,13 +93,6 @@ const handleSubmit = async () => {
                             </div>
                             <div>{{ bot.first_name }}</div>
                         </div>
-                    </div>
-                    <div v-if="showBotConfig">
-                        <q-btn @click="async () => {
-        await deleteBotAsync();
-    }" icon="delete" round unelevated color="red-1" text-color="red" size="sm">
-                            <q-tooltip class="bg-red-1 text-red">حذف بات</q-tooltip>
-                        </q-btn>
                     </div>
                 </div>
             </q-card-section>
@@ -117,7 +120,10 @@ const handleSubmit = async () => {
                 <q-linear-progress v-if="chatbotIsLoading" size="2px" indeterminate></q-linear-progress>
                 <div v-if="chatbotIsError && chatbotError?.response.status === 404"
                     class="flex row items-center justify-between q-pa-md">
-                    <div>چت باتی ثبت نشده است</div>
+                    <div class="flex column">
+                        <div class="text-grey-6 q-mb-sm">نام بات تلگرام</div>
+                        <div>چت باتی ثبت نشده است</div>
+                    </div>
                     <q-btn @click="showRegisterChatbot = true" color="blue-1" text-color="blue" unelevated>ثبت چت
                         بات</q-btn>
                 </div>
