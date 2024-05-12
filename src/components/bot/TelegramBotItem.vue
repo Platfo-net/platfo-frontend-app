@@ -24,7 +24,9 @@ const { data: chatbot, isLoading: chatbotIsLoading, isError: chatbotIsError, err
 const { data: chatbotList, isLoading: chatbotListLoading } = chatbotService.queries.getChatbotList();
 const { mutateAsync: registerChatbotAsync } = botService.telegram.mutations.registerChatbot(props.bot.id);
 const { mutateAsync: deleteChatbotAsync, isPending: chatbotIsDeleting } = botService.telegram.mutations.deleteChatbot(props.bot.id);
-const showRegisterChatbot = ref(false)
+const { mutateAsync: deleteBotAsync, isPending: deleteBotIsDeleting } = botService.telegram.mutations.deleteBot(props.bot.id);
+
+const showRegisterChatbot = ref(false);
 const chatbotId = ref<string>();
 /****************** */
 
@@ -63,7 +65,7 @@ const handleSubmit = async () => {
     <q-card flat bordered class="bg-grey-12">
         <q-card flat>
             <q-card-section>
-                <div class="row">
+                <div class="row justify-between">
                     <div class="q-mr-md">
                         <q-img :src="updateModel.image_url" class="rounded-borders bg-grey-12" height="100px"
                             width="100px" style="border: 1px solid #e2e2e2;"></q-img>
@@ -81,6 +83,13 @@ const handleSubmit = async () => {
                             </div>
                             <div>{{ bot.first_name }}</div>
                         </div>
+                    </div>
+                    <div v-if="showBotConfig">
+                        <q-btn @click="async () => {
+        await deleteBotAsync();
+    }" icon="delete" round unelevated color="red-1" text-color="red" size="sm">
+                            <q-tooltip class="bg-red-1 text-red">حذف بات</q-tooltip>
+                        </q-btn>
                     </div>
                 </div>
             </q-card-section>
@@ -117,10 +126,10 @@ const handleSubmit = async () => {
                         <div class="text-grey-6 q-mb-sm">نام بات تلگرام</div>
                         <div class="text-body2">{{ chatbot.name }}</div>
                     </div>
-                    <q-btn color="negative" @click="async () => {
+                    <q-btn color="red-1" text-color="red" @click="async () => {
         await deleteChatbotAsync();
         chatbot = undefined;
-    }" round icon="delete" :loading="chatbotIsDeleting" flat>
+    }" round icon="delete" :loading="chatbotIsDeleting" unelevated size="sm">
                     </q-btn>
                 </div>
             </q-expansion-item>

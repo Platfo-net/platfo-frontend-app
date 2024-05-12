@@ -7,6 +7,12 @@ export const useBotService = () => {
   const platfoApi = useApi();
   const queryClient = useQueryClient();
 
+  const invalidateTelegramBotList = async () => {
+    await queryClient.invalidateQueries({
+      queryKey: ['telegramBotList'],
+    });
+  };
+
   return {
     telegram: {
       queries: {
@@ -60,16 +66,14 @@ export const useBotService = () => {
               );
               return response.data;
             },
-            onSuccess: () => {
-              queryClient.invalidateQueries({
-                queryKey: ['telegramBotList'],
-              });
+            onSuccess: async () => {
+              await invalidateTelegramBotList();
             },
           }),
         updateBot: (botId: string) =>
           useMutation({
             mutationFn: async (bot: TelegramBot) => {
-              const file = bot.image as File;
+              // const file = bot.image as File;
               const response = await platfoApi.api.put<TelegramBot>(
                 `/telegram/${botId}`,
                 {
@@ -81,10 +85,19 @@ export const useBotService = () => {
               );
               return response.data;
             },
-            onSuccess: () => {
-              queryClient.invalidateQueries({
-                queryKey: ['telegramBotList'],
-              });
+            onSuccess: async () => {
+              await invalidateTelegramBotList();
+            },
+          }),
+        deleteBot: (botId: string) =>
+          useMutation({
+            mutationFn: async () => {
+              const response = await platfoApi.api.delete('/telegram/' + botId);
+              return response.data;
+            },
+            mutationKey: ['delete-telegram-bot', { botId }],
+            onSuccess: async () => {
+              await invalidateTelegramBotList();
             },
           }),
         registerChatbot: (botId: string) =>
