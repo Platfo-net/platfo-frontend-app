@@ -24,6 +24,8 @@ const showTelegramBotsList = ref(false);
 const selectedBotToAdd = ref<string>('');
 const manageCreditSection = ref<string>('connected_telegram_bots');
 const { data: connectedTelegramBots, isLoading: connectedTelegramBotsIsLoading } = chatbotService.bots.telegram.queries.getConnectedBots(route.params.chatbotId as string);
+const { mutateAsync: deleteConnectedTelegramBot, isPending: deleteConnectedTelegramBotIsPending } = chatbotService.bots.telegram.mutations.deleteBot(route.params.chatbotId as string);
+const { mutateAsync: registerTelegramBot, isPending: registerTelegramBotIsPending } = chatbotService.bots.telegram.mutations.registerBot(route.params.chatbotId as string);
 const { data: telegramBots, isLoading: telegramBotsIsLoading } = botService.telegram.queries.getBotList();
 /****************** */
 
@@ -49,7 +51,11 @@ const { data: telegramBots, isLoading: telegramBotsIsLoading } = botService.tele
                     v-model="selectedBotToAdd" emit-value map-options :loading="telegramBotsIsLoading">
                 </q-select>
                 <q-btn unelevated :disable="!selectedBotToAdd.length" type="submit" color="green-1" text-color="green"
-                    label="متصل کن" class="full-width"></q-btn>
+                    label="متصل کن" class="full-width" @click="async () => {
+        await registerTelegramBot(selectedBotToAdd);
+        showTelegramBotsList = false;
+        selectedBotToAdd = '';
+    }" :loading="registerTelegramBotIsPending"></q-btn>
             </q-card-section>
         </q-card>
     </q-dialog>
@@ -101,8 +107,14 @@ const { data: telegramBots, isLoading: telegramBotsIsLoading } = botService.tele
                             <div v-if="connectedTelegramBotsIsLoading">
                                 <q-linear-progress size="2px" indeterminate></q-linear-progress>
                             </div>
-                            <div v-else-if="!connectedTelegramBots || !connectedTelegramBots.length">
-                                باتی به چتبات وصل نیست...
+                            <div v-else-if="!connectedTelegramBots || !connectedTelegramBots.length" class="row">
+                                <div class="col-12 col-md-2">
+                                    <div class="bg-green-1 full-height cursor-pointer rounded-borders flex column items-center justify-center full-height"
+                                        @click="showTelegramBotsList = true">
+                                        <q-icon name="add" size="lg" color="green"></q-icon>
+                                        <div class="text-green">اتصال بات</div>
+                                    </div>
+                                </div>
                             </div>
                             <div v-else>
                                 <div class="row q-col-gutter-md">
@@ -119,8 +131,10 @@ const { data: telegramBots, isLoading: telegramBotsIsLoading } = botService.tele
                                                 </div>
                                             </q-card-section>
                                             <q-card-section>
-                                                <q-btn color="red-1" text-color="red" label="حذف اتصال" unelevated
-                                                    class="full-width"></q-btn>
+                                                <q-btn @click="async () => {
+        await deleteConnectedTelegramBot({ botId: bot.uuid, chatbotId: route.params.chatbotId as string });
+    }" color="red-1" text-color="red" label="حذف اتصال" unelevated class="full-width"
+                                                    :loading="deleteConnectedTelegramBotIsPending"></q-btn>
                                             </q-card-section>
                                         </q-card>
                                     </div>

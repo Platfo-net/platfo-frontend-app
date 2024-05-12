@@ -140,6 +140,49 @@ export const useChatbotService = () => {
               retry: false,
             }),
         },
+        mutations: {
+          registerBot: (chatbotId: string) =>
+            useMutation({
+              mutationKey: ['registerChatbot'],
+              mutationFn: async (botId: string) => {
+                const response = await platfoApi.api.post(
+                  '/telegram-bot/' +
+                    botId +
+                    '/chatbot/' +
+                    chatbotId +
+                    '/connect',
+                  {
+                    chatbot_id: chatbotId,
+                  }
+                );
+                return response.data;
+              },
+              onSuccess: () => {
+                queryClient.invalidateQueries({
+                  queryKey: ['chatbot-connected-telegram-bots', { chatbotId }],
+                });
+              },
+            }),
+          deleteBot: (chatbotId: string) =>
+            useMutation({
+              mutationKey: ['deleteChatbot'],
+              mutationFn: async (dto: { botId: string; chatbotId: string }) => {
+                const response = await platfoApi.api.delete(
+                  '/telegram-bot/' +
+                    dto.botId +
+                    '/chatbot/' +
+                    dto.chatbotId +
+                    '/disconnect'
+                );
+                return response.data;
+              },
+              onSuccess: () => {
+                queryClient.invalidateQueries({
+                  queryKey: ['chatbot-connected-telegram-bots', { chatbotId }],
+                });
+              },
+            }),
+        },
       },
     },
     queries: {
