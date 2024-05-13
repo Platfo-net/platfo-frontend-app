@@ -29,6 +29,7 @@ const isEdit = ref<boolean>(false);
 /** COMPONENT DEFINES */
 const TABLE_COLUMNS: QTableColumn[] = [
   { name: 'name', field: 'name', label: 'عنوان', align: 'left' },
+  { name: 'source_link', field: 'source_link', label: 'لینک منبع', align: 'left' },
   // { name: 'type', field: 'type', label: 'نوع فایل', align: 'left' },
   // { name: 'file', field: 'file', label: 'فایل', align: 'left' },
   { name: 'actions', field: 'actions', label: 'عملیات', align: 'left' },
@@ -82,6 +83,7 @@ const handleSubmit = async () => {
       $t('general.fields.requiredStringField'),
   ]" class="q-mb-md" outlined type="text" v-model="upsertKnowledgebaseModel!.name" dense label="نام"
             lazy-rules></q-input>
+            <q-input class="q-mb-md" outlined type="url" v-model="upsertKnowledgebaseModel!.source_link" dense label="لینک منبع"></q-input>
           <q-uploader v-if="!isEdit" :headers="[
     { name: 'Authorization', value: 'Bearer ' + authStore.state.access_token },
   ]" url="https://dev-api.platfo.net/api/v1/knowledge_base/upload/" :multiple="false" auto-upload field-name="file"
@@ -103,6 +105,14 @@ const handleSubmit = async () => {
     </q-card-section>
     <q-card-section>
       <q-table flat bordered :columns="TABLE_COLUMNS" :rows="knowledgebaseList || []">
+        <template v-slot:body-cell-source_link="props">
+          <q-td v-if="props.row.source_link" :props="props">
+            <a :href="props.row.source_link" target="_blank"><q-badge color="blue-1" text-color="blue" :label="props.row.source_link" class="q-pa-sm"></q-badge></a>
+          </q-td>
+          <q-td v-else>
+            <q-badge color="red-1" text-color="red" label="تعریف نشده" class="q-pa-sm"></q-badge>
+          </q-td>
+        </template>
         <template v-slot:body-cell-actions="props">
           <q-td :props="props">
             <div>

@@ -353,6 +353,7 @@ export interface KnowledgebaseBase {
   metadatas?: any;
   type?: KnowledgebaseFileType;
   file_path?: string;
+  source_link?: string;
   chatbot_id?: string;
 }
 
