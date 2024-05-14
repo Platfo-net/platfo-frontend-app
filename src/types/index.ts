@@ -355,6 +355,8 @@ export interface KnowledgebaseBase {
   file_path?: string;
   source_link?: string;
   chatbot_id?: string;
+  manual_input?: string;
+  urls?: string[];
 }
 
 export interface Knowledgebase extends KnowledgebaseBase {

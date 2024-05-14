@@ -27,14 +27,22 @@ const isEdit = ref<boolean>(false);
 /****************** */
 
 /** COMPONENT DEFINES */
+type UploadFileRejectedProps = { failedPropValidation: string; file: File };
+type CreateModalTabType = { id: string, label: string; };
 const TABLE_COLUMNS: QTableColumn[] = [
   { name: 'name', field: 'name', label: 'عنوان', align: 'left' },
   { name: 'source_link', field: 'source_link', label: 'لینک منبع', align: 'left' },
+  { name: 'manual_input', field: 'manual_input', label: 'متن دستی', align: 'left' },
   // { name: 'type', field: 'type', label: 'نوع فایل', align: 'left' },
-  // { name: 'file', field: 'file', label: 'فایل', align: 'left' },
+  { name: 'file_path', field: 'file_path', label: 'فایل', align: 'left' },
   { name: 'actions', field: 'actions', label: 'عملیات', align: 'left' },
-]
-type UploadFileRejectedProps = { failedPropValidation: string; file: File };
+];
+const createTabs: CreateModalTabType[] = [
+  { id: 'create_manual', label: 'دستی' },
+  { id: 'create_filebased', label: 'فایلی' },
+  // { id: 'create_crawler', label: 'کراولر' },
+];
+const currentCreateTab = ref<string>('create_manual');
 /******************** */
 
 /** COMPONENT FUNCTIONS */
@@ -72,28 +80,83 @@ const handleSubmit = async () => {
     isEdit = false;
   }">
     <q-card style="min-width: 367px;">
-      <q-card-section>
-        <div class="text-h6">{{ isEdit ? 'ویرایش دانش' : 'ایجاد دانش جدید' }}</div>
-      </q-card-section>
-      <q-card-section>
-        <q-form @submit="handleSubmit">
-          <q-input :rules="[
-    (val) =>
-      (val && val.length > 0) ||
-      $t('general.fields.requiredStringField'),
-  ]" class="q-mb-md" outlined type="text" v-model="upsertKnowledgebaseModel!.name" dense label="نام"
-            lazy-rules></q-input>
-            <q-input class="q-mb-md" outlined type="url" v-model="upsertKnowledgebaseModel!.source_link" dense label="لینک منبع"></q-input>
-          <q-uploader v-if="!isEdit" :headers="[
-    { name: 'Authorization', value: 'Bearer ' + authStore.state.access_token },
-  ]" url="https://dev-api.platfo.net/api/v1/knowledge_base/upload/" :multiple="false" auto-upload field-name="file"
-            flat bordered no-thumbnails label="فایل دانش (فقط pdf یا txt)" class="q-mb-md full-width"
-            accept=".txt, .pdf" @rejected="uploadFileRejected" @uploaded="uploadedEventHandler">
-          </q-uploader>
-          <q-btn type="submit" class="q-mb-md" color="primary" :label="isEdit ? 'ذخیره تغییرات' : 'ایجاد دانش جدید'"
-            :loading="isEdit ? updateKnowledgebaseIsPending : createKnowledgebaseIsPending"></q-btn>
-        </q-form>
-      </q-card-section>
+        <template v-if="!isEdit">
+          <q-tabs v-model="currentCreateTab">
+            <q-tab v-for="tab in createTabs" :name="tab.id" :key="tab.id" :label="tab.label"></q-tab>
+          </q-tabs>
+          <q-tab-panels v-model="currentCreateTab">
+            <q-tab-panel name="create_manual">
+              <q-card-section>
+                <div class="q-mb-md text-body1">
+                  ایجاد دانش دستی
+                </div>
+                <q-form @submit="handleSubmit">
+                  <q-input :rules="[
+                    (val) =>
+                      (val && val.length > 0) ||
+                      $t('general.fields.requiredStringField'),
+                  ]" class="q-mb-sm" outlined type="text" v-model="upsertKnowledgebaseModel!.name" dense label="نام"
+                    lazy-rules></q-input>
+                  <q-input class="q-mb-md" outlined type="url" v-model="upsertKnowledgebaseModel!.source_link" dense
+                    label="لینک منبع"></q-input>
+                  <q-input :rules="[
+                    (val) =>
+                      (val && val.length > 0) ||
+                      $t('general.fields.requiredStringField'),
+                  ]" lazy-rules class="q-mb-md" outlined type="textarea" v-model="upsertKnowledgebaseModel!.manual_input" dense
+                    label="متن دانش"></q-input>
+                  <q-btn type="submit" class="q-mb-md full-width" color="teal-1" text-color="teal" unelevated :label="isEdit ? 'ذخیره تغییرات' : 'ایجاد دانش جدید'"
+                    :loading="isEdit ? updateKnowledgebaseIsPending : createKnowledgebaseIsPending"></q-btn>
+                </q-form>
+              </q-card-section>
+            </q-tab-panel>
+            <q-tab-panel name="create_filebased">
+              <q-card-section>
+                <div class="q-mb-md text-body1">
+                  ایجاد دانش فایلی
+                </div>
+                <q-form @submit="handleSubmit">
+                  <q-input :rules="[
+                    (val) =>
+                      (val && val.length > 0) ||
+                      $t('general.fields.requiredStringField'),
+                  ]" class="q-mb-sm" outlined type="text" v-model="upsertKnowledgebaseModel!.name" dense label="نام"
+                    lazy-rules></q-input>
+                  <q-input class="q-mb-md" outlined type="url" v-model="upsertKnowledgebaseModel!.source_link" dense
+                    label="لینک منبع"></q-input>
+                  <q-uploader v-if="!isEdit" :headers="[
+                    { name: 'Authorization', value: 'Bearer ' + authStore.state.access_token },
+                  ]" url="https://dev-api.platfo.net/api/v1/knowledge_base/upload/" :multiple="false" auto-upload field-name="file"
+                    flat bordered no-thumbnails label="فایل دانش (فقط pdf یا txt)" class="q-mb-md full-width"
+                    accept=".txt, .pdf" @rejected="uploadFileRejected" @uploaded="uploadedEventHandler">
+                  </q-uploader>
+                  <q-btn type="submit" class="q-mb-md full-width" color="teal-1" text-color="teal" unelevated :label="isEdit ? 'ذخیره تغییرات' : 'ایجاد دانش جدید'"
+                    :loading="isEdit ? updateKnowledgebaseIsPending : createKnowledgebaseIsPending"></q-btn>
+                </q-form>
+              </q-card-section>
+            </q-tab-panel>
+          </q-tab-panels>
+        </template>
+        <template v-else>
+          <q-card-section>
+            <div class="text-h6">ویرایش دانش</div>
+          </q-card-section>
+          <q-card-section>
+            <q-form @submit="handleSubmit">
+              <q-input :rules="[
+        (val) =>
+          (val && val.length > 0) ||
+          $t('general.fields.requiredStringField'),
+      ]" class="q-mb-md" outlined type="text" v-model="upsertKnowledgebaseModel!.name" dense label="نام"
+                lazy-rules></q-input>
+                <q-input class="q-mb-md" outlined type="url" v-model="upsertKnowledgebaseModel!.source_link" dense label="لینک منبع"></q-input>
+                <q-input class="q-mb-md" outlined type="textarea" v-model="upsertKnowledgebaseModel!.manual_input" dense
+                    label="متن دانش"></q-input>
+              <q-btn  type="submit" class="q-mb-md full-width" color="blue-1" text-color="blue" unelevated :label="isEdit ? 'ذخیره تغییرات' : 'ایجاد دانش جدید'"
+                :loading="isEdit ? updateKnowledgebaseIsPending : createKnowledgebaseIsPending"></q-btn>
+            </q-form>
+          </q-card-section>
+        </template>
     </q-card>
   </q-dialog>
   <q-card flat bordered class="q-pa-md">
@@ -107,7 +170,8 @@ const handleSubmit = async () => {
       <q-table flat bordered :columns="TABLE_COLUMNS" :rows="knowledgebaseList || []">
         <template v-slot:body-cell-source_link="props">
           <q-td v-if="props.row.source_link" :props="props">
-            <a :href="props.row.source_link" target="_blank"><q-badge color="blue-1" text-color="blue" :label="props.row.source_link" class="q-pa-sm"></q-badge></a>
+            <a :href="props.row.source_link" target="_blank"><q-chip color="blue-1" text-color="blue"
+                :label="props.row.source_link" class="q-pa-sm" icon-right="link"></q-chip></a>
           </q-td>
           <q-td v-else>
             <q-badge color="red-1" text-color="red" label="تعریف نشده" class="q-pa-sm"></q-badge>
@@ -120,11 +184,38 @@ const handleSubmit = async () => {
                 @click="async () => await deleteKnowledgebase(props.row.uuid as string)"
                 :loading="deleteKnowledgebaseIsPending"></q-btn>
               <q-btn class="q-ml-md" dense size="sm" flat color="dark" label="ویرایش" @click="() => {
-    upsertKnowledgebaseModel = { ...props.row };
-    isEdit = true;
-    showUpsertKnowledgebaseModel = true;
-  }"></q-btn>
+                upsertKnowledgebaseModel = { ...props.row };
+                isEdit = true;
+                showUpsertKnowledgebaseModel = true;
+              }"></q-btn>
             </div>
+          </q-td>
+        </template>
+        <template v-slot:body-cell-manual_input="props">
+          <q-td v-if="props.row.manual_input" :props="props">
+            <q-btn color="blue-1" text-color="blue" label="مشاهده متن" unelevated size="sm">
+              <q-popup-proxy>
+                <q-banner>
+                  <template v-slot:avatar>
+                    <q-icon name="text_snippet" color="blue" size="sm" />
+                  </template>
+                  {{ props.row.manual_input }}
+                </q-banner>
+              </q-popup-proxy>
+            </q-btn>
+          </q-td>
+          <q-td v-else>
+            <q-badge color="red-1" text-color="red" label="تعریف نشده" class="q-pa-sm"></q-badge>
+          </q-td>
+        </template>
+        <template v-slot:body-cell-file_path="props">
+          <q-td :props="props">
+            <template v-if="props.row.manual_input">
+              <q-badge class="q-pa-sm" color="red-1" text-color="red">آپلود نشده</q-badge>
+            </template>
+            <template v-else>
+              <q-badge class="q-pa-sm" color="teal-1" text-color="teal">دارد</q-badge>
+            </template>
           </q-td>
         </template>
       </q-table>
