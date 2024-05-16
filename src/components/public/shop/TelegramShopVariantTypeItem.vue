@@ -28,6 +28,7 @@ const shopCart = useShoppingCart();
 </script>
 
 <template>
+  
   <div class="flex row">
     {{ variant.title }}
   </div>
@@ -44,19 +45,54 @@ const shopCart = useShoppingCart();
     </div>
     <div class="flex row">
       <template v-if="shopCart.getItemCount(product, variant) > 0">
-        <div class="flex row q-pa-sm justify-between items-center"
-          style="border: 1px solid #e2e2e2; border-radius: 4px; box-shadow: #e2e2e2 0px 0px 15px; width: 143px;">
-          <q-btn @click="shopCart.add(product, variant)" class="q-mx-sm" icon="add" color="white" text-color="grey-8"
-            size="sm" dense flat></q-btn>
-          <small class="q-mx-sm">{{ shopCart.getItemCount(product, variant) }}</small>
-          <q-btn @click="shopCart.remove(product, variant)" class="q-mx-sm"
-            :icon="shopCart.getItemCount(product, variant) === 1 ? 'delete' : 'remove'"
-            :text-color="shopCart.getItemCount(product, variant) === 1 ? 'red-8' : 'dark'" size="sm" dense flat></q-btn>
+        <div
+          class="flex row q-pa-sm justify-between items-center"
+          style="
+            border: 1px solid #e2e2e2;
+            border-radius: 4px;
+            box-shadow: #e2e2e2 0px 0px 15px;
+            width: 143px;
+          "
+        >
+          <q-btn
+            @click="shopCart.add(product, variant)"
+            class="q-mx-sm"
+            icon="add"
+            color="white"
+            text-color="grey-8"
+            size="sm"
+            dense
+            flat
+          ></q-btn>
+          <small class="q-mx-sm">{{
+            shopCart.getItemCount(product, variant)
+          }}</small>
+          <q-btn
+            @click="shopCart.remove(product, variant)"
+            class="q-mx-sm"
+            :icon="
+              shopCart.getItemCount(product, variant) === 1
+                ? 'delete'
+                : 'remove'
+            "
+            :text-color="
+              shopCart.getItemCount(product, variant) === 1 ? 'red-8' : 'dark'
+            "
+            size="sm"
+            dense
+            flat
+          ></q-btn>
         </div>
       </template>
       <template v-else>
         <div class="flex row">
-          <q-btn color="dark" :label="variant.is_available ? 'افزودن' : 'ناموجود'" @click="shopCart.add(product, variant)" style="width: 143px;" :disable="!variant.is_available"></q-btn>
+          <q-btn
+            color="dark"
+            :label="variant.is_available ? 'افزودن' : 'ناموجود'"
+            @click="shopCart.add(product, variant)"
+            style="width: 143px"
+            :disable="!variant.is_available"
+          ></q-btn>
         </div>
       </template>
     </div>
