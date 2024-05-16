@@ -33,10 +33,6 @@ const showBotsDrawer = ref(false);
 const showTelegramBotsList = ref(false);
 const selectedBotToAdd = ref<string>('');
 const manageCreditSection = ref<string>('connected_telegram_bots');
-// const botProp = ref({});
-// const loadingProp = ref(false);
-// const chatbotIdProp = ref('');
-// const botIdProp = ref('');
 
 const {
   data: connectedTelegramBots,
@@ -44,12 +40,6 @@ const {
 } = chatbotService.bots.telegram.queries.getConnectedBots(
   route.params.chatbotId as string
 );
-// const {
-//   mutateAsync: deleteConnectedTelegramBot,
-//   isPending: deleteConnectedTelegramBotIsPending,
-// } = chatbotService.bots.telegram.mutations.deleteBot(
-//   route.params.chatbotId as string
-// );
 const {
   mutateAsync: registerTelegramBot,
   isPending: registerTelegramBotIsPending,
@@ -215,34 +205,6 @@ const { data: telegramBots, isLoading: telegramBotsIsLoading } =
                     class="col-12 col-md-4"
                     :key="bot.uuid"
                   >
-                    <!-- <q-card bordered flat>
-                      <q-card-section>
-                        <div class="flex row justify-between items-center">
-                          <div>نام بات</div>
-                          <div>
-                            {{ bot.username }}
-                          </div>
-                        </div>
-                      </q-card-section>
-                      <q-card-section>
-                        <q-btn
-                          @click="
-                            async () => {
-                              await deleteConnectedTelegramBot({
-                                botId: bot.uuid,
-                                chatbotId: route.params.chatbotId as string,
-                              });
-                            }
-                          "
-                          color="red-1"
-                          text-color="red"
-                          label="حذف اتصال"
-                          unelevated
-                          class="full-width"
-                          :loading="deleteConnectedTelegramBotIsPending"
-                        ></q-btn>
-                      </q-card-section>
-                    </q-card> -->
                     <ConnectedBotsPage
                       :id = "bot.uuid"
                       :username = "bot.username"

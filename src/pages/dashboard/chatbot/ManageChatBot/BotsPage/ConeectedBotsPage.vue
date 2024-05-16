@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { TelegramBot } from 'src/types';
 import { useChatbotService } from 'src/services/useChatbotService';
 import { useRoute } from 'vue-router';
 const props = defineProps<{
@@ -14,16 +13,7 @@ const {
 } = chatbotService.bots.telegram.mutations.deleteBot(
   route.params.chatbotId as string
 );
-// const { id, username } = props.botProp;
-console.log(props.id);
-console.log(props.username);
 
-// const {
-//   data: connectedTelegramBots,
-//   isLoading: connectedTelegramBotsIsLoading,
-// } = chatbotService.bots.telegram.queries.getConnectedBots(
-//   route.params.chatbotId as string
-// );
 </script>
 <template>
   <q-card bordered flat>
