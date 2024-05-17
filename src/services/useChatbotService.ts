@@ -4,13 +4,15 @@ import {
   Chatbot,
   ChatbotBaseType,
   ChatbotConnectedTelegramBotsApiResponse,
-  ChatbotCreditSubscriptionTransactionResponse,
   ChatbotSubscriptionPlansResponse,
   ChatbotCreditType,
+  ChatbotCreditSubscriptionTransactionListResponse,
 } from 'src/types';
 import { AxiosResponse } from 'axios';
+import { useRouter } from 'vue-router';
 
 export const useChatbotService = () => {
+  const router = useRouter();
   const platfoApi = useApi();
   const queryClient = useQueryClient();
 
@@ -71,13 +73,13 @@ export const useChatbotService = () => {
             retry: false,
             refetchOnWindowFocus: false,
           }),
-        getChatbotCreditTransactions: (chatbotId: string) =>
+        getChatbotCreditTransactions: () =>
           useQuery({
-            queryKey: ['chatbot-credit-transactions', { chatbotId }],
+            queryKey: ['chatbot-credit-transactions'],
             queryFn: async () => {
               const response =
-                await platfoApi.api.get<ChatbotCreditSubscriptionTransactionResponse>(
-                  '/chatbot-credit/' + chatbotId + '/transaction'
+                await platfoApi.api.get<ChatbotCreditSubscriptionTransactionListResponse>(
+                  '/chatbot-credit/transactions'
                 );
               return response.data;
             },
@@ -119,6 +121,20 @@ export const useChatbotService = () => {
               queryClient.invalidateQueries({
                 queryKey: ['chatbot-credit-transactions', { chatbotId }],
               });
+            },
+          }),
+        payTransaction: () =>
+          useMutation({
+            mutationFn: async (dto: { transactionId: string }) => {
+              const response = await platfoApi.api.get<{
+                redirect_url: string;
+              }>('/chatbot-credit/' + dto.transactionId + '/pay');
+              return response.data;
+            },
+            onSuccess: (data) => {
+              setTimeout(() => {
+                window.location.replace(data.redirect_url);
+              }, 2000);
             },
           }),
       },
