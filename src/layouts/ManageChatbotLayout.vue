@@ -2,19 +2,30 @@
   <q-layout view="lHh Lpr lFf">
     <q-header bordered>
       <q-toolbar class="mobile-only">
-        <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
+        <q-btn
+          flat
+          dense
+          round
+          icon="menu"
+          aria-label="Menu"
+          @click="toggleLeftDrawer" />
         <q-toolbar-title> {{ $t('layout.appHeader') }} </q-toolbar-title>
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above style="border: 1px solid #e2e2e2">
-      <base-layout-sidebar-menu :routes="manageChatbotLayoutRoutes"></base-layout-sidebar-menu>
+    <q-drawer
+      v-model="leftDrawerOpen"
+      show-if-above
+      style="border: 1px solid #e2e2e2">
+      <base-layout-sidebar-menu
+        :routes="manageChatbotLayoutRoutes"></base-layout-sidebar-menu>
       <base-layout-sidebar-user-info></base-layout-sidebar-user-info>
     </q-drawer>
 
     <q-page-container class="bg-grey-3">
       <q-page class="q-pa-md container">
         <BreadCrumbs />
+        <chatbot-credit-banner></chatbot-credit-banner>
         <router-view />
       </q-page>
     </q-page-container>
@@ -29,10 +40,11 @@ import BaseLayoutSidebarMenu from 'components/common/BaseLayoutSidebarMenu.vue';
 import BaseLayoutSidebarUserInfo from 'src/components/common/BaseLayoutSidebarUserInfo.vue';
 import { useMeta } from 'quasar';
 import { useRoute } from 'vue-router';
+import ChatbotCreditBanner from 'src/components/dashboard/ChatbotCreditBanner.vue';
 const route = useRoute();
 useMeta(() => ({
   title: route.meta.title as string,
-}))
+}));
 
 const { manageChatbotLayoutRoutes } = useSidebar();
 

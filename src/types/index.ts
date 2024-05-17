@@ -380,14 +380,9 @@ export interface TelegramBot extends TelegramBotBase {
 }
 
 export type ChatbotCreditType = {
-  from_datetime: Date;
-  to_datetime: Date;
-  is_extra: boolean;
-  remaining_chat_count: number;
-  remaining_token_count: number;
+  amount: number;
+  currency: string;
 };
-
-export type ChatbotCreditsResponse = ChatbotCreditType[];
 
 export type ChatbotSubscriptionPlanFeature = {
   title: string;
@@ -417,14 +412,11 @@ export type ChatbotCreditSubscriptionTransaction = {
   created_at: Date;
   paid_at: Date;
   is_paid: boolean;
-  is_extra: boolean;
-  extend_days: number;
-  extend_chat_count: number;
-  extend_token_count: number;
+  can_pay: boolean;
 };
 
 export type ChatbotCreditSubscriptionTransactionResponse =
-  ChatbotCreditSubscriptionTransaction[];
+  ChatbotCreditSubscriptionTransaction;
 
 export type ChatbotConnectedTelegramBot = { uuid: string; username: string };
 export type ChatbotConnectedTelegramBotsApiResponse =

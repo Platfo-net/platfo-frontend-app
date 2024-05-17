@@ -5,8 +5,8 @@ import {
   ChatbotBaseType,
   ChatbotConnectedTelegramBotsApiResponse,
   ChatbotCreditSubscriptionTransactionResponse,
-  ChatbotCreditsResponse,
   ChatbotSubscriptionPlansResponse,
+  ChatbotCreditType,
 } from 'src/types';
 import { AxiosResponse } from 'axios';
 
@@ -59,12 +59,12 @@ export const useChatbotService = () => {
     },
     credit: {
       queries: {
-        getChatbotCredit: (chatbotId: string) =>
+        getChatbotCredit: () =>
           useQuery({
-            queryKey: ['chatbot-credit', { chatbotId }],
+            queryKey: ['chatbot-credit'],
             queryFn: async () => {
-              const response = await platfoApi.api.get<ChatbotCreditsResponse>(
-                '/chatbot-credit/' + chatbotId + '/credits'
+              const response = await platfoApi.api.get<ChatbotCreditType>(
+                '/chatbot-credit/credit'
               );
               return response.data;
             },
