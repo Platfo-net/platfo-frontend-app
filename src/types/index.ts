@@ -346,12 +346,17 @@ export interface Chatbot extends ChatbotBaseType {
   udpated_at: Date;
 }
 
-export type KnowledgebaseFileType = 'pdf' | 'txt';
+export enum KnowledgebaseFileEnum {
+  TEXT = 'txt',
+  PDF = 'pdf',
+  MANUAL_INPUT = 'manual_input',
+  CRAWLER = 'crawler',
+}
 
 export interface KnowledgebaseBase {
   name: string;
   metadatas?: any;
-  type?: KnowledgebaseFileType;
+  type?: KnowledgebaseFileEnum;
   file_path?: string;
   source_link?: string;
   chatbot_id?: string;
