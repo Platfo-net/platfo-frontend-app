@@ -510,12 +510,15 @@ const handleChooseDataType = (dataType: KnowledgebaseFileEnum) => {
           <q-td v-if="props.row.source_link" :props="props">
             <a :href="props.row.source_link" target="_blank"
               ><q-chip
+                dir="ltr"
                 color="blue-1"
                 text-color="blue"
-                :label="props.row.source_link"
+                :label="props.row.source_link.substring(0, 15) + '...'"
                 class="q-pa-sm"
-                icon-right="link"></q-chip
-            ></a>
+                icon-right="link">
+                <q-tooltip>{{ props.row.source_link }}</q-tooltip></q-chip
+              ></a
+            >
           </q-td>
           <q-td v-else>
             <q-badge
