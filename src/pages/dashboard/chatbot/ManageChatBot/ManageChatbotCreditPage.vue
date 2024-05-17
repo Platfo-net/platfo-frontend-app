@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import ChatbotCreditBanner from 'src/components/dashboard/ChatbotCreditBanner.vue';
 import { useChatbotService } from 'src/services/useChatbotService';
 import { ref } from 'vue';
 
@@ -39,6 +40,7 @@ const { mutateAsync: payTransactionAsync, isPending: payTransactionIsPending } =
 </script>
 
 <template>
+  <chatbot-credit-banner></chatbot-credit-banner>
   <q-card flat bordered>
     <q-layout
       container

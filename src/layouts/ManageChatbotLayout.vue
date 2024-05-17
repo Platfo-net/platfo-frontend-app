@@ -25,7 +25,6 @@
     <q-page-container class="bg-grey-3">
       <q-page class="q-pa-md container">
         <BreadCrumbs />
-        <chatbot-credit-banner></chatbot-credit-banner>
         <router-view />
       </q-page>
     </q-page-container>
@@ -40,7 +39,6 @@ import BaseLayoutSidebarMenu from 'components/common/BaseLayoutSidebarMenu.vue';
 import BaseLayoutSidebarUserInfo from 'src/components/common/BaseLayoutSidebarUserInfo.vue';
 import { useMeta } from 'quasar';
 import { useRoute } from 'vue-router';
-import ChatbotCreditBanner from 'src/components/dashboard/ChatbotCreditBanner.vue';
 const route = useRoute();
 useMeta(() => ({
   title: route.meta.title as string,
