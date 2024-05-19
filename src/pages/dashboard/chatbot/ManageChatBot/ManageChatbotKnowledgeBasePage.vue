@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { QTableColumn } from 'quasar';
 import { useKnowledgebaseService } from 'src/services/useKnowledgebaseService';
-import { ref } from 'vue';
+import { Ref, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import CreateKnowledgeDialog from 'src/components/dashboard/CreateKnowledgeDialog.vue';
+import EditKnowledgeDialog from 'src/components/dashboard/EditKnowledgeDialog.vue';
+import { Knowledgebase } from 'src/types';
 
 /** COMPONENT COMPOSABLES */
 const route = useRoute();
@@ -20,6 +22,9 @@ const {
   isPending: deleteKnowledgebaseIsPending,
 } = knowledgebaseService.mutations.deleteKnowledgebase();
 const showCreateKnowledgebaseModel = ref<boolean>(false);
+const showUpdateKnowledgebaseModel = ref<boolean>(false);
+// const updateKnowledgebaseModel = ref(null);
+const updateKnowledgebaseModel = ref<Knowledgebase>({} as Knowledgebase);
 /****************** */
 
 /** COMPONENT DEFINES */
@@ -44,7 +49,10 @@ const TABLE_COLUMNS: QTableColumn[] = [
 /******************** */
 
 /** COMPONENT FUNCTIONS */
-
+const editKnowlegebase = (knowledgebase: Knowledgebase) => {
+  updateKnowledgebaseModel.value = knowledgebase;
+  showUpdateKnowledgebaseModel.value = true;
+};
 /********************** */
 
 /** COMPONENT LIFECYCLE HANDLERS */
@@ -56,6 +64,11 @@ const TABLE_COLUMNS: QTableColumn[] = [
   <create-knowledge-dialog
     v-model="showCreateKnowledgebaseModel"
     :chatbotId="route.params.chatbotId as string"></create-knowledge-dialog>
+  <edit-knowledge-dialog
+    v-if="showUpdateKnowledgebaseModel"
+    v-model="showUpdateKnowledgebaseModel"
+    :chatbot-id="route.params.chatbotId as string"
+    :knowledge-base="updateKnowledgebaseModel"></edit-knowledge-dialog>
   <q-card flat bordered class="q-pa-md">
     <q-card-section class="row justify-between items-center">
       <div class="text-h6">
@@ -116,7 +129,8 @@ const TABLE_COLUMNS: QTableColumn[] = [
                 size="sm"
                 flat
                 color="dark"
-                label="ویرایش"></q-btn>
+                label="ویرایش"
+                @click="editKnowlegebase(props.row)"></q-btn>
             </div>
           </q-td>
         </template>
