@@ -37,9 +37,9 @@ const handleFormSubmit = () => {
           router.replace({ name: 'OtpPhoneConfirmationPage' });
         })
         .catch(() => {
-          notify.error('Error while calling OTP');
+          notify.error('خطا در فراخوانی رمز یکبار مصرف');
         });
-      notify.success('Successful', 'ثبت نام موفقیت آمیز');
+      notify.success('ثبت نام موفقیت آمیز', 'success');
       router.replace({
         name: 'OtpPhoneConfirmationPage',
       });
@@ -60,13 +60,20 @@ const handleFormSubmit = () => {
           )
           .then(({ data: { token } }) => {
             authStore.actions.setOtpToken(token);
-            router.replace({ name: 'OtpPhoneConfirmationPage' });
+            router.push({ name: 'OtpPhoneConfirmationPage' });
           })
-          .catch(() => {
-            notify.error('خطا در ارسال کد');
+          .catch((err) => {
+            if (
+              err.response.data.detail ===
+              'Activation code has been already sent to you.'
+            ) {
+              router.push({ name: 'OtpPhoneConfirmationPage' });
+            } else {
+              notify.error('خطا در ارسال کد');
+            }
           });
       } else {
-        notify.error('Error', err.response.data.detail);
+        notify.error(err.response.data.detail, 'error');
       }
     });
 };
@@ -74,50 +81,107 @@ const handleFormSubmit = () => {
 
 <template>
   <q-page class="flex justify-center items-center bg-grey-3 q-pa-lg">
-    <q-card flat style="min-width: 300px; width: 100%; max-width: 995px; border-radius: 35px;" class="flex row">
+    <q-card
+      flat
+      style="
+        min-width: 300px;
+        width: 100%;
+        max-width: 995px;
+        border-radius: 35px;
+      "
+      class="flex row">
       <q-card-section class="col-md-6 col-12">
         <div class="q-pa-lg">
-
-          <div class="text-h6 q-mb-lg text-bold">{{ $t('pages.public.register.title') }}</div>
+          <div class="text-h6 q-mb-lg text-bold">
+            {{ $t('pages.public.register.title') }}
+          </div>
           <form class="q-pa-md" @submit.prevent="handleFormSubmit">
             <div class="q-gutter-md">
               <div class="row q-col-gutter-md">
                 <div class="col-md-6 col-12">
-                  <div class="q-mb-sm">{{ $t('pages.public.register.fields.firstname') }}</div>
-                  <q-input rounded outlined name="first_name" v-model="authStore.registerState.first_name" type="text"
-                    color="primary" :rules="[(val) => !!val || $t('general.fields.requiredStringField')]" />
+                  <div class="q-mb-sm">
+                    {{ $t('pages.public.register.fields.firstname') }}
+                  </div>
+                  <q-input
+                    rounded
+                    outlined
+                    name="first_name"
+                    v-model="authStore.registerState.first_name"
+                    type="text"
+                    color="primary"
+                    :rules="[
+                      (val) =>
+                        !!val || $t('general.fields.requiredStringField'),
+                    ]" />
                 </div>
                 <div class="col-md-6 col-12">
-                  <div class="q-mb-sm">{{ $t('pages.public.register.fields.lastname') }}</div>
-                  <q-input rounded outlined color="primary" name="last_name" v-model="authStore.registerState.last_name"
-                    type="text" :rules="[(val) => !!val || $t('general.fields.requiredStringField')]" />
+                  <div class="q-mb-sm">
+                    {{ $t('pages.public.register.fields.lastname') }}
+                  </div>
+                  <q-input
+                    rounded
+                    outlined
+                    color="primary"
+                    name="last_name"
+                    v-model="authStore.registerState.last_name"
+                    type="text"
+                    :rules="[
+                      (val) =>
+                        !!val || $t('general.fields.requiredStringField'),
+                    ]" />
                 </div>
                 <div class="col-12">
-                  <div class="q-mb-sm">{{ $t('pages.public.register.fields.phoneNumber') }}</div>
-                  <q-input rounded outlined color="primary" name="phone_number"
-                    v-model="authStore.registerState.phone_number" type="text"
-                    :rules="[(val) => !!val || $t('general.fields.requiredStringField')]" />
+                  <div class="q-mb-sm">
+                    {{ $t('pages.public.register.fields.phoneNumber') }}
+                  </div>
+                  <q-input
+                    rounded
+                    outlined
+                    color="primary"
+                    name="phone_number"
+                    v-model="authStore.registerState.phone_number"
+                    type="text"
+                    :rules="[
+                      (val) =>
+                        !!val || $t('general.fields.requiredStringField'),
+                    ]" />
                 </div>
                 <div class="col-12">
-                  <div class="q-mb-sm">{{ $t('pages.public.register.fields.password') }}</div>
-                  <q-input rounded outlined color="primary" v-model="authStore.registerState.password"
+                  <div class="q-mb-sm">
+                    {{ $t('pages.public.register.fields.password') }}
+                  </div>
+                  <q-input
+                    rounded
+                    outlined
+                    color="primary"
+                    v-model="authStore.registerState.password"
                     :type="showPass ? 'password' : 'text'"
-                    :rules="[(val) => !!val || $t('general.fields.requiredStringField')]">
+                    :rules="[
+                      (val) =>
+                        !!val || $t('general.fields.requiredStringField'),
+                    ]">
                     <template v-slot:append>
-                      <q-icon :name="showPass ? 'visibility_off' : 'visibility'" class="cursor-pointer"
+                      <q-icon
+                        :name="showPass ? 'visibility_off' : 'visibility'"
+                        class="cursor-pointer"
                         @click="showPass = !showPass" />
                     </template>
                   </q-input>
                 </div>
                 <div class="col-12">
-                  <q-btn rounded color="primary" class="full-width q-pa-md"
-                    :label="$t('pages.public.register.register')" type="submit" :disable="
-            // authStore.registerState.phone_country_code.length < 1 ||
-            authStore.registerState.phone_number.length < 1 ||
-            authStore.registerState.first_name.length < 1 ||
-            authStore.registerState.last_name.length < 1 ||
-            authStore.registerState.password.length < 1
-            " />
+                  <q-btn
+                    rounded
+                    color="primary"
+                    class="full-width q-pa-md"
+                    :label="$t('pages.public.register.register')"
+                    type="submit"
+                    :disable="
+                      // authStore.registerState.phone_country_code.length < 1 ||
+                      authStore.registerState.phone_number.length < 1 ||
+                      authStore.registerState.first_name.length < 1 ||
+                      authStore.registerState.last_name.length < 1 ||
+                      authStore.registerState.password.length < 1
+                    " />
                 </div>
               </div>
             </div>
@@ -125,14 +189,19 @@ const handleFormSubmit = () => {
           <div class="flex row justify-center items-center q-mt-md">
             <p>
               {{ $t('pages.public.register.isUser') }}
-              <router-link class="text-secondary text-bold text-body1" style="text-decoration: none;"
-                :to="{ name: 'LoginPage' }">{{ $t('pages.public.register.loginHere') }}</router-link>
+              <router-link
+                class="text-secondary text-bold text-body1"
+                style="text-decoration: none"
+                :to="{ name: 'LoginPage' }"
+                >{{ $t('pages.public.register.loginHere') }}</router-link
+              >
             </p>
           </div>
         </div>
       </q-card-section>
-      <q-card-section class="bg-primary col-12 col-md-6 mobile-hide q-pa-xl flex items-center justify-center"
-        style="border-radius: 35px;">
+      <q-card-section
+        class="bg-primary col-12 col-md-6 mobile-hide q-pa-xl flex items-center justify-center"
+        style="border-radius: 35px">
         <signup-image />
       </q-card-section>
     </q-card>

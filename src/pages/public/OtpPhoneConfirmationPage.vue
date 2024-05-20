@@ -15,45 +15,48 @@ if (!authStore.otpToken) {
 }
 const resendEmail = ref(false);
 const counterSeconds = ref(120);
-const timeout = ref(setInterval(() => {
-  counterSeconds.value -= 1;
-  if (counterSeconds.value == 0) {
-    resendEmail.value = true;
-    clearInterval(timeout.value);
-  }
-}, 1000));
+const timeout = ref(
+  setInterval(() => {
+    counterSeconds.value -= 1;
+    if (counterSeconds.value == 0) {
+      resendEmail.value = true;
+      clearInterval(timeout.value);
+    }
+  }, 1000)
+);
 const handleResendCode = async () => {
   try {
-    const { data: { token } } = await api
-      .post<ISendActivationCodeResponse>(
-        '/auth/send-activation-code-by-sms',
-        {
-          phone_number: authStore.registerState.phone_number,
-          phone_country_code: authStore.registerState.phone_country_code,
-        }
-      )
-      resendEmail.value = false;
-      counterSeconds.value = 120;
-      timeout.value = setInterval(() => {
-        counterSeconds.value -= 1;
-        if (counterSeconds.value == 0) {
-          resendEmail.value = true;
-          clearInterval(timeout.value);
-        }
-      }, 1000);
-      authStore.actions.setOtpToken(token);
-      notify.success('ارسال مجدد موفقیت آمیز')
+    const {
+      data: { token },
+    } = await api.post<ISendActivationCodeResponse>(
+      '/auth/send-activation-code-by-sms',
+      {
+        phone_number: authStore.registerState.phone_number,
+        phone_country_code: authStore.registerState.phone_country_code,
+      }
+    );
+    resendEmail.value = false;
+    counterSeconds.value = 120;
+    timeout.value = setInterval(() => {
+      counterSeconds.value -= 1;
+      if (counterSeconds.value == 0) {
+        resendEmail.value = true;
+        clearInterval(timeout.value);
+      }
+    }, 1000);
+    authStore.actions.setOtpToken(token);
+    notify.success('ارسال مجدد موفقیت آمیز');
   } catch {
-    notify.error('خطا در ارسال مجدد کد تایید')
+    notify.error('خطا در ارسال مجدد کد تایید');
   }
-}
+};
 </script>
 
 <template>
   <q-page class="flex justify-center items-center bg-primary q-pa-lg">
     <q-card class="q-pa-md" style="min-width: 300px">
       <q-card-section>
-        <div class="flex row justify-center items-center text-h6">
+        <div class="flex row justify-center items-center text-body1">
           {{ $t('pages.otp.title') }}
         </div>
       </q-card-section>
@@ -61,7 +64,12 @@ const handleResendCode = async () => {
         <phone-otp></phone-otp>
       </q-card-section>
       <q-card-section class="flex items-center justify-center">
-        <q-btn color="dark" :disable="!resendEmail"
+        <q-btn
+          :color="!resendEmail ? 'grey-3' : 'teal-1'"
+          :text-color="!resendEmail ? 'grey-8' : 'teal'"
+          class="full-width"
+          unelevated
+          :disable="!resendEmail"
           @click="() => handleResendCode()"
           >{{ $t('pages.otp.resendConfirmation') }}
           {{ counterSeconds > 0 ? counterSeconds : '' }}</q-btn

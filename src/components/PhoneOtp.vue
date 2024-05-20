@@ -28,13 +28,13 @@ function handleOnComplete(value: any) {
       router.replace({ name: 'LoginPage' });
     })
     .catch((err) => {
-      inputClasses.value.push('otp-input-error')
-      notify.error(JSON.stringify(err.response.data));
-      // TODO implement proper error handling
+      inputClasses.value.push('otp-input-error');
+      notify.error('کد نادرست است');
     });
 }
 function handleOnChange(value: any) {
-  if (inputClasses.value.includes('otp-input-error')) inputClasses.value = ['otp-input'];
+  if (inputClasses.value.includes('otp-input-error'))
+    inputClasses.value = ['otp-input'];
   optState.value = value;
 }
 </script>
@@ -53,8 +53,7 @@ function handleOnChange(value: any) {
       :conditionalClass="['one', 'two', 'three', 'four']"
       :placeholder="['', '', '', '', '', '']"
       @on-change="handleOnChange"
-      @on-complete="handleOnComplete"
-    />
+      @on-complete="handleOnComplete" />
   </div>
 </template>
 
