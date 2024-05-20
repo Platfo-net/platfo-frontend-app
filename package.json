@@ -1,8 +1,8 @@
 {
   "name": "platfo-spa",
   "version": "0.0.1",
-  "description": "A Platfo Startup Project",
-  "productName": "Platfo App",
+  "description": "پلتفو ابزاری حرفه‌ای برای ساخت اپلیکیشن روی تلگرام هست. در کمتر از ده دقیقه می‌تونید پیشرفته‌ترین بات اپلیکیشن تلگرام رو برای خودتون داشته باشید. این فروشگاه کاملا مخصوص شماست و برای ساخت و راه‌اندازیش نیازی به هیچ دانش فنی یا حتی زیرساخت سروری ندارید...ا",
+  "productName": "پلتفو",
   "author": "Hamid Samimi <samimi.electronics@gmail.com>",
   "private": true,
   "scripts": {
