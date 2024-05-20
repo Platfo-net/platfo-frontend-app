@@ -183,39 +183,20 @@ const isTransactionExpired = (canPay: boolean, isPaid: boolean) =>
                   <q-td>
                     <q-btn
                       :label="
-                        isTransactionExpired(
-                          props.row.can_pay,
-                          props.row.is_paid
-                        )
-                          ? 'منقضی شده'
-                          : props.row.can_pay
+                        props.row.can_pay
                           ? 'پرداخت'
+                          : isTransactionExpired(
+                              props.row.can_pay,
+                              props.row.is_paid
+                            )
+                          ? 'منقضی شده'
                           : 'پرداخت شده'
                       "
-                      :color="
-                        isTransactionExpired(
-                          props.row.can_pay,
-                          props.row.is_paid
-                        ) || !props.row.can_pay
-                          ? 'grey-4'
-                          : 'teal-1'
-                      "
-                      :text-color="
-                        isTransactionExpired(
-                          props.row.can_pay,
-                          props.row.is_paid
-                        ) || !props.row.can_pay
-                          ? 'grey'
-                          : 'teal'
-                      "
+                      :color="!props.row.can_pay ? 'grey-4' : 'teal-1'"
+                      :text-color="!props.row.can_pay ? 'grey' : 'teal'"
                       size="sm"
                       unelevated
-                      :disable="
-                        isTransactionExpired(
-                          props.row.can_pay,
-                          props.row.is_paid
-                        ) || !props.row.can_pay
-                      "
+                      :disable="!props.row.can_pay"
                       :loading="payTransactionIsPending"
                       @click="
                         async () => {
