@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ChatbotCreditBanner from 'src/components/dashboard/ChatbotCreditBanner.vue';
 import { useChatbotService } from 'src/services/useChatbotService';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 /** COMPONENT COMPOSABLES */
 const chatbotService = useChatbotService();
@@ -28,6 +28,9 @@ const {
 } = chatbotService.credit.queries.getChatbotCreditTransactions();
 const { mutateAsync: payTransactionAsync, isPending: payTransactionIsPending } =
   chatbotService.credit.mutations.payTransaction();
+
+const isTransactionExpired = (canPay: boolean, isPaid: boolean) =>
+  !(canPay && isPaid);
 /****************** */
 
 /** COMPONENT FUNCTIONS */
@@ -179,12 +182,40 @@ const { mutateAsync: payTransactionAsync, isPending: payTransactionIsPending } =
                 <template v-slot:body-cell-actions="props">
                   <q-td>
                     <q-btn
-                      :label="props.row.can_pay ? 'پرداخت' : 'پرداخت شده'"
-                      :color="!props.row.can_pay ? 'grey-4' : 'teal-1'"
-                      :text-color="!props.row.can_pay ? 'grey' : 'teal'"
+                      :label="
+                        isTransactionExpired(
+                          props.row.can_pay,
+                          props.row.is_paid
+                        )
+                          ? 'منقضی شده'
+                          : props.row.can_pay
+                          ? 'پرداخت'
+                          : 'پرداخت شده'
+                      "
+                      :color="
+                        isTransactionExpired(
+                          props.row.can_pay,
+                          props.row.is_paid
+                        ) || !props.row.can_pay
+                          ? 'grey-4'
+                          : 'teal-1'
+                      "
+                      :text-color="
+                        isTransactionExpired(
+                          props.row.can_pay,
+                          props.row.is_paid
+                        ) || !props.row.can_pay
+                          ? 'grey'
+                          : 'teal'
+                      "
                       size="sm"
                       unelevated
-                      :disable="!props.row.can_pay"
+                      :disable="
+                        isTransactionExpired(
+                          props.row.can_pay,
+                          props.row.is_paid
+                        ) || !props.row.can_pay
+                      "
                       :loading="payTransactionIsPending"
                       @click="
                         async () => {
