@@ -38,39 +38,50 @@ const isBtnDisabled = computed(
 </script>
 
 <template>
-  <q-page class="flex justify-center items-center bg-primary q-pa-lg">
+  <q-page class="flex justify-center items-center bg-grey-3 q-pa-lg">
     <q-card
+      flat
+      bordered
       class="q-pa-md"
       style="min-width: 300px; width: 100%; max-width: 500px">
-      <div class="text-h6">{{ $t('pages.public.forgotPassword.title') }}</div>
-      <form @submit.prevent="handleFormSubmit">
-        <div class="q-gutter-md">
-          <q-input
-            name="phone_number"
-            v-model="authStore.changePasswordState.phone_number"
-            type="text"
-            :label="$t('pages.public.login.fields.phoneNumber')"
-            color="dark"
-            :rules="[
-              (val) => !!val || $t('general.fields.requiredStringField'),
-            ]"
-            dir="ltr"
-            :hint="t('pages.public.forgotPassword.fields.phoneNumberHint')" />
-        </div>
-        <q-btn
-          :color="!isBtnDisabled ? 'teal-1' : 'grey-3'"
-          :text-color="!isBtnDisabled ? 'teal' : 'grey-8'"
-          unelevated
-          class="full-width q-mt-md"
-          :label="$t('pages.public.forgotPassword.getToken')"
-          type="submit"
-          :disable="authStore.changePasswordState.phone_number.length < 11" />
-      </form>
+      <q-card-section class="text-h6 text-primary">
+        <q-icon name="fingerprint"></q-icon>
+        {{ $t('pages.public.forgotPassword.title') }}
+      </q-card-section>
+      <q-card-section>
+        <q-form @submit.prevent="handleFormSubmit">
+          <div>
+            <div>{{ $t('pages.public.login.fields.phoneNumber') }}</div>
+            <q-input
+              class="q-mt-md"
+              rounded
+              outlined
+              name="phone_number"
+              v-model="authStore.changePasswordState.phone_number"
+              type="text"
+              color="teal"
+              :rules="[
+                (val) => !!val || $t('general.fields.requiredStringField'),
+              ]"
+              dir="ltr"
+              :hint="t('pages.public.forgotPassword.fields.phoneNumberHint')" />
+          </div>
+          <q-btn
+            rounded
+            :color="!isBtnDisabled ? 'teal-1' : 'grey-3'"
+            :text-color="!isBtnDisabled ? 'teal' : 'grey-8'"
+            unelevated
+            class="full-width q-mt-md q-pa-md"
+            :label="$t('pages.public.forgotPassword.getToken')"
+            type="submit"
+            :disable="authStore.changePasswordState.phone_number.length < 11" />
+        </q-form>
+      </q-card-section>
       <div class="flex column justify-center end q-mt-md">
         <p>
           {{ $t('pages.public.forgotPassword.notUser') }}
           <router-link
-            class="text-body2 text-teal"
+            class="text-body2 text-blue"
             style="text-decoration: none"
             :to="{ name: 'RegisterPage' }"
             >{{ $t('pages.public.forgotPassword.registerHere') }}</router-link
@@ -79,7 +90,7 @@ const isBtnDisabled = computed(
         <p>
           {{ $t('pages.public.forgotPassword.isUser') }}
           <router-link
-            class="text-body2 text-teal"
+            class="text-body2 text-blue"
             style="text-decoration: none"
             :to="{ name: 'LoginPage' }"
             >{{ $t('pages.public.forgotPassword.loginHere') }}</router-link
