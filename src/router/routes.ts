@@ -934,6 +934,22 @@ const routes: RouteRecordRaw[] = [
     ],
   },
   {
+    path: '/payment/success',
+    name: 'PaymentSuccessPage',
+    component: () => import('pages/payments/SuccessPayment.vue'),
+    meta: {
+      title: 'پرداخت موفق | پلتفو',
+    },
+  },
+  {
+    path: '/payment/failed',
+    name: 'PaymentFailedPage',
+    component: () => import('pages/payments/FailedPayment.vue'),
+    meta: {
+      title: 'پرداخت ناموفق | پلتفو',
+    },
+  },
+  {
     path: '/not-authorized',
     name: 'NotAuthorized',
     component: () => import('pages/NotAuthorizedPage.vue'),
