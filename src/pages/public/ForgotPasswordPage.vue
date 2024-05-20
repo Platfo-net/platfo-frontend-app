@@ -5,6 +5,7 @@ import { useRouter } from 'vue-router';
 import { useAuthStore } from 'stores/auth-store';
 import { IForgotPasswordResponse } from 'stores/types';
 import { useI18n } from 'vue-i18n';
+import { computed } from 'vue';
 
 const { api } = useApi();
 const notify = useNotify();
@@ -31,14 +32,16 @@ const handleFormSubmit = async () => {
     notify.error(t('pages.public.forgotPassword.notifications.getTokenError'));
   }
 };
+const isBtnDisabled = computed(
+  () => authStore.changePasswordState.phone_number.length < 11
+);
 </script>
 
 <template>
   <q-page class="flex justify-center items-center bg-primary q-pa-lg">
     <q-card
       class="q-pa-md"
-      style="min-width: 300px; width: 100%; max-width: 500px"
-    >
+      style="min-width: 300px; width: 100%; max-width: 500px">
       <div class="text-h6">{{ $t('pages.public.forgotPassword.title') }}</div>
       <form @submit.prevent="handleFormSubmit">
         <div class="q-gutter-md">
@@ -52,29 +55,35 @@ const handleFormSubmit = async () => {
               (val) => !!val || $t('general.fields.requiredStringField'),
             ]"
             dir="ltr"
-            :hint="t('pages.public.forgotPassword.fields.phoneNumberHint')"
-          />
+            :hint="t('pages.public.forgotPassword.fields.phoneNumberHint')" />
         </div>
         <q-btn
-          color="dark"
+          :color="!isBtnDisabled ? 'teal-1' : 'grey-3'"
+          :text-color="!isBtnDisabled ? 'teal' : 'grey-8'"
+          unelevated
           class="full-width q-mt-md"
           :label="$t('pages.public.forgotPassword.getToken')"
           type="submit"
-          :disable="authStore.changePasswordState.phone_number.length < 11"
-        />
+          :disable="authStore.changePasswordState.phone_number.length < 11" />
       </form>
       <div class="flex column justify-center end q-mt-md">
         <p>
           {{ $t('pages.public.forgotPassword.notUser') }}
-          <router-link :to="{ name: 'RegisterPage' }">{{
-            $t('pages.public.forgotPassword.registerHere')
-          }}</router-link>
+          <router-link
+            class="text-body2 text-teal"
+            style="text-decoration: none"
+            :to="{ name: 'RegisterPage' }"
+            >{{ $t('pages.public.forgotPassword.registerHere') }}</router-link
+          >
         </p>
         <p>
           {{ $t('pages.public.forgotPassword.isUser') }}
-          <router-link :to="{ name: 'LoginPage' }">{{
-            $t('pages.public.forgotPassword.loginHere')
-          }}</router-link>
+          <router-link
+            class="text-body2 text-teal"
+            style="text-decoration: none"
+            :to="{ name: 'LoginPage' }"
+            >{{ $t('pages.public.forgotPassword.loginHere') }}</router-link
+          >
         </p>
       </div>
     </q-card>
