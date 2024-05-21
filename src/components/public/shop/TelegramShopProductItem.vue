@@ -25,8 +25,7 @@ const hasVariants = ref<boolean>(props.product.variants.length ? true : false);
               object-fit: cover;
             "
             :src="product.image_url"
-            fit="cover"
-          />
+            fit="cover" />
         </div>
         <div class="flex column full-width q-pa-sm">
           <div>{{ product.title }}</div>
@@ -40,25 +39,17 @@ const hasVariants = ref<boolean>(props.product.variants.length ? true : false);
       </div>
       <div
         v-if="!hasVariants"
-        class="flex row justify-between items-center q-py-md q-px-sm"
-      >
+        class="flex row justify-between items-center q-py-md q-px-sm">
         <telegram-shop-product-type-item :product="product" />
       </div>
       <div
         v-else
-        v-for="(variant, idx) in props.product.variants"
+        v-for="variant in props.product.variants"
         :key="variant.id"
-        class="q-mb-md"
-        :style="
-          idx != props.product.variants.length - 1
-            ? 'border-bottom: 1px solid #e2e2e2;'
-            : ''
-        "
-      >
+        class="q-mb-md">
         <telegram-shop-variant-type-item
           :product="product"
-          :variant="variant"
-        />
+          :variant="variant" />
       </div>
     </div>
   </q-card>
