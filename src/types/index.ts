@@ -68,6 +68,21 @@ export type UpsertProductType = {
   price: number;
   currency: string;
   category_id: string;
+  variants: ProductVariantType[];
+  attributes: ProductAttributeType[];
+};
+
+export type ProductVariantType = {
+  id: string;
+  title: string;
+  price: number;
+  currency: string;
+  is_available: boolean;
+};
+
+export type ProductAttributeType = {
+  key: string;
+  value: string;
 };
 
 export type ProductType = {
@@ -80,6 +95,8 @@ export type ProductType = {
   created_at: Date;
   updated_at: Date;
   image_url: string;
+  variants: ProductVariantType[];
+  attributes: ProductAttributeType[];
 };
 
 export type InsertProductCategoryType = {
@@ -249,7 +266,7 @@ export type ShopTableType = {
 export type ShopCategoryType = {
   value: string;
   title: string;
-}
+};
 
 export type ShopInformationType = {
   id: string;
@@ -262,3 +279,153 @@ export type PaginationType = {
   rowsPerPage: number;
   rowsNumber: number;
 };
+
+export type ShopPlanType = {
+  id: string;
+  title: string;
+  description: string;
+  is_active: boolean;
+  extend_days: number;
+  extend_count: number;
+  original_price: number;
+  discounted_price: number;
+  currency: string;
+  discount_percentage: number;
+  module: string;
+  features: string[];
+};
+
+export type DashboardDailyReportType = {
+  today_orders_count: number;
+  today_orders_sum: number;
+  today_orders_average: number;
+};
+
+export type ChartKeyValuePairType = {
+  date: Date;
+  value: number;
+};
+
+export type DashboardMonthlyReportType = {
+  orders_count_per_day: ChartKeyValuePairType[];
+  orders_amount_per_day: ChartKeyValuePairType[];
+  orders_average_per_day: ChartKeyValuePairType[];
+  orders_total_count: number;
+  orders_total_amount: number;
+  orders_total_average: number;
+};
+
+export type ShoppingCartItemType = {
+  product: ProductType;
+  variant: ProductVariantType | null;
+  count: number;
+  is_variant: boolean;
+  price: number;
+};
+
+export type ShopShoppingCart = {
+  shop_id: string;
+  items: ShoppingCartItemType[];
+};
+
+export type ShoppingCartType = {
+  shop_carts: ShopShoppingCart[];
+};
+
+export interface ChatbotBaseType {
+  name: string;
+  description?: string;
+  prompt?: string;
+  user_id?: string;
+  temperature: number;
+}
+
+export interface Chatbot extends ChatbotBaseType {
+  uuid: string;
+  created_at: Date;
+  udpated_at: Date;
+}
+
+export enum KnowledgebaseFileEnum {
+  TEXT = 'txt',
+  PDF = 'pdf',
+  MANUAL_INPUT = 'manual_input',
+  CRAWLER = 'crawler',
+}
+
+export interface KnowledgebaseBase {
+  name: string;
+  metadatas?: any;
+  type?: KnowledgebaseFileEnum;
+  file_path?: string;
+  source_link?: string;
+  chatbot_id?: string;
+  manual_input?: string;
+  urls?: string[];
+}
+
+export interface Knowledgebase extends KnowledgebaseBase {
+  uuid?: string;
+  created_at?: Date;
+  updated_at?: Date;
+}
+
+export interface TelegramBotBase {
+  first_name: string;
+  username: string;
+  welcome_message: string;
+  button_name: string;
+  app_link: string;
+  image: string | File;
+  image_url: string;
+}
+
+export interface TelegramBot extends TelegramBotBase {
+  id: string;
+}
+
+export type ChatbotCreditType = {
+  amount: number;
+  currency: string;
+};
+
+export type ChatbotSubscriptionPlanFeature = {
+  title: string;
+};
+
+export type ChatbotSubscriptionPlan = {
+  uuid: string;
+  title: string;
+  description: string;
+  is_active: boolean;
+  is_extra: boolean;
+  extend_days: number;
+  extend_chat_count: number;
+  extend_token_count: number;
+  price: number;
+  currency: string;
+  features: ChatbotSubscriptionPlanFeature[];
+};
+
+export type ChatbotSubscriptionPlansResponse = ChatbotSubscriptionPlan[];
+
+export type ChatbotCreditSubscriptionTransaction = {
+  uuid: string;
+  amount: number;
+  title: string;
+  currency: string;
+  created_at: Date;
+  paid_at: Date;
+  is_paid: boolean;
+  can_pay: boolean;
+};
+
+export type ChatbotCreditSubscriptionTransactionResponse =
+  ChatbotCreditSubscriptionTransaction;
+
+export type ChatbotCreditSubscriptionTransactionListResponse =
+  ChatbotCreditSubscriptionTransaction[];
+
+export type ChatbotConnectedTelegramBot = { uuid: string; username: string };
+export type ChatbotConnectedTelegramBotsApiResponse =
+  ChatbotConnectedTelegramBot[];

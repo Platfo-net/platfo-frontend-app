@@ -1,0 +1,8 @@
+{
+  "i18n-ally.localesPaths": ["src/i18n/**"],
+  "vue.complete.casing.tags": "autoKebab",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "prettier.bracketSameLine": false,
+  "prettier.configPath": ""
+}

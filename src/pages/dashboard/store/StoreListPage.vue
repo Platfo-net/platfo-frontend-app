@@ -4,7 +4,7 @@ import LayoutBreadCrumbs from 'components/BreadCrumbs.vue';
 </script>
 
 <template>
-  <q-page class="q-pa-md">
+  <q-page class="q-pa-md container">
     <LayoutBreadCrumbs />
 
     <div class="row justify-between items-center q-mb-lg">

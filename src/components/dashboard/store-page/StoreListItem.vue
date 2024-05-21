@@ -9,7 +9,7 @@ const props = defineProps<IShop>();
     <q-toolbar class="bg-primary text-white" style="border-top-left-radius: 4px; border-top-right-radius: 4px;">
       <q-toolbar-title class="text-h6">{{ props.title }}</q-toolbar-title>
       <q-btn class="q-ml-lg" size="sm" color="white" text-color="dark" :to="{
-        name: 'ManageStoreBasicInformation',
+        name: 'ManageStoreIndexPage',
         params: { storeId: props.id },
       }">{{
   $t('pages.panel.dashboard.storeListPage.storeListItem.manage')

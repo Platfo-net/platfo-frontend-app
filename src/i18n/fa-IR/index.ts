@@ -50,14 +50,14 @@ export default {
   pages: {
     public: {
       login: {
-        title: 'ورود به پلتفو',
+        title: 'ورود به دنیای پلتفو',
         fields: {
           phoneNumber: 'شماره موبایل',
-          password: 'پسوورد',
+          password: 'رمز عبور',
         },
-        notUser: 'هنوز کاربر نیستید؟',
-        forgotPassword: 'فراموشی رمز عبور',
-        registerHere: 'اینجا ثبت نام کن.',
+        notUser: 'هنوز کاربر پلتفو نیستید؟',
+        forgotPassword: 'بازیابی رمز عبور',
+        registerHere: 'ایجاد حساب',
         notifications: {
           loginSuccess: 'ورود موفقیت آمیز',
           loginError: 'شماره یا پسوورد نادرست بود',
@@ -65,21 +65,21 @@ export default {
         login: 'ورود',
       },
       register: {
-        title: 'ثبت نام در پلتفو',
+        title: 'ایجاد حساب در پلتفو',
         fields: {
           firstname: 'نام',
           lastname: 'نام خانوادگی',
           phoneCountryCode: 'کد کشور',
           phoneNumber: 'شماره موبایل',
-          password: 'پسوورد',
+          password: 'رمز عبور',
         },
-        isUser: 'کاربر هستید؟',
-        loginHere: 'اینجا وارد شوید.',
+        isUser: 'کاربر پلتفو هستید؟',
+        loginHere: 'ورود',
         notifications: {
           registerSuccess: 'ثبت نام موفقیت آمیز',
           registerError: 'شماره یا پسوورد نادرست بود',
         },
-        register: 'ثبت نام',
+        register: 'ایجاد حساب',
       },
       forgotPassword: {
         title: 'فراموشی رمز عبور',

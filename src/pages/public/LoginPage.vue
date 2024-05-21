@@ -7,6 +7,7 @@ import { useAuthStore } from 'stores/auth-store';
 import { ILoginApiResponse } from 'stores/types';
 import { ILoginFormState } from 'src/types';
 import { useI18n } from 'vue-i18n';
+import LoginImage from 'src/components/public/shop/LoginImage.vue';
 
 const { api } = useApi();
 const notify = useNotify();
@@ -39,67 +40,55 @@ const handleFormSubmit = async () => {
 </script>
 
 <template>
-  <q-page class="flex justify-center items-center bg-primary q-pa-lg">
-    <q-card
-      class="q-pa-md"
-      style="min-width: 300px; width: 100%; max-width: 500px"
-    >
-      <div class="text-h6">{{ $t('pages.public.login.title') }}</div>
-      <form @submit.prevent="handleFormSubmit">
-        <div class="q-gutter-md">
-          <q-input
-            name="phone_number"
-            v-model="loginState.phone_number"
-            type="text"
-            :label="$t('pages.public.login.fields.phoneNumber')"
-            color="dark"
-            :rules="[
-              (val) => !!val || $t('general.fields.requiredStringField'),
-            ]"
-            dir="ltr"
-          />
-          <q-input
-            v-model="loginState.password"
-            :type="showPass ? 'password' : 'text'"
-            :label="$t('pages.public.login.fields.password')"
-            color="dark"
-            :rules="[
-              (val) => !!val || $t('general.fields.requiredStringField'),
-            ]"
-            dir="ltr"
-          >
-            <template v-slot:append>
-              <q-icon
-                :name="showPass ? 'visibility_off' : 'visibility'"
-                class="cursor-pointer"
-                @click="showPass = !showPass"
-              />
-            </template>
-          </q-input>
-          <small class="flex justify-end">
-            <router-link :to="{ name: 'ForgotPasswordPage' }">{{
-              $t('pages.public.login.forgotPassword')
-            }}</router-link>
-          </small>
-        </div>
-        <q-btn
-          color="dark"
-          class="full-width q-mt-md"
-          :label="$t('pages.public.login.login')"
-          type="submit"
-          :disable="
-            loginState.password.length < 1 || loginState.phone_number.length < 1
-          "
-        />
-      </form>
-      <div class="flex column justify-center items-center q-mt-md">
-        <p>
-          {{ $t('pages.public.login.notUser') }}
-          <router-link :to="{ name: 'RegisterPage' }">{{
-            $t('pages.public.login.registerHere')
+  <q-page class="flex justify-center items-center bg-grey-3 q-pa-lg">
+    <q-card flat style="min-width: 300px; width: 100%; max-width: 995px; max-height: 595px; border-radius: 35px;"
+      class="flex row">
+      <q-card-section class="col-md-6 col-12">
+        <div class="q-pa-lg">
+          <div class="text-h6 q-mb-lg">{{ $t('pages.public.login.title') }}</div>
+          <form @submit.prevent="handleFormSubmit">
+            <div class="q-mb-lg">{{ $t('pages.public.login.fields.phoneNumber') }}</div>
+            <div class="q-gutter-md">
+              <q-input rounded outlined color="secondary" name="phone_number" v-model="loginState.phone_number"
+                type="text" :rules="[
+            (val) => !!val || $t('general.fields.requiredStringField'),
+          ]" dir="ltr" />
+              <div class="q-mb-lg">{{ $t('pages.public.login.fields.password') }}</div>
+              <q-input rounded outlined color="secondary" style="font-family: sans-serif;" v-model="loginState.password"
+                :type="showPass ? 'password' : 'text'" :rules="[
+            (val) => !!val || $t('general.fields.requiredStringField'),
+          ]" dir="ltr">
+                <template v-slot:append>
+                  <q-icon :name="showPass ? 'visibility_off' : 'visibility'" class="cursor-pointer"
+                    @click="showPass = !showPass" />
+                </template>
+              </q-input>
+              <div class="flex justify-center q-mb-lg">
+                <span class="q-mr-sm">رمز عبور خود را فراموش کرده اید؟</span>
+                <router-link class="text-bold text-secondary" style="text-decoration: none;"
+                  :to="{ name: 'ForgotPasswordPage' }">{{
+            $t('pages.public.login.forgotPassword')
           }}</router-link>
-        </p>
-      </div>
+              </div>
+            </div>
+            <q-btn rounded color="primary" class="full-width q-mt-md q-pa-md" :label="$t('pages.public.login.login')"
+              type="submit" :disable="loginState.password.length < 1 || loginState.phone_number.length < 1
+            " />
+          </form>
+          <div class="flex column justify-center items-center q-mt-md">
+            <p>
+              {{ $t('pages.public.login.notUser') }}
+              <router-link class="text-bold text-secondary" style="text-decoration: none;"
+                :to="{ name: 'RegisterPage' }">{{
+            $t('pages.public.login.registerHere')
+                }}</router-link>
+            </p>
+          </div>
+        </div>
+      </q-card-section>
+      <q-card-section class="bg-primary col-12 col-md-6 mobile-hide" style="border-radius: 35px;">
+        <login-image />
+      </q-card-section>
     </q-card>
   </q-page>
 </template>

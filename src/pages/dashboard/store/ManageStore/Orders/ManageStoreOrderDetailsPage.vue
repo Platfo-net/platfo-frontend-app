@@ -150,7 +150,8 @@ const changeOrderStatusHandler = async () => {
           <div class="col-12">
             <q-table flat bordered title="اقلام سفارش" :columns="[
               { name: 'image', field: 'image', label: 'عکس محصول', align: 'left' },
-              { name: 'title', field: 'title', label: 'عنوان کالا', align: 'left' },
+              { name: 'title', field: 'product_title', label: 'عنوان کالا', align: 'left' },
+              { name: 'variant_title', field: 'variant_title', label: 'عنوان ورینت', align: 'left' },
               { name: 'count', field: 'count', label: 'تعداد سفارش شده', align: 'left' },
               { name: 'price', field: 'price', label: 'قیمت واحد', align: 'left' },
               { name: 'total', field: 'total', label: 'مجموع', align: 'left' },

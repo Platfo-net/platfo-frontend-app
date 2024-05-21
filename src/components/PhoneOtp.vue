@@ -14,8 +14,8 @@ const otpInput = ref<InstanceType<typeof VOtpInput> | null>();
 const optState = ref('');
 const router = useRouter();
 const notify = useNotify();
+const inputClasses = ref<string[]>(['otp-input']);
 function handleOnComplete(value: any) {
-  console.log('OTP completed: ', optState.value);
   api
     .post('/auth/activate-by-sms', {
       phone_number: authStore.registerState.phone_number,
@@ -28,53 +28,56 @@ function handleOnComplete(value: any) {
       router.replace({ name: 'LoginPage' });
     })
     .catch((err) => {
-      notify.error(JSON.stringify(err.response.data));
-      // TODO implement proper error handling
+      inputClasses.value.push('otp-input-error');
+      notify.error('کد نادرست است');
     });
 }
 function handleOnChange(value: any) {
+  if (inputClasses.value.includes('otp-input-error'))
+    inputClasses.value = ['otp-input'];
   optState.value = value;
 }
 </script>
 
 <template>
-  <div class="overflow-auto q-py-lg">
+  <div>
     <v-otp-input
+      class="flex justify-between items-center"
       ref="otpInput"
       v-model="optState"
-      input-classes="otp-input"
+      :input-classes="inputClasses"
       separator=""
       :num-inputs="OTP_DIGITS"
       :should-auto-focus="true"
       input-type="letter-numeric"
       :conditionalClass="['one', 'two', 'three', 'four']"
-      :placeholder="['*', '*', '*', '*', '*', '*']"
+      :placeholder="['', '', '', '', '', '']"
       @on-change="handleOnChange"
-      @on-complete="handleOnComplete"
-    />
+      @on-complete="handleOnComplete" />
   </div>
 </template>
 
 <style lang="sass">
 .otp-input
-  width: 1.5rem
-  height: 1.5rem
-  margin: 0 10px
+  width: 2.2rem
+  height: 2.2rem
   border-radius: 4px
   border: #e2e2e2 1px solid
   text-align: center
   transition: all 150ms
 
+.otp-input-error
+  border: 1px solid $red !important
+  color: red !important
 
 .otp-input:focus
-  border: $primary 1px solid
+  border: $secondary 1px solid
   outline: none
 
 /* Background colour of an input field with value */
 .otp-input.is-complete
-  border: $warning 1px solid
-  background-color: $warning
-  color: $dark
+  border: $secondary 1px solid
+  color: $secondary
 
 .otp-input.is-complete:focus
   border: $secondary 1px solid

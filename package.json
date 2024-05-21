@@ -1,8 +1,8 @@
 {
   "name": "platfo-spa",
   "version": "0.0.1",
-  "description": "A Platfo Startup Project",
-  "productName": "Platfo App",
+  "description": "پلتفو ابزاری حرفه‌ای برای ساخت اپلیکیشن روی تلگرام هست. در کمتر از ده دقیقه می‌تونید پیشرفته‌ترین بات اپلیکیشن تلگرام رو برای خودتون داشته باشید. این فروشگاه کاملا مخصوص شماست و برای ساخت و راه‌اندازیش نیازی به هیچ دانش فنی یا حتی زیرساخت سروری ندارید...ا",
+  "productName": "پلتفو",
   "author": "Hamid Samimi <samimi.electronics@gmail.com>",
   "private": true,
   "scripts": {
@@ -15,13 +15,16 @@
   "dependencies": {
     "@quasar/extras": "^1.16.4",
     "@tanstack/vue-query": "^5.17.9",
+    "apexcharts": "^3.47.0",
     "axios": "^1.2.1",
     "pinia": "^2.0.11",
     "quasar": "^2.6.0",
+    "vazirmatn": "^33.0.3",
     "vue": "^3.0.0",
     "vue-i18n": "^9.2.2",
     "vue-qrcode": "^2.2.2",
     "vue-router": "^4.0.0",
+    "vue3-apexcharts": "^1.5.2",
     "vue3-otp-input": "^0.4.1"
   },
   "devDependencies": {

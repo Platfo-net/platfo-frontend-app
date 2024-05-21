@@ -62,14 +62,17 @@ const checkout = async () => {
     notify.error('خطا در پردازش اطلاعات. لطفا بعدا سعی کنید.');
     return;
   }
-  const shoppingCartItems =
-    shoppingCart.get().items[route.params.shopId as string];
-  dataToSend.items = Object.keys(shoppingCartItems).map((k): IShopOrderItem => {
-    return {
-      product_id: k,
-      count: shoppingCartItems[k].count,
-    };
-  });
+  const shoppingCartItems = shoppingCart.get().items;
+  dataToSend.items = shoppingCartItems.map(x => x.is_variant 
+    ? ({ product_id: x.product.id, count: x.count, variant_id: x.variant!.id })
+    : ({ product_id: x.product.id, count: x.count })
+  );
+  // dataToSend.items = Object.keys(shoppingCartItems).map((k): IShopOrderItem => {
+  //   return {
+  //     product_id: k,
+  //     count: shoppingCartItems[k].count,
+  //   };
+  // });
   try {
     const { data } = await api.post<ICreateShopOrderResponse>(
       `/shop/orders/telegram/${route.params.shopId}/${route.params.leadId || route.query.table || ''}`,

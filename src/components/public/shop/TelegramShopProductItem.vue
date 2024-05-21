@@ -1,56 +1,55 @@
 <script setup lang="ts">
 import { ITelegramShopProductItemProps } from 'components/models';
-import TomanSymbol from 'src/components/common/TomanSymbol.vue';
-import { useShoppingCart } from 'stores/shopping-cart-store';
-defineProps<ITelegramShopProductItemProps>();
-const shoppingCart = useShoppingCart();
+// import TomanSymbol from 'src/components/common/TomanSymbol.vue';
+// import { useShoppingCart } from 'stores/shopping-cart-store';
+import TelegramShopProductTypeItem from './TelegramShopProductTypeItem.vue';
+import TelegramShopVariantTypeItem from './TelegramShopVariantTypeItem.vue';
+import { ref } from 'vue';
+const props = defineProps<ITelegramShopProductItemProps>();
+// const shoppingCart = useShoppingCart();
+const hasVariants = ref<boolean>(props.product.variants.length ? true : false);
 </script>
 
 <template>
-  <q-card class="col-12 q-mb-md" bordered flat style="border-radius: 7px;">
+  <!-- hasVariants: {{ hasVariants }} -->
+  <q-card class="col-12 q-mb-md" bordered flat style="border-radius: 7px">
     <div class="flex column q-pa-md">
-      <div class="flex row" style="flex-wrap: nowrap;">
+      <div class="flex row" style="flex-wrap: nowrap">
         <div class="full-width">
-          <q-img style="border-radius: 4px; overflow: hidden; width: 100px; height: 100px; object-fit: cover;"
-            :src="product.image_url" fit="cover" />
+          <q-img
+            style="
+              border-radius: 4px;
+              overflow: hidden;
+              width: 100px;
+              height: 100px;
+              object-fit: cover;
+            "
+            :src="product.image_url"
+            fit="cover" />
         </div>
         <div class="flex column full-width q-pa-sm">
           <div>{{ product.title }}</div>
           <div class="flex row q-my-sm">
             <q-icon name="category" color="primary"></q-icon>
-            <small class="q-ml-sm">{{ product.category?.title || 'بدون دسته بندی' }}</small>
+            <small class="q-ml-sm">{{
+              product.category?.title || 'بدون دسته بندی'
+            }}</small>
           </div>
         </div>
       </div>
-      <div class="flex row justify-between items-center q-py-md q-px-sm">
-        <div class="flex row">
-          <div>
-            {{
-              Intl.NumberFormat('fa', {
-                currency: 'IRT',
-              }).format(product.price)
-            }}
-            <toman-symbol :size="16"></toman-symbol>
-          </div>
-        </div>
-        <div class="flex row">
-          <template v-if="shoppingCart.getItemCount(product) > 0">
-            <div class="flex row q-pa-sm justify-between items-center"
-              style="border: 1px solid #e2e2e2; border-radius: 4px; box-shadow: #e2e2e2 0px 0px 15px; width: 143px;">
-              <q-btn @click="shoppingCart.add(product)" class="q-mx-sm" icon="add" color="white" text-color="grey-8"
-                size="sm" dense flat></q-btn>
-              <small class="q-mx-sm">{{ shoppingCart.getItemCount(product) }}</small>
-              <q-btn @click="shoppingCart.remove(product)" class="q-mx-sm"
-                :icon="shoppingCart.getItemCount(product) === 1 ? 'delete' : 'remove'"
-                :text-color="shoppingCart.getItemCount(product) === 1 ? 'red-8' : 'dark'" size="sm" dense flat></q-btn>
-            </div>
-          </template>
-          <template v-else>
-            <div class="flex row">
-              <q-btn color="dark" label="افزودن" @click="shoppingCart.add(product)" style="width: 143px;"></q-btn>
-            </div>
-          </template>
-        </div>
+      <div
+        v-if="!hasVariants"
+        class="flex row justify-between items-center q-py-md q-px-sm">
+        <telegram-shop-product-type-item :product="product" />
+      </div>
+      <div
+        v-else
+        v-for="variant in props.product.variants"
+        :key="variant.id"
+        class="q-mb-md">
+        <telegram-shop-variant-type-item
+          :product="product"
+          :variant="variant" />
       </div>
     </div>
   </q-card>

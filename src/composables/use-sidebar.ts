@@ -28,6 +28,22 @@ export const useSidebar = () => {
         },
       ],
     },
+    {
+      title: 'چت بات',
+      icon: 'smart_toy',
+      children: [
+        {
+          title: 'چت بات های من',
+          to: { name: 'ChatbotListPage' },
+          icon: 'list',
+        },
+      ],
+    },
+    {
+      title: 'پلتفرم ها',
+      icon: 'list',
+      to: { name: 'BotListPage' },
+    },
   ];
 
   const manageShopLayoutRoutes: SidebarRoute[] = [
@@ -38,10 +54,14 @@ export const useSidebar = () => {
       activeClass: 'bg-transparent',
     },
     {
-      title:
-        t(
-          'pages.panel.dashboard.manageStorePage.panels.basicInformation.title'
-        ) + ' و اعتبار حساب',
+      title: 'پیشخوان',
+      to: { name: 'ManageStoreIndexPage' },
+      icon: 'dashboard',
+    },
+    {
+      title: t(
+        'pages.panel.dashboard.manageStorePage.panels.basicInformation.title'
+      ),
       to: { name: 'ManageStoreBasicInformation' },
       icon: 'info',
     },
@@ -80,7 +100,7 @@ export const useSidebar = () => {
       to: { name: 'ManageStoreShippingMethods' },
       icon: 'local_shipping',
     },
-    
+
     {
       title: 'سفارش ها',
       icon: 'list',
@@ -90,10 +110,45 @@ export const useSidebar = () => {
       title: 'مدیریت میزها',
       icon: 'bento',
       to: { name: 'ManageStoreTablesListPage' },
-    }
+    },
+  ];
+
+  const manageChatbotLayoutRoutes: SidebarRoute[] = [
+    {
+      title: t('general.goBack'),
+      to: { name: 'ChatbotListPage' },
+      icon: 'chevron_right',
+      activeClass: 'bg-transparent',
+    },
+    {
+      title: 'اطلاعات بات',
+      to: { name: 'ManageChatbotBasicInformationPage' },
+      icon: 'info',
+    },
+    {
+      title: 'مدیریت اعتبار',
+      to: { name: 'ManageChatbotCreditPage' },
+      icon: 'payment',
+    },
+    {
+      title: 'تنظیمات',
+      to: { name: 'ManageChatbotConfigurationPage' },
+      icon: 'settings',
+    },
+    {
+      title: 'پایگاه دانش',
+      to: { name: 'ManageChatbotKnowledgeBasePage' },
+      icon: 'list',
+    },
+    {
+      title: 'بات های متصل',
+      to: { name: 'ManageChatbotConnectedBotsPage' },
+      icon: 'smart_toy',
+    },
   ];
   return {
     mainLayoutRoutes,
     manageShopLayoutRoutes,
+    manageChatbotLayoutRoutes,
   };
 };

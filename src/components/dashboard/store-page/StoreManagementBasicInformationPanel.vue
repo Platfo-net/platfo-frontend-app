@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, reactive, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useNotify } from 'src/composables/use-notify';
 import { useI18n } from 'vue-i18n';
 import { useApi } from 'src/composables/use-api';
@@ -7,6 +7,8 @@ import { useRoute } from 'vue-router';
 import { IShop } from 'components/models';
 import BaseLoadingSpinner from 'components/common/BaseLoadingSpinner.vue';
 import { useShopService } from 'src/services/useShopService';
+import { getDaysFromNow } from 'src/utils';
+import TomanSymbol from 'src/components/common/TomanSymbol.vue';
 const { api, loading } = useApi();
 
 const { t } = useI18n();
@@ -20,9 +22,6 @@ const route = useRoute();
 const notify = useNotify();
 const shopService = useShopService();
 
-const { data: shopCredit } = shopService.queries.getShopCredit(
-  route.params.storeId as string
-);
 
 const { data: shopCategories, isPending: isCategoriesLoading } = shopService.queries.getShopCategories();
 
@@ -63,6 +62,7 @@ onMounted(async () => {
 </script>
 
 <template>
+  
   <q-card class="q-pa-lg q-mb-md" bordered flat>
     <div class="row justify-between items-center q-mb-md">
       <div class="text-h6">
@@ -191,24 +191,7 @@ onMounted(async () => {
       </div>
     </div>
   </q-card>
-  <q-card bordered flat>
-    <q-card-section>
-      <div class="row justify-between items-center">
-        <div class="text-h6">اعتبار حساب</div>
-        <q-btn color="dark" flat disable>افزودن اعتبار</q-btn>
-      </div>
-    </q-card-section>
-    <q-card-section>
-      <div class="row">
-        <div class="col-md-6 col-12">
-          <div class="text-body2 q-mb-md">اعتبار تا</div>
-          <div>
-            {{ new Date(shopCredit?.expires_at as string).toLocaleString('fa-IR') }}
-          </div>
-        </div>
-      </div>
-    </q-card-section>
-  </q-card>
+  
 </template>
 
 <style scoped lang="scss"></style>
