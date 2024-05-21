@@ -39,14 +39,6 @@ useMeta(() => ({
             <q-list bordered padding class="rounded-borders">
               <q-item>
                 <q-item-section>
-                  <q-item-label>بازگشت به</q-item-label>
-                  <q-item-section dir="ltr" caption>{{
-                    route.query.backUrl
-                  }}</q-item-section>
-                </q-item-section>
-              </q-item>
-              <q-item>
-                <q-item-section>
                   <q-item-label>شماره تراکنش</q-item-label>
                   <q-item-section dir="ltr" caption>{{
                     route.query.tid
