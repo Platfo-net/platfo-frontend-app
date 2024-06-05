@@ -77,6 +77,7 @@ const handleFormSubmit = () => {
     <q-card
       flat
       style="
+        height: calc(100vh - 100px);
         min-width: 300px;
         width: 100%;
         max-width: 995px;
@@ -86,7 +87,7 @@ const handleFormSubmit = () => {
     >
       <q-card-section class="col-md-6 col-12">
         <div class="q-pa-lg">
-          <div class="text-h6 q-mb-lg text-bold">
+          <div class="text-h5 q-mb-lg text-bold">
             {{ $t('pages.public.register.title') }}
           </div>
           <form class="q-pa-md" @submit.prevent="handleFormSubmit">
@@ -165,7 +166,7 @@ const handleFormSubmit = () => {
                     <template v-slot:append>
                       <q-icon
                         :name="showPass ? 'visibility_off' : 'visibility'"
-                        class="cursor-pointer"
+                        class="cursor-pointer q-mx-xs"
                         @click="showPass = !showPass"
                       />
                     </template>
@@ -217,6 +218,8 @@ const handleFormSubmit = () => {
 :deep(input:-webkit-autofill) {
   border-radius: 28px;
   padding: 0 12px;
+  margin-left: 1px;
+  margin-right: 1px;
 }
 
 :deep(.q-field--outlined .q-field__control) {

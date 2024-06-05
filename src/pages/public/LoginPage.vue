@@ -47,55 +47,64 @@ const handleFormSubmit = async () => {
         min-width: 300px;
         width: 100%;
         max-width: 995px;
-        max-height: 595px;
         border-radius: 35px;
+        height: calc(100vh - 100px);
       "
       class="flex row"
     >
       <q-card-section class="col-md-6 col-12">
         <div class="q-pa-lg">
-          <div class="text-h6 q-mb-lg">
+          <div class="text-h5 q-mb-lg text-bold">
             {{ $t('pages.public.login.title') }}
           </div>
-          <form @submit.prevent="handleFormSubmit">
-            <div class="q-gutter-xs">
-              <div class="q-mb-sm">
-                {{ $t('pages.public.login.fields.phoneNumber') }}
-              </div>
-              <q-input
-                rounded
-                outlined
-                name="phone_number"
-                v-model="loginState.phone_number"
-                type="text"
-                :rules="[
-                  (val) => !!val || $t('general.fields.requiredStringField'),
-                ]"
-                dir="ltr"
-              />
-              <div class="q-mb-sm">
-                {{ $t('pages.public.login.fields.password') }}
-              </div>
-              <q-input
-                rounded
-                outlined
-                color="secondary"
-                style="font-family: sans-serif"
-                v-model="loginState.password"
-                :type="showPass ? 'password' : 'text'"
-                :rules="[
-                  (val) => !!val || $t('general.fields.requiredStringField'),
-                ]"
-                dir="ltr"
-              >
-                <template v-slot:append>
-                  <q-icon
-                    :name="showPass ? 'visibility_off' : 'visibility'"
-                    class="cursor-pointer"
-                    @click="showPass = !showPass"
+          <form class="q-pa-md" @submit.prevent="handleFormSubmit">
+            <div class="q-gutter-md">
+              <div class="row q-col-gutter-md">
+                <div class="col-12">
+                  <div class="q-mb-sm">
+                    {{ $t('pages.public.login.fields.phoneNumber') }}
+                  </div>
+                  <q-input
+                    rounded
+                    outlined
+                    name="phone_number"
+                    v-model="loginState.phone_number"
+                    type="text"
+                    :rules="[
+                      (val) =>
+                        !!val || $t('general.fields.requiredStringField'),
+                    ]"
+                    dir="ltr"
                   />
-                </template>
-              </q-input>
+                </div>
+                <div class="col-12">
+                  <div class="q-mb-sm">
+                    {{ $t('pages.public.login.fields.password') }}
+                  </div>
+                  <q-input
+                    rounded
+                    outlined
+                    color="secondary"
+                    style="font-family: sans-serif"
+                    v-model="loginState.password"
+                    :type="showPass ? 'password' : 'text'"
+                    :rules="[
+                      (val) =>
+                        !!val || $t('general.fields.requiredStringField'),
+                    ]"
+                    dir="ltr"
+                  >
+                    <template v-slot:append>
+                      <q-icon
+                        :name="showPass ? 'visibility_off' : 'visibility'"
+                        class="cursor-pointer q-mx-xs"
+                        @click="showPass = !showPass"
+                      />
+                    </template>
+                  </q-input>
+                </div>
+              </div>
+
               <div class="flex justify-center q-mb-lg">
                 <span class="q-mr-sm">رمز عبور خود را فراموش کرده اید؟</span>
                 <router-link
@@ -132,7 +141,7 @@ const handleFormSubmit = async () => {
         </div>
       </q-card-section>
       <q-card-section
-        class="bg-primary col-12 col-md-6 mobile-hide"
+        class="bg-primary col-12 col-md-6 mobile-hide q-pa-xl flex items-center justify-center"
         style="border-radius: 35px"
       >
         <login-image />
@@ -145,6 +154,8 @@ const handleFormSubmit = async () => {
 :deep(input:-webkit-autofill) {
   border-radius: 28px;
   padding: 0 12px;
+  margin-left: 1px;
+  margin-right: 1px;
 }
 
 :deep(.q-field--outlined .q-field__control) {
