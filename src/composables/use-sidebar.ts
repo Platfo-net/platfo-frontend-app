@@ -13,8 +13,24 @@ export const useSidebar = () => {
   const { t } = useI18n();
   const mainLayoutRoutes: SidebarRoute[] = [
     {
+      title: 'پلتفرم ها',
+      icon: 'hub',
+      to: { name: 'BotListPage' },
+    },
+    {
+      title: 'چت بات',
+      icon: 'assistant',
+      children: [
+        {
+          title: 'چت بات های من',
+          to: { name: 'ChatbotListPage' },
+          icon: 'list',
+        },
+      ],
+    },
+    {
       title: 'فروشگاه',
-      icon: 'shopping_cart',
+      icon: 'storefront',
       children: [
         {
           title: 'فروشگاه های من',
@@ -28,22 +44,6 @@ export const useSidebar = () => {
         },
       ],
     },
-    {
-      title: 'چت بات',
-      icon: 'smart_toy',
-      children: [
-        {
-          title: 'چت بات های من',
-          to: { name: 'ChatbotListPage' },
-          icon: 'list',
-        },
-      ],
-    },
-    {
-      title: 'پلتفرم ها',
-      icon: 'list',
-      to: { name: 'BotListPage' },
-    },
   ];
 
   const manageShopLayoutRoutes: SidebarRoute[] = [
@@ -56,7 +56,7 @@ export const useSidebar = () => {
     {
       title: 'پیشخوان',
       to: { name: 'ManageStoreIndexPage' },
-      icon: 'dashboard',
+      icon: 'explore',
     },
     {
       title: t(
@@ -121,7 +121,7 @@ export const useSidebar = () => {
       activeClass: 'bg-transparent',
     },
     {
-      title: 'اطلاعات بات',
+      title: 'اطلاعات  چت بات',
       to: { name: 'ManageChatbotBasicInformationPage' },
       icon: 'info',
     },
@@ -138,12 +138,12 @@ export const useSidebar = () => {
     {
       title: 'پایگاه دانش',
       to: { name: 'ManageChatbotKnowledgeBasePage' },
-      icon: 'list',
+      icon: 'school',
     },
     {
-      title: 'بات های متصل',
+      title: 'اتصال و انتشار',
       to: { name: 'ManageChatbotConnectedBotsPage' },
-      icon: 'smart_toy',
+      icon: 'link',
     },
   ];
   return {
