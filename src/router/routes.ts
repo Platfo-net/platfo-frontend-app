@@ -318,7 +318,7 @@ const routes: RouteRecordRaw[] = [
                 'pages/dashboard/store/ManageStore/Tables/ManageStoreTablesListPage.vue'
               ),
             meta: {
-              title: 'میز ها | پلتفو',
+              title: 'اتصال و انتشار | پلتفو',
               breadcrumbs: [
                 {
                   label: 'pages.panel.dashboard.title',

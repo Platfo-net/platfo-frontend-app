@@ -81,7 +81,7 @@ const handleDelete = async (tableId: string) => {
   await removeShopTable({ tableId })
   refetchList()
 }
-const handleClickUrlCell = (url: string) => {navigator.clipboard.writeText(url); notify.success('به بریده دان انتقال یافت')}
+const handleClickUrlCell = (url: string) => { navigator.clipboard.writeText(url); notify.success('به بریده دان انتقال یافت') }
 /********************** */
 
 /** COMPONENT LIFECYCLE HANDLERS */
@@ -97,8 +97,8 @@ const handleClickUrlCell = (url: string) => {navigator.clipboard.writeText(url);
       <q-card-section>
         <q-form @submit.prevent="handleCreate">
           <q-input class="q-my-md" type="text" v-model="createTableModel.title" :rules="[(val) =>
-                        (val && val.length > 0) ||
-                        $t('general.fields.requiredStringField'),]" label="عنوان میز"></q-input>
+    (val && val.length > 0) ||
+    $t('general.fields.requiredStringField'),]" label="عنوان میز"></q-input>
           <q-btn color="primary" label="ایجاد میز جدید" type="submit"></q-btn>
         </q-form>
       </q-card-section>
@@ -107,13 +107,13 @@ const handleClickUrlCell = (url: string) => {navigator.clipboard.writeText(url);
   <q-dialog v-model="showUpdateDialog">
     <q-card>
       <q-card-section>
-        ویرایش  میز
+        ویرایش میز
       </q-card-section>
       <q-card-section>
         <q-form @submit.prevent="handleUpdate">
           <q-input class="q-my-md" type="text" v-model="updateTableModel.title" :rules="[(val) =>
-                        (val && val.length > 0) ||
-                        $t('general.fields.requiredStringField'),]" label="عنوان میز"></q-input>
+    (val && val.length > 0) ||
+    $t('general.fields.requiredStringField'),]" label="عنوان میز"></q-input>
           <q-btn color="primary" label="اعمال ویرایش" type="submit"></q-btn>
         </q-form>
       </q-card-section>
@@ -122,24 +122,23 @@ const handleClickUrlCell = (url: string) => {navigator.clipboard.writeText(url);
   <q-dialog v-model="showDeleteDialog">
     <q-card>
       <q-card-section>
-        ویرایش  میز
+        ویرایش میز
       </q-card-section>
       <q-card-section>
         <q-form @submit.prevent="handleUpdate">
           <q-input class="q-my-md" type="text" v-model="updateTableModel.title" :rules="[(val) =>
-                        (val && val.length > 0) ||
-                        $t('general.fields.requiredStringField'),]" label="عنوان میز"></q-input>
+    (val && val.length > 0) ||
+    $t('general.fields.requiredStringField'),]" label="عنوان میز"></q-input>
           <q-btn color="primary" label="اعمال ویرایش" type="submit"></q-btn>
         </q-form>
       </q-card-section>
     </q-card>
   </q-dialog>
   <div class="q-my-md">
-    <q-table ref="tableRef" class="sticky-last-col" title="میزها" bordered flat separator="cell" :rows="shopTables"
-      :columns="columns as QTableColumn[]" row-key="name" :loading="isFetching">
+    <q-table ref="tableRef" class="sticky-last-col" title="اتصال و انتشار" bordered flat separator="cell"
+      :rows="shopTables" :columns="columns as QTableColumn[]" row-key="name" :loading="isFetching">
       <template v-slot:top-right>
-        <q-btn color="primary" label="ایجاد میز جدید" icon="add" flat
-          @click="showCreateDialog = true"></q-btn>
+        <q-btn color="primary" label="ایجاد میز جدید" icon="add" flat @click="showCreateDialog = true"></q-btn>
       </template>
       <template v-slot:loading>
         <q-inner-loading showing color="primary" />
@@ -148,7 +147,7 @@ const handleClickUrlCell = (url: string) => {navigator.clipboard.writeText(url);
         <q-td :props="props">
           <div style="z-index: 2" @click="handleClickUrlCell(props.row.url as string)">
             <q-card bordered flat style="max-width: 150px;">
-                <vue-qrcode :value="props.value"></vue-qrcode>
+              <vue-qrcode :value="props.value"></vue-qrcode>
             </q-card>
             <q-tooltip>
               {{ props.value }}
@@ -166,7 +165,8 @@ const handleClickUrlCell = (url: string) => {navigator.clipboard.writeText(url);
         <q-td :props="props">
           <div>
             <q-btn dense size="sm" flat label="ویرایش" @click="handleClickUpdateButton(props.row)"></q-btn>
-            <q-btn dense size="sm" label="حذف" @click="handleDelete(props.row.id)" color="negative" icon="delete" class="q-ml-sm"></q-btn>
+            <q-btn dense size="sm" label="حذف" @click="handleDelete(props.row.id)" color="negative" icon="delete"
+              class="q-ml-sm"></q-btn>
           </div>
         </q-td>
       </template>
