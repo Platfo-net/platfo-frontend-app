@@ -16,7 +16,7 @@ const shoppingCart = useShoppingCart();
             :src="item.product.image_url" fit="cover" />
         </div>
         <div class="flex column full-width q-pa-sm">
-          <div>{{ item.is_variant ? item.variant?.title : item.product.title }}</div>
+          <div>{{ item.is_variant ? item.product.title + ' | ' + item.variant?.title : item.product.title }}</div>
           <div class="flex row q-my-sm">
             <q-icon name="category" color="primary"></q-icon>
             <small class="q-ml-sm">{{ item.product.category?.title || 'بدون دسته بندی' }}</small>
@@ -38,16 +38,20 @@ const shoppingCart = useShoppingCart();
           <template v-if="item.count > 0">
             <div class="flex row q-pa-sm justify-center items-center"
               style="border: 1px solid #e2e2e2; border-radius: 4px; box-shadow: #e2e2e2 0px 0px 15px; width: 143px;">
-              <q-btn @click="item.is_variant ? shoppingCart.add(item.product, item.variant!) : shoppingCart.add(item.product)" class="q-mx-sm" icon="add" color="white" text-color="grey-8"
-                size="sm" dense flat></q-btn>
+              <q-btn
+                @click="item.is_variant ? shoppingCart.add(item.product, item.variant!) : shoppingCart.add(item.product)"
+                class="q-mx-sm" icon="add" color="white" text-color="grey-8" size="sm" dense flat></q-btn>
               <small class="q-mx-sm">{{ item.count }}</small>
-              <q-btn @click="item.is_variant ? shoppingCart.remove(item.product, item.variant!) : shoppingCart.remove(item.product)" class="q-mx-sm" :icon="item.count === 1 ? 'delete' : 'remove'"
+              <q-btn
+                @click="item.is_variant ? shoppingCart.remove(item.product, item.variant!) : shoppingCart.remove(item.product)"
+                class="q-mx-sm" :icon="item.count === 1 ? 'delete' : 'remove'"
                 :text-color="item.count === 1 ? 'red-8' : 'dark'" size="sm" dense flat></q-btn>
             </div>
           </template>
           <template v-else>
             <div class="flex row">
-              <q-btn color="dark" label="افزودن به سبد خرید" @click="item.is_variant ? shoppingCart.add(item.product, item.variant!) : shoppingCart.add(item.product)"></q-btn>
+              <q-btn color="dark" label="افزودن به سبد خرید"
+                @click="item.is_variant ? shoppingCart.add(item.product, item.variant!) : shoppingCart.add(item.product)"></q-btn>
             </div>
           </template>
         </div>

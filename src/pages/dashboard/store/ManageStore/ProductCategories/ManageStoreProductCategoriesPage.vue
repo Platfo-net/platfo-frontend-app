@@ -9,7 +9,9 @@ const route = useRoute();
 /************************ */
 
 /** COMPONENT STATE */
-const { data: categories, isPending  } = categoriesService.queries.getAll(route.params.storeId as string);
+const { data: categories, isPending } = categoriesService.queries.getAll(
+  route.params.storeId as string
+);
 const columns = [
   { name: 'title', label: 'عنوان', field: 'title', align: 'left' },
   {
@@ -49,19 +51,17 @@ const columns = [
       bordered
       flat
       separator="cell"
-      :rows="categories"
+      :rows="categories || []"
       :columns="columns as QTableColumn[]"
       row-key="name"
-      :loading="isPending"
-    >
+      :loading="isPending">
       <template v-slot:top-right>
         <q-btn
           color="primary"
           label="دسته بندی جدید"
           icon="add"
           flat
-          :to="{ name: 'ManageStoreProductCategoryCreatePage' }"
-        ></q-btn>
+          :to="{ name: 'ManageStoreProductCategoryCreatePage' }"></q-btn>
       </template>
       <template v-slot:loading>
         <q-inner-loading showing color="primary" />
@@ -96,8 +96,7 @@ const columns = [
               size="sm"
               flat
               :to="`product-categories/${props.row.id}/edit`"
-              label="ویرایش"
-            ></q-btn>
+              label="ویرایش"></q-btn>
           </div>
         </q-td>
       </template>

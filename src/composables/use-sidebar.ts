@@ -107,7 +107,7 @@ export const useSidebar = () => {
       to: { name: 'ManageStoreOrdersListPage' },
     },
     {
-      title: 'مدیریت میزها',
+      title: 'اتصال و انتشار',
       icon: 'bento',
       to: { name: 'ManageStoreTablesListPage' },
     },
