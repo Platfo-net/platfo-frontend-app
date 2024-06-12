@@ -39,7 +39,7 @@ const clearCreateShopModel = () => createShopModel.value = {
     <q-dialog @hide="clearCreateShopModel" v-model="showCreateDialog">
       <q-card style="min-width: 367px">
         <q-card-section>
-          <div class="text-h6">چت بات جدید</div>
+          <div class="text-h6">فروشگاه جدید</div>
         </q-card-section>
         <q-card-section>
           <q-form @submit.prevent="handleFormSubmit">
