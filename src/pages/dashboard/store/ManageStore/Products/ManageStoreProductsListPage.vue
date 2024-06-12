@@ -131,40 +131,20 @@ onMounted(async () => {
         <q-separator />
         <q-card-section>
           آیا از حذف این محصول مطمئن هستید؟
-          <span class="text-negative text-bold"
-            >این محصول برای همیشه از بین خواهد رفت.</span
-          >
+          <span class="text-negative text-bold">این محصول برای همیشه از بین خواهد رفت.</span>
         </q-card-section>
         <q-separator />
         <q-card-actions align="right">
           <q-btn label="انصراف" color="negative" v-close-popup />
-          <q-btn
-            flat
-            label="بله"
-            color="primary"
-            @click="handleDeleteBtnClick(toDeleteId)" />
+          <q-btn flat label="بله" color="primary" @click="handleDeleteBtnClick(toDeleteId)" />
         </q-card-actions>
       </q-card>
     </q-dialog>
-    <q-table
-      ref="tableRef"
-      class="sticky-last-col"
-      title="محصولات"
-      bordered
-      flat
-      separator="cell"
-      :rows="productsPaginatedResponse?.items || []"
-      :columns="columns as QTableColumn[]"
-      row-key="name"
-      :loading="isFetching"
-      @request="tableOnRequestHandler"
-      v-model:pagination="pagination">
+    <q-table ref="tableRef" class="sticky-last-col" title="محصولات" bordered flat separator="cell"
+      :rows="productsPaginatedResponse?.items || []" :columns="columns as QTableColumn[]" row-key="name"
+      :loading="isFetching" @request="tableOnRequestHandler" v-model:pagination="pagination">
       <template v-slot:top-right>
-        <q-btn
-          color="primary"
-          label="محصول جدید"
-          icon="add"
-          flat
+        <q-btn color="primary" label="محصول جدید" icon="add" flat
           :to="{ name: 'ManageStoreProductCreatePage' }"></q-btn>
       </template>
       <template v-slot:loading>
@@ -173,7 +153,10 @@ onMounted(async () => {
       <template v-slot:body-cell-image_url="props">
         <q-td :props="props">
           <div style="z-index: 2">
-            <q-img style="max-width: 50px" :src="props.value" />
+            <template v-if="props.value">
+              <q-img style="max-width: 50px" :src="props.value" />
+            </template>
+            <template v-else><q-badge color="red-1" text-color="red">بدون عکس</q-badge></template>
           </div>
         </q-td>
       </template>
@@ -181,17 +164,20 @@ onMounted(async () => {
         <q-td :props="props">
           <div>
             {{
-              Intl.NumberFormat('fa', {
-                currency: 'IRT',
-              }).format(props.value)
-            }}
+      Intl.NumberFormat('fa', {
+        currency: 'IRT',
+      }).format(props.value)
+    }}
             <toman-symbol :size="16"></toman-symbol>
           </div>
         </q-td>
       </template>
       <template v-slot:body-cell-category="props">
         <q-td :props="props">
-          {{ props.value.title }}
+          <template v-if="props.value">
+            {{ props.value.title }}
+          </template>
+          <template v-else><q-badge color="red-1" text-color="red">بدون دسته بندی</q-badge></template>
         </q-td>
       </template>
       <template v-slot:body-cell-created_at="props">
@@ -207,25 +193,12 @@ onMounted(async () => {
       <template v-slot:body-cell-actions="props">
         <q-td :props="props">
           <div>
-            <q-btn
-              dense
-              size="sm"
-              flat
-              :to="`products/${props.row.id}/edit`"
-              label="ویرایش"
-              class="q-ml-md"></q-btn>
-            <q-btn
-              dense
-              size="sm"
-              flat
-              color="red"
-              icon="delete"
-              @click="
-                () => {
-                  toDeleteId = props.row.id;
-                  showDeleteAlert = true;
-                }
-              "></q-btn>
+            <q-btn dense size="sm" flat :to="`products/${props.row.id}/edit`" label="ویرایش" class="q-ml-md"></q-btn>
+            <q-btn dense size="sm" flat color="red" icon="delete" @click="() => {
+      toDeleteId = props.row.id;
+      showDeleteAlert = true;
+    }
+      "></q-btn>
           </div>
         </q-td>
       </template>
