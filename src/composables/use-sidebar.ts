@@ -21,11 +21,6 @@ export const useSidebar = () => {
           to: { name: 'StoreListPage' },
           icon: 'list',
         },
-        {
-          title: 'ایجاد فروشگاه جدید',
-          to: { name: 'CreateStorePage' },
-          icon: 'add',
-        },
       ],
     },
     {
