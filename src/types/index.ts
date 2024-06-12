@@ -429,3 +429,28 @@ export type ChatbotCreditSubscriptionTransactionListResponse =
 export type ChatbotConnectedTelegramBot = { uuid: string; username: string };
 export type ChatbotConnectedTelegramBotsApiResponse =
   ChatbotConnectedTelegramBot[];
+
+export type ShopType = {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  color_code: string;
+};
+
+export type CreateShopDto = {
+  title: string;
+  description: string;
+  category: string;
+  color_code: string;
+};
+
+export type CreateShopSuccessResponseDto = {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  support_token: string;
+};
+
+export type GetShopListSuccessResponse = ShopType[];
