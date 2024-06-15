@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { ProductType, UpsertProductType, ProductVariantType, ProductAttributeType } from 'src/types';
+import {
+  ProductType,
+  UpsertProductType,
+  ProductVariantType,
+  ProductAttributeType,
+} from 'src/types';
 import BaseUploader from 'components/common/BaseUploader.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useProductsService } from 'src/services/useProductsService';
@@ -28,9 +33,8 @@ const upsertModel = ref<UpsertProductType>({
   attributes: [],
   variants: [],
 });
-const { data: categories, isPending: categoriesPending } = productCategoriesService.queries.getAll(
-  route.params.storeId as string
-);
+const { data: categories, isPending: categoriesPending } =
+  productCategoriesService.queries.getAll(route.params.storeId as string);
 const isEdit = ref<boolean>(route.fullPath.includes('edit'));
 const productId = route.params.productId as string;
 const product = ref<ProductType>({} as ProductType);
@@ -145,19 +149,26 @@ onMounted(async () => {
 </script>
 
 <template>
-  <q-dialog v-model="showCreateVariantDialog" @hide="x => productVariantModel = {
-    id: '',
-    title: '',
-    price: 0,
-    currency: 'IRT',
-    is_available: false
-  }">
-    <q-card style="min-width: 367px;">
+  <q-dialog
+    v-model="showCreateVariantDialog"
+    @hide="
+      (x) =>
+        (productVariantModel = {
+          id: '',
+          title: '',
+          price: 0,
+          currency: 'IRT',
+          is_available: false,
+        })
+    "
+  >
+    <q-card style="min-width: 367px">
       <q-card-section>
         <div class="text-h6">گونه جدید</div>
       </q-card-section>
       <q-card-section>
-        <q-form @submit="() => {
+        <q-form
+          @submit="() => {
           upsertModel.variants?.push(productVariantModel as ProductVariantType)
           productVariantModel = {
             id: '',
@@ -167,121 +178,126 @@ onMounted(async () => {
             is_available: false
           };
           showCreateVariantDialog = false;
-        }">
+        }"
+        >
           <q-input
-              class="q-mb-md"
-              outlined
-              label="عنوان"
-              type="text"
-              v-model="productVariantModel.title"
-              dense
-              lazy-rules
-              :rules="[
-                (val) =>
-                  (val && val.length > 0) ||
-                  $t('general.fields.requiredStringField'),
-              ]"
-            ></q-input>
-            <q-input
-              class="q-mb-md"
-              outlined
-              type="number"
-              v-model="productVariantModel.price"
-              dense
-              :label="`${$t(
-                'pages.panel.dashboard.manageStorePage.panels.productManagement.fields.price'
-              )} *`"
-              :hint="
-                $t(
-                  'pages.panel.dashboard.manageStorePage.panels.productManagement.fields.priceHint'
-                )
-              "
-              lazy-rules
-            ></q-input>
-            <div class="flex justify-between items-center row q-mb-md">
-              <div>وضعیت موجودی</div>
-              <div>
-                <q-toggle
-                  v-model="productVariantModel.is_available"
-                  checked-icon="check"
-                  color="primary"
-                  unchecked-icon="clear"
-                  :label="productVariantModel.is_available ? 'موجود' : 'نا موجود'"
-                />
-              </div>
+            class="q-mb-md"
+            outlined
+            label="عنوان"
+            type="text"
+            v-model="productVariantModel.title"
+            dense
+            lazy-rules
+            :rules="[
+              (val) =>
+                (val && val.length > 0) ||
+                $t('general.fields.requiredStringField'),
+            ]"
+          ></q-input>
+          <q-input
+            class="q-mb-md"
+            outlined
+            type="number"
+            v-model="productVariantModel.price"
+            dense
+            :label="`${$t(
+              'pages.panel.dashboard.manageStorePage.panels.productManagement.fields.price'
+            )} *`"
+            :hint="
+              $t(
+                'pages.panel.dashboard.manageStorePage.panels.productManagement.fields.priceHint'
+              )
+            "
+            lazy-rules
+          ></q-input>
+          <div class="flex justify-between items-center row q-mb-md">
+            <div>وضعیت موجودی</div>
+            <div>
+              <q-toggle
+                v-model="productVariantModel.is_available"
+                checked-icon="check"
+                color="primary"
+                unchecked-icon="clear"
+                :label="productVariantModel.is_available ? 'موجود' : 'نا موجود'"
+              />
             </div>
-            <q-btn
-              type="submit"
-              class="q-mb-md"
-              color="primary"
-              label='افزودن'
-            ></q-btn>
+          </div>
+          <q-btn
+            type="submit"
+            class="q-mb-md"
+            color="primary"
+            label="افزودن"
+          ></q-btn>
         </q-form>
       </q-card-section>
     </q-card>
   </q-dialog>
-  <q-dialog v-model="showCreateAttributeDialog" @hide="() => productAttributeModel = {
-    key: '',
-    value: '',
-  }">
-    <q-card style="min-width: 367px;">
+  <q-dialog
+    v-model="showCreateAttributeDialog"
+    @hide="
+      () =>
+        (productAttributeModel = {
+          key: '',
+          value: '',
+        })
+    "
+  >
+    <q-card style="min-width: 367px">
       <q-card-section>
         <div class="text-h6">ویژگی جدید</div>
       </q-card-section>
       <q-card-section>
-        <q-form @submit="() => {
+        <q-form
+          @submit="() => {
           upsertModel.attributes?.push(productAttributeModel as ProductAttributeType)
           productAttributeModel = {
             key: '',
             value: ''
           };
           showCreateAttributeDialog = false;
-        }">
+        }"
+        >
           <q-input
-              class="q-mb-md"
-              outlined
-              label="عنوان"
-              type="text"
-              v-model="productAttributeModel.key"
-              dense
-              lazy-rules
-              :rules="[
-                (val) =>
-                  (val && val.length > 0) ||
-                  $t('general.fields.requiredStringField'),
-              ]"
-            ></q-input>
-            <q-input
-              class="q-mb-md"
-              outlined
-              type="text"
-              v-model="productAttributeModel.value"
-              dense
-              label="مقدار"
-              :rules="[
-                (val) =>
-                  (val && val.length > 0) ||
-                  $t('general.fields.requiredStringField'),
-              ]"
-              lazy-rules
-            ></q-input>
-            <q-btn
-              type="submit"
-              class="q-mb-md"
-              color="primary"
-              label='افزودن'
-            ></q-btn>
+            class="q-mb-md"
+            outlined
+            label="عنوان"
+            type="text"
+            v-model="productAttributeModel.key"
+            dense
+            lazy-rules
+            :rules="[
+              (val) =>
+                (val && val.length > 0) ||
+                $t('general.fields.requiredStringField'),
+            ]"
+          ></q-input>
+          <q-input
+            class="q-mb-md"
+            outlined
+            type="text"
+            v-model="productAttributeModel.value"
+            dense
+            label="مقدار"
+            :rules="[
+              (val) =>
+                (val && val.length > 0) ||
+                $t('general.fields.requiredStringField'),
+            ]"
+            lazy-rules
+          ></q-input>
+          <q-btn
+            type="submit"
+            class="q-mb-md"
+            color="primary"
+            label="افزودن"
+          ></q-btn>
         </q-form>
       </q-card-section>
     </q-card>
   </q-dialog>
   <q-form @submit="submitForm">
     <q-card>
-      <base-loading-spinner
-        :loading="
-          productsService.loading.value
-        "
-      />
+      <base-loading-spinner :loading="productsService.loading.value" />
       <q-card-section class="flex row justify-between">
         <div class="text-h5">
           <template v-if="!isEdit">ایجاد محصول جدید</template>
@@ -291,7 +307,7 @@ onMounted(async () => {
           <q-btn
             color="black"
             label="بازگشت"
-            :to="{ name: 'ManageStoreProducts' }"
+            :to="{ name: 'StoreProductsManagement' }"
           ></q-btn>
         </div>
       </q-card-section>
@@ -362,13 +378,23 @@ onMounted(async () => {
         </div>
       </q-card-section>
       <q-card-section>
-        <q-table flat bordered title="گونه های محصول" :columns="productVariantTableColumns as QTableColumn[]" :rows="upsertModel.variants">
+        <q-table
+          flat
+          bordered
+          title="گونه های محصول"
+          :columns="productVariantTableColumns as QTableColumn[]"
+          :rows="upsertModel.variants"
+        >
           <template v-slot:top-right>
-            <q-btn @click="showCreateVariantDialog = true" color="dark">افزودن</q-btn>
+            <q-btn @click="showCreateVariantDialog = true" color="dark"
+              >افزودن</q-btn
+            >
           </template>
           <template v-slot:body-cell-is_available="props">
             <q-td :props="props">
-              <q-badge :color="props.row.is_available ? 'green' : 'negative'">{{ props.row.is_available ? 'موجود' : 'نا موجود' }}</q-badge>
+              <q-badge :color="props.row.is_available ? 'green' : 'negative'">{{
+                props.row.is_available ? 'موجود' : 'نا موجود'
+              }}</q-badge>
             </q-td>
           </template>
           <template v-slot:body-cell-actions="props">
@@ -380,9 +406,13 @@ onMounted(async () => {
                   flat
                   color="red"
                   icon="delete"
-                  @click="() => {
-                    upsertModel.variants = upsertModel.variants?.filter(x => x.title !== props.row.title);
-                  }"
+                  @click="
+                    () => {
+                      upsertModel.variants = upsertModel.variants?.filter(
+                        (x) => x.title !== props.row.title
+                      );
+                    }
+                  "
                 ></q-btn>
               </div>
             </q-td>
@@ -390,9 +420,17 @@ onMounted(async () => {
         </q-table>
       </q-card-section>
       <q-card-section>
-        <q-table flat bordered title="ویژگی های محصول" :columns="productAttributesTableColumns as QTableColumn[]" :rows="upsertModel.attributes">
+        <q-table
+          flat
+          bordered
+          title="ویژگی های محصول"
+          :columns="productAttributesTableColumns as QTableColumn[]"
+          :rows="upsertModel.attributes"
+        >
           <template v-slot:top-right>
-            <q-btn @click="showCreateAttributeDialog = true" color="dark">افزودن</q-btn>
+            <q-btn @click="showCreateAttributeDialog = true" color="dark"
+              >افزودن</q-btn
+            >
           </template>
           <template v-slot:body-cell-actions="props">
             <q-td :props="props">
@@ -403,9 +441,13 @@ onMounted(async () => {
                   flat
                   color="red"
                   icon="delete"
-                  @click="() => {
-                    upsertModel.attributes = upsertModel.attributes?.filter(x => x.key !== props.row.key);
-                  }"
+                  @click="
+                    () => {
+                      upsertModel.attributes = upsertModel.attributes?.filter(
+                        (x) => x.key !== props.row.key
+                      );
+                    }
+                  "
                 ></q-btn>
               </div>
             </q-td>

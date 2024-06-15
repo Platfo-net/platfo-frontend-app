@@ -8,7 +8,6 @@ import { UpdateProductCategoryType } from 'src/types';
 import { computed, reactive, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
-
 /** COMPONENT COMPOSABLES */
 const route = useRoute();
 const router = useRouter();
@@ -18,7 +17,10 @@ const notify = useNotify();
 
 /** COMPONENT STATE */
 const newImageUrl = ref('');
-const { data: category, isPending } = productCategoriesService.queries.getOneById(route.params.categoryId as string);
+const { data: category, isPending } =
+  productCategoriesService.queries.getOneById(
+    route.params.categoryId as string
+  );
 const upsertModel = reactive<UpdateProductCategoryType>({
   image: '',
   title: '',
@@ -35,14 +37,17 @@ const handleUploadedImage = (response: string) => {
   upsertModel.image = responseParsed.filename;
   newImageUrl.value = responseParsed.url;
 };
-const { mutateAsync } = productCategoriesService.mutations.update(route.params.categoryId as string, upsertModel);
+const { mutateAsync } = productCategoriesService.mutations.update(
+  route.params.categoryId as string,
+  upsertModel
+);
 
 async function submitForm() {
   try {
     await mutateAsync();
     notify.success('دسته بندی با موفقیت ایجاد شد');
     await router.replace({ name: 'ManageStoreProductCategories' });
-  } catch(err) {
+  } catch (err) {
     console.log(err);
     notify.error('خطایی در ارسال داده رخ داد.');
   }
@@ -67,7 +72,7 @@ watch(category, (c) => {
           <q-btn
             color="black"
             label="بازگشت"
-            :to="{ name: 'ManageStoreProductCategories' }"
+            :to="{ name: 'StoreProductsManagement' }"
           ></q-btn>
         </div>
       </q-card-section>
@@ -90,8 +95,15 @@ watch(category, (c) => {
             ></q-input>
           </div>
           <div class="col-md-6 col-12">
-            <q-img class="q-pa-md rounded-borders" style="border: 1px solid #e1e1e1;" :src="newImageUrl || category?.image_url"></q-img>
-            <base-uploader :image-type="ImageType.ProductCategory" @uploaded="handleUploadedImage" />
+            <q-img
+              class="q-pa-md rounded-borders"
+              style="border: 1px solid #e1e1e1"
+              :src="newImageUrl || category?.image_url"
+            ></q-img>
+            <base-uploader
+              :image-type="ImageType.ProductCategory"
+              @uploaded="handleUploadedImage"
+            />
           </div>
         </div>
       </q-card-section>

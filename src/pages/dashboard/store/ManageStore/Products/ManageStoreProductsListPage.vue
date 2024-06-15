@@ -12,12 +12,17 @@ const productsService = useProductsService();
 const route = useRoute();
 const notify = useNotify();
 
-const { data: productsPaginatedResponse, isFetching, refetch } = useQuery({
-  queryFn: async () => await productsService.queries.getAll(
-    route.params.storeId as string,
-    { page: pagination.value.page, page_size: pagination.value.rowsPerPage }
-  ),
-  queryKey: ['product-list']
+const {
+  data: productsPaginatedResponse,
+  isFetching,
+  refetch,
+} = useQuery({
+  queryFn: async () =>
+    await productsService.queries.getAll(route.params.storeId as string, {
+      page: pagination.value.page,
+      page_size: pagination.value.rowsPerPage,
+    }),
+  queryKey: ['product-list'],
 });
 
 /************************ */
@@ -70,7 +75,7 @@ const pagination = ref<PaginationType>({
   rowsPerPage: 20,
 });
 const showDeleteAlert = ref<boolean>(false);
-const toDeleteId = ref<string>('')
+const toDeleteId = ref<string>('');
 /****************** */
 
 /** COMPONENT DEFINES */
@@ -89,20 +94,21 @@ async function tableOnRequestHandler(_props: any) {
 }
 async function loadData() {
   await refetch();
-  pagination.value.rowsNumber = productsPaginatedResponse.value?.pagination.total_count as number;
+  pagination.value.rowsNumber = productsPaginatedResponse.value?.pagination
+    .total_count as number;
 }
 
 const handleDeleteBtnClick = async (id: string) => {
   try {
-    await productsService.mutations.remove(id)
-    notify.success('حذف محصول موفقیت آمیز')
+    await productsService.mutations.remove(id);
+    notify.success('حذف محصول موفقیت آمیز');
     refetch();
     showDeleteAlert.value = false;
   } catch (err) {
     notify.error('خطا در حذف محصول');
     showDeleteAlert.value = false;
   }
-}
+};
 /********************** */
 
 /** COMPONENT LIFECYCLE HANDLERS */
@@ -125,7 +131,9 @@ onMounted(async () => {
         <q-separator />
         <q-card-section>
           آیا از حذف این محصول مطمئن هستید؟
-          <span class="text-negative text-bold">این محصول برای همیشه از بین خواهد رفت.</span>
+          <span class="text-negative text-bold"
+            >این محصول برای همیشه از بین خواهد رفت.</span
+          >
         </q-card-section>
         <q-separator />
         <q-card-actions align="right">
@@ -216,10 +224,12 @@ onMounted(async () => {
               flat
               color="red"
               icon="delete"
-              @click="() => {
-                toDeleteId = props.row.id;
-                showDeleteAlert = true;
-              }"
+              @click="
+                () => {
+                  toDeleteId = props.row.id;
+                  showDeleteAlert = true;
+                }
+              "
             ></q-btn>
           </div>
         </q-td>
@@ -228,5 +238,4 @@ onMounted(async () => {
   </div>
 </template>
 
-<style lang="sass">
-</style>
+<style lang="sass"></style>

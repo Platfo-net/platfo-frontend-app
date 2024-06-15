@@ -153,37 +153,37 @@ const routes: RouteRecordRaw[] = [
               ],
             },
           },
-          {
-            path: 'products',
-            name: 'ManageStoreProducts',
-            component: () =>
-              import(
-                'pages/dashboard/store/ManageStore/Products/ManageStoreProductsListPage.vue'
-                // 'components/dashboard/store-page/StoreManagementProductsPanel.vue'
-              ),
+          // {
+          //   path: 'products',
+          //   name: 'ManageStoreProducts',
+          //   component: () =>
+          //     import(
+          //       'pages/dashboard/store/ManageStore/Products/ManageStoreProductsListPage.vue'
+          //       // 'components/dashboard/store-page/StoreManagementProductsPanel.vue'
+          //     ),
 
-            meta: {
-              title: 'محصولات | پلتفو',
-              breadcrumbs: [
-                {
-                  label: 'pages.panel.dashboard.title',
-                  to: { name: 'Dashboard' },
-                },
-                {
-                  label: 'pages.panel.dashboard.storeListPage.title',
-                  to: { name: 'StoreListPage' },
-                },
-                {
-                  label: 'pages.panel.dashboard.manageStorePage.title',
-                  to: { name: 'ManageStoreBasicInformation' },
-                },
-                {
-                  label:
-                    'pages.panel.dashboard.manageStorePage.panels.productManagement.title',
-                },
-              ],
-            },
-          },
+          //   meta: {
+          //     title: 'محصولات | پلتفو',
+          //     breadcrumbs: [
+          //       {
+          //         label: 'pages.panel.dashboard.title',
+          //         to: { name: 'Dashboard' },
+          //       },
+          //       {
+          //         label: 'pages.panel.dashboard.storeListPage.title',
+          //         to: { name: 'StoreListPage' },
+          //       },
+          //       {
+          //         label: 'pages.panel.dashboard.manageStorePage.title',
+          //         to: { name: 'ManageStoreBasicInformation' },
+          //       },
+          //       {
+          //         label:
+          //           'pages.panel.dashboard.manageStorePage.panels.productManagement.title',
+          //       },
+          //     ],
+          //   },
+          // },
           {
             path: 'products-old',
             name: 'ManageStoreProductsOld',
@@ -275,6 +275,34 @@ const routes: RouteRecordRaw[] = [
                 },
                 {
                   label: 'ایجاد محصول',
+                },
+              ],
+            },
+          },
+          {
+            path: 'products',
+            name: 'StoreProductsManagement',
+            component: () =>
+              import(
+                'pages/dashboard/store/ManageStore/StoreProducts/StoreProductsManagement.vue'
+              ),
+            meta: {
+              title: 'محصولات | پلتفوم',
+              breadcrumbs: [
+                {
+                  label: 'pages.panel.dashboard.title',
+                  to: { name: 'Dashboard' },
+                },
+                {
+                  label: 'pages.panel.dashboard.storeListPage.title',
+                  to: { name: 'StoreListPage' },
+                },
+                {
+                  label: 'pages.panel.dashboard.manageStorePage.title',
+                  to: { name: 'ManageStoreBasicInformation' },
+                },
+                {
+                  label: 'مدیریت محصولات',
                 },
               ],
             },

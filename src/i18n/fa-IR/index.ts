@@ -307,7 +307,7 @@ export default {
               fields: {
                 title: 'عنوان',
                 titleHint: '',
-                price: 'قیمت',
+                price: 'هزینه',
                 priceHint: 'واحد قیمت محصولات تومان است',
               },
               noShipmentMethods:

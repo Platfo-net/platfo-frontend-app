@@ -9,7 +9,9 @@ const route = useRoute();
 /************************ */
 
 /** COMPONENT STATE */
-const { data: categories, isPending  } = categoriesService.queries.getAll(route.params.storeId as string);
+const { data: categories, isPending } = categoriesService.queries.getAll(
+  route.params.storeId as string
+);
 const columns = [
   { name: 'title', label: 'عنوان', field: 'title', align: 'left' },
   {

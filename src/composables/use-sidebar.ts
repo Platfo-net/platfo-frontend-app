@@ -65,26 +65,32 @@ export const useSidebar = () => {
       to: { name: 'ManageStoreBasicInformation' },
       icon: 'info',
     },
+    // {
+    //   title: 'مدیریت محصولات',
+    //   // to: { name: 'ManageStoreProducts' },
+    //   icon: 'inventory_2',
+    //   children: [
+    //     {
+    //       title: t(
+    //         'pages.panel.dashboard.manageStorePage.panels.productManagement.title'
+    //       ),
+    //       to: { name: 'ManageStoreProducts' },
+    //       icon: 'list',
+    //     },
+    //     {
+    //       title: t(
+    //         'pages.panel.dashboard.manageStorePage.panels.productCategories.title'
+    //       ),
+    //       to: { name: 'ManageStoreProductCategories' },
+    //       icon: 'category',
+    //     },
+    //   ],
+    // },
     {
       title: 'مدیریت محصولات',
       // to: { name: 'ManageStoreProducts' },
+      to: { name: 'StoreProductsManagement' },
       icon: 'inventory_2',
-      children: [
-        {
-          title: t(
-            'pages.panel.dashboard.manageStorePage.panels.productManagement.title'
-          ),
-          to: { name: 'ManageStoreProducts' },
-          icon: 'list',
-        },
-        {
-          title: t(
-            'pages.panel.dashboard.manageStorePage.panels.productCategories.title'
-          ),
-          to: { name: 'ManageStoreProductCategories' },
-          icon: 'category',
-        },
-      ],
     },
     {
       title: t(

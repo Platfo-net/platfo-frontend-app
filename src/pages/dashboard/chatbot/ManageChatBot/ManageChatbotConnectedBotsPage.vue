@@ -206,8 +206,8 @@ const { data: telegramBots, isLoading: telegramBotsIsLoading } =
                     :key="bot.uuid"
                   >
                     <ConnectedBotsPage
-                      :id = "bot.uuid"
-                      :username = "bot.username"
+                      :id="bot.uuid"
+                      :username="bot.username"
                     />
                   </div>
                   <div class="col-12 col-md-2">

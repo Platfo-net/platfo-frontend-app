@@ -7,7 +7,6 @@ import { InsertProductCategoryType } from 'src/types';
 import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
-
 /** COMPONENT COMPOSABLES */
 const route = useRoute();
 const router = useRouter();
@@ -19,7 +18,7 @@ const notify = useNotify();
 const upsertModel = ref<InsertProductCategoryType>({
   image: '',
   title: '',
-  shop_id: route.params.storeId as string
+  shop_id: route.params.storeId as string,
 });
 const newImageUrl = ref('');
 /****************** */
@@ -62,7 +61,7 @@ async function submitForm() {
           <q-btn
             color="black"
             label="بازگشت"
-            :to="{ name: 'ManageStoreProductCategories' }"
+            :to="{ name: 'StoreProductsManagement' }"
           ></q-btn>
         </div>
       </q-card-section>
@@ -84,7 +83,10 @@ async function submitForm() {
               ]"
             ></q-input>
             <div class="col-md-6 col-12">
-              <base-uploader :image-type="ImageType.ProductCategory" @uploaded="handleUploadedImage" />
+              <base-uploader
+                :image-type="ImageType.ProductCategory"
+                @uploaded="handleUploadedImage"
+              />
             </div>
           </div>
         </div>
